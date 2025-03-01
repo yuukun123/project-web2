@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/searchpro.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <link rel="icon" href="../Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <title>The Sweets</title>
+</head>
+
+<body>
+    
+    <!--header-->
+    <div class="header">
+        <button class="logo" style="border: none; background: none; cursor:pointer ">
+            <img src="../Img/Sweets1.png" alt="">
+        </button>
+        <nav class="navigation">
+            <a href="../index.html">HOME</a>
+            <a href="../Home/about.html">ABOUT</a>
+            <a href="../Home/receipt.html">RECEIPT</a>
+            <button class="sp-cart" id="cart-btn">
+                <ion-icon name="cart-outline"></ion-icon>
+            </button>
+            
+            <div class="search-container">
+                <div class="input-wrapper">
+                    <input type="find" id="search" onkeyup="myFunction() " placeholder="Search for names..">
+                    <span class="search-icon">
+                        <button class="searchBtn" onclick="">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </button>
+                    </span>
+                </div>
+                <div id="hintContainer" class="hint-container"></div>
+            </div>
+
+            <button id="login-btn" class="btnLogin-popup" onclick="window.location.href='./login.html#login'">Login</button>
+            <button id="logout-btn" class="btnLogout-popup" onclick="window.location.href='./login.html#register'">Register</button>
+        </nav>
+
+        <div class="hamburger"  id="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="hamburger"  id="hamburger" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        
+        <div class="mobile-menu-off">
+            <a href="../index.html">HOME</a>
+            <a href="../Home/searchpro.html">SEARCH</a>
+            <a href="../Home/receipt.html">RECEIPT</a>
+            <button class="sp-cart" id="cart-btn">
+                <ion-icon name="cart-outline"></ion-icon>
+            </button>
+
+            <div class="btn-log">
+                <button id="login-btn" class="btnLogin-popup" onclick="window.location.href='./login.html#login'">Login</button>
+                <button id="logout-btn" class="btnLogout-popup" onclick="window.location.href='./login.html#register'">Register</button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- main screen -->
+    <div class="Home_main">
+
+        <!--Poster-->
+        <div class="pg-12 ">
+            <!-- Searching Pro -->
+            <div class="bsearchpro">
+                <div class="search-container-pro">
+                    <span class="search-price-title">name:
+                        <input type="text" id="searchName" placeholder="Search for names..">
+                    </span>
+                    <!-- <input type="text" id="searchCategory" placeholder="Search for category.."> -->
+
+
+                    <!-- <label for="category">Search for category: </label> -->
+                    <select name="category" id="searchCategory">
+                        <option value="Mousse">Category</option>
+                        <option value="Mousse">Mousse</option>
+                        <option value="Croissant">Croissant</option>
+                        <option value="Drink">Drink</option>
+                    </select>
+
+                </div>
+                <div class="search-price">
+                    <span class="search-price-title">Price from:
+                        <input type="number" id="minPrice" min="0" placeholder="0đ">
+                        To:
+                        <input type="number" id="maxPrice" max="500000" placeholder="500.000đ">
+                    </span>
+                </div>
+                <button type="button" class="btn-searchpro" onclick="search()" >Search</button>
+
+                <div class="tab_content_pro" id="productList">
+                    <!-- Kết quả tìm kiếm sẽ hiển thị ở đây -->
+                </div>
+                
+            </div>
+
+            <!-- <input type="radio" name="filter" id="filter-all" class="filter-input" checked> -->
+            <div class="tab_content" id="All"></div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer">
+        <div class="Footer_footer_contain">
+            <div class="footer_section ">
+                <h3 class="Footer_footer_title ">INTRODUCE</h3>
+                <ul>
+                    <li><button class="Foot_footer_list ">Về Chúng Tôi</button></li>
+                    <li><button class="Foot_footer_list ">Thoả Thuận Sử Dụng</button></li>
+                    <li><button class="Foot_footer_list ">Quy Chế Hoạt Động</button></li>
+                    <li><button class="Foot_footer_list ">Chính Sách Bảo Mật</button></li>
+                </ul>
+            </div>
+            <div class="footer_section ">
+                <h3 class="Footer_footer_title ">CORNER FOOD</h3>
+                <ul>
+                    <li><button class="Foot_footer_list ">Mouse</button></li>
+                    <li><button class="Foot_footer_list ">Croissant</button></li>
+                    <li><button class="Foot_footer_list ">Drink</button></li>
+                </ul>
+            </div>
+            <div class="footer_section ">
+                <h3 class="Footer_footer_title ">SUPPORT</h3>
+                <ul>
+                    <li><button class="Foot_footer_list ">Góp Ý</button></li>
+                    <li><button class="Foot_footer_list ">Tuyển Dụng</button></li>
+                    <li><button class="Foot_footer_list ">FAQ</button></li>
+                </ul>
+            </div>
+            <div class="footer_section">
+                <div class="footer_logo">
+                    <img src="../Img/Sweets1.png" alt="">
+                </div>
+                <ul class="Footer_connect_icon ">
+                    <li>
+                        <a href="# ">
+                            <ion-icon name="logo-youtube"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="# ">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="# ">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="footer-bottom-line"></div>
+
+        <div class="copy-right">
+            <p>© copyright 2024 by The MEM Group | Công ty TNHH The Sweets | Design by The MESince </p>
+        </div>
+    </div>
+
+    <button id="backToTop" onclick="scrollToTop()">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+    </button>
+
+    <script src="../js/menu.js"></script>
+    <script src="../js/searchpro.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/statiscal-users.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="icon" href="../../Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <title>Statistical</title>
+</head>
+
+<body>
+    <div class="grid-full">
+        <div class="left-screen">
+            <!--header-->
+            <div class="header">
+                <div class="text-heading">
+                    <h1>Statistical</h1>
+                </div>
+                <nav class="navigation">
+                    <button id="login-btn" class="btnLogin-popup">Login</button>
+                    <div class="Function-cl">
+                        <div class="logout">
+                            <button id="logout-btn" class="btnLogout-popup">Logout</button>
+                        </div>
+                        
+                    </div>
+                </nav>
+
+                <div class="hamburger"  id="hamburger" onclick="toggleMenu()">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+
+
+            <!--Mobile-->
+            <div class="mobile-menu" id="mobileMenu">
+
+                <div class="menu-container">
+                    <!--Manage-product-->
+                    <button class="grade-button" onclick="toggleGrade('gradeFood', 'chevronFood')">
+                        <span class="text-head">
+                            <ion-icon name="fast-food-outline"></ion-icon>
+                            Product
+                        </span>
+                        <span class="chevron up" id="chevronFood"></span>
+                    </button>
+                    <div class="subject-list active" id="gradeFood" style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="clipboard-outline"></ion-icon>
+                                <a href="./list-product.html">List product</a>
+                            </span>
+                        </div>
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                                <a href="./add-product.html">Add product</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Manage-user-->
+                    <button class="grade-button" onclick="toggleGrade('gradeUserList', 'chevronUserList')">
+                        <span class="text-head">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                            Manage User
+                        </span>
+                        <span class="chevron up" id="chevronUserList"></span>
+                    </button>
+                    <div class="subject-list" id="gradeUserList" style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="person-outline"></ion-icon>
+                                <a href="./manager-user.html">List User</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Receipt-->
+                    <button class="grade-button" onclick="toggleGrade('gradeReceipt', 'chevronReceipt')">
+                        <span class="text-head">
+                            <ion-icon name="receipt-outline"></ion-icon>
+                            Receipt
+                    </span>
+                        <span class="chevron up" id="chevronReceipt"></span>
+                    </button>
+                    <div class="subject-list " id="gradeReceipt" style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
+                                <a href="./receipt.html">Status order</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Statistical-->
+                    <button class="grade-button" onclick="toggleGrade('gradeStatistical', 'chevronStatistical')">
+                        <span class="text-head">
+                            <ion-icon name="stats-chart-outline"></ion-icon>
+                            Statistical
+                        </span>
+                        <span class="chevron down" id="chevronStatistical"></span>
+                    </button>
+                    <div class="subject-list active" id="gradeStatistical">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="stats-chart-outline"></ion-icon>
+                                <a href="./statiscal-product.html">Product statistical</a>
+                            </span>
+                        </div>
+                        <div class="subject-item active">
+                            <span class="text-in">
+                                <ion-icon name="stats-chart-outline"></ion-icon>
+                                <a href="./statiscal-users.html">User Statistical</a>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            
+            <div class="Home">
+                <div class="text-big">Statistical User</div>
+                <div class="filter">
+                    <div class="time">
+                       
+                        <div class="to">
+                            <p>Name User: </p>
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="div">
+                        <button class="sta-btn"><a href="./statiscal-users.html">Statistical</a></button>
+                    </div>
+                </div>
+            
+            
+                <p class="main-title">INFORMATION USERS</p>
+                <div class="bd-bt"></div>
+            
+                <table class="table-customer">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Total Orders</th>
+                            <th>Total Spending</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>0868137377</td>
+                            <td>Quận 3</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="main-title">TOP USERS</p>
+                <div class="bd-bt"></div>
+            
+                <table class="table-customer">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>User ID</th>
+                            <th>Full Name</th>
+                            <th>Total Orders</th>
+                            <th>Total Spending</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+                            <td>
+                                <button class="js-function-detail"><ion-icon name="receipt-outline"></ion-icon></button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+                            <td>
+                                <button class="js-function-detail"><ion-icon name="receipt-outline"></ion-icon></button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+                            <td>
+                                <button class="js-function-detail"><ion-icon name="receipt-outline"></ion-icon></button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+                            <td>
+                                <button class="js-function-detail"><ion-icon name="receipt-outline"></ion-icon></button>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>MEM123</td>
+                            <td>Võ Anh Hào</td>
+                            <td>2</td>
+                            <td>700.000đ</td>
+                            <td>
+                                <button class="js-function-detail"><ion-icon name="receipt-outline"></ion-icon></button>
+                            </td>
+
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+            <div class="div-receipt">
+                <div class="receipt">
+                    <div class="row-1 flex">
+                        <div class="receipt-id">
+                            <p class="paragraph">Receipt ID:</p>
+                            <div class="paragraph">HD123</div>
+                        </div>
+                        <div class="receipt-date">
+                            <p class="paragraph">Receipt Date:</p>
+                            <div class="paragraph">20-10-2024</div>
+                        </div>
+                    </div>
+                    <table class="table-receipt">
+                        <thead>
+                            <td>Product ID</td>
+                            <td>Product Name</td>
+                            <td>Quantity</td>
+                            <td>Unit Price</td>
+                            <td>Total Amount</td>
+                        </thead>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Avocado Mousse</td>
+                            <td>2</td>
+                            <td>510.000đ</td>
+                            <td>1.020.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Avocado Mousse</td>
+                            <td>2</td>
+                            <td>510.000đ</td>
+                            <td>1.020.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Avocado Mousse</td>
+                            <td>2</td>
+                            <td>510.000đ</td>
+                            <td>1.020.000đ</td>
+                        </tr>
+                        <tr>
+                            <td>MEM123</td>
+                            <td>Avocado Mousse</td>
+                            <td>2</td>
+                            <td>510.000đ</td>
+                            <td>1.020.000đ</td>
+                        </tr>
+                    </table>
+                        <div class="close-btn">
+                            <button >Cancel<ion-icon name="close-outline"></ion-icon></button>
+                        </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-screen">
+            <!-- main screen -->
+            <div class="Function-use">
+                <div class="logo">
+                    <img src="../../Img/Sweets1.png" alt="">
+                </div>
+                
+                <div class="menu-container">
+                    <!--Manage-product-->
+                    <button class="grade-button" onclick="toggleGrade('gradeFood', 'chevronFood')">
+                        <span class="text-head">
+                            <ion-icon name="fast-food-outline"></ion-icon>
+                            Product
+                        </span>
+                        <span class="chevron up" id="chevronFood"></span>
+                    </button>
+                    <div class="subject-list" id="gradeFood"  style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="clipboard-outline"></ion-icon>
+                                <a class="colorForLink" href="./list-product.html">List product</a>
+                            </span>
+                        </div>
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                                <a class="colorForLink" href="./add-product.html">Add product</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Manage-user-->
+                    <button class="grade-button" onclick="toggleGrade('gradeUserList', 'chevronUserList')">
+                        <span class="text-head">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                            Manage User
+                        </span>
+                        <span class="chevron up" id="chevronUserList"></span>
+                    </button>
+                    <div class="subject-list" id="gradeUserList" style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="person-outline"></ion-icon>
+                                <a class="colorForLink" href="./manager-user.html">List User</a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!--Receipt-->
+                    <button class="grade-button" onclick="toggleGrade('gradeReceipt', 'chevronReceipt')">
+                        <span class="text-head">
+                            <ion-icon name="receipt-outline"></ion-icon>
+                            Receipt
+                    </span>
+                        <span class="chevron up" id="chevronReceipt"></span>
+                    </button>
+                    <div class="subject-list" id="gradeReceipt" style="display:none;">
+                        <div class="subject-item">
+                            <span class="text-in">
+                                <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
+                                <a class="colorForLink" href="./receipt.html">Status order</a>
+                            </span>
+                        </div>
+                        
+                    </div>
+
+                    <!--Statistical-->
+                    <button class="grade-button" onclick="toggleGrade('gradeStatistical', 'chevronStatistical')">
+                        <span class="text-head">
+                            <ion-icon name="stats-chart-outline"></ion-icon>
+                            Statistical
+                        </span>
+                        <span class="chevron down" id="chevronStatistical"></span>
+                    </button>
+                    <div class="subject-list active" id="gradeStatistical">
+                        <div class="subject-item" >
+                            <span class="text-in">
+                                <ion-icon name="stats-chart-outline"></ion-icon>
+                                <a class="colorForLink" href="./statiscal-product.html">Product statistical</a>
+                            </span>
+                        </div>
+                        <div class="subject-item active">
+                            <span class="text-in">
+                                <ion-icon name="stats-chart-outline"></ion-icon>
+                                <a class="colorForLink" href="./statiscal-users.html">User Statistical</a>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        
+    </div>  
+    
+    <script src="../js/statiscal-users.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js "></script> -->
+</body>
+
+</html>

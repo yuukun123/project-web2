@@ -1,0 +1,1361 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+}
+
+body {
+    width: 100%;
+    /* max-height: 100vh; */
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.grid-full{
+    display: grid;
+    grid-template-columns: 5fr 1fr ;
+    /* grid-template-columns: repeat(2, 1fr); */
+    /* background: #ffffff; */
+    gap: 10px;
+    height: 100%;
+    /* padding:15px 15px 15px; */
+    margin: 10px;
+    transition: transform .5s ease;
+}
+
+.left-screen{
+    display: grid;
+    row-gap: 10px;
+    width: 100%;
+    transition: right 0.5s ease;
+}
+
+.right-screen{
+    position: relative;
+    width: 100%;
+    right: 0;
+
+}
+
+.Function-use{
+    display: flex;
+    flex-direction: column;
+    /* grid-template-columns: repeat(1, auto); */
+    justify-items: center;
+    border: 1px solid black;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.logo{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.menu-container {
+    width: 99.5%;
+    /* max-width: 400px; */
+    background: #ffffff;
+    margin-bottom: auto;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.grade-button {
+    width: 100%;
+    padding: 8px 16px;
+    background: #ffffff;
+    border: none;
+    border-bottom: 1px solid #d1d5db;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    pointer-events: auto;
+}
+
+.gradeFood {
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.text-head{
+    display: flex;
+    color: #9D5068;
+    align-items: center;
+}
+
+.text-head ion-icon{
+    font-size: 25px;
+    margin-right: 6px;
+}
+
+.text-in{
+    color: #455265;
+}
+
+.grade-button:hover {
+    background: #F6B1CE;
+
+}
+
+.grade-button:hover span{
+    color: white;
+}
+
+.subject-list {
+    display: none;
+    border-bottom: 1px solid #d1d5db;
+}
+
+.subject-list.active {
+    display: block;
+}
+
+.colorForLink{
+    color: #455265;
+}
+
+.subject-item {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    background:#f7f7f7;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* .subject-itema a{
+    padding-right: 50px;
+} */
+
+.subject-item:last-child {
+    border-bottom: none;
+}
+
+.subject-item.active{
+    background :#ffdee5;
+}
+
+
+.subject-item.active:hover span{
+    color: #000000;
+}
+
+.subject-icon {
+    font-size: 1.25rem;
+}
+
+.chevron {
+    border: solid #4b5563;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transition: transform 0.1s;
+}
+
+.chevron.up {
+    transform: rotate(135deg);
+    margin-top: 0px;
+}
+
+.chevron.down {
+    transform: rotate(45deg);
+    margin-bottom: 4px;
+}
+
+/* Styles for chevron rotation */
+/* .chevron.down::before {
+    content: "▼";
+}
+
+.chevron.up::before {
+    content: "▲";
+} */
+
+/* Định dạng header */
+.header {
+    position: relative;
+    top: 0;
+    left: 0;
+    /* width: 100%;
+    max-width: 100vw; */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0px 100px;
+    height: 80px;
+    border: 1px solid black;
+    background: #fbd5e5;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+
+}
+
+header.hide {
+    transform: translateY(-100%);
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+}
+
+.text-heading{
+    margin-right: auto;
+}
+
+.text-heading h1{
+    font-size: 24px;
+}
+
+/* login button */
+.btnLogin-popup {
+    width: 70px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #1f1c1c;
+    outline-width: 2px;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #000000;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.btnLogin-popup:hover {
+    background: #cadbfb;
+    color: #162938;
+}
+
+.btnLogout-popup{
+    width: 70px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid #1f1c1c;
+    outline-width: 2px;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #000000;
+    font-weight: 500;
+    margin-left: 40px;
+    transition: .5s;
+}
+
+.btnLogout-popup:hover {
+    background: #cadbfb;
+    color: #162938;
+}
+
+/*Edit for Home*/
+.Home{
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    background: #dbe8fc;
+}
+
+.text-big{
+    display: flex;
+    font-size: 30px;
+    justify-content: center;
+    height: 75px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    border-bottom: 4px solid #4E499E;
+    border-radius: 3px;
+    margin: 30px;
+}
+
+.product-grid{
+    display: grid;
+    /* grid-template-columns: 15vh 36vh 30vh 20vh 25vh 26vh 21vh; */
+    /* grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); */
+    grid-template-columns: 3fr ;
+    gap: 20px;
+    row-gap: 25px;
+    margin: 20px;
+    align-items: center;
+}
+
+.top{
+    display: flex;
+    gap: 20px;
+}
+
+.id{
+    width: 33%;
+    /* margin-bottom: 20px; */
+}
+
+.name{
+    width: 33%;
+}
+
+.price{
+    width: 33%;
+}
+
+.bottom{
+    display: flex;
+    gap: 20px;
+}
+
+.status{
+    width: 33%;
+}
+
+.category{
+    width: 33%;
+}
+
+.capital{
+    width: 33%;
+}
+
+.product-head {
+    font-weight: bold;
+    text-align: left;
+    color: #455265;
+    margin-bottom: 20px;
+}
+
+.product-items input{
+    padding: 10px;
+    width: 100%;
+    height: 35px;
+    border: 1px solid #ffffff;
+}
+
+.product-items .select{
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 15px;
+    line-height: 1.5;
+    color: black;
+    background-color: #ffffff;
+    border: 1px solid #ffffff;
+}
+
+.add-more{
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    margin-bottom: 45px;
+}
+
+.add-more button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 42%;
+    height: 50px;
+    background: #0B1957;
+    border-radius: 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+
+.add-more ion-icon{
+    font-size: 25px;
+}
+
+.add-more button:hover{
+    background: #EF99B4;
+}
+
+.product-pic{
+    font-weight: bold;
+    text-align: left;
+    color: #455265;
+    margin: 20px 50px;
+    margin-top: 40px;
+}
+
+.items-pic {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Adjust the gap between the button and the icon */
+}
+
+.insert {
+    display: flex;
+    align-items: center;
+    /* border: none; Optional: Remove button border */
+    /* background: none; Optional: Remove button background */
+    cursor: pointer; /* Show pointer cursor */
+    gap: 5px; /* Adjust the gap between the text and the icon */
+    border: 1px solid rgb(0, 0, 0);
+    background: #000000;
+    color: #ffffff;
+    width: 180px;
+    height: 40px;
+    margin: 0 50px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.insert input[type="button"] {
+    border: none; /* Optional: Remove border from button input */
+    background: none; /* Optional: Remove background from button input */
+    cursor: pointer; /* Show pointer cursor */
+    color: white;
+    margin: 0 30px;
+
+}
+
+.insert ion-icon {
+    font-size: 20px; /* Adjust icon size */
+    vertical-align: middle; /* Ensure vertical alignment */
+}
+
+.insert:hover{
+    /* border: 1px solid rgb(0, 0, 0); */
+    background: #ffffff;
+    color: #000000;
+}
+
+.insert:hover input[type="button"] {
+    color: rgb(0, 0, 0); /* Explicitly set the text color to white on hover */
+}
+
+.insert:hover ion-icon {
+    color: rgb(0, 0, 0); /* Icon turns white on hover */
+}
+
+.items-pic input[type="text"]{
+    width: 80%;
+    height: 5vh;
+    padding: 10px;
+    margin-right: 50px;
+    font-size: 18px;
+}
+
+.describe{
+    margin-bottom: 20px;
+}
+
+.write-describe{
+    margin-bottom: 50px;
+    margin: 0 50px;
+}
+
+.write-describe textarea{
+    padding: 10px;
+    width: 100%;
+}
+
+.button-click{
+    display: flex;
+    margin-top: 30px;
+    justify-content: center;
+    gap: 40px;
+}
+
+.button-click button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 150px;
+    height: 40px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+
+.save{
+    background: #1d8c1c;
+    color: #ffffff;
+}
+
+.cancel{
+    background: #c52525;
+    color: #ffffff;
+}
+
+.save:hover{
+    background: #0e5c00;
+}
+
+.cancel:hover{
+    background: #750000;
+}
+
+.blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none; /* Initially hidden */
+    z-index: 1; /* Ensure it appears above other content */
+}
+
+.blur-overlay {
+    background: rgba(0, 0, 0, 0.4); /* Dark overlay */
+    backdrop-filter: blur(2px); /* Blur effect */
+    z-index: 2; /* Behind the form */
+}
+
+.blur-overlay.active {
+    display: block; /* Show both when active */
+}
+
+.save-success{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 45vw;
+    height: 35vw;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 0, 0, .6);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 3;
+    transition: transform .3s ease, height .2s ease;
+    transform: translate(-50%, -50%) scale(0);
+}
+
+.save-success.active-popup{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.icon-suc{
+    display: flex;
+    justify-content: center;
+    margin-top: -15px;
+}
+
+.icon-suc ion-icon{
+    color: #009a0f;
+    font-size: 80px;
+}
+
+.text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.text h1 {
+    color: green; /* Matches the green text in your image */
+    font-size: 30px; /* Adjust size as needed */
+    text-align: center;
+}
+
+.text p {
+    text-align: center;
+    font-size: 18px; 
+    color: #333; 
+    line-height: 1.5; 
+    margin-top: 10px; 
+}
+
+.button1 {
+    display: flex;
+    justify-content: center;  /* Centers the buttons horizontally */
+    gap: 20px;  /* Adds space between the buttons */
+    margin-top: 20px;
+}
+
+.button1 button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button.close {
+    background-color: #f44336; /* Red background for "close" button */
+    color: white;
+}
+
+button.go-to {
+    background-color: #4c6faf; /* Green background for "Go List Product" button */
+    color: white;
+}
+
+button.go-to a {
+    color: white;
+    text-decoration: none;
+}
+
+button.go-to a:hover {
+    
+}
+
+/* Hover effects for both buttons */
+.button1 button:hover {
+    background-color: #333333b8;
+    color: white;
+}
+
+
+.cancel-success{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    width: 40vw;
+    height: 30vw;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 0, 0, .6);
+    box-shadow: 0 0 30px rgba(0, 0, 0, .3);
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    z-index: 3;
+    transition: transform .3s ease, height .2s ease;
+    transform: translate(-50%, -50%) scale(0);
+
+}
+
+.cancel-success.active-popup{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.icon-suc2 ion-icon{
+    color: #9a0000;
+    font-size: 80px;
+}
+
+.text2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.text2 h1 {
+    color: rgb(128, 0, 0); /* Matches the green text in your image */
+    font-size: 35px; /* Adjust size as needed */
+    text-align: center;
+}
+
+.text2 p{
+    font-size: 20px;
+}
+
+.button2 {
+    display: flex;
+    justify-content: center;
+    gap: 50px; /* Space between the buttons */
+    margin-top: 20px;
+}
+
+.button2 input {
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#button1 {
+    background-color: #f44336; /* Red background for "Yes" */
+    color: white;
+}
+
+#button2 {
+    background-color: #4CAF50; /* Green background for "No" */
+    color: white;
+}
+
+/* Hover effects */
+.button2 input:hover {
+    background-color: #333333ae !important;
+    color: white !important;
+}
+
+
+/* Styles for hamburger icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1000;
+
+}
+
+.hamburger .bar {
+    height: 3px;
+    width: 100%;
+    background-color: #503a3a;
+    border-radius: 5px;
+    /* margin: 4px 0; */
+    transition: all 0.3s ease;
+}
+
+.hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+
+  /* Hide navigation in mobile view */
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 90px; /* Adjust as per header height */
+    right: -250px;
+    width: 100px;
+    height: 100vh;
+    background-color: white;
+    padding: 10px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 99;
+    overflow-y: auto;
+}
+
+@media (max-width: 1024px) {
+    .navigation {
+        /* display: none; */
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 20px;
+        cursor: pointer;
+        margin-left: 40px;
+    }
+
+    .mobile-menu {
+        display: none;
+        flex-direction: column;
+        background-color: white;
+        position: absolute;
+        top: 90px;
+        width: 100%;
+    }
+
+    .mobile-menu.active {
+        display: flex;
+        right: 0;
+        width: 280px;
+        height: 194vh;
+        padding: 35px 15px;
+    }
+
+}
+
+
+  /* Optional: If you want smooth transitions */
+.mobile-menu {
+    transition: all 0.3s ease;
+}
+
+
+/* Responsive Design */
+@media (max-width: 1390px) and (min-width: 1281px){
+
+    /* .text-head{
+        font-size: 16px;
+    }
+
+    .text-head ion-icon{
+        font-size: 16px;
+        margin-right: 5px;
+    } */
+}
+
+@media screen and (max-width: 1280px) and (min-width: 1025px){
+    .Home{
+        width: auto;
+    }
+
+
+    .add-more button {
+        width: 40%;
+    }
+
+    .id , .name, .price{
+        width: 100%;
+    }
+
+    .status , .category, .capital{
+        width: 100%;
+    }
+
+    .product-items input{
+        width: 100%;
+    } 
+
+    .product-items .select{
+        width: 100%;
+    }
+
+    .write-describe textarea{
+        width: 95%;
+    }
+
+    .text-head{
+        font-size: 13.5px;
+    }
+
+    .text-head ion-icon{
+        display: none;
+    }
+
+    .text-in{
+        font-size: 14px;
+    }
+
+    .text-in ion-icon{
+        display: none;
+    }
+
+    .save-success{
+        width: 55vw;
+        height: 40vw;
+        gap: 40px;
+    }
+
+    .cancel-success{
+        width: 45vw;
+        height: 40vw;
+        gap: 40px;
+    }
+}
+
+/* Tablet */
+@media screen and (max-width: 1024px) and (min-width: 861px) {
+    .product-grid{
+        /* grid-template-columns: 10vh 30vh 30vh 20vh 25vh 22vh 21vh; */
+        /* grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); */
+        grid-template-columns: 1fr ;
+    }
+
+    .text-head{
+        font-size: 13.5px;
+    }
+
+    .text-head ion-icon{
+        display: none;
+    }
+
+    .text-in{
+        font-size: 14px;
+    }
+
+    .text-in ion-icon{
+        display: none;
+    }
+
+    .top , .bottom{
+        gap: 49px;
+    }
+
+    .id , .name, .price{
+        width: 30%;
+    }
+
+    .status , .category, .capital{
+        width: 30%;
+    }
+
+    .product-items input{
+        width: 100%;
+    } 
+
+    .product-items .select{
+        width: 100%;
+    }
+
+    .write-describe textarea{
+        width: 92%;
+    }
+
+    .items-pic input[type="text"] {
+        width: 60%;
+        height: 6.5vh;
+        padding: 10px;
+        margin-right: 50px;
+    }
+
+    .grid-full {
+        grid-template-columns: repeat(1, 1fr);
+        transition: transform .5s ease;
+    }
+    .right-screen {
+        display: none;
+        transition: opacity .5s ease;
+    }
+
+    .save-success{
+        width: 50vw;
+        height: 50vw;
+    }
+
+    .text p{
+        font-size: 14px;
+    }
+
+    .cancel-success{
+        width: 55vw;
+        height: 45vw;
+        gap: 40px;
+    }
+}
+
+
+@media screen and (max-width: 860px) {
+    .product-grid{
+        /* grid-template-columns: 4vh 10vh 10vh 10vh 10vh 9vh 10vh; */
+        /* grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); */
+        grid-template-columns: repeat(1, 1fr) ;
+        gap: 30px;
+    }
+
+    .id , .name, .price{
+        width: 32%
+    }
+
+    .status , .category, .capital{
+        width: 32%;
+    }
+
+    .product-head{
+        width: 70%;
+    }
+
+    .write-describe textarea{
+        width: 90%;
+    }
+
+    .items-pic input[type="text"] {
+        width: 55%;
+        height: 40px;
+        padding: 10px;
+        margin-right: 50px;
+        font-size: 18px;
+    }
+
+    .grid-full {
+        grid-template-columns: repeat(1, 1fr);
+        transition: transform .5s ease;
+    }
+    .right-screen {
+        display: none;
+        transition: opacity .5s ease;
+    }
+    
+    .save-success{
+        width: 70vw;
+        height: 65vw;
+    }
+
+    .cancel-success{
+        width: 55vw;
+        height: 45vw;
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .Home{
+        font-size: 14px;
+    }
+
+    .product-items img{
+        width: 100%;
+        height: 53px;
+    }
+
+    .text p{
+        font-size: 16px
+    }
+    
+    .cancel-success{
+        width: 65vw;
+        height: 60vw;
+        gap: 40px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .header{
+        padding: 10px;
+    }
+
+    .top{
+        display: contents;
+    }
+
+    .bottom{
+        display: contents;
+    }
+    
+    .id , .name, .price{
+        width: 100%
+    }
+
+    .status , .category, .capital{
+        width: 100%;
+    }
+
+    .add-more button{
+        width: 35%;
+        height: 40px;
+        font-size: 10px;
+    }
+
+    .add-more ion-icon{
+        font-size: 18px;
+    }
+
+    .items-pic{
+        display: contents;
+    }
+
+    .insert {
+        width: auto;
+        height: 30px;
+        margin-bottom: 20px;
+        display: flex; /* Sử dụng flexbox */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+    }
+
+    .insert input[type="button"] {
+        border: none;
+        color: white;
+        padding: 5px 15px; /* Thêm padding cho đẹp */
+        display: flex; /* Sử dụng flexbox trong button */
+        align-items: center; /* Căn giữa nội dung button theo chiều dọc */
+        justify-content: center; /* Căn giữa nội dung button theo chiều ngang */
+        font-size: 18px; /* Tùy chỉnh kích thước font */
+    }
+
+    /* Tùy chỉnh khoảng cách giữa text và icon (nếu có) */
+    .insert input[type="button"] svg {
+        margin-left: 5px;
+    }
+
+    .items-pic input[type="text"] {
+        margin: 0 50px;
+        /* margin-left: auto; */
+        width: 80%;
+        font-size: 14px;
+    }
+
+    .text-heading h1{
+        font-size: 20px;
+    }
+
+
+    .Home{
+        font-size: 13px;
+    }
+
+    .save-success{
+        width: 80vw;
+        height: 85vw;
+    }
+
+    .cancel-success{
+        width: 75vw;
+        height: 75vw;
+        gap: 40px;
+    }
+
+    .text2 p{
+        font-size: 17px
+    }
+}
+
+@media (max-width: 480px) {
+    .add-more button {
+        gap: 5px;
+        font-size: 9px;
+    }
+
+    .add-more ion-icon {
+        font-size: 15px;
+    }
+
+    .text-heading h1{
+        font-size: 20px;
+    }
+    .product-head{
+        font-size: 15px;
+    }
+
+    .Home{
+        font-size: 10px;
+    }
+
+    .product-items img{
+        width: 30px;
+        height: 50px;
+    }
+
+    .product-pic{
+        font-size: 15px;
+    }
+
+    .items-pic{
+        display: contents;
+    }
+
+    .insert {
+        width: auto;
+        height: 30px;
+        margin-bottom: 20px;
+        display: flex; /* Sử dụng flexbox */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        justify-content: center; /* Căn giữa theo chiều ngang */
+    }
+
+    .insert input[type="button"] {
+        border: none;
+        color: white;
+        padding: 5px 15px; /* Thêm padding cho đẹp */
+        display: flex; /* Sử dụng flexbox trong button */
+        align-items: center; /* Căn giữa nội dung button theo chiều dọc */
+        justify-content: center; /* Căn giữa nội dung button theo chiều ngang */
+        font-size: 18px; /* Tùy chỉnh kích thước font */
+    }
+
+    /* Tùy chỉnh khoảng cách giữa text và icon (nếu có) */
+    .insert input[type="button"] svg {
+        margin-left: 5px;
+    }
+
+    .items-pic input[type="text"] {
+        margin: 0 50px;
+        max-width: 74%;
+        width: auto;
+        font-size: 14px;
+    }
+
+    .write-describe textarea {
+        width: 95%;
+        height: 100px
+    }
+
+    .button-click button{
+        width: 30%;
+        /* height: auto; */
+        font-size: 15px;
+        gap: 10px;
+    }
+
+    .save-success{
+        width: 70vw;
+        height: 95vw;
+        gap: 20px;
+    }
+
+    .icon-suc ion-icon{
+        font-size: 60px;
+    }
+
+    .text h1{
+        font-size: 25px;
+    }
+
+    .text2 h1{
+        font-size: 25px;
+    }
+
+    .text p{
+        font-size: 13px
+    }
+
+    .text2 p{
+        font-size: 13px
+    }
+
+    .cancel-success{
+        width: 80vw;
+        height: 85vw;
+        gap: 40px;
+    }
+
+    .button1 button{
+        font-size: 11px;
+    }
+
+    .btnLogin-popup{
+        width: 60px;
+        height: 30px;
+        background: transparent;
+        border: 1px solid #1f1c1c;
+        outline-width: 2px;
+        outline: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.8em;
+        color: #000000;
+        font-weight: 500;
+        margin-left: 23px;
+        transition: .5s;
+    }
+
+    .btnLogout-popup{
+        width: 60px;
+        height: 30px;
+        background: transparent;
+        border: 1px solid #1f1c1c;
+        outline-width: 2px;
+        outline: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.8em;
+        color: #000000;
+        font-weight: 500;
+        margin-left: 23px;
+        transition: .5s;
+    }
+}
+
+@media (max-width: 360px) {
+    /* .product-grid{
+        grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+    } */
+
+    .product-head{
+        font-size: 14px;
+    }
+
+    .product-pic{
+        font-size: 14px;
+    }
+
+    .insert {
+        width: auto;
+        height: 30px;
+        margin-bottom: 20px;
+        display: flex; /* Sử dụng flexbox để căn chỉnh */
+        align-items: center; /* Căn chỉnh theo chiều dọc */
+        justify-content: center; /* Căn chỉnh theo chiều ngang */
+    }
+
+    .insert input[type="button"] {
+        border: none;
+        /* background: black; */
+        color: white;
+        font-size: 16px; /* Điều chỉnh kích thước font nếu cần */
+        padding: 5px 15px; /* Thêm padding để tạo khoảng cách */
+        display: flex; /* Sử dụng flexbox bên trong button để căn chỉnh text và icon */
+        align-items: center; /* Căn chỉnh theo chiều dọc */
+        justify-content: center; /* Căn chỉnh theo chiều ngang */
+    }
+
+    /* Thêm khoảng cách giữa text và icon nếu cần */
+    .insert input[type="button"] svg {
+        margin-left: 5px; /* Tùy chỉnh khoảng cách */
+    }
+
+    .items-pic input[type="text"] {
+        margin: 0 50px;
+        width: 70%;
+        font-size: 12px;
+    }
+    
+    .Home{
+        font-size: 5px;
+    }
+
+    .product-items img{
+        width: 30px;
+        height: auto;
+    }
+
+    .save-success{
+        width: 70vw;
+        height: 110vw;
+        gap: 20px;
+    }
+    .button1 button{
+        font-size: 10px;
+    }
+
+    .cancel-success{
+        width: 88vw;
+        height: 99vw;
+        gap: 40px;
+    }
+
+    .button2 input{
+        font-size: 10px;
+    }
+}
+
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #e4b95b;
+    border-radius: 10px;
+}
