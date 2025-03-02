@@ -1,20 +1,3 @@
-function toggleMenu(hamburger) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
-    
-    // Toggle active class for both hamburger icons
-    document.querySelectorAll('.hamburger').forEach(icon => {
-        icon.classList.toggle('active');
-    });
-}
-
-const logo = document.querySelector('.logo');
-logo.addEventListener('click', function(e) {
-
-    e.preventDefault();
-    window.location.href = '../../index.html'; 
-});
-
 //Search Pro
 const menuItems = {
     Mousse: [

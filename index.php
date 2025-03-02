@@ -2,7 +2,16 @@
 // Khởi động phiên
 session_start();
 
-$page = $_GET['pages'] ?? 'home';
+// Kiểm tra xem có ?pages hay chưa
+if (!isset($_GET['pages'])) {
+// Nếu chưa có, tự động chuyển hướng sang ?pages=home
+header('Location: index.php?pages=home');
+exit;  // Dừng script để tránh chạy tiếp
+}
+
+// Bây giờ chắc chắn đã có ?pages
+$page = $_GET['pages'];
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +20,7 @@ $page = $_GET['pages'] ?? 'home';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/assets/css/style.css">
 
     <?php
     // Giả sử $page được lấy ở index.php hoặc set ở header trước khi include
@@ -27,7 +37,7 @@ $page = $_GET['pages'] ?? 'home';
         echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
     }
     else {
-        echo '<link rel="stylesheet" href="public/assets/css/style.css">';
+        echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     }
     ?>
 
@@ -69,6 +79,9 @@ $page = $_GET['pages'] ?? 'home';
                 $showRegister = true;
                 require __DIR__ . '/pages/register.php';
                 break;
+            // case 'cart':
+            //     require __DIR__ . '/includes/cart.php';
+            //     break;
         }
         ?>
     </div>
@@ -81,18 +94,19 @@ $page = $_GET['pages'] ?? 'home';
 
     <?php 
         if ($page === 'home') : 
-            echo '<script src="public/assets/js/script.js"></script>';
+            echo '<script src="public/assets/js/index.js"></script>';
         endif;  // End of if statement
         if ($page === 'login' || $page ==='register') : 
             echo '<script src="public/assets/js/login.js"></script>';
         endif;  // End of if statement
         if ($page === 'about') : 
-            echo '<script src="public/assets/js/script.js"></script>';
+            echo '<script src="public/assets/js/about.js"></script>';
         endif;  // End of if statement
         if ($page ==='receipt') : 
             echo '<script src="public/assets/js/receipt.js"></script>';
         endif;  // End of if statement
     ?>
+    <script src="public/assets/js/script.js"></script>
 
 </body>
 

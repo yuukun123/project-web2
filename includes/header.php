@@ -15,6 +15,7 @@ echo '
         <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
         </button>
+        <span class="cart-count"></span>
 
         <div class="search-container">
             <div class="input-wrapper">
@@ -61,4 +62,9 @@ echo '
         </div>
     </div>
 </div>';
+
+
+// Nhúng cart
+include 'includes/cart.php';
+
 ?>
