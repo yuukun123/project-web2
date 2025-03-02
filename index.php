@@ -1,6 +1,8 @@
 <?php
 // Khởi động phiên
 session_start();
+
+$page = $_GET['pages'] ?? 'home';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +11,25 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/assets/css/style.css">
+
+    <?php
+    // Giả sử $page được lấy ở index.php hoặc set ở header trước khi include
+    if ($page === 'login') {
+        echo '<link rel="stylesheet" href="public/assets/css/login.css">';
+    }
+    elseif ($page === 'register') {
+        echo '<link rel="stylesheet" href="public/assets/css/login.css">';
+    } 
+    elseif ($page === 'about') {
+        echo '<link rel="stylesheet" href="public/assets/css/about.css">';
+    }
+    elseif ($page === 'receipt') {
+        echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
+    }
+    else {
+        echo '<link rel="stylesheet" href="public/assets/css/style.css">';
+    }
+    ?>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -23,13 +43,34 @@ session_start();
 </head>
 
 <body>
-
     <?php include 'includes/header.php'; ?>
 
     <!-- main screen -->
     <div class="Home_main">
-        <?php include 'includes/banner.php'; ?>
-        <?php include 'includes/products.php'; ?>
+        <?php
+        switch ($page) {
+            case 'home':
+            default:
+                include 'includes/banner.php';
+                include 'includes/products.php';
+                break;
+            case 'about':
+                include 'includes/banner.php';
+                require __DIR__ . '/pages/about.php';
+                break;
+            case 'receipt':
+                require __DIR__ . '/pages/receipt.php';
+                break;
+            case 'login':
+                $showRegister = false;
+                require __DIR__ . '/pages/login.php';
+                break;
+            case 'register':
+                $showRegister = true;
+                require __DIR__ . '/pages/register.php';
+                break;
+        }
+        ?>
     </div>
 
     <?php include 'includes/footer.php'; ?>
@@ -38,7 +79,21 @@ session_start();
         <ion-icon name="arrow-up-outline"></ion-icon>
     </button>
 
-    <script src="public/assets/js/script.js"></script>
+    <?php 
+        if ($page === 'home') : 
+            echo '<script src="public/assets/js/script.js"></script>';
+        endif;  // End of if statement
+        if ($page === 'login' || $page ==='register') : 
+            echo '<script src="public/assets/js/login.js"></script>';
+        endif;  // End of if statement
+        if ($page === 'about') : 
+            echo '<script src="public/assets/js/script.js"></script>';
+        endif;  // End of if statement
+        if ($page ==='receipt') : 
+            echo '<script src="public/assets/js/receipt.js"></script>';
+        endif;  // End of if statement
+    ?>
+
 </body>
 
 </html>

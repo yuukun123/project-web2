@@ -6,12 +6,12 @@ include __DIR__ . '/../app/config/config.php';
 echo '
 <div class="header">
     <button class="logo" style="border: none; background: none; cursor:pointer">
-        <img src="' . BASE_URL . 'img/Sweets1.png" alt="">
+        <img src="' . BASE_URL . 'Img/Sweets1.png" alt="">
     </button>
     <nav class="navigation">
         <a href="index.php">HOME</a>
-        <a href="about.php">ABOUT</a>
-        <a href="receipt.php">RECEIPT</a>
+        <a href="?pages=about">ABOUT</a>
+        <a href="?pages=receipt">RECEIPT</a>
         <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
         </button>
@@ -29,9 +29,8 @@ echo '
         </div>
 
         <a href="./Home/searchpro.html" class="searchAdvance">ADVANCED SEARCH</a>
-        <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'app/Home/login.php\'">Login</button>
-        <button id="logout-btn" class="btnLogout-popup"
-            onclick="window.location.href=\'app/Home/login.php#register.php\'">Register</button>
+        <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'?pages=login\'" >Login</button>
+        <button id="logout-btn" class="btnLogout-popup" onclick="window.location.href=\'?pages=register\'" >Register</button>
     </nav>
 
     <div class="hamburger" id="hamburger" onclick="toggleMenu()">

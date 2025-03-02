@@ -1,3 +1,3 @@
 <?php
-define('BASE_URL', '/test/Project-Web/public/assets/'); // Chỉnh đúng đường dẫn
+define('BASE_URL', '/Project-Web2/public/assets/'); // Chỉnh đúng đường dẫn
 ?>

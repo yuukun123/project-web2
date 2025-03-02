@@ -255,15 +255,15 @@ header.hide {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -0%) scale(1);
-    width: 900px;
+    width: 1200px;
     height: 480px;
     background-color: #ffffff;
     border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
-    transition: transform .5s ease, height .2s ease;
+    /* overflow: hidden;
+    transition: transform .5s ease, height .2s ease; */
 }
 
 
@@ -272,6 +272,7 @@ header.hide {
     padding: 40px;
 }
 
+/*
 .wrapper .form-box.login {
     transition: transform .18s ease;
     transform: translateX(0);
@@ -291,8 +292,13 @@ header.hide {
 .wrapper.active .form-box.register {
     transition: transform .18s ease;
     transform: translateX(0);
-}
+} */
 
+.form-box.login,
+.form-box.register {
+    /* Chỉ định style chung, không cần transform */
+    position: relative; /* tuỳ ý */
+}
 
 .input-infor{
     display: grid;

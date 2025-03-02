@@ -1,6 +1,10 @@
 <!-- footer.php -->
 <?php
-echo '<div class="footer">
+
+// include __DIR__ . '/../app/config/config.php';
+
+echo '
+<div class="footer">
     <div class="Footer_footer_contain">
         <div class="footer_section ">
             <h3 class="Footer_footer_title ">INTRODUCE</h3>
@@ -29,7 +33,7 @@ echo '<div class="footer">
         </div>
         <div class="footer_section">
             <div class="footer_logo">
-                <img src="public/assets/Img/Sweets1.png" alt="">
+                <img src="' . BASE_URL . 'img/Sweets1.png" alt="">
             </div>
             <ul class="Footer_connect_icon ">
                 <li><a href="#"><ion-icon name="logo-youtube"></ion-icon></a></li>
