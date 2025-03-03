@@ -29,8 +29,8 @@ echo '
             <div id="hintContainer" class="hint-container"></div>
         </div>
 
-        <a href="./Home/searchpro.html" class="searchAdvance">ADVANCED SEARCH</a>
-        <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'?pages=login\'" >Login</button>
+        <a href="?pages=advance" class="searchAdvance">ADVANCED SEARCH</a>
+        <button id="login-btn" class="btnLogin-popup"  >Login</button>
         <button id="logout-btn" class="btnLogout-popup" onclick="window.location.href=\'?pages=register\'" >Register</button>
     </nav>
 

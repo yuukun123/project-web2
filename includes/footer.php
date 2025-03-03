@@ -46,5 +46,9 @@ echo '
     <div class="copy-right">
         <p>© copyright 2024 by The MEM Group | Công ty TNHH The Sweets | Design by The MESince </p>
     </div>
-</div>';
+</div>
+
+<button id="backToTop" onclick="scrollToTop()">
+    <ion-icon name="arrow-up-outline"></ion-icon>
+</button>';
 ?>

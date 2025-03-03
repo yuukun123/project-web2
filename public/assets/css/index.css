@@ -250,46 +250,7 @@
     /* background-color: rgba(0, 123, 255, 0.1); */
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-/*see more*/
-.pagination{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-
-}
-
-.page-link{
-    width: 50px;
-    border: 0.5px solid #FACDE5;
-    border-radius: 10px;
-    background: #FACDE5;
-    color: #ffffff;
-    padding: 5px 1px;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.page-link.active{
-    background-color: #F768A0;
-    color: #fff;
-}
 
 /*slick slide banner */
 .carousel_wrapper {

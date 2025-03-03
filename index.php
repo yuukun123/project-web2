@@ -36,6 +36,9 @@ $page = $_GET['pages'];
     elseif ($page === 'receipt') {
         echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
     }
+    elseif ($page === 'advance') {
+        echo '<link rel="stylesheet" href="public/assets/css/searchpro.css">';
+    }
     else {
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     }
@@ -79,18 +82,14 @@ $page = $_GET['pages'];
                 $showRegister = true;
                 require __DIR__ . '/pages/register.php';
                 break;
-            // case 'cart':
-            //     require __DIR__ . '/includes/cart.php';
-            //     break;
+            case 'advance':
+                require __DIR__ . '/pages/searchpro.php';
+                break;
         }
         ?>
     </div>
 
     <?php include 'includes/footer.php'; ?>
-
-    <button id="backToTop" onclick="scrollToTop()">
-        <ion-icon name="arrow-up-outline"></ion-icon>
-    </button>
 
     <?php 
         if ($page === 'home') : 
@@ -104,6 +103,9 @@ $page = $_GET['pages'];
         endif;  // End of if statement
         if ($page ==='receipt') : 
             echo '<script src="public/assets/js/receipt.js"></script>';
+        endif;  // End of if statement
+        if ($page ==='advance') :
+            echo '<script src="public/assets/js/searchpro.js"></script>';
         endif;  // End of if statement
     ?>
     <script src="public/assets/js/script.js"></script>
