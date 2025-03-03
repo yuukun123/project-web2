@@ -110,6 +110,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    function updateLoginButtons() {
+        const currentUser = getCurrentUser();
+        if (currentUser) {
+            // user đang login
+            logoutBtns.forEach(btn => {
+                btn.textContent = 'Logout';
+                // Thay đổi class, v.v. 
+            });
+        } else {
+            // user chưa login
+            logoutBtns.forEach(btn => {
+                btn.textContent = 'Register';
+            });
+        }
+    }
+    updateLoginButtons();
+
     // Handle the logout functionality for both logout buttons (mobile and desktop)
     logoutBtns.forEach(button => {
         button.addEventListener('click', function() {
