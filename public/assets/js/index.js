@@ -1,34 +1,45 @@
 /*Home data*/
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Function to get current user from localStorage
-    function getCurrentUser() {
-        const currentUser = localStorage.getItem('UserStr');
-        return currentUser ? JSON.parse(currentUser) : null;
-
-    }
-
     function isLoggedIn() {
         return !!getCurrentUser(); // Returns true if currentUser exists, false otherwise
     }
 
-    // const cartBtn = document.getElementById('cart-btn');
-    const cartBtn = document.querySelectorAll('.sp-cart')
-    if (cartBtn.length > 0) {
-        cartBtn.forEach(button => {
-            button.addEventListener('click', function(event) {
-                event.preventDefault();
-                
-                if (!isLoggedIn()) {
-                    alert('Please log in to buy!');
-                    window.location.href = '?pages=login';
-                } else {
-                    // Code to view cart goes here (if user is logged in)
-                    console.log('Viewing cart...'); // Placeholder for cart viewing logic
-                }
+    function viewCart(){
+        const cartBtn = document.querySelectorAll('.sp-cart')
+        if (cartBtn.length > 0) {
+            cartBtn.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    if (!isLoggedIn()) {
+                        alert('Please log in to buy!');
+                        window.location.href = '?pages=login';
+                    } else {
+                        // Code to view cart goes here (if user is logged in)
+                        console.log('Viewing cart...'); // Placeholder for cart viewing logic
+                    }
+                });
             });
-        });
+        }
     }
+    // // const cartBtn = document.getElementById('cart-btn');
+    // const cartBtn = document.querySelectorAll('.sp-cart')
+    // if (cartBtn.length > 0) {
+    //     cartBtn.forEach(button => {
+    //         button.addEventListener('click', function(event) {
+    //             event.preventDefault();
+                
+    //             if (!isLoggedIn()) {
+    //                 alert('Please log in to buy!');
+    //                 window.location.href = '?pages=login';
+    //             } else {
+    //                 // Code to view cart goes here (if user is logged in)
+    //                 console.log('Viewing cart...'); // Placeholder for cart viewing logic
+    //             }
+    //         });
+    //     });
+    // }
 
     //Render
 

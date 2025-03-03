@@ -61,9 +61,14 @@ echo '
             <button id="login-btn" class="btnLogout-popup">Register</button>
         </div>
     </div>
+</div>
+
+
+<div class="notificate" id="notificate">
+    <p id="message"></p>
 </div>';
 
-
+    
 // Nhúng cart
 include 'includes/cart.php';
 

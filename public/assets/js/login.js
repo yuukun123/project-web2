@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Login successful!');
                 setCurrentUser(user);
                 localStorage.setItem("loggedIn", "true");
-                window.location.href = '../Client/user-index.html';
+                window.location.href = '?pages=home';
             } else {
                 alert('Invalid email or password!');
             }
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Alert and redirect to login
                 alert('Registration successful!');
                 localStorage.setItem("loggedIn", "true");
-                window.location.href = '../index.php';
+                window.location.href = '?pages=home';
             }
         });
     }

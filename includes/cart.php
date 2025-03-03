@@ -1,5 +1,8 @@
 <?php
-echo '<div class="shopping-cart">
+echo '
+
+
+<div class="shopping-cart">
     <button class="close">
         <ion-icon name="close-outline"></ion-icon>
     </button>
@@ -67,5 +70,7 @@ echo '<div class="shopping-cart">
             <button class="pay">Pay</button>
         </a>
     </div>
-</div>';
+</div>
+
+<div class="blur-overlay"></div>';
 ?>
