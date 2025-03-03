@@ -953,12 +953,28 @@ input[type="number"] {
 .content h1{
     font-size: 50px;
 }
+
 .describe p{
     font-size: 18px;
     font-weight: 300;
     text-align: left;
     font-style: italic;
-    margin-top: 20px    ;
+    margin-top: 20px;
+    overflow-y: scroll;
+    max-height: 205px;
+  
+}
+.describe p::-webkit-scrollbar  {
+    width: 2px;
+}
+
+.describe p::-webkit-scrollbar-track {
+    background: #d5909f;
+}
+
+.describe p::-webkit-scrollbar-thumb {
+    background: #e4b95b;
+    border-radius: 10px;
 }
 .size-cake{
     display: flex;
@@ -1024,7 +1040,7 @@ input[type="number"] {
 }
 .buy-cake{
     border: 1px #cecece  solid;
-    margin-top: 50px;
+    margin-top: 15px;
     border-radius: 8px 8px 0 0;
     border-top: 4px solid #e493a1 ;
 }   
@@ -2678,7 +2694,7 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #d5909f;
 }
 
 ::-webkit-scrollbar-thumb {
