@@ -3,14 +3,14 @@
 session_start();
 
 // Kiểm tra xem có ?pages hay chưa
-if (!isset($_GET['pages'])) {
+if (!isset($_POST['pages'])) {
 // Nếu chưa có, tự động chuyển hướng sang ?pages=home
 header('Location: index.php?pages=home');
 exit;  // Dừng script để tránh chạy tiếp
 }
 
 // Bây giờ chắc chắn đã có ?pages
-$page = $_GET['pages'];
+$page = $_POST['pages'];
     
 ?>
 <!DOCTYPE html>
