@@ -1,5 +1,3 @@
-<!--header-->
-
 <!-- main screen -->
 <div class="Home_main">
     <!--wrapper-->
@@ -7,19 +5,19 @@
         <!--login account-->
         <div class="form-box login">
             <h2>Login</h2>
-            <form id="loginForm">
+            <form id="loginForm" action="Controllers/login_process.php" method="POST">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>
                     </span>
-                    <input id="loginUserName" type="text" required>
+                    <input id="loginUserName" name="username" type="text" required>
                     <label>User name</label>
                 </div>
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="lock-closed-outline"></ion-icon>
                     </span>
-                    <input id="loginPassword" type="password" required>
+                    <input id="loginPassword" name="password" type="password" required>
                     <label>Password</label>
                 </div>
 
@@ -35,10 +33,3 @@
         </div>
     </div>
 </div>
-
-<!-- footer -->
-
-
-<button id="backToTop" onclick="scrollToTop()">
-    <ion-icon name="arrow-up-outline"></ion-icon>
-</button>

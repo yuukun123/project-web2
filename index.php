@@ -1,17 +1,44 @@
 <?php
 // Khởi động phiên
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    echo "Session đã bị xóa hoặc chưa được tạo!";
+} else {
+    echo "Session tồn tại! ID: " . $_SESSION['user_id'];
+}
+
+include('app/config/data_connect.php'); // Kết nối database
+
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['login_token'])) {
+    $token = $_COOKIE['login_token'];
+
+    // Kiểm tra token trong database
+    $sql = "SELECT * FROM users WHERE remember_token = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+    $user = $result->fetch_assoc();
+
+    // Tự động đăng nhập
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['role'] = $user['role'];
+    }
+}
 
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
 // Nếu chưa có, tự động chuyển hướng sang ?pages=home
 header('Location: index.php?pages=home');
-exit;  // Dừng script để tránh chạy tiếp
+exit; // Dừng script để tránh chạy tiếp
 }
 
 // Bây giờ chắc chắn đã có ?pages
 $page = $_GET['pages'];
-    
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
