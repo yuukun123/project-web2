@@ -1,15 +1,16 @@
 /*Home data*/
 
-function checkLoginStatus() {
-    return fetch('../../app/database/check_session.php')
-        .then(response => response.json())
-        .then(data => data.loggedIn) // Trả về `true` nếu đăng nhập, `false` nếu chưa
-        .catch(error => {
-            console.error('Error:', error);
-            return false;
-        });
-}
+// function checkLoginStatus() {
+//     return fetch('../../app/database/check_session.php')
+//         .then(response => response.json())
+//         .then(data => data.loggedIn) // Trả về `true` nếu đăng nhập, `false` nếu chưa
+//         .catch(error => {
+//             console.error('Error:', error);
+//             return false;
+//         });
+// }
 document.addEventListener('DOMContentLoaded', function() {
+
     // Get stored users from localStorage
     // function getStoredUsers() {
     //     const users = localStorage.getItem('users');
@@ -69,25 +70,8 @@ document.addEventListener('DOMContentLoaded', function() {
     //     });
     // }
 
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Ngăn form load lại trang
 
-        const formData = new FormData(this);
 
-        fetch('pages/Controllers/login_process.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Server Response:", data);
-            alert(data.message);
-            if (data.status === "success") {
-                window.location.href = '?pages=home'; 
-            }
-        })
-        .catch(error => console.error('Fetch Error:', error));
-    });
 
 
     // Handle Register Form Submission

@@ -45,156 +45,31 @@ close.forEach(btn => {
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    // =============================
-    // 1. Lấy các phần tử DOM
-    // =============================
-    const loginBtns   = document.querySelectorAll('.btnLogin-popup');   // Các nút "Login"
-    const logoutBtns  = document.querySelectorAll('.btnLogout-popup');  // Các nút "Register / Logout"
-    const loginBtn    = document.getElementById('login-btn');           // Nút login chính (nếu có)
-    const notificate  = document.getElementById("notificate");          // Khung thông báo
-    const message     = document.getElementById("message");             // Nội dung thông báo
+    const loginBtn  = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
 
-    // =============================
-    // 2. Hàm kiểm tra / lấy user
-    // =============================
-    function getCurrentUser() {
-        const currentUser = localStorage.getItem('UserStr');
-        return currentUser ? JSON.parse(currentUser) : null;
-    }
 
+
+
+    // Nếu sử dụng PHP session, không cần kiểm tra localStorage
     function isLoggedIn() {
-        return !!getCurrentUser(); // true nếu user tồn tại, false nếu không
+        return document.body.classList.contains('logged-in'); // Class này sẽ được thêm bằng PHP
     }
 
-    // =============================
-    // 3. Hàm cập nhật nút Login
-    // =============================
-    function updateLoginButtons() {
-        const currentUser = getCurrentUser();
-        console.log('Current user from localStorage:', currentUser);
-
-        // Nếu user đã login => đổi text nút thành tên user
-        // Ngược lại => để text "Login"
-        loginBtns.forEach(button => {
-            if (currentUser) {
-            button.textContent = currentUser.username;
-            button.classList.add('logged-in');
-            } else {
-            button.textContent = 'Login';
-            button.classList.remove('logged-in');
-            }
-        });
-    }
-
-    // =============================
-    // 4. Hàm cập nhật nút Register/Logout
-    // =============================
-    function updateLogoutButtons() {
-        const currentUser = getCurrentUser();
-        logoutBtns.forEach(btn => {
-            if (currentUser) {
-            // Nếu đã login => nút này thành "Logout"
-            btn.textContent = 'Logout';
-            } else {
-            // Chưa login => nút này thành "Register"
-            btn.textContent = 'Register';
-            }
-        });
-    }
-
-    // =============================
-    // 5. Hàm cập nhật tất cả nút
-    // =============================
-    function updateAllButtons() {
-        updateLoginButtons();
-        updateLogoutButtons();
-    }
-
-    // =============================
-    // 6. Xử lý khi user trở lại trang 
-    //    (localStorage.getItem("loggedIn") === "true")
-    // =============================
-    if (localStorage.getItem("loggedIn") === "true") {
-    const currentUser = getCurrentUser();
-    if (currentUser && notificate && message) {
-        message.innerHTML = `Welcome back, ${currentUser.username}!<br>Have a good day!`;
-        notificate.classList.add("show");
-
-        // 2 giây sau ẩn
-        setTimeout(() => {
-        notificate.classList.remove("show");
-        notificate.classList.add("hide");
-        // 1 giây sau (transition) => display none
-        setTimeout(() => {
-            notificate.style.display = "none";
-        }, 1000);
-        }, 2000);
-    }
-
-    // Xoá cờ
-    localStorage.removeItem("loggedIn");
-    localStorage.removeItem("username");
-    }
-
-    // =============================
-    // 7. Lần đầu gọi hàm cập nhật
-    // =============================
-    updateAllButtons();
-
-    // =============================
-    // 8. Lắng nghe sự kiện storage (đa tab)
-    // =============================
-    window.addEventListener('storage', function(e) {
-        if (e.key === 'UserStr') {
-            console.log('Storage event triggered:', e);
-            updateAllButtons();
+    // Cập nhật UI dựa trên session (PHP)
+    function updateUI() {
+        if (isLoggedIn()) {
+            if (loginBtn)  loginBtn.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'inline-block';
+        } else {
+            if (loginBtn)  loginBtn.style.display = 'inline-block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
         }
-    });
-
-    // =============================
-    // 9. Nút loginBtn (nếu có) => chặn sang login nếu đã login
-    // =============================
-    if (loginBtn) {
-        loginBtn.addEventListener('click', function(e) {
-            e.preventDefault(); // chặn hành vi mặc định (nếu <a href> hoặc <button> có onclick)
-            if (isLoggedIn()) {
-            alert("You are already logged in!");
-            } else {
-            window.location.href = '?pages=login';
-            }
-        });
     }
 
-    // =============================
-    // 10. Xử lý logout
-    // =============================
-    logoutBtns.forEach(button => {
-        button.addEventListener('click', function() {
-            const currentUser = getCurrentUser();
-            if (currentUser) {
-            // User đang login => thực hiện logout
-            console.log("Logout button clicked");
-            localStorage.removeItem('UserStr');
-            updateLoginButtons(); 
-            alert('Logout successful!');
-            window.location.href = '?page=home';
-            } else {
-            // Chưa login => thực hiện logic register
-            console.log("Register button clicked");
-            window.location.href = '?pages=register';
-            }
-        });
-    });
-
-
-    // =============================
-    // 11. Sự kiện tuỳ chỉnh (nếu có)
-    // =============================
-    window.addEventListener('userLoggedIn', function() {
-        updateAllButtons();
-    });
-
+    updateUI();
 });
+
 
 /*scroll*/
 let lastScrollTop = 0;

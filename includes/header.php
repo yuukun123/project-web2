@@ -2,6 +2,23 @@
 
 include __DIR__ . '/../app/config/config.php';
 
+// Mặc định hiển thị Login & Register
+$authButtons = '
+    <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'?pages=login\'">Login</button>
+    <button id="register-btn" class="btnLogout-popup" onclick="window.location.href=\'?pages=register\'">Register</button>
+';
+
+// Nếu đã đăng nhập, thay thế bằng tên user & Logout
+if (isset($_SESSION['username'])) {
+    $authButtons = '
+        <div class="user-menu">
+            <button id="user-btn" class="btnLogin-popup"> ' . htmlspecialchars($_SESSION['username']) . '</button>
+            <form action="pages/Controllers/logout.php" method="POST" style="display: inline;">
+                <button type="submit" class="btnLogout-popup">Logout</button>
+            </form>
+        </div>
+    ';
+}
 
 echo '
 <div class="header">
@@ -30,8 +47,9 @@ echo '
         </div>
 
         <a href="?pages=advance" class="searchAdvance">ADVANCED SEARCH</a>
-        <button id="login-btn" class="btnLogin-popup"  >Login</button>
-        <button id="logout-btn" class="btnLogout-popup" onclick="window.location.href=\'?pages=register\'" >Register</button>
+        <div class="auth-container">
+            ' . $authButtons . '
+        </div>
     </nav>
 
     <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -57,8 +75,7 @@ echo '
         </a>
 
         <div class="btn-log">
-            <button id="login-btn" class="btnLogin-popup">Login</button>
-            <button id="login-btn" class="btnLogout-popup">Register</button>
+            ' . $authButtons . '
         </div>
     </div>
 </div>
@@ -68,7 +85,7 @@ echo '
     <p id="message"></p>
 </div>';
 
-    
+
 // Nhúng cart
 include 'includes/cart.php';
 

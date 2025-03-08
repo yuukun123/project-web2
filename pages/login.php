@@ -5,7 +5,7 @@
         <!--login account-->
         <div class="form-box login">
             <h2>Login</h2>
-            <form id="loginForm" action="Controllers/login_process.php" method="POST">
+            <form id="loginForm" method="POST" action="pages/Controllers/login_process.php">
                 <div class="input-box">
                     <span class="icon">
                         <ion-icon name="person-outline"></ion-icon>

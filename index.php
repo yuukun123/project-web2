@@ -1,44 +1,29 @@
 <?php
-// Khởi động phiên
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    echo "Session đã bị xóa hoặc chưa được tạo!";
-} else {
-    echo "Session tồn tại! ID: " . $_SESSION['user_id'];
+    // Khởi động phiên
+
+// Kiểm tra xem đã đăng nhập chưa
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
 }
+
+    echo "Session ID: " . session_id();
+if (isset($_SESSION['username'])) {
+    echo "Bạn đã đăng nhập với username: " . $_SESSION['username'];
+} else {
+    echo "Bạn chưa đăng nhập!";
+}
+
+
 
 include('app/config/data_connect.php'); // Kết nối database
-
-if (!isset($_SESSION['user_id']) && isset($_COOKIE['login_token'])) {
-    $token = $_COOKIE['login_token'];
-
-    // Kiểm tra token trong database
-    $sql = "SELECT * FROM users WHERE remember_token = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $token);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-
-    // Tự động đăng nhập
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['username'] = $user['username'];
-    $_SESSION['role'] = $user['role'];
-    }
-}
-
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
-// Nếu chưa có, tự động chuyển hướng sang ?pages=home
-header('Location: index.php?pages=home');
-exit; // Dừng script để tránh chạy tiếp
+    // Nếu chưa có, tự động chuyển hướng sang ?pages=home
+    header('Location: index.php?pages=home');
+    exit; // Dừng script để tránh chạy tiếp
 }
-
 // Bây giờ chắc chắn đã có ?pages
 $page = $_GET['pages'];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,20 +38,15 @@ $page = $_GET['pages'];
     // Giả sử $page được lấy ở index.php hoặc set ở header trước khi include
     if ($page === 'login') {
         echo '<link rel="stylesheet" href="public/assets/css/login.css">';
-    }
-    elseif ($page === 'register') {
+    } elseif ($page === 'register') {
         echo '<link rel="stylesheet" href="public/assets/css/login.css">';
-    } 
-    elseif ($page === 'about') {
+    } elseif ($page === 'about') {
         echo '<link rel="stylesheet" href="public/assets/css/about.css">';
-    }
-    elseif ($page === 'receipt') {
+    } elseif ($page === 'receipt') {
         echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
-    }
-    elseif ($page === 'advance') {
+    } elseif ($page === 'advance') {
         echo '<link rel="stylesheet" href="public/assets/css/searchpro.css">';
-    }
-    else {
+    } else {
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     }
     ?>
@@ -82,7 +62,7 @@ $page = $_GET['pages'];
     <title>The Sweets</title>
 </head>
 
-<body>
+<body class="<?php echo isset($_SESSION['username']) ? 'logged-in' : ''; ?>">
     <?php include 'includes/header.php'; ?>
 
     <!-- main screen -->
@@ -118,22 +98,22 @@ $page = $_GET['pages'];
 
     <?php include 'includes/footer.php'; ?>
 
-    <?php 
-        if ($page === 'home') : 
-            echo '<script src="public/assets/js/index.js"></script>';
-        endif;  // End of if statement
-        if ($page === 'login' || $page ==='register') : 
-            echo '<script src="public/assets/js/login.js"></script>';
-        endif;  // End of if statement
-        if ($page === 'about') : 
-            echo '<script src="public/assets/js/about.js"></script>';
-        endif;  // End of if statement
-        if ($page ==='receipt') : 
-            echo '<script src="public/assets/js/receipt.js"></script>';
-        endif;  // End of if statement
-        if ($page ==='advance') :
-            echo '<script src="public/assets/js/searchpro.js"></script>';
-        endif;  // End of if statement
+    <?php
+    if ($page === 'home') :
+        echo '<script src="public/assets/js/index.js"></script>';
+    endif;  // End of if statement
+    if ($page === 'login' || $page === 'register') :
+        echo '<script src="public/assets/js/login.js"></script>';
+    endif;  // End of if statement
+    if ($page === 'about') :
+        echo '<script src="public/assets/js/about.js"></script>';
+    endif;  // End of if statement
+    if ($page === 'receipt') :
+        echo '<script src="public/assets/js/receipt.js"></script>';
+    endif;  // End of if statement
+    if ($page === 'advance') :
+        echo '<script src="public/assets/js/searchpro.js"></script>';
+    endif;  // End of if statement
     ?>
     <script src="public/assets/js/script.js"></script>
 

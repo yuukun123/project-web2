@@ -1,67 +1,44 @@
 <?php
 session_start();
-header('Content-Type: application/json'); // Đảm bảo phản hồi là JSON
+ob_start();
 
-include('../../app/config/data_connect.php'); // Kết nối database
+include('../../app/config/data_connect.php');
 
-// Hiển thị lỗi (chỉ dùng trong môi trường phát triển)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
 
-// Kiểm tra phương thức request
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    echo json_encode(["status" => "error", "message" => "Invalid request method"]);
-    exit();
-}
+    $sql = "SELECT * FROM users WHERE user_name = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-// Nhận dữ liệu từ form
-$username = $_POST['username'] ?? '';
-$password = $_POST['password'] ?? '';
-$remember = isset($_POST['remember']); // Kiểm tra "Ghi nhớ đăng nhập"
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
 
-// Kiểm tra input rỗng
-if (empty($username) || empty($password)) {
-    echo json_encode(["status" => "error", "message" => "Vui lòng nhập đầy đủ thông tin!"]);
-    exit();
-}
+        if ($password === $user['password']) {
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['user_name'];
 
-// Truy vấn kiểm tra tài khoản
-$sql = "SELECT * FROM users WHERE username = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
+            ob_end_clean();
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-
-    // Kiểm tra mật khẩu
-    if (password_verify($password, $user['password'])) {
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['role'] = $user['role'];
-
-        // Nếu người dùng chọn "Ghi nhớ đăng nhập"
-        if ($remember) {
-            $token = bin2hex(random_bytes(32)); // Tạo token ngẫu nhiên
-            setcookie("login_token", $token, time() + (86400 * 30), "/"); // Lưu cookie 30 ngày
-
-            // Cập nhật token vào database
-            $update_sql = "UPDATE users SET remember_token = ? WHERE id = ?";
-            $update_stmt = $conn->prepare($update_sql);
-            $update_stmt->bind_param("si", $token, $user['id']);
-            $update_stmt->execute();
+            echo "Đăng nhập thành công! Đang chuyển hướng...";
+            header("Refresh: 2; URL=../../index.php?pages=home"); // Chuyển hướng sau 2 giây
+            exit();
+        } else {
+            echo "Sai mật khẩu!";
+            header("Refresh: 2; URL=../../index.php?pages=login&error=wrong_password");
+            exit();
         }
-
-        // Trả về JSON thành công
-        echo json_encode(["status" => "success", "message" => "Đăng nhập thành công"]);
-        exit();
     } else {
-        echo json_encode(["status" => "error", "message" => "Mật khẩu không đúng!"]);
+        echo "Không tìm thấy người dùng!";
+        header("Refresh: 2; URL=../../index.php?pages=login&error=user_not_found");
         exit();
     }
 } else {
-    echo json_encode(["status" => "error", "message" => "Tài khoản không tồn tại!"]);
+    echo "Yêu cầu không hợp lệ!";
+    header("Refresh: 2; URL=../../index.php?pages=login&error=invalid_request");
     exit();
 }
 ?>
