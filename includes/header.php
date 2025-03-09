@@ -26,9 +26,9 @@ echo '
         <img src="' . BASE_URL . 'Img/Sweets1.png" alt="">
     </button>
     <nav class="navigation">
-        <a href="index.php">HOME</a>
-        <a href="?pages=about">ABOUT</a>
-        <a href="?pages=receipt">RECEIPT</a>
+        <a href="home">HOME</a>
+        <a href="about">ABOUT</a>
+        <a href="receipt">RECEIPT</a>
         <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
         </button>
@@ -46,7 +46,7 @@ echo '
             <div id="hintContainer" class="hint-container"></div>
         </div>
 
-        <a href="?pages=advance" class="searchAdvance">ADVANCED SEARCH</a>
+        <a href="advance" class="searchAdvance">ADVANCED SEARCH</a>
         <div class="auth-container">
             ' . $authButtons . '
         </div>

@@ -18,7 +18,7 @@ include('app/config/data_connect.php'); // Kết nối database
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
     // Nếu chưa có, tự động chuyển hướng sang ?pages=home
-    header('Location: index.php?pages=home');
+    header('Location: /project-web2/home');
     exit; // Dừng script để tránh chạy tiếp
 }
 // Bây giờ chắc chắn đã có ?pages

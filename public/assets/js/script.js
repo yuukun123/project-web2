@@ -17,7 +17,7 @@ const logo = document.querySelector('.logo');
 logo.addEventListener('click', function(e) {
 
     e.preventDefault();
-    window.location.href = 'index.php'; 
+    window.location.href = '/project-web2/home'; 
 });
 
 // get the data from the local storage
