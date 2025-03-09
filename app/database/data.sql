@@ -1,3 +1,5 @@
+use webdata;
+
 -- Chèn dữ liệu vào bảng CATEGORY (tránh chèn trùng lặp)
 INSERT INTO CATEGORY (category_name) VALUES
 ('Mousse'),
@@ -15,28 +17,28 @@ ON DUPLICATE KEY UPDATE size_name = VALUES(size_name);
 -- Chèn dữ liệu vào bảng PRODUCT (Không cần chỉ định product_id)
 INSERT INTO PRODUCT (product_name, price, category_id, size_id, status, description, image) VALUES
 -- Mousse
-('Avocado Mousse', 510000, 1, 3, 'Available', 'A creamy avocado mousse with a smooth texture.', './Img/Mousse/Avocado_Mousse.jpg'),
-('Blueberry Mousse', 510000, 1, 3, 'Available', 'Delicious blueberry mousse with a tangy flavor.', './Img/Mousse/Blueberry_Mousse.jpg'),
-('Corn Mousse', 520000, 1, 3, 'Available', 'Sweet and savory corn mousse, rich in taste.', './Img/Mousse/Corn_Mousse.jpg'),
-('Longan Mousse', 530000, 1, 3, 'Available', 'Exotic longan mousse with a soft, airy texture.', './Img/Mousse/Longan_Mousse.jpg'),
-('Mango Mousse', 540000, 1, 3, 'Available', 'Refreshing mango mousse with tropical sweetness.', './Img/Mousse/Mango_Mousse.jpg'),
-('Melon Mousse', 550000, 1, 3, 'Available', 'Juicy melon mousse with a light, creamy finish.', './Img/Mousse/Melon_Mousse.jpg'),
+('Avocado Mousse', 510000, 1, 3, 'Available', 'A creamy avocado mousse with a smooth texture.', 'public/assets/Img/Mousse/Avocado_Mousse.jpg'),
+('Blueberry Mousse', 510000, 1, 3, 'Available', 'Delicious blueberry mousse with a tangy flavor.', 'public/assets/Img/Mousse/Blueberry_Mousse.jpg'),
+('Corn Mousse', 520000, 1, 3, 'Available', 'Sweet and savory corn mousse, rich in taste.', 'public/assets/Img/Mousse/Corn_Mousse.jpg'),
+('Longan Mousse', 530000, 1, 3, 'Available', 'Exotic longan mousse with a soft, airy texture.', 'public/assets/Img/Mousse/Longan_Mousse.jpg'),
+('Mango Mousse', 540000, 1, 3, 'Available', 'Refreshing mango mousse with tropical sweetness.', 'public/assets/Img/Mousse/Mango_Mousse.jpg'),
+('Melon Mousse', 550000, 1, 3, 'Available', 'Juicy melon mousse with a light, creamy finish.', 'public/assets/Img/Mousse/Melon_Mousse.jpg'),
 
 -- Croissant
-('Avocado Croissant', 110000, 2, 2, 'Available', 'Flaky croissant with creamy avocado filling.', './Img/Croissant/Avocado_Croissant.jpg'),
-('Choco Mallow Croissant', 110000, 2, 2, 'Available', 'Chocolate croissant with marshmallow filling.', './Img/Croissant/Choco_Mallow_Croissant.png'),
-('Dinosaur Almond Croissant', 120000, 2, 2, 'Available', 'Almond croissant with a crunchy texture.', './Img/Croissant/Dinosaur_Almond_Croissant.png'),
-('Honey Almond Croissant', 130000, 2, 2, 'Available', 'Sweet honey croissant with almond slices.', './Img/Croissant/Honey_Almond_Croissant.png'),
-('Matcha Croissant', 140000, 2, 2, 'Available', 'Flaky croissant infused with matcha flavor.', './Img/Croissant/Matcha_Croissant.jpg'),
-('Plain Croissant', 150000, 2, 2, 'Available', 'Classic French croissant with a crispy texture.', './Img/Croissant/Plain_Croissant.png'),
+('Avocado Croissant', 110000, 2, 2, 'Available', 'Flaky croissant with creamy avocado filling.', 'public/assets/Img/Croissant/Avocado_Croissant.jpg'),
+('Choco Mallow Croissant', 110000, 2, 2, 'Available', 'Chocolate croissant with marshmallow filling.', 'public/assets/Img/Croissant/Choco_Mallow_Croissant.png'),
+('Dinosaur Almond Croissant', 120000, 2, 2, 'Available', 'Almond croissant with a crunchy texture.', 'public/assets/Img/Croissant/Dinosaur_Almond_Croissant.png'),
+('Honey Almond Croissant', 130000, 2, 2, 'Available', 'Sweet honey croissant with almond slices.', 'public/assets/Img/Croissant/Honey_Almond_Croissant.png'),
+('Matcha Croissant', 140000, 2, 2, 'Available', 'Flaky croissant infused with matcha flavor.', 'public/assets/Img/Croissant/Matcha_Croissant.jpg'),
+('Plain Croissant', 150000, 2, 2, 'Available', 'Classic French croissant with a crispy texture.', 'public/assets/Img/Croissant/Plain_Croissant.png'),
 
 -- Drink
-('Choco Mallow', 55000, 3, 1, 'Available', 'A delicious chocolate drink with marshmallow.', './Img/Drink/Choco_Mallow.png'),
-('Lemon Tea', 60000, 3, 1, 'Available', 'Refreshing lemon tea with a hint of honey.', './Img/Drink/Lemon_Tea.png'),
-('Lychee Tea', 70000, 3, 1, 'Available', 'Fruity lychee tea with a floral aroma.', './Img/Drink/Lychee_Tea.png'),
-('Matcha Latte', 75000, 3, 1, 'Available', 'Smooth latte with rich matcha flavor.', './Img/Drink/Matcha_Latte.png'),
-('Matcha Mallow', 80000, 3, 1, 'Available', 'Matcha drink topped with fluffy marshmallow.', './Img/Drink/Matcha_Mallow.png'),
-('Matcha Misu', 85000, 3, 1, 'Available', 'Matcha tiramisu-inspired drink.', './Img/Drink/Matcha_Misu.png');
+('Choco Mallow', 55000, 3, 1, 'Available', 'A delicious chocolate drink with marshmallow.', 'public/assets/Img/Drink/Choco_Mallow.png'),
+('Lemon Tea', 60000, 3, 1, 'Available', 'Refreshing lemon tea with a hint of honey.', 'public/assets/Img/Drink/Lemon_Tea.png'),
+('Lychee Tea', 70000, 3, 1, 'Available', 'Fruity lychee tea with a floral aroma.', 'public/assets/Img/Drink/Lychee_Tea.png'),
+('Matcha Latte', 75000, 3, 1, 'Available', 'Smooth latte with rich matcha flavor.', 'public/assets/Img/Drink/Matcha_Latte.png'),
+('Matcha Mallow', 80000, 3, 1, 'Available', 'Matcha drink topped with fluffy marshmallow.', 'public/assets/Img/Drink/Matcha_Mallow.png'),
+('Matcha Misu', 85000, 3, 1, 'Available', 'Matcha tiramisu-inspired drink.', 'public/assets/Img/Drink/Matcha_Misu.png');
 
 
 -- Chèn dữ liệu vào bảng USERS (tránh lỗi trùng email)

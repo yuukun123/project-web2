@@ -1,21 +1,20 @@
 <?php
-    // Khởi động phiên
+// Khởi động phiên
 
 // Kiểm tra xem đã đăng nhập chưa
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-    echo "Session ID: " . session_id();
-if (isset($_SESSION['username'])) {
-    echo "Bạn đã đăng nhập với username: " . $_SESSION['username'];
-} else {
-    echo "Bạn chưa đăng nhập!";
-}
-
-
+// echo "Session ID: " . session_id();
+// if (isset($_SESSION['username'])) {
+//     echo "Bạn đã đăng nhập với username: " . $_SESSION['username'];
+// } else {
+//     echo "Bạn chưa đăng nhập!";
+// }
 
 include('app/config/data_connect.php'); // Kết nối database
+
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
     // Nếu chưa có, tự động chuyển hướng sang ?pages=home
@@ -54,11 +53,13 @@ $page = $_GET['pages'];
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    <link rel="icon" href="public/assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <link rel="icon" href="<?php echo 'public/assets/Img/Sweets1.png'; ?>" type="image/x-icon" />
+
     <title>The Sweets</title>
 </head>
 

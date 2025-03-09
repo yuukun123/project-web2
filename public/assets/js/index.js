@@ -44,187 +44,262 @@ document.addEventListener('DOMContentLoaded', function() {
     //Render
 
     // Sample data structure for items
-    const menuItems = {
-        Mousse: [
-            { links: './Home/product/index-1.html', id: '1', name: 'Avocado Mousse', price: '510,000 VND', image: './Img/Mousse/Avocado_Mousse.jpg' },
-            { links: './Home/product/index-2.html', id: '2', name: 'Blueberry Mousse', price: '510,000 VND', image: './Img/Mousse/Blueberry_Mousse.jpg' },
-            { links: './Home/product/index-3.html', id: '3', name: 'Corn Mousse', price: '520,000 VND', image: './Img/Mousse/Corn_Mousse.jpg' },
-            { links: './Home/product/index-4.html', id: '4', name: 'Longan Mousse', price: '530,000 VND', image: './Img/Mousse/Longan_Mousse.jpg' },
-            { links: './Home/product/index-5.html', id: '5', name: 'Mango Mousse', price: '540,000 VND', image: './Img/Mousse/Mango_Mousse.jpg' },
-            { links: './Home/product/index-6.html', id: '6', name: 'Melon Mousse', price: '550,000 VND', image: './Img/Mousse/Melon_Mousse.jpg'},
-        ],
-        Croissant: [
-            { links: './Home/product/index-7.html', id: '7', name: 'Avocado Croissant', price: '110,000 VND', image: './Img/Croissant/Avocado_Croissant.jpg' },
-            { links: './Home/product/index-8.html', id: '8', name: 'Choco Mallow Croissant', price: '110,000 VND', image: './Img/Croissant/Choco_Mallow_Croissant.png' },
-            { links: './Home/product/index-9.html', id: '9', name: 'Dinosaur Almond Croissant', price: '120,000 VND', image: './Img/Croissant/Dinosaur_Almond_Croissant.png' },
-            { links: './Home/product/index-10.html', id: '10', name: 'Honey Almond Croissant', price: '130,000 VND', image: './Img/Croissant/Honey_Almond_Croissant.png' },
-            { links: './Home/product/index-11.html', id: '11', name: 'Matcha Croissant', price: '140,000 VND', image: './Img/Croissant/Matcha_Croissant.jpg' },
-            { links: './Home/product/index-12.html', id: '12', name: 'Plain Croissant', price: '150,000 VND', image: './Img/Croissant/Plain_Croissant.png' },
-        ],
-        Drink: [
-            { links: './Home/product/index-13.html', id: '13', name: 'Choco Mallow', price: '55,000 VND', image: './Img/Drink/Choco_Mallow.png' },
-            { links: './Home/product/index-14.html', id: '14', name: 'Lemon Tea', price: '60,000 VND', image: './Img/Drink/Lemon_Tea.png'},
-            { links: './Home/product/index-15.html', id: '15', name: 'Lychee Tea', price: '70,000 VND', image: './Img/Drink/Lychee_Tea.png'},
-            { links: './Home/product/index-16.html', id: '16', name: 'Matcha Latte', price: '75,000 VND', image: './Img/Drink/Matcha_Latte.png'},
-            { links: './Home/product/index-17.html', id: '17', name: 'Matcha Mallow', price: '80,000 VND', image: './Img/Drink/Matcha_Mallow.png'},
-            { links: './Home/product/index-18.html', id: '18', name: 'Matcha Misu', price: '85,000 VND', image: './Img/Drink/Matcha_Misu.png' },
-        ],
-    };
+    // // const menuItems = {
+    // //     Mousse: [
+    // //         { links: './Home/product/index-1.html', id: '1', name: 'Avocado Mousse', price: '510,000 VND', image: './Img/Mousse/Avocado_Mousse.jpg' },
+    // //         { links: './Home/product/index-2.html', id: '2', name: 'Blueberry Mousse', price: '510,000 VND', image: './Img/Mousse/Blueberry_Mousse.jpg' },
+    // //         { links: './Home/product/index-3.html', id: '3', name: 'Corn Mousse', price: '520,000 VND', image: './Img/Mousse/Corn_Mousse.jpg' },
+    // //         { links: './Home/product/index-4.html', id: '4', name: 'Longan Mousse', price: '530,000 VND', image: './Img/Mousse/Longan_Mousse.jpg' },
+    // //         { links: './Home/product/index-5.html', id: '5', name: 'Mango Mousse', price: '540,000 VND', image: './Img/Mousse/Mango_Mousse.jpg' },
+    // //         { links: './Home/product/index-6.html', id: '6', name: 'Melon Mousse', price: '550,000 VND', image: './Img/Mousse/Melon_Mousse.jpg'},
+    // //     ],
+    // //     Croissant: [
+    // //         { links: './Home/product/index-7.html', id: '7', name: 'Avocado Croissant', price: '110,000 VND', image: './Img/Croissant/Avocado_Croissant.jpg' },
+    // //         { links: './Home/product/index-8.html', id: '8', name: 'Choco Mallow Croissant', price: '110,000 VND', image: './Img/Croissant/Choco_Mallow_Croissant.png' },
+    // //         { links: './Home/product/index-9.html', id: '9', name: 'Dinosaur Almond Croissant', price: '120,000 VND', image: './Img/Croissant/Dinosaur_Almond_Croissant.png' },
+    // //         { links: './Home/product/index-10.html', id: '10', name: 'Honey Almond Croissant', price: '130,000 VND', image: './Img/Croissant/Honey_Almond_Croissant.png' },
+    // //         { links: './Home/product/index-11.html', id: '11', name: 'Matcha Croissant', price: '140,000 VND', image: './Img/Croissant/Matcha_Croissant.jpg' },
+    // //         { links: './Home/product/index-12.html', id: '12', name: 'Plain Croissant', price: '150,000 VND', image: './Img/Croissant/Plain_Croissant.png' },
+    // //     ],
+    // //     Drink: [
+    // //         { links: './Home/product/index-13.html', id: '13', name: 'Choco Mallow', price: '55,000 VND', image: './Img/Drink/Choco_Mallow.png' },
+    // //         { links: './Home/product/index-14.html', id: '14', name: 'Lemon Tea', price: '60,000 VND', image: './Img/Drink/Lemon_Tea.png'},
+    // //         { links: './Home/product/index-15.html', id: '15', name: 'Lychee Tea', price: '70,000 VND', image: './Img/Drink/Lychee_Tea.png'},
+    // //         { links: './Home/product/index-16.html', id: '16', name: 'Matcha Latte', price: '75,000 VND', image: './Img/Drink/Matcha_Latte.png'},
+    // //         { links: './Home/product/index-17.html', id: '17', name: 'Matcha Mallow', price: '80,000 VND', image: './Img/Drink/Matcha_Mallow.png'},
+    // //         { links: './Home/product/index-18.html', id: '18', name: 'Matcha Misu', price: '85,000 VND', image: './Img/Drink/Matcha_Misu.png' },
+    // //     ],
+    // // };
 
-    const filterInputs = document.querySelectorAll('.filter-input');
-    // const tabContents = document.querySelectorAll('.tab_content');
-    // const navLinks = document.querySelectorAll('.nav-links label');
+    // // const filterInputs = document.querySelectorAll('.filter-input');
+    // // // const tabContents = document.querySelectorAll('.tab_content');
+    // // // const navLinks = document.querySelectorAll('.nav-links label');
 
-    // Function to filter items with animation
-    function filterItems(category) {
-        const allTabContents = document.querySelectorAll('.tab_content');
-        allTabContents.forEach(content => {
-            content.style.opacity = '0';
-            setTimeout(() => {
-                content.style.display = 'none';
-            }, 300); // Match CSS animation duration
-        });
+    // // // Function to filter items with animation
+    // // function filterItems(category) {
+    // //     const allTabContents = document.querySelectorAll('.tab_content');
+    // //     allTabContents.forEach(content => {
+    // //         content.style.opacity = '0';
+    // //         setTimeout(() => {
+    // //             content.style.display = 'none';
+    // //         }, 300); // Match CSS animation duration
+    // //     });
 
-        const selectedContent = document.getElementById(category);
-        if (selectedContent) {
-            setTimeout(() => {
-                selectedContent.style.display = 'grid';
-                requestAnimationFrame(() => {
-                    selectedContent.style.opacity = '1';
-                });
-            }, 300);
+    // //     const selectedContent = document.getElementById(category);
+    // //     if (selectedContent) {
+    // //         setTimeout(() => {
+    // //             selectedContent.style.display = 'grid';
+    // //             requestAnimationFrame(() => {
+    // //                 selectedContent.style.opacity = '1';
+    // //             });
+    // //         }, 300);
+    // //     }
+
+    // //     if (category === 'All') {
+    // //         setupPagination('All', allItems);
+    // //     } else {
+    // //         const categoryItems = menuItems[category] || [];
+    // //         setupPagination(category, categoryItems);
+    // //     }
+    // // }
+
+    // // // Add event listeners for filter inputs
+    // // filterInputs.forEach(input => {
+    // //     input.addEventListener('change', function () {
+    // //         const category = this.id.replace('filter-', '');
+    // //         const formattedCategory = category === 'all' ? 'All' : category.charAt(0).toUpperCase() + category.slice(1);
+    // //         filterItems(formattedCategory);
+
+    // //         // Scroll to the top after filtering
+    // //         window.scrollTo({
+    // //             top: 0,
+    // //             behavior: 'smooth'
+    // //         });
+    // //     });
+    // // });
+
+    // // const menuItemsPerPage = 8;
+
+    // const allItems = Object.values(menuItems).flat();
+
+    // // // Function to create a new item card
+    // // function createItemCard(item) {
+    // //     const card = document.createElement('div');
+    // //     card.className = 'movie-item';
+    // //     card.innerHTML = `
+    // //         <a href="${item.links}" target="_blank">
+    // //             <img class="poster-img" height="300" width="300" src="${item.image}" alt="${item.name}">
+    // //         </a>
+    // //         <p class="title">${item.name}</p>
+    // //         <button class="sp-cart butn title" data-id="${item.id}">
+    // //             <p class="text-color">Price: ${item.price}</p>
+    // //         </button>
+    // //     `;
+
+    // //     // Function to get current user from localStorage
+    // //     function getCurrentUser() {
+    // //         const currentUser = localStorage.getItem('UserStr');
+    // //         return currentUser ? JSON.parse(currentUser) : null;
+
+    // //     }
+
+    // //     function isLoggedIn() {
+    // //         return !!getCurrentUser(); // Returns true if currentUser exists, false otherwise
+    // //     }
+
+    // //     // const cartBtn = document.getElementById('cart-btn');
+    // //     const cartBtn = card.querySelector('.sp-cart')
+    // //     cartBtn.addEventListener('click', function (event) {
+    // //         event.preventDefault();
+    
+    // //         if (!isLoggedIn()) {
+    // //             alert('Please log in to buy!');
+    // //             window.location.href = './Home/login.html';
+    // //         } else {
+    // //             // Logic for viewing the cart if logged in
+    // //             console.log('Viewing cart...');
+    // //         }
+    // //     });
+    
+    // //     return card;
+    // // }
+
+
+    // // Function to render items for a specific section and page
+    // function renderItems(containerId, items, page = 1) {
+    //     const container = document.getElementById(containerId);
+    //     if (!container) return;
+
+    //     container.innerHTML = ''; // Clear previous items
+
+    //     const start = (page - 1) * menuItemsPerPage;
+    //     const end = start + menuItemsPerPage;
+    //     const itemsToShow = items.slice(start, end);
+
+    //     itemsToShow.forEach(item => {
+    //         container.appendChild(createItemCard(item));
+    //     });
+    // }
+
+    // // Function to set up pagination for a section
+    // function setupPagination(containerId, items) {
+    //     const container = document.getElementById(containerId);
+    //     if (!container) return;
+    
+    //     const paginationContainer = document.querySelector('.pagination');
+    //     if (!paginationContainer) return;
+    
+    //     paginationContainer.innerHTML = ''; // Clear previous pagination buttons
+    
+    //     const totalPages = Math.ceil(items.length / menuItemsPerPage);
+    //     for (let i = 1; i <= totalPages; i++) {
+    //         const button = document.createElement('button');
+    //         button.className = 'page-link';
+    //         button.textContent = i;
+    
+    //         button.addEventListener('click', () => {
+    //             // Scroll to top of the page (or specific container)
+    //             window.scrollTo({
+    //                 top: 0, // Adjust to scroll to a specific position (e.g., element.offsetTop)
+    //                 behavior: 'smooth', // Smooth scrolling animation
+    //             });
+    
+    //             // Remove "active" class from all buttons
+    //             const allButtons = paginationContainer.querySelectorAll('.page-link');
+    //             allButtons.forEach(btn => btn.classList.remove('active'));
+    
+    //             // Add "active" class to the clicked button
+    //             button.classList.add('active');
+    
+    //             // Render items for the selected page
+    //             renderItems(containerId, items, i);
+    //         });
+    
+    //         if (i === 1) button.classList.add('active'); // Default to first page
+    //         paginationContainer.appendChild(button);
+    //     }
+    
+    //     // Render first page by default
+    //     renderItems(containerId, items, 1);
+    // }
+    
+    // // Initialize the "All" section
+    // setupPagination('All', allItems);
+
+    let itemsPerPage = 8; // Số sản phẩm mỗi trang
+    let currentPage = 1;
+    let selectedCategory = "all"; // Mặc định là All
+
+    function updateProducts() {
+        // Lấy tất cả sản phẩm trong container
+        let allProducts = document.querySelectorAll("#product-container .movie-item");
+        if (allProducts.length === 0) return; // Nếu không có sản phẩm, dừng
+
+        // Ẩn tất cả sản phẩm
+        allProducts.forEach(product => product.style.display = "none");
+
+        // Lọc sản phẩm theo danh mục
+        let filteredProducts = selectedCategory === "all"
+            ? allProducts
+            : document.querySelectorAll(`#product-container .movie-item[data-category="${selectedCategory}"]`);
+
+        if (filteredProducts.length === 0) {
+            console.warn("Không tìm thấy sản phẩm nào thuộc danh mục: " + selectedCategory);
+            return;
         }
 
-        if (category === 'All') {
-            setupPagination('All', allItems);
-        } else {
-            const categoryItems = menuItems[category] || [];
-            setupPagination(category, categoryItems);
+        let totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        if (currentPage > totalPages) currentPage = 1; // Nếu vượt quá số trang, quay về trang đầu
+
+        // Hiển thị sản phẩm của trang hiện tại
+        filteredProducts.forEach((product, index) => {
+            product.style.display = (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) 
+                ? "block" 
+                : "none";
+        });
+
+        // Cập nhật giao diện phân trang
+        let paginationContainer = document.querySelector(".pagination");
+        paginationContainer.innerHTML = ""; // Xóa phân trang cũ
+
+        if (totalPages > 1) { // Tạo nút phân trang nếu có hơn 1 trang
+            for (let i = 1; i <= totalPages; i++) {
+                let button = document.createElement("button");
+                button.className = "page-link";
+                button.innerText = i;
+                button.dataset.page = i;
+                if (i === currentPage) button.classList.add("active");
+                paginationContainer.appendChild(button);
+            }
         }
     }
 
-    // Add event listeners for filter inputs
-    filterInputs.forEach(input => {
-        input.addEventListener('change', function () {
-            const category = this.id.replace('filter-', '');
-            const formattedCategory = category === 'all' ? 'All' : category.charAt(0).toUpperCase() + category.slice(1);
-            filterItems(formattedCategory);
-
-            // Scroll to the top after filtering
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+    // Xử lý sự kiện lọc sản phẩm khi thay đổi radio input
+    document.querySelectorAll(".filter-input").forEach(input => {
+        input.addEventListener("change", function () {
+            selectedCategory = this.id.replace("filter-", "").toLowerCase();
+            currentPage = 1; // Reset về trang đầu tiên khi đổi danh mục
+            updateProducts();
         });
     });
 
-    const menuItemsPerPage = 8;
-
-    const allItems = Object.values(menuItems).flat();
-
-    // Function to create a new item card
-    function createItemCard(item) {
-        const card = document.createElement('div');
-        card.className = 'movie-item';
-        card.innerHTML = `
-            <a href="${item.links}" target="_blank">
-                <img class="poster-img" height="300" width="300" src="${item.image}" alt="${item.name}">
-            </a>
-            <p class="title">${item.name}</p>
-            <button class="sp-cart butn title" data-id="${item.id}">
-                <p class="text-color">Price: ${item.price}</p>
-            </button>
-        `;
-
-        // Function to get current user from localStorage
-        function getCurrentUser() {
-            const currentUser = localStorage.getItem('UserStr');
-            return currentUser ? JSON.parse(currentUser) : null;
-
+    // Xử lý sự kiện khi bấm vào nút phân trang
+    document.querySelector(".pagination").addEventListener("click", function (event) {
+        if (event.target.tagName === "BUTTON") {
+            currentPage = parseInt(event.target.dataset.page);
+            updateProducts();
         }
+    });
 
-        function isLoggedIn() {
-            return !!getCurrentUser(); // Returns true if currentUser exists, false otherwise
-        }
-
-        // const cartBtn = document.getElementById('cart-btn');
-        const cartBtn = card.querySelector('.sp-cart')
-        cartBtn.addEventListener('click', function (event) {
-            event.preventDefault();
-    
-            if (!isLoggedIn()) {
-                alert('Please log in to buy!');
-                window.location.href = './Home/login.html';
-            } else {
-                // Logic for viewing the cart if logged in
-                console.log('Viewing cart...');
-            }
+    // Cập nhật class active cho navigation (dành cho nhãn)
+    document.querySelectorAll(".nav-item").forEach(label => {
+        label.addEventListener("click", function () {
+            document.querySelectorAll(".nav-item").forEach(l => l.classList.remove("active"));
+            this.classList.add("active");
         });
-    
-        return card;
-    }
+    });
 
-
-    // Function to render items for a specific section and page
-    function renderItems(containerId, items, page = 1) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        container.innerHTML = ''; // Clear previous items
-
-        const start = (page - 1) * menuItemsPerPage;
-        const end = start + menuItemsPerPage;
-        const itemsToShow = items.slice(start, end);
-
-        itemsToShow.forEach(item => {
-            container.appendChild(createItemCard(item));
-        });
-    }
-
-    // Function to set up pagination for a section
-    function setupPagination(containerId, items) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-    
-        const paginationContainer = document.querySelector('.pagination');
-        if (!paginationContainer) return;
-    
-        paginationContainer.innerHTML = ''; // Clear previous pagination buttons
-    
-        const totalPages = Math.ceil(items.length / menuItemsPerPage);
-        for (let i = 1; i <= totalPages; i++) {
-            const button = document.createElement('button');
-            button.className = 'page-link';
-            button.textContent = i;
-    
-            button.addEventListener('click', () => {
-                // Scroll to top of the page (or specific container)
-                window.scrollTo({
-                    top: 0, // Adjust to scroll to a specific position (e.g., element.offsetTop)
-                    behavior: 'smooth', // Smooth scrolling animation
-                });
-    
-                // Remove "active" class from all buttons
-                const allButtons = paginationContainer.querySelectorAll('.page-link');
-                allButtons.forEach(btn => btn.classList.remove('active'));
-    
-                // Add "active" class to the clicked button
-                button.classList.add('active');
-    
-                // Render items for the selected page
-                renderItems(containerId, items, i);
-            });
-    
-            if (i === 1) button.classList.add('active'); // Default to first page
-            paginationContainer.appendChild(button);
-        }
-    
-        // Render first page by default
-        renderItems(containerId, items, 1);
-    }
-    
-    // Initialize the "All" section
-    setupPagination('All', allItems);
+    updateProducts(); // Chạy lần đầu khi trang tải
 
 
     // Function to show hints based on user input

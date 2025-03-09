@@ -51,10 +51,3 @@
         </div>
     </div>
 </div>
-
-<!-- footer -->
-
-
-<button id="backToTop" onclick="scrollToTop()">
-    <ion-icon name="arrow-up-outline"></ion-icon>
-</button>

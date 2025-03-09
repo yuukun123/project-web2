@@ -190,8 +190,9 @@
 }
 
 
+
 .tab_content {
-    display: none;
+    /* display: none; */
 }
 
 #filter-all:checked ~ #All {
@@ -249,8 +250,6 @@
     font-weight: bold;
     /* background-color: rgba(0, 123, 255, 0.1); */
 }
-
-
 
 /*slick slide banner */
 .carousel_wrapper {

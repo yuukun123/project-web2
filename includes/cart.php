@@ -8,7 +8,7 @@ echo '
     </button>
 
     <div class="cart-items">
-        <img src="../Img/Mousse/Corn_Mousse.jpg" height="74" width="60" class="cart-img" alt="">
+        <img src="" height="74" width="60" class="cart-img" alt="">
         <span class="infor">
             <button class="close-mini">
                 <ion-icon name="close-outline"></ion-icon>
@@ -31,7 +31,7 @@ echo '
     </div>
 
     <div class="cart-items">
-        <img src="../Img/Mousse/Melon_Mousse.jpg" height="74" width="60" class="cart-img" alt="">
+        <img src="" height="74" width="60" class="cart-img" alt="">
         <span class="infor">
             <button class="close-mini">
                 <ion-icon name="close-outline"></ion-icon>
