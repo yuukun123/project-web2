@@ -62,7 +62,7 @@ if (!empty($productsAll)) {
     foreach ($productsAll as $item) {
         echo '<div class="movie-item" data-category="' . htmlspecialchars($item['category']) . '">';
         //sửa chỗ này yuu
-        echo '<a href="../pages/product-detail.php?id='. $item['product_id'] .' " target="_blank">';
+        echo '<a href="pages/product-detail.php?id='. $item['product_id'] .' " target="_blank">';
         echo '<img class="poster-img" height="300" width="300" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['product_name']) . '">';
         echo '</a>';
         echo '<p class="title">' . htmlspecialchars($item['product_name']) . '</p>';

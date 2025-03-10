@@ -1,6 +1,6 @@
 <?php
 include '../app/config/data_connect.php'; // Kết nối database
-
+include __DIR__ . '../app/config/config.php';
 // Kiểm tra xem ID có được truyền lên không
 if (isset($_GET['id'])) {
     $id = intval($_GET['id']); // Chuyển ID về kiểu số để tránh lỗi SQL Injection
@@ -24,6 +24,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title><?php echo $product['name']; ?></title>
+    
 </head>
 <?php include '../includes/header.php'; ?>
     
