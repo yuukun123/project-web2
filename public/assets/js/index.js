@@ -361,18 +361,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // const hintContainers = document.querySelectorAll('.hint-container');
-
-    // document.addEventListener('click', (event) => {
-    //     const isClickInside = [...hintContainers, ...loginBtns].some(el => el.contains(event.target));
-
-    //     if (!isClickInside) {
-    //         logoutContainers.forEach(container => {
-    //             container.classList.remove('active-popup'); // Hide the logout container when clicked outside
-    //         });
-    //     }
-    // });
-
     
     const searchInput = document.getElementById('search');
     const hintContainer = document.getElementById('hintContainer');
