@@ -4,8 +4,8 @@ include __DIR__ . '/../app/config/config.php';
 
 // Mặc định hiển thị Login & Register
 $authButtons = '
-    <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'?pages=login\'">Login</button>
-    <button id="register-btn" class="btnLogout-popup" onclick="window.location.href=\'?pages=register\'">Register</button>
+    <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'login\'">Login</button>
+    <button id="register-btn" class="btnLogout-popup" onclick="window.location.href=\'register\'">Register</button>
 ';
 
 // Nếu đã đăng nhập, thay thế bằng tên user & Logout

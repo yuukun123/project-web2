@@ -1,6 +1,8 @@
 <?php
-session_start();
-ob_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 
 include('../../app/config/data_connect.php');
 
@@ -18,27 +20,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user = $result->fetch_assoc();
 
         if ($password === $user['password']) {
-            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['user_name'];
 
-            ob_end_clean();
 
             echo "Đăng nhập thành công! Đang chuyển hướng...";
-            header("Refresh: 2; URL=../../index.php?pages=home"); // Chuyển hướng sau 2 giây
+            header("Refresh: 2; URL=http://localhost/project-web2/home"); // Chuyển hướng sau 2 giây
             exit();
         } else {
             echo "Sai mật khẩu!";
-            header("Refresh: 2; URL=../../index.php?pages=login&error=wrong_password");
-            exit();
+            header("Refresh: 2; URL=http://localhost/project-web2/login?error=wrong_password");
+
         }
     } else {
         echo "Không tìm thấy người dùng!";
-        header("Refresh: 2; URL=../../index.php?pages=login&error=user_not_found");
-        exit();
+        header("Refresh: 2; URL=http://localhost/project-web2/login?error=user_not_found");
+
     }
 } else {
     echo "Yêu cầu không hợp lệ!";
-    header("Refresh: 2; URL=../../index.php?pages=login&error=invalid_request");
-    exit();
+    header("Refresh: 2; URL=http://localhost/project-web2/login?error=invalid_request");
+
 }
 ?>

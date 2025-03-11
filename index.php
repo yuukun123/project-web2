@@ -98,7 +98,8 @@ $page = $_GET['pages'];
     </div>
 
     <?php include 'includes/footer.php'; ?>
-
+    <script src="public/assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <?php
     if ($page === 'home') :
         echo '<script src="public/assets/js/index.js"></script>';
@@ -116,8 +117,6 @@ $page = $_GET['pages'];
         echo '<script src="public/assets/js/searchpro.js"></script>';
     endif;  // End of if statement
     ?>
-    <script src="public/assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

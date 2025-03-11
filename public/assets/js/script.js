@@ -8,11 +8,6 @@ function toggleMenu(hamburger) {
     });
 }
 
-function myFunction() {
-    const input = document.getElementById('search');
-    // Add your search functionality here
-}
-
 const logo = document.querySelector('.logo');
 logo.addEventListener('click', function(e) {
 
@@ -48,26 +43,79 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginBtn  = document.getElementById('login-btn');
     const logoutBtn = document.getElementById('logout-btn');
 
-
-
-
-    // Nếu sử dụng PHP session, không cần kiểm tra localStorage
-    function isLoggedIn() {
-        return document.body.classList.contains('logged-in'); // Class này sẽ được thêm bằng PHP
+    // Kiểm tra đăng nhập qua PHP session
+    function checkLoginStatus() {
+        fetch("http://localhost/project-web2/includes/session.php", {
+            method: "GET",
+            credentials: "include" // QUAN TRỌNG: Để gửi cookie PHPSESSID
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Session Data:", data); // Debug session
+            if (data.loggedIn) {
+                document.body.classList.add("logged-in");
+            } else {
+                document.body.classList.remove("logged-in");
+            }
+            updateUI();
+        })
+        .catch(error => console.error("Lỗi kiểm tra session:", error));
     }
 
-    // Cập nhật UI dựa trên session (PHP)
+    // Cập nhật giao diện đăng nhập
     function updateUI() {
-        if (isLoggedIn()) {
-            if (loginBtn)  loginBtn.style.display = 'none';
+
+        if (document.body.classList.contains('logged-in')) {
+            if (loginBtn) loginBtn.style.display = 'none';
             if (logoutBtn) logoutBtn.style.display = 'inline-block';
         } else {
-            if (loginBtn)  loginBtn.style.display = 'inline-block';
+            if (loginBtn) loginBtn.style.display = 'inline-block';
             if (logoutBtn) logoutBtn.style.display = 'none';
         }
     }
 
-    updateUI();
+    // Kiểm tra và chặn hành động nếu chưa đăng nhập
+    function protectCartActions() {
+        document.querySelectorAll(".sp-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                fetch("http://localhost/project-web2/includes/session.php")
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.loggedIn) {
+                            alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                            window.location.href = "login";
+                        } else {
+                            let productId = this.dataset.id;
+                            addToCart(productId);
+                        }
+                    })
+                    .catch(error => console.error("Lỗi kiểm tra đăng nhập:", error));
+            });
+        });
+    }
+
+    // Hàm thêm vào giỏ hàng
+    function addToCart(productId) {
+        fetch("http://localhost/project-web2/includes/cart.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ product_id: productId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Sản phẩm đã được thêm vào giỏ hàng!");
+            } else {
+                alert("Lỗi khi thêm sản phẩm vào giỏ hàng.");
+            }
+        })
+        .catch(error => console.error("Lỗi khi thêm vào giỏ hàng:", error));
+    }
+    
+    // Chạy kiểm tra đăng nhập và bảo vệ giỏ hàng
+    checkLoginStatus();
+    protectCartActions();
+
 });
 
 

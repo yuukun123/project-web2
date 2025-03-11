@@ -116,6 +116,12 @@ header.hide {
     transition: .5s;
     justify-content: center;
     align-items: center;
+
+    /* Giới hạn text */
+    white-space: nowrap; /* Không xuống dòng */
+    overflow: hidden; /* Ẩn phần nội dung thừa */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm (...) */
+    display: inline-block; /* Đảm bảo kích thước phù hợp */
 }
 
 .cart-count-mobile{
@@ -254,7 +260,7 @@ header.hide {
 /* login button */
 .btnLogin-popup {
     /* display: flex; */
-    width: 90px;
+    width: 100px;
     height: 30px;
     background: transparent;
     border: 1px solid #1f1c1c;
@@ -267,6 +273,13 @@ header.hide {
     font-weight: 500;
     margin-left: 40px;
     transition: .5s;
+    padding: 0px 10px;
+
+    /* Giới hạn text */
+    white-space: nowrap; /* Không xuống dòng */
+    overflow: hidden; /* Ẩn phần nội dung thừa */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm (...) */
+    display: inline-block; /* Đảm bảo kích thước phù hợp */
 }
 
 .btnLogin-popup:hover {
@@ -275,7 +288,7 @@ header.hide {
 }
 
 .btnLogout-popup {
-    width: 90px;
+    width: 100px;
     height: 30px;
     background: transparent;
     border: 1px solid #1f1c1c;
@@ -288,6 +301,7 @@ header.hide {
     font-weight: 500;
     margin-left: 10px;
     transition: .5s;
+    padding: 0 10px;
 }
 
 .btnLogout-popup:hover {
@@ -1097,11 +1111,17 @@ ul {
     }
 
     .input-wrapper input{
-        width: 215px;
+        width: 177px;
     }
 
     .search-icon button {
         width: 55px;
+    }
+
+    .searchAdvance{
+        width: 115px;
+        height: 30px;
+        font-size: 12px;
     }
 
     .pg-12{
