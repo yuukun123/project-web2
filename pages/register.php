@@ -4,8 +4,6 @@ if (!isset($showRegister)) {
     $showRegister = false;
 }
 ?>
-<!--header-->
-
 
 <!-- main screen -->
 <div class="Home_main">
@@ -14,7 +12,7 @@ if (!isset($showRegister)) {
         <!--register account-->
         <div class="form-box register" style="display: <?= $showRegister ? 'block' : 'none' ?>;">
             <h2>Registration</h2>
-            <form id="registerForm">
+            <form id="registerForm" action="pages/Controllers/register_process.php" method="POST">
 
                 <div class="input-infor">
 
@@ -23,7 +21,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="person-outline"></ion-icon>
                             </span>
-                            <input id="registerUsername" type="text" required>
+                            <input id="registerUsername" type="text" name="username" required>
                             <label>User name<span style="color: red;">*</span></label>
                         </div>
 
@@ -31,7 +29,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="mail-outline"></ion-icon>
                             </span>
-                            <input id="registerEmail" type="email" required>
+                            <input id="registerEmail" type="email" name="email" required>
                             <label>Email</label>
                         </div>
 
@@ -39,7 +37,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <input id="registerPassword" type="password" required>
+                            <input id="registerPassword" type="password" name="password" required>
                             <label>Password</label>
                         </div>
                     </div>
@@ -49,7 +47,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="call-outline"></ion-icon>
                             </span>
-                            <input id="registerPhone" type="number" required>
+                            <input id="registerPhone" type="number" name="phone" required>
                             <label>Phone number</label>
                         </div>
 
@@ -57,7 +55,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <input id="registerAddress" type="text" required>
+                            <input id="registerAddress" type="text" name="address" required>
                             <label>Address</label>
                         </div>
 
@@ -65,7 +63,7 @@ if (!isset($showRegister)) {
                             <span class="icon">
                                 <ion-icon name="lock-closed-outline"></ion-icon>
                             </span>
-                            <input id="registerConfirmPassword" type="password" required>
+                            <input id="registerConfirmPassword" type="password" name="confirm_password" required>
                             <label>Confirm Password</label>
                         </div>
                     </div>
@@ -73,21 +71,14 @@ if (!isset($showRegister)) {
                 </div>
 
                 <div class="remember-forgot">
-                    <label><input type="checkbox">i agree to the terms & conditions</label>
+                    <label><input type="checkbox" name="agree">i agree to the terms & conditions</label>
                 </div>
                 <button type="submit" class="btn">Register</button>
                 <div class="login-register">
-                    <p>Already have an account ? <a href="?pages=login" class="login-link">Login</a></p>
+                    <p>Already have an account ? <a href="login" class="login-link">Login</a></p>
                 </div>
             </form>
         </div>
 
     </div>
 </div>
-
-<!-- footer -->
-
-
-<button id="backToTop" onclick="scrollToTop()">
-    <ion-icon name="arrow-up-outline"></ion-icon>
-</button>

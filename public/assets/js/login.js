@@ -55,29 +55,29 @@ document.addEventListener('DOMContentLoaded', function() {
     //     });
     // }
 
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+    // const registerForm = document.getElementById('registerForm');
+    // if (registerForm) {
+    //     registerForm.addEventListener('submit', function(event) {
+    //         event.preventDefault();
 
-            const formData = new FormData(registerForm);
+    //         const formData = new FormData(registerForm);
 
-            fetch('app/config/register_process.php', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Registration successful!');
-                    window.location.href = '?pages=login'; // Chuyển hướng về trang đăng nhập
-                } else {
-                    alert(data.message); // Hiển thị lỗi từ server
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    }
+    //         fetch('app/config/register_process.php', {
+    //             method: 'POST',
+    //             body: formData
+    //         })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.success) {
+    //                 alert('Registration successful!');
+    //                 window.location.href = '?pages=login'; // Chuyển hướng về trang đăng nhập
+    //             } else {
+    //                 alert(data.message); // Hiển thị lỗi từ server
+    //             }
+    //         })
+    //         .catch(error => console.error('Error:', error));
+    //     });
+    // }
 
     // Function to get current user from localStorage
     // function getCurrentUser() {
