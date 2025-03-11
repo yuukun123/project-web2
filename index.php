@@ -45,7 +45,7 @@ $page = $_GET['pages'];
         echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
     } elseif ($page === 'advance') {
         echo '<link rel="stylesheet" href="public/assets/css/searchpro.css">';
-    } else {
+    } elseif ($page === 'home') {
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     }
     ?>
@@ -117,7 +117,7 @@ $page = $_GET['pages'];
     endif;  // End of if statement
     ?>
     <script src="public/assets/js/script.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>

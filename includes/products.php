@@ -29,6 +29,20 @@ while ($row = $result->fetch_assoc()) {
 ?>
 
 <?php
+echo'
+<div class="search-container" id="search-container">
+<div class="input-wrapper" id="input-wrapper">
+    <input type="text" class="search-input" onkeyup="myFunction()" placeholder="Search for names..">
+    <span class="search-icon" id="search-icon">
+        <button class="searchBtn" type="button">
+            <ion-icon name="search-outline"></ion-icon>
+        </button>
+    </span>
+</div>
+<div id="hintContainer" class="hint-container"></div>
+</div>
+';
+
 // Xuất HTML sử dụng echo
 echo '<div class="pg-12">';
 echo '<div class="flex-full">';

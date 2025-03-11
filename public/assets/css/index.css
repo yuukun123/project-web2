@@ -251,136 +251,8 @@
     /* background-color: rgba(0, 123, 255, 0.1); */
 }
 
-/*slick slide banner */
-.carousel_wrapper {
-    position: relative;
-    max-width: 100%;
-    overflow: hidden; 
-    top: 20px;
-}
-
-.slide-item {
-    position: relative;
-    display: flex !important; /* Override Slick's default display */
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.slide-item.banner-img {
-    position: relative;
-    width: 1360px;
-    height: auto;
-    background-color: #efefef;
-    object-fit: cover;
-    object-position: center;
-}
-
-.custom-prev,
-.custom-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
-    /* padding: 15px; */
-    border: none;
-    border-radius: 70%;
-    cursor: pointer;
-    z-index: 1;
-    /* font-size: 20px; */
-    width: 55px;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease;
-    /* padding: 0; */
-}
-
-/* Left arrow positioning */
-.custom-prev {
-    top: 210px;
-    left: -30px;
-}
-
-/* Right arrow positioning */
-.custom-next {
-    top: 210px;
-    right: -30px;
-}
-
-/* Add hover effect for buttons */
-.custom-prev:hover,
-.custom-next:hover {
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-/* Adjust SVG size */
-.custom-prev svg{
-    width: 30px;
-    height: 30px;
-    fill: white;
-    display: block;
-    margin-left: 20px;
-}
-
-.custom-next svg {
-    width: 30px;
-    height: 30px;
-    fill: white;
-    display: block;
-    margin-right: 20px;
-}
-
-/* Dots styling */
-.carousel-dots {
-    position: relative;
-    /* margin-top: 100px; */
-    top: -30px;
-    /* bottom: 100px; */
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    z-index: 1;
-}
-
-.carousel-dots li button:before {
-    position: absolute;
-    bottom: 20px;
-    display: flex;
-    justify-content: center;
-    width: 1%;
-}
-
-.carousel-dots li {
-    margin: 0 5px;
-}
-
-.carousel-dots li button {
-    font-size: 0;
-    line-height: 0;
-    display: block;
-    width: 8px;
-    height: 8px;
-    padding: 5px;
-    cursor: pointer;
-    color: transparent;
-    border: 1px solid rgb(114, 113, 113);
-    outline: none;
-    background-color: transparent;
-    border-radius: 50%;
-    /* transition: background-color 0.3s ease; */
-}
-
-.carousel-dots li.slick-active button {
-    background: rgb(255, 255, 255);
-    transform: scale(1.2);
-    border: 1px solid rgb(0, 0, 0);
+#search-container{
+    display: none;
 }
 
 /* Responsive Design */
@@ -395,6 +267,8 @@
         justify-content: center;
         transition: width 0.5s ease, height 0.5s ease; 
     }
+
+
 
     .title{
         width: 240px;
@@ -598,6 +472,85 @@
         padding: 10px 20px;
         width: 100%;
         text-align: left;
+    }
+
+    /* Style the input */
+    #search-container{
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: space-around;
+        margin-top: 30px;
+        max-width: 100vh;
+    }
+    #input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 85%;
+    }
+
+    #input-wrapper input {
+        padding: 8px 68px 8px 12px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        outline: none;
+        width: 100%;
+        background-color: white;
+        transition: all 0.2s ease;
+    }
+
+    #input-wrapper input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    #search-icon {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #search-icon button {
+        width: 68px;
+        height: 42px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #666;
+        background: #e1dfdf;
+        border-radius: 20px;
+        margin-right: -8px;
+        transition: color 0.2s ease;
+    }
+
+    #search-icon button:hover {
+        color: #4a90e2;
+    }
+
+    #search-icon ion-icon {
+        font-size: 20px;
+    }
+
+    /* Optional: Style the placeholder text */
+    #input-wrapper input::placeholder {
+        color: #999;
+    }
+
+    /* Optional: Style for when the input is disabled */
+    #input-wrapper input:disabled {
+        background-color: #f5f5f5;
+        cursor: not-allowed;
+    }
+
+    #hintContainer{
+        margin-top: 60px;
     }
 
     /* Show the hamburger menu */

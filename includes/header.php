@@ -36,14 +36,14 @@ echo '
 
         <div class="search-container">
             <div class="input-wrapper">
-                <input type="text" id="search" onkeyup="myFunction()" placeholder="Search for names..">
+                <input type="text" class="search-input" onkeyup="myFunction()" placeholder="Search for names..">
                 <span class="search-icon">
                     <button class="searchBtn" type="button">
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </span>
             </div>
-            <div id="hintContainer" class="hint-container"></div>
+            <div class="hint-container"></div>
         </div>
 
         <a href="advance" class="searchAdvance">ADVANCED SEARCH</a>
