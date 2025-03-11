@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $address = trim($_POST['address']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $agree = isset($_POST['agree']);
+    // $agree = isset($_POST['agree']);
     $default_role = "user"; // Gán giá trị mặc định cho role
 
     // Kiểm tra trống
@@ -29,10 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Mật khẩu không khớp.";
     }
 
-    // Kiểm tra đã chấp nhận điều khoản chưa
-    if (!$agree) {
-        $errors[] = "Bạn phải đồng ý với điều khoản & điều kiện.";
-    }
+    // // Kiểm tra đã chấp nhận điều khoản chưa
+    // if (!$agree) {
+    //     $errors[] = "Bạn phải đồng ý với điều khoản & điều kiện.";
+    // }
 
     // Kiểm tra email đã tồn tại chưa
     $stmt = $conn->prepare("SELECT user_id FROM users WHERE email = ?");
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "Đăng ký thành công! Vui lòng đăng nhập.";
-            header("Location: ../../index.php?pages=login");
+            header("Location: http://localhost/project-web2/login");
             exit();
         } else {
             $errors[] = "Lỗi khi đăng ký. Vui lòng thử lại.";
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Nếu có lỗi, lưu vào session để hiển thị lại
     $_SESSION['errors'] = $errors;
-    header("Location: ../../index.php?pages=register");
+    header("Location: http://localhost/project-web2/register");
     exit();
 }
 
