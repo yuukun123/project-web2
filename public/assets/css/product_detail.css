@@ -801,23 +801,13 @@ input[type="number"] {
 
 
 .list-product{
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    justify-items: center; 
-    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 80px;
+    justify-content: center; 
+    margin-bottom: 100px;
 }
-.product-1{
-   grid-column: 1 / 2; 
-}
-.product-2{
-    grid-column: 2 / 3; 
-}
-.product-3{
-    grid-column: 3 / 4; 
-}
-.product-4{
-    grid-column: 4 / 5; 
-}
+
 .list-product img{
     cursor: pointer;
 }
