@@ -1,8 +1,5 @@
 <!-- main screen -->
 <div class="Home_main">
-
-    <!-- slider -->
-
     <!-- Phần nội dung ABOUT ME -->
     <div class="pg-12">
         <!-- Tiêu đề ABOUT ME -->

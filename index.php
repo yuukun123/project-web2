@@ -47,6 +47,8 @@ $page = $_GET['pages'];
         echo '<link rel="stylesheet" href="public/assets/css/searchpro.css">';
     } elseif ($page === 'home') {
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
+    } elseif ($page === 'product') {
+        echo '<link rel="stylesheet" href="public/assets/css/product_detail.css">';
     }
     ?>
 
@@ -93,13 +95,14 @@ $page = $_GET['pages'];
             case 'advance':
                 require __DIR__ . '/pages/searchpro.php';
                 break;
+            case 'product':
+                require __DIR__ . '/pages/product-detail.php';
+                break;
         }
         ?>
     </div>
 
-    <?php include 'includes/footer.php'; ?>
-    <script src="public/assets/js/script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <?php
     if ($page === 'home') :
         echo '<script src="public/assets/js/index.js"></script>';
@@ -116,7 +119,13 @@ $page = $_GET['pages'];
     if ($page === 'advance') :
         echo '<script src="public/assets/js/searchpro.js"></script>';
     endif;  // End of if statement
+    if ($page === 'product') :
+        echo '<script src="public/assets/js/product.js"></script>';
+    endif;  // End of if statement
     ?>
+    <?php include 'includes/footer.php'; ?>
+    <script src="public/assets/js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
