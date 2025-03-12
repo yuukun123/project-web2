@@ -1,5 +1,5 @@
 <?php
-include '../app/config/data_connect.php'; // Kết nối database
+// include '../app/config/data_connect.php'; // Kết nối database
 
 // Kiểm tra xem ID có được truyền lên không
 if (isset($_GET['id'])) {
@@ -32,41 +32,12 @@ if($result->num_rows > 0){
 }
 ?>
 
-<!-- header -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <link rel="icon" href="<?php echo '../public/assets/Img/Sweets1.png'; ?>" type="image/x-icon" />
-    <link rel="stylesheet" href="<?php echo'../public/assets/css/style.css"'; ?> />
-    <link rel="stylesheet" href="<?php echo'../public/assets/css/product_detail.css"'; ?> />
-    <title>The Sweets</title>
-
-    <title><?php echo $product['name']; ?></title>
-    <link rel="stylesheet" href="../public/assets/css/style.css">
-    <link rel="stylesheet" href="../public/assets/css/product_detail.css">
-    
-
-</head>
-<body>
-<?php include '../includes/header.php'; ?>
-
 <?php
     if(!empty($product)){
-        echo'<div class="Home_main">
+        echo'
         <div class="Cake-infor">
             <div class="image-cake">
-                <img src=" ../'. htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['product_name']) . '">
+                <img src=" '. htmlspecialchars($product['image']) . '" alt="' . htmlspecialchars($product['product_name']) . '">
             </div>
             <div class="content">
                 <h1> ' .$product['product_name']. ' </h1>
@@ -104,8 +75,7 @@ if($result->num_rows > 0){
             </div>
             </div>
         </div>
-       
-    </div>';
+';
     echo'
     <div class="showing-product">
         <div class="div-title-product">
@@ -116,7 +86,7 @@ if($result->num_rows > 0){
         echo'<div class="list-product">';
         foreach($product_rand as $items){
             echo'<div class="product-1">';
-            echo' <a href="./product-detail.php?id='.$items['product_id'].'"> <img width="300px" height="300px" class="poster-img" src=" ../'.htmlspecialchars($items['image']).'" alt="'.htmlspecialchars($items['product_name']).'">    </a>';
+            echo' <a href="home?pages=product&id='.$items['product_id'].'"> <img width="300px" height="300px" class="poster-img" src="'.htmlspecialchars($items['image']).'" alt="'.htmlspecialchars($items['product_name']).'">    </a>';
             echo'<p class="name-product">'.$items['product_name'].'</p>';
             echo'<p class="price-product sp-cart">Price: '. number_format($items['price'], 0, ',', '.') .' VNĐ</p>';
             echo'</div>';  
@@ -141,8 +111,8 @@ if($result->num_rows > 0){
     }
 ?>
 
-<?php include '../includes/footer.php'; ?>
-</body>
-</html>
+
+
+
 
 

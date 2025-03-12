@@ -567,6 +567,13 @@ header.hide {
     transition: all 0.3s ease;
 }
 
+.Home_main {
+    flex: 1 0 auto;
+    position: relative;
+    min-height: 100vh;
+    padding: 0px 0px;
+    overflow: hidden;
+}
 
 /*shopping cart */
 .blur-overlay {
