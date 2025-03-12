@@ -55,7 +55,7 @@ if($result->num_rows > 0){
     <title><?php echo $product['name']; ?></title>
     <link rel="stylesheet" href="../public/assets/css/style.css">
     <link rel="stylesheet" href="../public/assets/css/product_detail.css">
-    
+    <script href="../public/assets/js/product.js"></script>
 
 </head>
 <body>
