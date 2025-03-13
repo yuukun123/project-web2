@@ -6,13 +6,6 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-// echo "Session ID: " . session_id();
-// if (isset($_SESSION['username'])) {
-//     echo "Bạn đã đăng nhập với username: " . $_SESSION['username'];
-// } else {
-//     echo "Bạn chưa đăng nhập!";
-// }
-
 include('app/config/data_connect.php'); // Kết nối database
 
 // Kiểm tra xem có ?pages hay chưa
@@ -67,6 +60,7 @@ $page = $_GET['pages'];
 
 <body class="<?php echo isset($_SESSION['username']) ? 'logged-in' : ''; ?>">
     <?php include 'includes/header.php'; ?>
+    <?php include 'includes/cart.php'; ?>
 
     <!-- main screen -->
     <div class="Home_main">
@@ -98,6 +92,12 @@ $page = $_GET['pages'];
             case 'product':
                 require __DIR__ . '/pages/product-detail.php';
                 break;
+            // case 'cart':
+            //     require __DIR__ . '/includes/cart.php';
+            //     break;
+            // case 'cart_action':
+            //     require __DIR__ . '/includes/cart_action.php';
+            //     break;
         }
         ?>
     </div>

@@ -677,6 +677,15 @@ header.hide {
     color: black;
 }
 
+.bottom-text input{
+    display: flex;
+    width: 15px;
+    height: 25px;
+    text-align: center;
+    border-radius: 20px;
+    
+}
+
 .click {
     margin-right: 5px;
     margin-left: 5px;

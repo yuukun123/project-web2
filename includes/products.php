@@ -80,9 +80,22 @@ if (!empty($productsAll)) {
         echo '<img class="poster-img" height="300" width="300" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['product_name']) . '">';
         echo '</a>';
         echo '<p class="title">' . htmlspecialchars($item['product_name']) . '</p>';
-        echo '<button class="sp-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
+        // nút thêm sản phẩm vô card
+        // echo '<button class="sp-cart butn title add-to-cart" 
+        //             data-id="' . htmlspecialchars($item['product_id']) . '" 
+        //             data-name="' . htmlspecialchars($item['product_name']) . '" 
+        //             data-price="' . $item['price'] . '" 
+        //             data-image="' . htmlspecialchars($item['image']) . '">';
+
+        // echo '<p class="text-color">' . number_format($item['price']) . ' VND</p>';
+        // echo '</button>';
+        echo '<button class="sp-cart add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
         echo '<p class="text-color">Price: ' . number_format($item['price']) . ' VND</p>';
         echo '</button>';
+        
+        
+
+
         echo '</div>';
     }
 } else {
