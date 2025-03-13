@@ -2,6 +2,9 @@
 
 include __DIR__ . '/../app/config/config.php';
 
+// Kết nối đến CSDL
+require_once __DIR__ . '/../app/config/data_connect.php';
+
 // Mặc định hiển thị Login & Register
 $authButtons = '
     <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'login\'">Login</button>
@@ -29,6 +32,7 @@ echo '
         <a href="home">HOME</a>
         <a href="about">ABOUT</a>
         <a href="receipt">RECEIPT</a>
+
         <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
         </button>
@@ -83,10 +87,12 @@ echo '
 
 <div class="notificate" id="notificate">
     <p id="message"></p>
-</div>';
+</div>
 
+';
 
 // Nhúng cart
-include 'includes/cart.php';
+
+// include 'cart.php';
 
 ?>

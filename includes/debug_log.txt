@@ -1,0 +1,55 @@
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+)
+Array
+(
+    [product_id] => 1
+)
+Array
+(
+    [product_id] => 1
+)
+Array
+(
+    [product_id] => 1
+)
+Array
+(
+    [product_id] => 1
+)
+Array
+(
+    [product_id] => 1
+)
+Array
+(
+    [product_id] => 2
+)
+Array
+(
+    [product_id] => 2
+)
+Array
+(
+    [product_id] => 2
+)
+Array
+(
+    [product_id] => 2
+)
+Array
+(
+    [product_id] => 8
+)

@@ -7,6 +7,11 @@
     /* background: #EEEEEE; */
 }
 
+.input-wrapper {
+    position: relative;
+    display: none;
+    align-items: center;
+}
 
 .Cake-infor{
     display: flex;

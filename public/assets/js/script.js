@@ -15,108 +15,206 @@ logo.addEventListener('click', function(e) {
     window.location.href = '/project-web2/home'; 
 });
 
-// get the data from the local storage
-const blurOverlay = document.querySelector('.blur-overlay'); // Make sure this exists in your HTML
-const btnCart = document.querySelectorAll('.sp-cart');
-const shoppingCart = document.querySelector('.shopping-cart'); // Only one shopping-cart
-const close = document.querySelectorAll('.shopping-cart .close');
+document.addEventListener("DOMContentLoaded", function () {
+    const blurOverlay = document.querySelector(".blur-overlay"); 
+    const btnCart = document.querySelectorAll(".add-to-cart"); // Nút thêm sản phẩm vào giỏ hàng
+    const shoppingCart = document.querySelector(".shopping-cart"); // Cửa sổ giỏ hàng
+    const cartBtn = document.getElementById("cart-btn"); // Nút mở giỏ hàng
+    const closeBtns = document.querySelectorAll(".shopping-cart .close");
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const cartCount = document.querySelector(".cart-count");
 
-btnCart.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (shoppingCart) {
-            shoppingCart.classList.add('active'); // Change display to make the cart visible
-            blurOverlay.classList.add('active'); // Optional: Only if blur overlay exists
-        }
-    });
-});
 
-close.forEach(btn => {
-    btn.addEventListener('click', () => {
-        if (shoppingCart) {
-            shoppingCart.classList.remove('active'); // Change display to make the cart visible
-            blurOverlay.classList.remove('active'); // Optional: Only if blur overlay exists
-        }
-    });
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const loginBtn  = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-
-    // Kiểm tra đăng nhập qua PHP session
-    function checkLoginStatus() {
+    // 🏷 Kiểm tra trạng thái đăng nhập từ session
+    function checkLoginStatus(callback) {
         fetch("http://localhost/project-web2/includes/session.php", {
             method: "GET",
-            credentials: "include" // QUAN TRỌNG: Để gửi cookie PHPSESSID
+            credentials: "include"
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Session Data:", data); // Debug session
+            console.log("Session Data:", data);
+            console.log("Đã đăng nhập:", data.loggedIn);
+            console.log("ID người dùng:", data.user_id);
+
             if (data.loggedIn) {
                 document.body.classList.add("logged-in");
             } else {
                 document.body.classList.remove("logged-in");
             }
             updateUI();
+            if (callback) callback(data.loggedIn);
         })
         .catch(error => console.error("Lỗi kiểm tra session:", error));
     }
 
-    // Cập nhật giao diện đăng nhập
+    // 🔄 Cập nhật giao diện Login / Logout
     function updateUI() {
-
-        if (document.body.classList.contains('logged-in')) {
-            if (loginBtn) loginBtn.style.display = 'none';
-            if (logoutBtn) logoutBtn.style.display = 'inline-block';
-        } else {
-            if (loginBtn) loginBtn.style.display = 'inline-block';
-            if (logoutBtn) logoutBtn.style.display = 'none';
-        }
+        const isLoggedIn = document.body.classList.contains("logged-in");
+        
+        if (loginBtn) loginBtn.style.display = isLoggedIn ? "none" : "inline-block";
+        if (logoutBtn) logoutBtn.style.display = isLoggedIn ? "inline-block" : "none";
     }
 
-    // Kiểm tra và chặn hành động nếu chưa đăng nhập
-    function protectCartActions() {
-        document.querySelectorAll(".sp-cart").forEach(button => {
-            button.addEventListener("click", function () {
-                fetch("http://localhost/project-web2/includes/session.php")
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.loggedIn) {
-                            alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
-                            window.location.href = "login";
-                        } else {
-                            let productId = this.dataset.id;
-                            addToCart(productId);
-                        }
-                    })
-                    .catch(error => console.error("Lỗi kiểm tra đăng nhập:", error));
+    // 🛒 Mở giỏ hàng (Chỉ kiểm tra đăng nhập khi bấm vào biểu tượng giỏ hàng)
+    if (cartBtn) {
+        cartBtn.addEventListener("click", () => {
+            checkLoginStatus((isLoggedIn) => {
+                if (isLoggedIn) {
+                    fetchCart(); // ✅ Cập nhật danh sách giỏ hàng
+                    shoppingCart.classList.add("active");
+                    blurOverlay?.classList.add("active");
+                } else {
+                    alert("Bạn cần đăng nhập để xem giỏ hàng!");
+                    window.location.href = "login";
+                }
             });
         });
     }
+    
 
-    // Hàm thêm vào giỏ hàng
+    // ❌ Đóng giỏ hàng
+    closeBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            shoppingCart.classList.remove("active");
+            blurOverlay?.classList.remove("active");
+        });
+    });
+
+    // 🛒 Thêm sản phẩm vào giỏ hàng (Chỉ kiểm tra đăng nhập khi bấm vào nút sản phẩm)
+    btnCart.forEach(button => {
+        button.addEventListener("click", function (event) {
+            event.stopPropagation(); // 🛑 Ngăn không cho sự kiện lan lên trên
+
+            checkLoginStatus((isLoggedIn) => {
+                if (!isLoggedIn) {
+                    alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                    window.location.href = "login";
+                } else {
+                    let productId = this.getAttribute("data-id");
+                    addToCart(productId);
+                }
+            });
+        });
+    });
+
+    // xem giỏ hàng 
+
+
+
+    // document.querySelectorAll(".add-to-cart").forEach(button => {
+    //     button.addEventListener("click", function () {
+    //         let productId = this.getAttribute("data-id"); // ✅ Lấy giá trị chính xác
+    //         console.log("🛒 Đang gửi request thêm sản phẩm:", productId);
+
+    //         if (!productId) {
+    //             alert("Lỗi: Không tìm thấy ID sản phẩm!");
+    //             return;
+    //         }
+
+    //         addToCart(productId);
+    //     });
+    // });
+
+    function updateCartCount() {
+        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1")
+            .then(response => response.json())
+            .then(data => {
+                console.log("Số lượng giỏ hàng:", data.count);
+                document.querySelector(".cart-count").textContent = data.count || 0;
+            })
+            .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));
+    }
+    
+    // Gọi hàm khi trang tải
+    updateCartCount();
+    
+
+    // ✅ 🛒 Thêm sản phẩm vào giỏ hàng
     function addToCart(productId) {
-        fetch("http://localhost/project-web2/includes/cart.php", {
+        console.log("Đang gửi request thêm sản phẩm:", productId);
+    
+        fetch("http://localhost/project-web2/includes/cart_action.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ product_id: productId })
+            body: JSON.stringify({ action: "add", product_id: productId })
         })
         .then(response => response.json())
         .then(data => {
+            console.log("Response từ server:", data);
             if (data.success) {
-                alert("Sản phẩm đã được thêm vào giỏ hàng!");
+                alert("Đã thêm sản phẩm vào giỏ hàng!");
+                fetchCart();
             } else {
-                alert("Lỗi khi thêm sản phẩm vào giỏ hàng.");
+                alert("Lỗi: " + data.message);
             }
         })
         .catch(error => console.error("Lỗi khi thêm vào giỏ hàng:", error));
     }
     
-    // Chạy kiểm tra đăng nhập và bảo vệ giỏ hàng
+    function removeFromCart(productId) {
+        fetch("http://localhost/project-web2/includes/cart_action.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "remove", product_id: productId })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchCart(); // ✅ Cập nhật giỏ hàng sau khi xóa
+            } else {
+                alert("Lỗi khi xóa sản phẩm: " + data.message);
+            }
+        })
+        .catch(error => console.error("Lỗi khi xóa sản phẩm:", error));
+    }
+
+    function updateQuantity(productId, change) {
+        fetch("http://localhost/project-web2/includes/cart_action.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "update", product_id: productId, quantity_change: change })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchCart(); // ✅ Load lại giỏ hàng sau khi cập nhật
+            } else {
+                alert("Lỗi khi cập nhật số lượng: " + data.message);
+            }
+        })
+        .catch(error => console.error("Lỗi cập nhật số lượng:", error));
+    }
+    
+
+    // 🛒 Lấy danh sách giỏ hàng
+    function fetchCart() {
+        fetch("http://localhost/project-web2/includes/cart.php", {
+            method: "GET",
+            credentials: "include" // ✅ Đảm bảo gửi cookie session
+        })
+        .then(response => response.text())
+        .then(data => {
+            console.log("Dữ liệu giỏ hàng nhận được:", data);
+            if (shoppingCart) {
+                shoppingCart.innerHTML = data; // ✅ Cập nhật HTML của giỏ hàng
+                shoppingCart.classList.add("active"); // ✅ Hiển thị giỏ hàng nếu có sản phẩm
+                blurOverlay?.classList.add("active");
+            }
+        })
+        .catch(error => console.error("Lỗi khi fetch giỏ hàng:", error));
+    }
+    
+
+
+    // 🚀 Khởi chạy khi trang tải xong
     checkLoginStatus();
-    protectCartActions();
+    // fetchCart();
 
 });
+
+
 
 
 /*scroll*/
