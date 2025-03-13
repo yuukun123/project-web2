@@ -1,5 +1,5 @@
 <?php
-// include '../app/config/data_connect.php'; // Kết nối database
+include __DIR__ . '/../app/config/data_connect.php'; // Kết nối database
 
 // Kiểm tra xem ID có được truyền lên không
 if (isset($_GET['id'])) {
@@ -31,6 +31,30 @@ if($result->num_rows > 0){
     die("sản phẩm không tồn tại");
 }
 ?>
+
+<!-- header -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <link rel="icon" href="<?php echo '../public/assets/Img/Sweets1.png'; ?>" type="image/x-icon" />
+    <link rel="stylesheet" href="<?php echo'../public/assets/css/style.css"'; ?> />
+    <link rel="stylesheet" href="<?php echo'../public/assets/css/product_detail.css"'; ?> />
+    <title><?php echo $product['name']; ?></title>
+    <script src="../public/assets/js/product.js"></script>
+</head>
+<body>
+<?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <?php
     if(!empty($product)){
@@ -80,7 +104,7 @@ if($result->num_rows > 0){
     <div class="showing-product">
         <div class="div-title-product">
             <div class="border"></div>
-        <p class="title-product">Best seller</p>
+        <p class="title-product">Other products</p>
         </div>
         ';
         echo'<div class="list-product">';
@@ -90,27 +114,13 @@ if($result->num_rows > 0){
             echo'<p class="name-product">'.$items['product_name'].'</p>';
             echo'<p class="price-product sp-cart">Price: '. number_format($items['price'], 0, ',', '.') .' VNĐ</p>';
             echo'</div>';  
-            // <div class="product-2">
-            //     <a href="../product/index-5.html"><img width="300px" height="300px" class="poster-img " src="../../Img/Mousse/Mango_Mousse.jpg" alt=""></a>
-            //     <p class="name-product">Mango Mousse</p>
-            //     <p class="price-product sp-cart">Price: 540.000 VNĐ</p>
-            // </div>
-            // <div class="product-3">
-            //     <a href="../product/index-16.html"><img width="300px" height="300px" class="poster-img" src="../../Img/Drink/Matcha_Latte.png" alt=""></a>
-            //     <p class="name-product">Matcha Latte</p>
-            //     <p class="price-product sp-cart">Price: 75.000 VNĐ</p>
-            // </div>
-            // <div class="product-4">
-            //     <a href="../product/index-12.html"><img width="300px" height="300px" class="poster-img" src="../../Img/Croissant/Plain_Croissant.png" alt=""></a>
-            //     <p class="name-product">Plain Croissant</p>
-            //     <p class="price-product sp-cart">Price: 150.000 VNĐ</p>
-            // </div>
         }
         echo'</div>';
         echo'</div>';
     }
 ?>
 
+</body>
 
 
 
