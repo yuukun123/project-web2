@@ -32,28 +32,6 @@ if($result->num_rows > 0){
 }
 ?>
 
-<!-- header -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <link rel="icon" href="<?php echo '../public/assets/Img/Sweets1.png'; ?>" type="image/x-icon" />
-    <link rel="stylesheet" href="<?php echo'../public/assets/css/style.css"'; ?> />
-    <link rel="stylesheet" href="<?php echo'../public/assets/css/product_detail.css"'; ?> />
-    <title><?php echo $product['name']; ?></title>
-    <script src="../public/assets/js/product.js"></script>
-</head>
-<body>
 <?php require_once __DIR__ . '/../includes/header.php'; ?>
 
 <?php
@@ -120,7 +98,7 @@ if($result->num_rows > 0){
     }
 ?>
 
-</body>
+
 
 
 

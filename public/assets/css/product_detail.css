@@ -6,13 +6,11 @@
     overflow: hidden;
     /* background: #EEEEEE; */
 }
-
 .input-wrapper {
     position: relative;
     display: none;
     align-items: center;
 }
-
 .Cake-infor{
     display: flex;
     column-gap: 70px;
