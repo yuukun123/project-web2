@@ -92,9 +92,6 @@ if (!empty($productsAll)) {
         echo '<button class="sp-cart add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
         echo '<p class="text-color">Price: ' . number_format($item['price']) . ' VND</p>';
         echo '</button>';
-        
-        
-
 
         echo '</div>';
     }

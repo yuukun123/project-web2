@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (isLoggedIn) {
                     fetchCart(); // ✅ Cập nhật danh sách giỏ hàng
                     shoppingCart.classList.add("active");
-                    blurOverlay?.classList.add("active");
+                    blurOverlay.classList.add("active");
                 } else {
                     alert("Bạn cần đăng nhập để xem giỏ hàng!");
                     window.location.href = "login";
@@ -198,12 +198,14 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             console.log("Dữ liệu giỏ hàng nhận được:", data);
             if (shoppingCart) {
-                shoppingCart.innerHTML = data; // ✅ Cập nhật HTML của giỏ hàng
-                shoppingCart.classList.add("active"); // ✅ Hiển thị giỏ hàng nếu có sản phẩm
-                blurOverlay?.classList.add("active");
+                // shoppingCart.innerHTML = data; // ✅ Cập nhật giao diện
+                shoppingCart.style.display = "block"; // ✅ Hiển thị giỏ hàng
+                if (blurOverlay) blurOverlay.classList.add("active");
+            } else {
+                console.error("❌ Không tìm thấy phần tử .shopping-cart trên trang!");
             }
         })
-        .catch(error => console.error("Lỗi khi fetch giỏ hàng:", error));
+        .catch(error => console.error("❌ Lỗi khi fetch giỏ hàng:", error));
     }
     
 

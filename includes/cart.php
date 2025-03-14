@@ -1,27 +1,22 @@
 <?php
-// session_start();
-// include "../app/config/data_connect.php"; 
-
-global $conn; // Khai báo biến global nếu cần
-
-if (!isset($conn) && isset($GLOBALS['conn'])) {
-    $conn = $GLOBALS['conn']; // Lấy từ biến global
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
-// include "cart_action.php";
-// echo "<script>console.log('User ID từ PHP: " . ($_SESSION['user_id'] ?? 'Chưa có') . "');</script>";
-
+// Kết nối database nếu chưa có
 if (!isset($conn)) {
-    die("Lỗi: Kết nối database chưa được khởi tạo! Vui lòng kiểm tra lại index.php.");
+    include_once "../app/config/data_connect.php";
 }
 
-$user_id = $_SESSION['user_id'] ?? 0;
+// Kiểm tra kết nối database
+// if (!isset($conn) || $conn === null) {
+//     die(json_encode(["success" => false, "message" => "Lỗi: Kết nối database chưa được khởi tạo!"]));
+// }
 
+// Kiểm tra đăng nhập
+$user_id = $_SESSION['user_id'] ?? 0;
 // if (!$user_id) {
-//     echo "<p>Vui lòng đăng nhập để xem giỏ hàng.</p>";
+//     echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
 //     exit;
 // }
 
@@ -30,28 +25,34 @@ $sql = "SELECT cart.product_id, product.product_name, product.price, product.ima
         FROM cart
         INNER JOIN product ON cart.product_id = product.product_id
         WHERE cart.user_id = ?";
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 $total_price = 0;
-
 $products = [];
+
+// Lưu dữ liệu vào mảng để dùng sau
 while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
 
-// Xuất JSON ra script để hiển thị trong console
-echo "<script>console.log('Dữ liệu giỏ hàng: ', " . json_encode($products) . ");</script>";
+// Kiểm tra nếu giỏ hàng rỗng
+// if (empty($products)) {
+//     echo '<p>Giỏ hàng của bạn đang trống.</p>';
+//     exit;
+// }
+
 
 echo '<div class="shopping-cart">
     <button class="close">
         <ion-icon name="close-outline"></ion-icon>
     </button>';
 
-// Hiển thị danh sách sản phẩm
-while ($row = $result->fetch_assoc()) {
+// Hiển thị danh sách sản phẩm trong giỏ hàng
+foreach ($products as $row) {
     $total_price += $row["price"] * $row["quantity"];
     echo '
     <div class="cart-items">

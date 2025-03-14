@@ -6,7 +6,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-include('app/config/data_connect.php'); // Kết nối database
+include_once 'app/config/data_connect.php'; // Kết nối database
 
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
@@ -60,7 +60,8 @@ $page = $_GET['pages'];
 
 <body class="<?php echo isset($_SESSION['username']) ? 'logged-in' : ''; ?>">
     <?php include 'includes/header.php'; ?>
-    <?php include 'includes/cart.php'; ?>
+    
+
 
     <!-- main screen -->
     <div class="Home_main">
@@ -70,6 +71,7 @@ $page = $_GET['pages'];
             default:
                 include 'includes/banner.php';
                 include 'includes/products.php';
+
                 break;
             case 'about':
                 include 'includes/banner.php';
@@ -100,9 +102,10 @@ $page = $_GET['pages'];
             //     break;
         }
         ?>
+        <?php include 'includes/cart.php'; ?>
     </div>
 
-
+    <?php include 'includes/footer.php'; ?>
     <?php
     if ($page === 'home') :
         echo '<script src="public/assets/js/index.js"></script>';
@@ -123,7 +126,6 @@ $page = $_GET['pages'];
         echo '<script src="public/assets/js/product.js"></script>';
     endif;  // End of if statement
     ?>
-    <?php include 'includes/footer.php'; ?>
     <script src="public/assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
