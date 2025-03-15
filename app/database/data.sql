@@ -42,28 +42,28 @@ INSERT INTO PRODUCT (product_name, price, category_id, size_id, status, descript
 
 
 -- Chèn dữ liệu vào bảng USERS (tránh lỗi trùng email)
-INSERT INTO USERS (user_name, phone, email, address, password, role) VALUES
-('NguyenVanA', '0901234567', 'nguyenvana@example.com', '123 Le Loi, HCM', 'hashed_password_1', 'customer'),
-('TranThiB', '0912345678', 'tranthib@example.com', '456 Nguyen Hue, HCM', 'hashed_password_2', 'customer'),
-('LeVanC', '0923456789', 'levanc@example.com', '789 Tran Hung Dao, HCM', 'hashed_password_3', 'admin')
-ON DUPLICATE KEY UPDATE phone = VALUES(phone), address = VALUES(address), password = VALUES(password);
+INSERT INTO USERS (user_name, phone, email, city, district, ward, street, password, role) VALUES
+('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Ho Chi Minh', 'District 1', 'Ben Nghe', '123 Le Loi', 'hashed_password_1', 'customer'),
+('TranThiB', '0912345678', 'tranthib@example.com', 'Ho Chi Minh', 'District 3', 'Vo Thi Sau', '456 Nguyen Hue', 'hashed_password_2', 'customer'),
+('LeVanC', '0923456789', 'levanc@example.com', 'Ha Noi', 'Ba Dinh', 'Kim Ma', '789 Tran Hung Dao', 'hashed_password_3', 'admin')
+ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password);
 
--- Chèn dữ liệu vào bảng ORDERS (Tự động sinh order_id)
+-- Chèn thêm dữ liệu vào bảng ORDERS
 INSERT INTO ORDERS (user_id, total_cost, status, notes) VALUES
-(1, 1050000, 'Pending', 'Giao hàng giờ hành chính'),
-(2, 520000, 'Completed', 'Giao gấp trong ngày'),
-(1, 750000, 'Processing', 'Giao vào buổi chiều');
+(2, 1300000, 'Pending', 'Giao hàng sau 18h'),
+(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần'),
+(1, 450000, 'Processing', 'Giao buổi sáng sớm');
 
--- Chèn dữ liệu vào bảng ORDER_DETAIL (Dựa theo ORDER_ID đã có)
+-- Chèn thêm dữ liệu vào bảng ORDER_DETAIL
 INSERT INTO ORDER_DETAIL (order_id, product_id, quantity, price) VALUES
-(1, 3, 2, 520000),
-(1, 5, 1, 540000),
-(2, 2, 1, 520000),
-(3, 6, 1, 750000);
+(1, 7, 2, 110000),
+(2, 10, 1, 130000),
+(3, 15, 2, 60000);
 
--- Chèn dữ liệu vào bảng CART (tránh lỗi trùng dữ liệu)
+-- Chèn thêm dữ liệu vào bảng CART (tránh lỗi trùng dữ liệu)
 INSERT INTO CART (user_id, product_id, quantity) VALUES
-(1, 4, 1),
-(2, 1, 2),
-(3, 5, 1)
+(1, 12, 1),
+(2, 8, 3),
+(3, 9, 2)
 ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);
+

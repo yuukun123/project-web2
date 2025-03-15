@@ -609,6 +609,7 @@ header.hide {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease;
     z-index: 99;
+
 }
 
 .shopping-cart.active{
@@ -632,12 +633,31 @@ header.hide {
     color: #000000;
 }
 
+.cart-scroll{
+    overflow-y: auto;
+    max-height: 65%;
+}
+
+.cart-scroll::-webkit-scrollbar {
+    width: 1px;
+}
+
+.cart-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.cart-scroll::-webkit-scrollbar-thumb {
+    background: #f088bab2;
+    border-radius: 10px;
+}
+
 .cart-items{
     display: flex;
     /* margin: 25px 0; */
     padding: 22px 0;
     border-bottom: 0.5px solid #464646;
     border-top: 0.5px solid #464646;
+
 }
 
 .cart-img{

@@ -4,7 +4,10 @@ CREATE TABLE USERS (
     user_name VARCHAR(255) NOT NULL,
     phone VARCHAR(20) UNIQUE,
     email VARCHAR(255) UNIQUE NOT NULL,
-    address VARCHAR(255),
+    city VARCHAR(100) NOT NULL,      -- Thành phố / Tỉnh
+    district VARCHAR(100) NOT NULL,  -- Quận / Huyện
+    ward VARCHAR(100) NOT NULL,      -- Phường / Xã
+    street VARCHAR(255) NOT NULL,    -- Địa chỉ chi tiết (Số nhà, tên đường)
     password VARCHAR(255) NOT NULL,
     role ENUM('customer', 'admin') DEFAULT 'customer',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

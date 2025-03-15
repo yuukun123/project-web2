@@ -1,128 +1,91 @@
 /*Home data*/
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
+    const citySelect = document.getElementById("registerCity");
+    const districtSelect = document.getElementById("registerDistrict");
+    const wardSelect = document.getElementById("registerWard");
 
-
-
-
-
-    // Handle Register Form Submission
-    // const registerForm = document.getElementById('registerForm');
-    // if (registerForm){
-    //     registerForm.addEventListener('submit', function(event) {
-    //         event.preventDefault(); // Prevent default form submission
-    //         const username = document.getElementById('registerUsername').value.toLowerCase();
-    //         const email = document.getElementById('registerEmail').value;
-    //         const password = document.getElementById('registerPassword').value;
-    //         const confirmPassword = document.getElementById('registerConfirmPassword').value;
-    //         const phone = document.getElementById('registerPhone').value;
-    //         const address = document.getElementById('registerAddress').value;
-
-    //         const regex = /[\s\u00C0-\u1EF9]/; // Kiểm tra khoảng trắng hoặc ký tự có dấu
-
-    //         const users = getStoredUsers();
-
-    //         // Check if email or username is already registered
-    //         if (users.find(user => user.email === email || user.username === username)) {
-    //             alert('Email or username is already registered!');
-    //         } 
-    //         else {
-    //             if (phone.length !== 10) {
-    //                 alert('phone number must be at least 10 characters');
-    //                 return;
-    //             }
-
-    //             if(regex.test(username)){
-    //                 alert('Username must not contain any whitespace or special characters');
-    //                 return;
-    //             }
-                
-    //             // Check if password and confirm password match
-    //             if (password !== confirmPassword) {
-    //                 alert('Passwords do not match!');
-    //                 return;
-    //             }
-
-    //             // Add the new user to the user list
-    //             users.push({ username, email, password, phone, address , role: 'client'});
-    //             saveUsers(users);
-
-    //             // Alert and redirect to login
-    //             alert('Registration successful!');
-    //             localStorage.setItem("loggedIn", "true");
-    //             window.location.href = '?pages=home';
-    //         }
-    //     });
-    // }
-
-    // const registerForm = document.getElementById('registerForm');
-    // if (registerForm) {
-    //     registerForm.addEventListener('submit', function(event) {
-    //         event.preventDefault();
-
-    //         const formData = new FormData(registerForm);
-
-    //         fetch('app/config/register_process.php', {
-    //             method: 'POST',
-    //             body: formData
-    //         })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.success) {
-    //                 alert('Registration successful!');
-    //                 window.location.href = '?pages=login'; // Chuyển hướng về trang đăng nhập
-    //             } else {
-    //                 alert(data.message); // Hiển thị lỗi từ server
-    //             }
-    //         })
-    //         .catch(error => console.error('Error:', error));
-    //     });
-    // }
-
-    // Function to get current user from localStorage
-    // function getCurrentUser() {
-    //     const currentUser = localStorage.getItem('UserStr');
-    //     return currentUser ? JSON.parse(currentUser) : null;
-
-    // }
-
-    // function isLoggedIn() {
-    //     return !!getCurrentUser(); // Returns true if currentUser exists, false otherwise
-    // }
-
-    // // const cartBtn = document.getElementById('cart-btn');
-    // const cartBtn = document.querySelectorAll('.sp-cart')
-    // if (cartBtn.length > 0) {
-    //     cartBtn.forEach(button => {
-    //         button.addEventListener('click', function(event) {
-    //             event.preventDefault();
-                
-    //             if (!isLoggedIn()) {
-    //                 // alert('Please log in to view your cart!');
-    //             } else {
-    //                 // Code to view cart goes here (if user is logged in)
-    //                 console.log('Viewing cart...'); // Placeholder for cart viewing logic
-    //             }
-    //         });
-    //     });
-    // }
-
-    const cartBtns = document.querySelectorAll('.sp-cart');
-
-    if (cartBtns.length > 0) {
-        cartBtns.forEach(button => {
-            button.addEventListener('click', async function(event) {
-                event.preventDefault();
-
-                const loggedIn = await checkLoginStatus();
-
-                if (!loggedIn) {
-                    alert('Please log in to view your cart!');
-                    window.location.href = '?pages=login';
-                } else {
-                    console.log('Viewing cart...');
-                }
+    // Lấy danh sách tỉnh/thành phố từ API
+    fetch("https://provinces.open-api.vn/api/p/")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(city => {
+                let option = new Option(city.name, city.code);
+                citySelect.add(option);
             });
         });
-    }
+
+    // Khi chọn tỉnh/thành phố -> Load danh sách quận/huyện
+    citySelect.addEventListener("change", function () {
+        let cityCode = citySelect.value;
+        districtSelect.innerHTML = "<option value=''>Select District</option>";
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
+
+        if (cityCode) {
+            fetch(`https://provinces.open-api.vn/api/p/${cityCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.districts.forEach(district => {
+                        let option = new Option(district.name, district.code);
+                        districtSelect.add(option);
+                    });
+                });
+        }
+    });
+
+    // Khi chọn quận/huyện -> Load danh sách phường/xã
+    districtSelect.addEventListener("change", function () {
+        let districtCode = districtSelect.value;
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
+
+        if (districtCode) {
+            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.wards.forEach(ward => {
+                        let option = new Option(ward.name, ward.code);
+                        wardSelect.add(option);
+                    });
+                });
+        }
+    });
+
+
+    const form = document.getElementById('registerForm');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Ngăn chặn form submit mặc định
+
+        const formData = new FormData(form);
+
+        fetch('pages/Controllers/register_process.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                window.location.href = 'http://localhost/project-web2/login';
+            } else {
+                alert('Đã xảy ra lỗi:\n' + data.errors.join('\n'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Đã xảy ra lỗi không xác định.');
+        });
+    });
+    
 });
+
+document.querySelectorAll(".input-box input").forEach((input) => {
+    input.addEventListener("input", function () {
+        if (this.validity.valid || this.value.trim() !== "") {
+            this.classList.add("has-content");
+        } else {
+            this.classList.remove("has-content");
+        }
+    });
+});
+
