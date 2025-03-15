@@ -15,6 +15,8 @@ logo.addEventListener('click', function(e) {
     window.location.href = '/project-web2/home'; 
 });
 
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const blurOverlay = document.querySelector(".blur-overlay"); 
     const btnCart = document.querySelectorAll(".add-to-cart"); // Nút thêm sản phẩm
@@ -101,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hàm thêm sản phẩm vào giỏ hàng
     function addToCart(productId) {
         console.log("Đang gửi request thêm sản phẩm:", productId);
-        fetch("http://localhost/project-web2/includes/cart_action.php", {
+        fetch("includes/cart_action.php", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -123,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hàm xóa sản phẩm khỏi giỏ hàng
     function removeFromCart(productId) {
-        fetch("http://localhost/project-web2/includes/cart_action.php", {
+        fetch("includes/cart_action.php", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -143,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hàm cập nhật số lượng sản phẩm
     function updateQuantity(productId, change) {
-        fetch("http://localhost/project-web2/includes/cart_action.php", {
+        fetch("includes/cart_action.php", {
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
@@ -163,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hàm lấy danh sách giỏ hàng
     function fetchCart() {
-        fetch("http://localhost/project-web2/includes/cart.php", {
+        fetch("includes/cart.php", {
             method: "GET",
             credentials: "include"
         })
@@ -215,6 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
     // Khi trang tải xong, kiểm tra trạng thái đăng nhập và cập nhật số lượng giỏ hàng
     checkLoginStatus();
     updateCartCount();
+    window.updateQuantity = updateQuantity;
+    window.removeFromCart = removeFromCart;
     
 
 });

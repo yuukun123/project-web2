@@ -1,4 +1,9 @@
 /*Home data*/
+function myFunction() {
+    const input = document.getElementById('search');
+    // Add your search functionality here
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     
 
@@ -96,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // test fetch sản phẩm 
     const searchTerm = 'm';
-    const url = `http://localhost/project-web2/pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`;
+    const url = `pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`;
     console.log('Fetching:', url); // Kiểm tra URL
 
     fetch(url)
@@ -104,20 +109,18 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(data => console.log(data))
     .catch(error => console.error('Error:', error));
     
+    // Các biến và sự kiện khác của trang...
 
-    // Lấy danh sách tất cả ô tìm kiếm và container gợi ý
     const searchInputs = document.querySelectorAll(".search-input");
     const searchButtons = document.querySelectorAll(".searchBtn");
 
-    // Hàm tìm kiếm sản phẩm
+    // Hàm tìm kiếm sản phẩm (giữ nguyên nếu cần)
     function searchItems(searchTerm) {
         let allProducts = document.querySelectorAll("#product-container .movie-item");
-
         if (searchTerm.trim() === "") {
-            allProducts.forEach(product => product.style.display = "block"); // Hiển thị lại toàn bộ sản phẩm
+            allProducts.forEach(product => product.style.display = "block");
             return;
         }
-
         let found = false;
         allProducts.forEach(product => {
             let productName = product.querySelector(".title").innerText.toLowerCase();
@@ -128,12 +131,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 product.style.display = "none";
             }
         });
-
         if (!found) {
             document.getElementById("product-container").innerHTML = "<p>Không tìm thấy sản phẩm nào!</p>";
         }
     }
 
+    let isSelectingHint = false;
     // Hàm hiển thị gợi ý tìm kiếm
     function showHints(inputField) {
         const searchTerm = inputField.value.trim();
@@ -157,17 +160,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 products.forEach(item => {
                     const hintItem = document.createElement("div");
                     hintItem.className = "hint-item";
+                    // Sử dụng dataset để lưu product_id
+                    hintItem.dataset.productId = item.product_id;
                     hintItem.innerHTML = `
                         <img src="${item.image}" alt="${item.product_name}" style="width:30px; height:30px; margin-right:10px;">
                         ${item.product_name}
                     `;
 
-                    hintItem.addEventListener("click", function () {
-                        inputField.value = item.product_name;
-                        hintContainer.innerHTML = "";
-                        hintContainer.style.display = "none";
-                        searchItems(item.product_name);
+                    // Dùng mousedown để tránh mất focus trước khi xử lý
+                    hintItem.addEventListener("mousedown", function (event) {
+                        event.preventDefault(); // Ngăn trình duyệt hiểu là nhấp ra ngoài input
+                        isSelectingHint = true;
                     });
+
+                    hintItem.addEventListener("click", function () {
+                        isSelectingHint = false; // Reset biến
+                        console.log(item.product_id);
+                        window.location.href = `home?pages=product&id=${item.product_id}`;
+                    });                    
 
                     hintContainer.appendChild(hintItem);
                 });
@@ -177,12 +187,23 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error("Lỗi khi lấy gợi ý:", error));
     }
 
+    let inputTimeout = null; // Biến lưu bộ đếm thời gian
     // Gán sự kiện cho từng ô tìm kiếm
     searchInputs.forEach(input => {
         input.addEventListener("input", function () {
-            showHints(this);
+        
+            if (event.data === " ") return;
+
+            clearTimeout(inputTimeout); // Xóa bộ đếm thời gian trước đó
+            const searchField = this;
+            
+            inputTimeout = setTimeout(() => {
+                showHints(searchField); // Gọi hàm hiển thị hint sau khi người dùng ngừng nhập
+            }, 500); // Chờ 500ms sau khi ngừng nhập mới gọi API
+            
             if (this.value.trim() === "") {
                 console.log("Ô tìm kiếm trống - Đang tải lại danh sách sản phẩm gốc...");
+                // Nếu có hàm loadAllProducts(), gọi ở đây
                 loadAllProducts();
             }
         });
@@ -192,6 +213,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 searchItems(this.value);
             }
         });
+
+        input.addEventListener("blur", function () {
+            setTimeout(() => {
+                if (!isSelectingHint) {
+                    this.closest(".search-container").querySelector(".hint-container").style.display = "none";
+                }
+                isSelectingHint = false;
+            }, 200); // Đợi 200ms để kiểm tra xem người dùng có click vào hint không
+        });
+
+    });
+
+    // Xử lý click ngoài vùng input/hint-container
+    document.addEventListener("click", function (event) {
+        if (!event.target.closest(".search-container") && !event.target.closest(".hint-item")) {
+            document.querySelectorAll(".hint-container").forEach(hint => {
+                hint.innerHTML = "";
+                hint.style.display = "none";
+            });
+        }
     });
 
     // Gán sự kiện click cho nút tìm kiếm
@@ -204,18 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    document.addEventListener("click", function (event) {
-        searchInputs.forEach(input => {
-            const hintContainer = input.closest(".search-container").querySelector(".hint-container");
-            
-            // Kiểm tra nếu click ngoài ô input và ngoài hint-container thì ẩn
-            if (!input.contains(event.target) && !hintContainer.contains(event.target)) {
-                hintContainer.innerHTML = "";
-                hintContainer.style.display = "none";
-            }
-        });
-    });
+    
 
 });
-
-
