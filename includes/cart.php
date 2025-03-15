@@ -3,22 +3,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+
 // Kết nối database nếu chưa có
 if (!isset($conn)) {
     include_once "../app/config/data_connect.php";
 }
 
-// Kiểm tra kết nối database
-// if (!isset($conn) || $conn === null) {
-//     die(json_encode(["success" => false, "message" => "Lỗi: Kết nối database chưa được khởi tạo!"]));
-// }
-
 // Kiểm tra đăng nhập
 $user_id = $_SESSION['user_id'] ?? 0;
-// if (!$user_id) {
-//     echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
-//     exit;
-// }
+if (!$user_id) {
+    echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
+    exit;
+}
 
 // Lấy danh sách sản phẩm trong giỏ hàng
 $sql = "SELECT cart.product_id, product.product_name, product.price, product.image, cart.quantity
@@ -39,18 +38,16 @@ while ($row = $result->fetch_assoc()) {
     $products[] = $row;
 }
 
-// Kiểm tra nếu giỏ hàng rỗng
-// if (empty($products)) {
-//     echo '<p>Giỏ hàng của bạn đang trống.</p>';
-//     exit;
-// }
+if (empty($products)) {
+    echo '<div class="empty-cart">
+            <ion-icon name="close-circle-outline"></ion-icon>    
+            Không có sản phẩm trong giỏ hàng.
+        </div>';
+}
 
 
-echo '<div class="shopping-cart">
-    <button class="close">
-        <ion-icon name="close-outline"></ion-icon>
-    </button>
-    <div class="cart-scroll">';
+// Xuất dữ liệu giỏ hàng (có thể debug dữ liệu bằng console)
+echo "<script>console.log('Dữ liệu giỏ hàng: ', " . json_encode($products) . ");</script>";
 
 
 // Hiển thị danh sách sản phẩm trong giỏ hàng
@@ -83,17 +80,10 @@ foreach ($products as $row) {
 }
 
 echo '
-    </div>
     <div class="provisional-charge">
         <p>Provisional invoice :</p>
         <p>' . number_format($total_price, 0, ",", ".") . ' VND</p>
     </div>
-    <div class="Pay">
-        <a href="./user-pay.html" target="_blank" class="pay-link">
-            <button class="pay">Pay</button>
-        </a>
-    </div>
-</div>
 
-<div class="blur-overlay"></div>';
+    ';
 ?>

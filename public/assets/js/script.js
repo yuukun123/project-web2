@@ -17,16 +17,15 @@ logo.addEventListener('click', function(e) {
 
 document.addEventListener("DOMContentLoaded", function () {
     const blurOverlay = document.querySelector(".blur-overlay"); 
-    const btnCart = document.querySelectorAll(".add-to-cart"); // Nút thêm sản phẩm vào giỏ hàng
+    const btnCart = document.querySelectorAll(".add-to-cart"); // Nút thêm sản phẩm
     const shoppingCart = document.querySelector(".shopping-cart"); // Cửa sổ giỏ hàng
     const cartBtn = document.getElementById("cart-btn"); // Nút mở giỏ hàng
-    const closeBtns = document.querySelectorAll(".shopping-cart .close");
+    const closeBtns = document.querySelectorAll(".close");
     const loginBtn = document.getElementById("login-btn");
     const logoutBtn = document.getElementById("logout-btn");
     const cartCount = document.querySelector(".cart-count");
 
-
-    // 🏷 Kiểm tra trạng thái đăng nhập từ session
+    // Kiểm tra trạng thái đăng nhập từ session
     function checkLoginStatus(callback) {
         fetch("http://localhost/project-web2/includes/session.php", {
             method: "GET",
@@ -35,9 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             console.log("Session Data:", data);
-            console.log("Đã đăng nhập:", data.loggedIn);
-            console.log("ID người dùng:", data.user_id);
-
             if (data.loggedIn) {
                 document.body.classList.add("logged-in");
             } else {
@@ -49,19 +45,19 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Lỗi kiểm tra session:", error));
     }
 
-    // 🔄 Cập nhật giao diện Login / Logout
+    // Cập nhật giao diện đăng nhập
     function updateUI() {
         const isLoggedIn = document.body.classList.contains("logged-in");
         if (loginBtn) loginBtn.style.display = isLoggedIn ? "none" : "inline-block";
         if (logoutBtn) logoutBtn.style.display = isLoggedIn ? "inline-block" : "none";
     }
 
-    // 🛒 Mở giỏ hàng (Chỉ kiểm tra đăng nhập khi bấm vào biểu tượng giỏ hàng)
+    // Khi nhấn nút mở giỏ hàng
     if (cartBtn) {
         cartBtn.addEventListener("click", () => {
             checkLoginStatus((isLoggedIn) => {
                 if (isLoggedIn) {
-                    fetchCart(); // ✅ Cập nhật danh sách giỏ hàng
+                    fetchCart(); // Load giỏ hàng từ database
                     shoppingCart.classList.add("active");
                     if (blurOverlay) blurOverlay.classList.add("active");
                 } else {
@@ -71,21 +67,21 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
-    
 
-    // ❌ Đóng giỏ hàng
-    closeBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
+    // Khi nhấn nút đóng giỏ hàng
+    document.addEventListener("click", function (event) {
+        if (event.target.classList.contains("close")) {
             shoppingCart.classList.remove("active");
             if (blurOverlay) blurOverlay.classList.remove("active");
-        });
+            console.log("Đóng giỏ hàng");
+        }
     });
+    
 
-    // 🛒 Thêm sản phẩm vào giỏ hàng (Chỉ kiểm tra đăng nhập khi bấm vào nút sản phẩm)
+    // Thêm sản phẩm vào giỏ hàng (trên trang sản phẩm)
     btnCart.forEach(button => {
         button.addEventListener("click", function (event) {
-            event.stopPropagation(); // 🛑 Ngăn không cho sự kiện lan lên trên
-
+            event.stopPropagation();
             checkLoginStatus((isLoggedIn) => {
                 if (!isLoggedIn) {
                     alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
@@ -102,28 +98,12 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // xem giỏ hàng 
-    function updateCartCount() {
-        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1", {
-            method: "GET",
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Số lượng giỏ hàng:", data.count);
-            if (cartCount) {
-                cartCount.textContent = data.count || 0;
-            }
-        })
-        .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));
-    }
-
-    // ✅ 🛒 Thêm sản phẩm vào giỏ hàng
+    // Hàm thêm sản phẩm vào giỏ hàng
     function addToCart(productId) {
         console.log("Đang gửi request thêm sản phẩm:", productId);
         fetch("http://localhost/project-web2/includes/cart_action.php", {
             method: "POST",
-            credentials: "include", // đảm bảo gửi cookie session
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ action: "add", product_id: parseInt(productId) })
         })
@@ -132,20 +112,16 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Response từ server:", data);
             if (data.success) {
                 alert("Đã thêm sản phẩm vào giỏ hàng!");
-                // Option 1: Reload lại trang để cập nhật giỏ hàng
-                location.reload();
-                
-                // Option 2: Gọi các hàm cập nhật giỏ hàng động nếu bạn đã xử lý chúng
-                // fetchCart();
-                // updateCartCount();
+                fetchCart();
+                updateCartCount();
             } else {
                 alert("Lỗi: " + data.message);
             }
         })
         .catch(error => console.error("Lỗi khi thêm vào giỏ hàng:", error));
     }
-    
-    
+
+    // Hàm xóa sản phẩm khỏi giỏ hàng
     function removeFromCart(productId) {
         fetch("http://localhost/project-web2/includes/cart_action.php", {
             method: "POST",
@@ -165,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Lỗi khi xóa sản phẩm:", error));
     }
 
+    // Hàm cập nhật số lượng sản phẩm
     function updateQuantity(productId, change) {
         fetch("http://localhost/project-web2/includes/cart_action.php", {
             method: "POST",
@@ -183,9 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Lỗi cập nhật số lượng:", error));
     }
-    
 
-    // 🛒 Lấy danh sách giỏ hàng
+    // Hàm lấy danh sách giỏ hàng
     function fetchCart() {
         fetch("http://localhost/project-web2/includes/cart.php", {
             method: "GET",
@@ -194,25 +170,55 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.text())
         .then(data => {
             console.log("Dữ liệu giỏ hàng nhận được:", data);
-            if (shoppingCart) {
-                // shoppingCart.innerHTML = data;
-                // shoppingCart.classList.add("active");
-                // if (blurOverlay) blurOverlay.classList.add("active");
+            const cartContent = document.querySelector(".cart-scroll"); // Chỉ cập nhật nội dung sản phẩm
+            if (cartContent) {
+                if (data.includes("empty-cart")) { // Kiểm tra nếu có nội dung rỗng từ PHP
+                    cartContent.innerHTML = `
+                        <div class="emptyCart">
+                            <div class="close-icon"> <ion-icon name="alert-circle-outline"></ion-icon> </div>
+                            <p class="empty-cart">Giỏ hàng của bạn đang trống.</p>
+                        </div>
+                    `;
+                }
+                else {
+                    // Cập nhật danh sách sản phẩm mà không ảnh hưởng nút đóng
+                    cartContent.innerHTML = data;
+                }
             } else {
-                console.error("Không tìm thấy phần tử .shopping-cart trên trang!");
+                console.error("Không tìm thấy phần tử .cart-content trên trang!");
             }
+    
+            // Hiển thị giỏ hàng và lớp mờ nếu chưa hiển thị
+            shoppingCart.classList.add("active");
+            if (blurOverlay) blurOverlay.classList.add("active");
         })
         .catch(error => console.error("Lỗi khi fetch giỏ hàng:", error));
     }
     
 
+    // Hàm cập nhật số lượng sản phẩm trên icon giỏ hàng
+    function updateCartCount() {
+        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Số lượng giỏ hàng:", data.count);
+            if (cartCount) {
+                cartCount.textContent = data.count || 0;
+            }
+        })
+        .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));
+    }
 
-    // 🚀 Khởi chạy khi trang tải xong
+    // Khi trang tải xong, kiểm tra trạng thái đăng nhập và cập nhật số lượng giỏ hàng
     checkLoginStatus();
-    fetchCart();
     updateCartCount();
+    
 
 });
+
 
 
 

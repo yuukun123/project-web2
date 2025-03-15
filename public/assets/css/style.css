@@ -609,6 +609,7 @@ header.hide {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease;
     z-index: 99;
+    /* overflow: hidden; */
 
 }
 
@@ -635,7 +636,7 @@ header.hide {
 
 .cart-scroll{
     overflow-y: auto;
-    max-height: 65%;
+    height: 65%;
 }
 
 .cart-scroll::-webkit-scrollbar {
@@ -649,6 +650,21 @@ header.hide {
 .cart-scroll::-webkit-scrollbar-thumb {
     background: #f088bab2;
     border-radius: 10px;
+}
+
+.close-icon{
+    display: flex;
+    justify-content: center;
+    font-size: 8vh;
+    color: #ff8c8c;
+    margin-bottom: 30px;
+}
+
+.empty-cart{
+    display: flex;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
 }
 
 .cart-items{

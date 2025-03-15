@@ -61,8 +61,6 @@ $page = $_GET['pages'];
 <body class="<?php echo isset($_SESSION['username']) ? 'logged-in' : ''; ?>">
     <?php include 'includes/header.php'; ?>
     
-
-
     <!-- main screen -->
     <div class="Home_main">
         <?php
@@ -102,8 +100,25 @@ $page = $_GET['pages'];
             //     break;
         }
         ?>
-        <?php include 'includes/cart.php'; ?>
+        
     </div>
+
+    <div class="shopping-cart">
+        <button class="close">
+            &times;
+        </button>
+        <div class="cart-scroll">
+            <?php include 'includes/cart.php'; ?>
+        </div>
+        
+        <div class="Pay">
+            <a href="./user-pay.html" target="_blank" class="pay-link">
+                <button class="pay">Pay</button>
+            </a>
+        </div>
+    </div>
+    <div class="blur-overlay"></div>
+
 
     <?php include 'includes/footer.php'; ?>
     <?php
