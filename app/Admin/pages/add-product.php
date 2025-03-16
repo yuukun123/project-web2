@@ -25,7 +25,8 @@
             <!--Edit for Home-->
             <div class="Home">
                 <div class="text-big">Add Product</div>
-
+                <!-- include file dưới này -->
+                <?php include ("../Views/products/add.php");?>
             </div>
         </div>
         

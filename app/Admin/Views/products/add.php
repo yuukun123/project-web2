@@ -1,5 +1,4 @@
-<form>
-
+<form action="../../Controllers/add-product-processs.php" method="post">
     <div class="add-more">
         <button class="add-category">
             <ion-icon name="add-circle-outline"></ion-icon>
@@ -14,10 +13,10 @@
     <div class="product-grid">
 
         <div class="top">
-            <div class="id">
+            <!-- <div class="id">
                 <div class="product-head">Id</div>
                 <div class="product-items"><input type="text"></div>
-            </div>
+            </div> -->
             <div class="name">
                 <div class="product-head">Name</div>
                 <div class="product-items"><input type="text"></div>
@@ -26,25 +25,24 @@
                 <div class="product-head">Price</div>
                 <div class="product-items"><input type="text"></div>
             </div>
-
-        </div>
-                            
-        <div class="bottom">
             <div class="status">
                 <div class="product-head">Status</div>
                 <div class="product-items">
-                    <select class="select" name="jumpMenu3" id="jumpMenu3">
+                    <select class="select" name="status" id="status">
                         <option selected="selected">--Select status--</option>
-                        <option >In stock</option>
+                        <option >Available</option>
                         <option >Sold out</option>
                     </select>
                 </div>
             </div>
 
+        </div>
+                            
+        <div class="bottom">
             <div class="category">
                 <div class="product-head">Category</div>
                 <div class="product-items">
-                    <select class="select" name="jumpMenu3" id="jumpMenu3">
+                    <select class="select" name="category" id="category">
                         <option selected="selected">--Select category--</option>
                         <option >Mousse</option>
                         <option >Croissant</option>
@@ -55,8 +53,13 @@
 
             <div class="capital">
                 <div class="product-head">Size</div>
-                <div class="product-items"><input type="number"></div>
+                <div class="product-items">
+                    <select class="select" name="size" id="size">
+                        <option selected="selected">--Select size--</option>
+                    </select>
+                </div>
             </div>
+
         </div>
 
     </div>
@@ -69,14 +72,7 @@
         </label>
             
         <input type="text" id="filePath" readonly />
-        <input type="file" id="fileInput" style="display:none;" 
-            onchange="
-                const file = this.files[0];
-                if (file) {
-                    const uploadPath = 'uploads/' + file.name; 
-                    document.getElementById('filePath').value = uploadPath;
-                }
-            " />
+        <input type="file" id="fileInput" style="display:none;" />
 
     </div>
 
