@@ -736,17 +736,3 @@
         text-justify: inter-word;
     }
 }
-
-
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #e4b95b;
-    border-radius: 10px;
-}

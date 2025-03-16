@@ -5,8 +5,6 @@ function myFunction() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    
-
     // render và lọc sản phẩm
     let itemsPerPage = 8; // Số sản phẩm mỗi trang
     let currentPage = 1;

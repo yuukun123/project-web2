@@ -15,7 +15,10 @@ logo.addEventListener('click', function(e) {
     window.location.href = '/project-web2/home'; 
 });
 
-
+function myFunction() {
+    const input = document.getElementById('search');
+    // Add your search functionality here
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     const blurOverlay = document.querySelector(".blur-overlay"); 

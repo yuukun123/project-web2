@@ -14,10 +14,10 @@ if (!isset($conn)) {
 
 // Kiểm tra đăng nhập
 $user_id = $_SESSION['user_id'] ?? 0;
-if (!$user_id) {
-    echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
-    exit;
-}
+// if (!$user_id) {
+//     echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
+//     exit;
+// }
 
 // Lấy danh sách sản phẩm trong giỏ hàng
 $sql = "SELECT cart.product_id, product.product_name, product.price, product.image, cart.quantity

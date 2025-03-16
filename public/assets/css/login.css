@@ -618,6 +618,18 @@ input[type="number"] {
         overflow-y: auto;
     }
 
+    .wrapper .input-infor::-webkit-scrollbar {
+        width: 1px;
+    }
+    
+    .wrapper .input-infor::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    .wrapper .input-infor::-webkit-scrollbar-thumb {
+        background: #F7B9D7;
+        border-radius: 10px;
+    }
 
     .remember-forgot{
         margin-top: 20px;
@@ -713,18 +725,4 @@ input[type="number"] {
         text-align: justify;
         text-justify: inter-word;
     }
-}
-
-
-::-webkit-scrollbar {
-    width: 2px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #F7B9D7;
-    border-radius: 10px;
 }

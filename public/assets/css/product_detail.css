@@ -1541,15 +1541,3 @@
     }
     
 }
-::-webkit-scrollbar {
-    width: 0px;
-}
-
-::-webkit-scrollbar-track {
-    background: #d5909f;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #e4b95b;
-    border-radius: 10px;
-}
