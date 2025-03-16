@@ -13,7 +13,7 @@ body {
     height: 100vh;
     margin: 0;
     padding: 0;
-    background: url(../Img/banner2.jpg);
+    background: url(../../../../public/assets/Img/banner2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

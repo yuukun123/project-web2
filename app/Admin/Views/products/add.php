@@ -19,16 +19,16 @@
             </div> -->
             <div class="name">
                 <div class="product-head">Name</div>
-                <div class="product-items"><input type="text"></div>
+                <div class="product-items"><input type="text" name="name" required></div>
             </div>
             <div class="price">
                 <div class="product-head">Price</div>
-                <div class="product-items"><input type="text"></div>
+                <div class="product-items"><input type="text" name="price" required></div>
             </div>
             <div class="status">
                 <div class="product-head">Status</div>
                 <div class="product-items">
-                    <select class="select" name="status" id="status">
+                    <select class="select" name="status" id="status" required>
                         <option selected="selected">--Select status--</option>
                         <option >Available</option>
                         <option >Sold out</option>
@@ -42,7 +42,7 @@
             <div class="category">
                 <div class="product-head">Category</div>
                 <div class="product-items">
-                    <select class="select" name="category" id="category">
+                    <select class="select" name="category" id="category" required>
                         <option selected="selected">--Select category--</option>
                         <option >Mousse</option>
                         <option >Croissant</option>
@@ -54,7 +54,7 @@
             <div class="capital">
                 <div class="product-head">Size</div>
                 <div class="product-items">
-                    <select class="select" name="size" id="size">
+                    <select class="select" name="size" id="size" required>
                         <option selected="selected">--Select size--</option>
                     </select>
                 </div>
@@ -72,13 +72,13 @@
         </label>
             
         <input type="text" id="filePath" readonly />
-        <input type="file" id="fileInput" style="display:none;" />
+        <input type="file" id="fileInput" name="image" style="display:none;" />
 
     </div>
 
     <div class="product-pic describe">Describe</div>
     <div class="write-describe">
-        <textarea rows="6" cols="150" style="overflow:auto;"></textarea>
+        <textarea name="description" rows="6" cols="150" style="overflow:auto;" required></textarea>
     </div>
 
     <div class="button-click">

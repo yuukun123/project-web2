@@ -14,7 +14,7 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
-    <link rel="icon" href="assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <link rel="icon" href="../public/assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
     <title>The Sweets</title>
 </head>
 
@@ -22,7 +22,7 @@
     <!--header-->
     <div class="header">
         <div class="logo">
-            <img src="assets/Img/Sweets1.png" alt="">
+            <img src="../../public/assets/Img/Sweets1.png" alt="">
         </div>
     </div>
 

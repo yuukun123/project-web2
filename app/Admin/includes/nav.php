@@ -1,7 +1,7 @@
 <div class="right-screen">
     <div class="Function-use">
         <button class="logo" style="border: none; background: none; cursor:pointer">
-            <img src="../assets/Img/Sweets1.png" alt="">
+            <img src="../../../public/assets/Img/Sweets1.png" alt="">
         </button>
         
         <div class="menu-container">
