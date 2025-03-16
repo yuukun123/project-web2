@@ -15,6 +15,8 @@ logo.addEventListener('click', function(e) {
     window.location.href = 'home.php'; 
 });
 
+
+
 function toggleGrade(contentId, chevronId) {
     var chevron = document.querySelectorAll(('#' + chevronId));
     var content = document.querySelectorAll(('#' + contentId));

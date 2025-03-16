@@ -1,4 +1,5 @@
 <?php
+session_start(); // Đảm bảo session được khởi động
 $page = basename($_SERVER['PHP_SELF']);
 
 switch ($page) {
@@ -23,20 +24,31 @@ switch ($page) {
     default:
         $title = "Home";
 }
+
+
+$authButtons = '<button id="login-btn" class="btnLogin-popup">Login</button>';
+
+if (isset($_SESSION['username'])) {
+    $authButtons = '
+        <div class="navigation">
+            <button id="user-btn" class="btnLogin-popup"> ' . htmlspecialchars($_SESSION['username']) . '</button>
+            <form action="../Login_Processing/logout_processing.php" method="POST" style="display: inline;">
+                <div class="Function-cl">
+                    <div class="logout">
+                        <button type="submit" id="logout-btn" class="btnLogout-popup">Logout</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    ';
+}
 ?>
 
 <div class="header">
     <div class="text-heading">
         <h1><?php echo $title; ?></h1>
     </div>
-    <nav class="navigation">
-        <button id="login-btn" class="btnLogin-popup">Login</button>
-        <div class="Function-cl">
-            <div class="logout">
-                <button id="logout-btn" class="btnLogout-popup">Logout</button>
-            </div>
-        </div>
-    </nav>
+    <?php echo $authButtons; ?>
 
     <div class="hamburger"  id="hamburger" onclick="toggleMenu()">
         <div class="bar"></div>

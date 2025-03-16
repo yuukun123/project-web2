@@ -282,6 +282,9 @@ header.hide {
     height: 100%;
     background: #dbe8fc;
     background-image: url('../Img/Ahri.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .text-big{
@@ -302,7 +305,7 @@ header.hide {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 215px;
+    padding: 165px;
     
 }
 

@@ -1,28 +1,4 @@
 <?php
-$page = basename($_SERVER['PHP_SELF']);
-
-switch ($page) {
-    case "list-product.php":
-        $title = "Product List";
-        break;
-    case "add-product.php":
-        $title = "Add Product";
-        break;
-    case "manager-user.php":
-        $title = "User Manager";
-        break;
-    case "statiscal-user.php":
-        $title = "Statiscal User";
-        break;
-    case "statiscal-product.php":
-        $title = "Statiscal Product";
-        break;
-    case "receipt.php":
-        $title = "Receipt";
-        break;
-    default:
-        $title = "Home";
-}
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +30,7 @@ switch ($page) {
             <?php include ("../includes/header.php"); ?>
             
             <div class="Home">
-                <div class="text-big"><?php echo $title; ?></div>
+                <div class="text-big">Home</div>
                 <div class="text-small">Welcome to Admin</div>
             </div>
         </div>
