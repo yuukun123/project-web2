@@ -20,7 +20,7 @@
             <span class="search-price-title">Price from:
                 <input type="number" id="minPrice" min="0" placeholder="0đ">
                 To:
-                <input type="number" id="maxPrice" max="500000" placeholder="500.000đ">
+                <input type="number" id="maxPrice" max="600000" placeholder="600.000đ">
             </span>
         </div>
         <button type="button" class="btn-searchpro" onclick="search()">Search</button>
