@@ -35,7 +35,6 @@ switch ($page) {
             <div class="logout">
                 <button id="logout-btn" class="btnLogout-popup">Logout</button>
             </div>
-            
         </div>
     </nav>
 

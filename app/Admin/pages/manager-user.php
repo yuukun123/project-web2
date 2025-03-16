@@ -11,7 +11,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <link rel="icon" href="../assets/Img/Sweets1.png" type="image/x-icon" class="icon-page"/>
+  <link rel="icon" href="../assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
   <title>Admin</title>
 </head>
 
@@ -29,6 +29,7 @@
     <?php include ("../includes/nav.php"); ?>
   </div>
 
+  <script src="../assets/js/script.js"></script>
   <script src="../assets/js/manager-user.js"></script>
   
 </body>

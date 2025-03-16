@@ -1,8 +1,8 @@
 <div class="right-screen">
     <div class="Function-use">
-        <div class="logo">
+        <button class="logo" style="border: none; background: none; cursor:pointer">
             <img src="../assets/Img/Sweets1.png" alt="">
-        </div>
+        </button>
         
         <div class="menu-container">
             <!--Manage-product-->

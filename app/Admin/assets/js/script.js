@@ -8,6 +8,13 @@ function toggleMenu(hamburger) {
     });
 }
 
+const logo = document.querySelector('.logo');
+logo.addEventListener('click', function(e) {
+
+    e.preventDefault();
+    window.location.href = 'home.php'; 
+});
+
 function toggleGrade(contentId, chevronId) {
     var chevron = document.querySelectorAll(('#' + chevronId));
     var content = document.querySelectorAll(('#' + contentId));

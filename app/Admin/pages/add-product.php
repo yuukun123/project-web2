@@ -13,7 +13,7 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <link rel="icon" href="../../Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <link rel="icon" href="../assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
     <title>Admin</title>
 </head>
 
@@ -33,6 +33,7 @@
 
     </div>
     
+    <script src="../assets/js/script.js"></script>
     <script src="../assets/js/add-product.js"></script>
 </body>
 
