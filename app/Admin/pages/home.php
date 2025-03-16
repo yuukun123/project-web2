@@ -1,0 +1,68 @@
+<?php
+$page = basename($_SERVER['PHP_SELF']);
+
+switch ($page) {
+    case "list-product.php":
+        $title = "Product List";
+        break;
+    case "add-product.php":
+        $title = "Add Product";
+        break;
+    case "manager-user.php":
+        $title = "User Manager";
+        break;
+    case "statiscal-user.php":
+        $title = "Statiscal User";
+        break;
+    case "statiscal-product.php":
+        $title = "Statiscal Product";
+        break;
+    case "receipt.php":
+        $title = "Receipt";
+        break;
+    default:
+        $title = "Home";
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> 
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="icon" href="../assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
+    <title>Admin</title>
+</head>
+
+<body>
+    <div class="notificate" id="notificate">
+        <p id="message"></p>
+    </div>
+
+
+    <div class="grid-full">
+        <div class="left-screen">
+            <?php include ("../includes/header.php"); ?>
+            
+            <div class="Home">
+                <div class="text-big"><?php echo $title; ?></div>
+                <div class="text-small">Welcome to Admin</div>
+            </div>
+        </div>
+
+        <?php include ("../includes/nav.php"); ?>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+</body> 
+
+</html>

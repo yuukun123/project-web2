@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 "username_db" => $row['user_name'], // Tên người dùng từ database
                 "password_db" => $hashed_password, // Mật khẩu hash từ database
                 "role" => $row['role'], // Phân quyền
-                "redirect" => "views/home.php", //
+                "redirect" => "pages/home.php", //
             ]);
         } else {
             echo json_encode([
