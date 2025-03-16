@@ -640,7 +640,7 @@ header.hide {
 }
 
 .cart-scroll::-webkit-scrollbar {
-    width: 1px;
+    width: 0.8px;
 }
 
 .cart-scroll::-webkit-scrollbar-track {
@@ -670,7 +670,7 @@ header.hide {
 .cart-items{
     display: flex;
     /* margin: 25px 0; */
-    padding: 22px 0;
+    padding: 26px 0;
     border-bottom: 0.5px solid #464646;
     border-top: 0.5px solid #464646;
 
@@ -691,7 +691,7 @@ header.hide {
     color: white;
     font-size: 14px;
     padding: 2px 0;
-    margin-right: 105px;
+    /* margin-right: 105px; */
 }
 
 .close-mini{
@@ -701,8 +701,8 @@ header.hide {
     cursor: pointer;
     font-size: 20px;
     color: white;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-end;
+    margin-top: -12px;
 }
 
 .infor p{

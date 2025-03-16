@@ -59,10 +59,9 @@ foreach ($products as $row) {
             <img src="' . $row["image"] . '" height="74" width="60" class="cart-img" alt="">
             <span class="infor">
                 <button class="close-mini" onclick="removeFromCart(' . $row["product_id"] . ')">
-                    <span class="head-text">' . $row["product_name"] . '</span>
                     <ion-icon name="close-outline"></ion-icon>
                 </button>
-                
+                <span class="head-text">' . $row["product_name"] . '</span>
                 <p class="bottom-text">SL
                     <button class="click" onclick="updateQuantity(' . $row["product_id"] . ', -1)">
                         <ion-icon name="caret-back-outline"></ion-icon>
