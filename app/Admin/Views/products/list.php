@@ -15,8 +15,8 @@
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
         <div class="product-items"> <?php echo $row['category']; ?> </div>
         <div class="product-items">
-            <button onclick="editProduct('<?php echo $row['id']; ?>')">Edit</button>
-            <button onclick="deleteProduct('<?php echo $row['id']; ?>')">Delete</button>
+            <button class="edit-button" onclick="editProduct('<?php echo $row['id']; ?>')">Edit</button>
+            <button class="delete-button" onclick="deleteProduct('<?php echo $row['id']; ?>')">Delete</button>
         </div>
     <?php } ?>
 </div>
