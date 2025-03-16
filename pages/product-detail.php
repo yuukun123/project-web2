@@ -90,7 +90,7 @@ if($result->num_rows > 0){
             echo'<div class="product-1">';
             echo' <a href="home?pages=product&id='.$items['product_id'].'"> <img width="300px" height="300px" class="poster-img" src="'.htmlspecialchars($items['image']).'" alt="'.htmlspecialchars($items['product_name']).'">    </a>';
             echo'<p class="name-product">'.$items['product_name'].'</p>';
-            echo'<p class="price-product sp-cart">Price: '. number_format($items['price'], 0, ',', '.') .' VNĐ</p>';
+            echo'<p class="price-product sp-cart add-to-cart" data-id="' . htmlspecialchars($items['product_id']) . '">  Price: '. number_format($items['price'], 0, ',', '.') .' VNĐ</p>';
             echo'</div>';  
         }
         echo'</div>';
