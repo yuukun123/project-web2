@@ -625,7 +625,7 @@ header.hide {
     font-size: 40px;
     background: none;
     border: none;
-    padding: 15px 0;
+    padding: 8px 0;
     cursor: pointer;
     /* border-bottom: 0.5px solid rgb(255, 255, 255, 0.2); */
 }
@@ -636,7 +636,7 @@ header.hide {
 
 .cart-scroll{
     overflow-y: auto;
-    height: 65%;
+    height: 75%;
 }
 
 .cart-scroll::-webkit-scrollbar {
