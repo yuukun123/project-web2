@@ -6,11 +6,7 @@
     overflow: hidden;
     /* background: #EEEEEE; */
 }
-.input-wrapper {
-    position: relative;
-    display: none;
-    align-items: center;
-}
+
 .Cake-infor{
     display: flex;
     column-gap: 70px;
@@ -273,18 +269,8 @@
     background: #F7B9D7;
     color: #ffffff;
 }
-/* search */
-.search-container {
-    position: relative;
-    display: inline-block;
-    margin-left: 300px;
-}
 
-.input-wrapper {
-    position: relative;
-    display: none;
-    align-items: center;
-}
+
 /* Responsive Design */
 @media screen and (min-width: 1390px){
     .header{

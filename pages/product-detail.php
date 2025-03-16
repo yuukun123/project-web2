@@ -64,14 +64,14 @@ if($result->num_rows > 0){
                             <p>-</p>
                         </button>
                         <input type="text" name="" id="" value="1">
-                        <button class="plus-btn" >
+                        <button class="plus-btn">
                             <p>+</p>
                         </button>
                     </div>
                 </div>
             </div>
             <div class="add-shopping-cart ">
-                <button class="sp-cart"  id="add-cart-btn">
+                <button class="sp-cart add-to-cart-detail"  data-id="' . htmlspecialchars($product['product_id']) . '">
                     <p>Add to cart</p>
                 </button>
             </div>

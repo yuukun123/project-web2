@@ -59,14 +59,18 @@ foreach ($products as $row) {
             <img src="' . $row["image"] . '" height="74" width="60" class="cart-img" alt="">
             <span class="infor">
                 <button class="close-mini" onclick="removeFromCart(' . $row["product_id"] . ')">
+                    <span class="head-text">' . $row["product_name"] . '</span>
                     <ion-icon name="close-outline"></ion-icon>
                 </button>
-                <p class="head-text">' . $row["product_name"] . '</p>
+                
                 <p class="bottom-text">SL
                     <button class="click" onclick="updateQuantity(' . $row["product_id"] . ', -1)">
                         <ion-icon name="caret-back-outline"></ion-icon>
                     </button>
-                    ' . $row["quantity"] . '
+                    <input type="number" class="quantity-input" id="quantity_' . $row["product_id"] . '" 
+                        value="' . $row["quantity"] . '" 
+                        min="1" 
+                        onchange="updateQuantityDirectly(' . $row["product_id"] . ', this.value)">
                     <button class="click" onclick="updateQuantity(' . $row["product_id"] . ', 1)">
                         <ion-icon name="caret-forward-outline"></ion-icon>
                     </button>

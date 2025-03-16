@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "../app/config/data_connect.php"; // Đảm bảo file kết nối database được include
+include "../app/config/data_connect.php"; // Kết nối database
 
 header("Content-Type: application/json");
 error_reporting(E_ALL);
@@ -31,17 +31,8 @@ switch ($action) {
         addToCart($conn, $user_id, $data);
         break;
     default:
-        // Nếu có yêu cầu lấy số lượng giỏ hàng qua GET
         if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["cart_count"])) {
-            $sql = "SELECT SUM(quantity) AS total FROM cart WHERE user_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("i", $user_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $totalItems = $row['total'] ?? 0;
-            echo json_encode(["count" => $totalItems]);
-            exit;
+            getCartCount($conn, $user_id);
         } else {
             echo json_encode(["success" => false, "message" => "Hành động không hợp lệ"]);
         }
@@ -56,7 +47,6 @@ function addToCart($conn, $user_id, $data) {
         exit;
     }
 
-    // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
     $sql_check = "SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("ii", $user_id, $product_id);
@@ -64,13 +54,11 @@ function addToCart($conn, $user_id, $data) {
     $result = $stmt_check->get_result();
 
     if ($result->num_rows > 0) {
-        // Nếu đã có, tăng số lượng
         $sql_update = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?";
         $stmt_update = $conn->prepare($sql_update);
         $stmt_update->bind_param("ii", $user_id, $product_id);
         $stmt_update->execute();
     } else {
-        // Nếu chưa có, thêm sản phẩm mới
         $sql_insert = "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, 1)";
         $stmt_insert = $conn->prepare($sql_insert);
         $stmt_insert->bind_param("ii", $user_id, $product_id);
@@ -83,16 +71,16 @@ function addToCart($conn, $user_id, $data) {
 /* 🔄 Cập nhật số lượng sản phẩm */
 function updateQuantity($conn, $user_id, $data) {
     $product_id = $data['product_id'] ?? 0;
-    $change = $data['quantity_change'] ?? 0;
+    $new_quantity = $data['quantity'] ?? 1;
 
-    if (!$product_id || $change == 0) {
+    if (!$product_id || $new_quantity < 1) {
         echo json_encode(["success" => false, "message" => "Dữ liệu không hợp lệ"]);
         exit;
     }
 
-    $sql = "UPDATE cart SET quantity = GREATEST(quantity + ?, 1) WHERE user_id = ? AND product_id = ?";
+    $sql = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $change, $user_id, $product_id);
+    $stmt->bind_param("iii", $new_quantity, $user_id, $product_id);
     $stmt->execute();
 
     echo json_encode(["success" => true, "message" => "Cập nhật số lượng thành công"]);
@@ -114,4 +102,17 @@ function removeItem($conn, $user_id, $data) {
 
     echo json_encode(["success" => true, "message" => "Sản phẩm đã được xóa"]);
 }
-?>
+
+/* 🛍️ Lấy số lượng sản phẩm trong giỏ hàng */
+function getCartCount($conn, $user_id) {
+    $sql = "SELECT SUM(quantity) AS total FROM cart WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $totalItems = $row['total'] ?? 0;
+
+    echo json_encode(["count" => $totalItems]);
+    exit;
+}

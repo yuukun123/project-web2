@@ -683,14 +683,15 @@ header.hide {
 .infor{
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    /* align-items: flex-end; */
+    justify-content: space-around;
 }
 
 .infor .head-text{
     color: white;
     font-size: 14px;
     padding: 2px 0;
-    margin-right: auto;
+    margin-right: 105px;
 }
 
 .close-mini{
@@ -700,12 +701,15 @@ header.hide {
     cursor: pointer;
     font-size: 20px;
     color: white;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .infor p{
     display: flex;
     color: #a5a5a5;
     font-size: 16px;
+    align-items: center;
 }
 
 
@@ -715,12 +719,29 @@ header.hide {
 
 .bottom-text input{
     display: flex;
-    width: 15px;
-    height: 25px;
+    width: 40px;
+
     text-align: center;
     border-radius: 20px;
     
+    -moz-appearance: textfield; /* Firefox */
+    -webkit-appearance: none; /* Chrome, Safari */
+    appearance: none; /* Chuẩn chung */
+
+
+    text-align: center;
+    background: transparent; /* Xóa nền */
+    border: none; /* Xóa viền */
+    font-size: 16px;
+    color: white;
+    
 }
+
+.bottom-text input::-webkit-outer-spin-button,
+  .bottom-text input::-webkit-inner-spin-button {
+    display: none; /* Hide the arrow buttons */
+  }
+
 
 .click {
     margin-right: 5px;
@@ -736,7 +757,7 @@ header.hide {
 
 .price{ 
     font-size: 14px;
-    margin-left: 83px;
+    margin-left: 50px;
     color: white;
 }
 
