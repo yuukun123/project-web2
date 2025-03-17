@@ -1,4 +1,5 @@
 <?php
+session_name("user");
 session_start();
 include "../app/config/data_connect.php"; // Kết nối database
 
@@ -7,16 +8,24 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 // Kiểm tra đăng nhập
-if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] === null) {
+if (
+    !isset($_SESSION['user']) || 
+    !isset($_SESSION['user']['user_id']) || 
+    !isset($_SESSION['user']['username']) || 
+    !isset($_SESSION['user']['role']) || 
+    !is_numeric($_SESSION['user']['user_id'])
+) {
     echo json_encode([
         "success" => false,
-        "message" => "User chưa đăng nhập",
-        "debug_user_id" => $_SESSION['user_id'] ?? "Không có user_id"
+        "message" => "Vui lòng đăng nhập trước khi thao tác."
     ]);
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = (int) $_SESSION['user']['user_id']; // Ép kiểu để đảm bảo an toàn
+$username = $_SESSION['user']['username'];
+$role = $_SESSION['user']['role'];
+
 $data = json_decode(file_get_contents("php://input"), true);
 $action = $data['action'] ?? '';
 

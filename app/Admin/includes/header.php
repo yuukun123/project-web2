@@ -1,5 +1,8 @@
 <?php
-session_start(); // Đảm bảo session được khởi động
+// include "../Api_php/check-session-admin.php";
+session_name("admin"); // Đảm bảo session dành riêng cho admin
+session_start();
+
 $page = basename($_SERVER['PHP_SELF']);
 
 switch ($page) {
@@ -28,10 +31,11 @@ switch ($page) {
 
 $authButtons = '<button id="login-btn" class="btnLogin-popup">Login</button>';
 
-if (isset($_SESSION['username'])) {
+if (isset($_SESSION['admin']) && isset($_SESSION['admin']['username'])) {
+    $username = htmlspecialchars($_SESSION['admin']['username']); // Chống XSS
     $authButtons = '
         <div class="navigation">
-            <button id="user-btn" class="btnLogin-popup"> ' . htmlspecialchars($_SESSION['username']) . '</button>
+            <button id="user-btn" class="btnLogin-popup">' . $username . '</button>
             <form action="../Login_Processing/logout_processing.php" method="POST" style="display: inline;">
                 <div class="Function-cl">
                     <div class="logout">

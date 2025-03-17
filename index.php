@@ -1,10 +1,25 @@
 <?php
 // Khởi động phiên
+session_name("user");
+session_start(); // Đảm bảo session được khởi động
 
-// Kiểm tra xem đã đăng nhập chưa
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+// Kiểm tra nếu biến $_SESSION['user'] tồn tại
+if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+    $user_id = $_SESSION['user']['user_id'] ?? 'Chưa đăng nhập';
+    $username = $_SESSION['user']['username'] ?? 'Chưa đăng nhập';
+    $role = $_SESSION['user']['role'] ?? 'Chưa đăng nhập';
+} else {
+    $user_id = "Không có dữ liệu";
+    $username = "Không có dữ liệu";
+    $role = "Không có dữ liệu";
 }
+
+// // Hiển thị thông tin (hoặc kiểm tra debug)
+// echo "User ID: " . htmlspecialchars($user_id) . "<br>";
+// echo "Username: " . htmlspecialchars($username) . "<br>";
+// echo "Role: " . htmlspecialchars($role) . "<br>";
+
+
 
 include_once 'app/config/data_connect.php'; // Kết nối database
 

@@ -1,5 +1,6 @@
 <?php
-session_start();
+// require_once "../Api_php/check-session-admin.php";
+
 include '../config/db.php'; // Kết nối database
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

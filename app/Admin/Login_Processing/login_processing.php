@@ -1,8 +1,14 @@
 <?php
-session_start();
 include '../../config/data_connect.php'; // Kết nối database
 
+session_name("admin"); // Đảm bảo sử dụng session riêng cho admin
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+
     $username = $_POST['admin_username'];
     $password = $_POST['admin_password'];
 
@@ -16,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
-    
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
@@ -42,33 +48,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Kiểm tra mật khẩu nhập vào với mật khẩu hash từ database
         if (password_verify($password, $hashed_password)) {
-            $_SESSION['username'] = $row['user_name'];
-            $_SESSION['role'] = $row['role']; // Lấy role từ database
+            // **🔹 Cập nhật phần lưu session**
+            $_SESSION['admin'] = [
+                'user_id'  => $row['user_id'],
+                'username' => $row['user_name'],
+                'role'     => $row['role']
+            ];
 
             // Trả về dữ liệu JSON
             echo json_encode([
                 "status" => "success",
-                "username_nhap" => $username, // Tên người dùng vừa nhập
-                "password_nhap" => $password, // Mật khẩu vừa nhập (không hash)
-                "username_db" => $row['user_name'], // Tên người dùng từ database
-                "password_db" => $hashed_password, // Mật khẩu hash từ database
-                "role" => $row['role'], // Phân quyền
-                "redirect" => "pages/home.php", //
+                "message" => "Đăng nhập thành công",
+                "redirect" => "pages/home.php",
+                "user" => $_SESSION['admin'] // Trả về session đã lưu
             ]);
         } else {
             echo json_encode([
                 "status" => "error",
                 "message" => "Sai mật khẩu",
-                "username_nhap" => $username,
-                "password_nhap" => $password
             ]);
         }
     } else {
         echo json_encode([
             "status" => "error",
             "message" => "Tài khoản không tồn tại",
-            "username_nhap" => $username,
-            "password_nhap" => $password
         ]);
     }
 

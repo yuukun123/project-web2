@@ -2,20 +2,18 @@
 
 include __DIR__ . '/../app/config/config.php';
 
-// Kết nối đến CSDL
-require_once __DIR__ . '/../app/config/data_connect.php';
-
 // Mặc định hiển thị Login & Register
 $authButtons = '
     <button id="login-btn" class="btnLogin-popup" onclick="window.location.href=\'login\'">Login</button>
     <button id="register-btn" class="btnLogout-popup" onclick="window.location.href=\'register\'">Register</button>
 ';
 
-// Nếu đã đăng nhập, thay thế bằng tên user & Logout
-if (isset($_SESSION['username'])) {
+// Nếu đã đăng nhập, hiển thị tên người dùng và nút Logout
+if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+    $username = htmlspecialchars($_SESSION['user']['username'] ?? 'Guest');
     $authButtons = '
         <div class="user-menu">
-            <button id="user-btn" class="btnLogin-popup"> ' . htmlspecialchars($_SESSION['username']) . '</button>
+            <button id="user-btn" class="btnLogin-popup">' . $username . '</button>
             <form action="pages/Controllers/logout.php" method="POST" style="display: inline;">
                 <button type="submit" class="btnLogout-popup">Logout</button>
             </form>

@@ -1,4 +1,5 @@
 <?php
+session_name("user");
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -10,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = trim($_POST['password']);
 
     // Truy vấn người dùng từ database
-    $sql = "SELECT user_id, user_name, password FROM users WHERE user_name = ?";
+    $sql = "SELECT user_id, user_name, password, role FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -30,9 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $update_stmt->execute();
                 $update_stmt->close();
 
-                // Lưu thông tin đăng nhập vào session
-                $_SESSION['user_id'] = $user['user_id'];
-                $_SESSION['username'] = $user['user_name'];
+                // Lưu thông tin đăng nhập vào session riêng biệt
+                $_SESSION['user'] = [
+                    'user_id' => $user['user_id'],
+                    'username' => $user['user_name'],
+                    'role' => $user['role']
+                ];
 
                 echo "Đăng nhập thành công! Đang chuyển hướng...";
                 header("Refresh: 2; URL=http://localhost/project-web2/home");
@@ -45,8 +49,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } 
         // Nếu mật khẩu đã được hash, dùng password_verify
         elseif (password_verify($password, $db_password)) {
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['user_name'];
+            // Lưu thông tin đăng nhập vào session riêng biệt
+            $_SESSION['user'] = [
+                'user_id' => $user['user_id'],
+                'username' => $user['user_name'],
+                'role' => $user['role']
+            ];
+            
 
             echo "Đăng nhập thành công! Đang chuyển hướng...";
             header("Refresh: 2; URL=http://localhost/project-web2/home");

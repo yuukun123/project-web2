@@ -1,15 +1,25 @@
 <?php
+session_name("user");
 session_start();
 header('Content-Type: application/json');
 
-// Debug: Kiểm tra xem session đã được khởi tạo chưa
-if (!isset($_SESSION['user_id'])) {
-    $_SESSION['user_id'] = null; // Đặt null nếu chưa đăng nhập
+// Kiểm tra nếu session đã tồn tại và chứa thông tin user
+if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+    $response = [
+        'loggedIn' => true,
+        'user_id' => $_SESSION['user']['user_id'] ?? null,
+        'username' => $_SESSION['user']['username'] ?? null,
+        'role' => $_SESSION['user']['role'] ?? null
+    ];
+} else {
+    $response = [
+        'loggedIn' => false,
+        'user_id' => null,
+        'username' => null,
+        'role' => null
+    ];
 }
 
-// Trả về JSON đúng chuẩn
-echo json_encode([
-    'loggedIn' => isset($_SESSION['user_id']) && $_SESSION['user_id'] !== null,
-    'user_id' => $_SESSION['user_id'] // Hiển thị user_id để debug
-]);
+// Trả về dữ liệu JSON
+echo json_encode($response);
 ?>
