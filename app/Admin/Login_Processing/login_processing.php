@@ -31,6 +31,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Password từ DB: " . $row['password']);
         error_log("Role từ DB: " . $row['role']);
 
+
+        $allowed_roles = ['admin', 'staff', 'manager'];
+        if (!in_array(strtolower($row['role']), $allowed_roles)){
+            echo json_encode([
+                "status" => "error",
+                "message" => "Tài khoản này không có quyền truy cập trang quản trị."
+            ]);
+            exit;
+        }
+
         $hashed_password = $row['password'];
 
         // Kiểm tra xem mật khẩu có được băm hay không
