@@ -1,4 +1,4 @@
-<form action="../../Controllers/add-product-processs.php" method="post">
+<form id="add-product-form" action="../../Controllers/add-product-process.php" method="post" enctype="multipart/form-data">
     <div class="add-more">
         <button class="add-category">
             <ion-icon name="add-circle-outline"></ion-icon>
@@ -19,20 +19,21 @@
             </div> -->
             <div class="name">
                 <div class="product-head">Name</div>
-                <div class="product-items"><input type="text" name="name" required></div>
+                <div class="product-items"><input type="text" name="name" id="name" required></div>
             </div>
             <div class="price">
                 <div class="product-head">Price</div>
-                <div class="product-items"><input type="text" name="price" required></div>
+                <div class="product-items"><input type="text" name="price" id="price" required></div>
             </div>
             <div class="status">
                 <div class="product-head">Status</div>
                 <div class="product-items">
-                    <select class="select" name="status" id="status" required>
-                        <option selected="selected">--Select status--</option>
-                        <option >Available</option>
-                        <option >Sold out</option>
-                    </select>
+                <select class="select" name="status" id="status" required>
+                    <option value="" disabled selected>--Select status--</option>
+                    <option value="Available">Available</option>
+                    <option value="Out of Stock">Out of Stock</option>
+                    <option value="Discontinued">Discontinued</option>
+                </select>
                 </div>
             </div>
 
@@ -71,14 +72,14 @@
             <ion-icon name="cloud-upload-outline"></ion-icon>
         </label>
             
-        <input type="text" id="filePath" readonly />
+        <input type="text" id="filePath" name="filePath" readonly />
         <input type="file" id="fileInput" name="image" style="display:none;" />
 
     </div>
 
     <div class="product-pic describe">Describe</div>
     <div class="write-describe">
-        <textarea name="description" rows="6" cols="150" style="overflow:auto;" required></textarea>
+        <textarea name="description" id="description" rows="6" cols="150" style="overflow:auto;" required></textarea>
     </div>
 
     <div class="button-click">
@@ -104,7 +105,7 @@
         </div>
         
         <div class="button1">
-            <button class="close" type="reset">close</button>
+            <button class="close" id="productForm" type="reset">close</button>
             <button class="go-to"><a href="./list-product.html">Go List Product</a></button>
         </div>
     </div>
