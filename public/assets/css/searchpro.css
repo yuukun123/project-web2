@@ -215,7 +215,7 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     outline: none;
-    width: 250px;
+    width: 150px;
     background-color: transparent;
 }
 
@@ -252,7 +252,7 @@
 /* Search Button Pro */
 .btn-searchpro{
     border-radius: 8px;
-    width: 80px;
+    width: 120px;
     height: 30px;
     background: transparent;
     border: 1px solid #1f1c1c;
@@ -263,6 +263,7 @@
     font-weight: 100;
     transition: .2s;
     margin-bottom: 30px;
+    margin-left: 124px;
 }
 
 .btn-searchpro:hover{
