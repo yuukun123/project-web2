@@ -19,6 +19,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+
+        if (strtolower($user['role']) !== 'customer') {
+            echo "Tài khoản không phải là khách hàng. Không thể đăng nhập!";
+            header("Refresh: 2; URL=http://localhost/project-web2/login?error=role_not_allowed");
+            exit();
+        }
+
         $db_password = $user['password']; // Lấy mật khẩu từ database
 
         // Kiểm tra nếu mật khẩu chưa hash (giả sử mật khẩu cũ có độ dài < 60 ký tự)
