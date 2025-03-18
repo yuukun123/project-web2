@@ -5,7 +5,7 @@ if (!isset($conn)) {
 }
 
 // Truy vấn sản phẩm từ database
-$sql = "SELECT product_id, product_name, price, image, category_id FROM PRODUCT WHERE status = 'Available'";
+$sql = "SELECT product_id, product_name, price, image, category_id, status FROM PRODUCT WHERE status IN ('Available', 'Out of Stock', 'Discontinued')";
 $result = $conn->query($sql);
 if (!$result) {
     die("Query error: " . $conn->error);
@@ -75,26 +75,25 @@ echo '<div class="tab_content" id="product-container">';
 if (!empty($productsAll)) {
     foreach ($productsAll as $item) {
         echo '<div class="movie-item" data-category="' . htmlspecialchars($item['category']) . '">';
-        //sửa chỗ này yuu
         echo '<a href="home?pages=product&id=' . $item['product_id'] . '" target="_blank">';
         echo '<img class="poster-img" height="300" width="300" src="' . htmlspecialchars($item['image']) . '" alt="' . htmlspecialchars($item['product_name']) . '">';
         echo '</a>';
         echo '<p class="title">' . htmlspecialchars($item['product_name']) . '</p>';
-        // nút thêm sản phẩm vô card
-        // echo '<button class="sp-cart butn title add-to-cart" 
-        //             data-id="' . htmlspecialchars($item['product_id']) . '" 
-        //             data-name="' . htmlspecialchars($item['product_name']) . '" 
-        //             data-price="' . $item['price'] . '" 
-        //             data-image="' . htmlspecialchars($item['image']) . '">';
-
-        // echo '<p class="text-color">' . number_format($item['price']) . ' VND</p>';
-        // echo '</button>';
-        echo '<button class="sp-cart add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
-        echo '<p class="text-color">Price: ' . number_format($item['price']) . ' VND</p>';
-        echo '</button>';
-
+    
+        if ($item['status'] === 'Available') {
+            echo '<button class="sp-cart add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
+            echo '<p class="text-color">Price: ' . number_format($item['price']) . ' VND</p>';
+            echo '</button>';
+        } else {
+            // Hiển thị nút disabled
+            echo '<button class="sp-cart butn title disabled-btn" disabled>';
+            echo '<p class="text-color">' . htmlspecialchars($item['status']) . '</p>';
+            echo '</button>';
+        }
+    
         echo '</div>';
     }
+    
 } else {
     echo '<p>No products available.</p>';
 }

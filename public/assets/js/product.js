@@ -37,6 +37,10 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then((response) => response.json())
         .then((data) => {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+            }
+            
             alert(data.message); // Thông báo sản phẩm đã được thêm
 
             if (data.success) {

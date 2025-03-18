@@ -1,7 +1,6 @@
 <?php
 session_name("user");
 session_start();
-include "../app/config/data_connect.php"; // Kết nối database
 
 header("Content-Type: application/json");
 error_reporting(E_ALL);
@@ -14,13 +13,18 @@ if (
     !isset($_SESSION['user']['username']) || 
     !isset($_SESSION['user']['role']) || 
     !is_numeric($_SESSION['user']['user_id'])
-) {
+) 
+{
     echo json_encode([
         "success" => false,
+        "redirect" => "login",
         "message" => "Vui lòng đăng nhập trước khi thao tác."
     ]);
     exit;
+
 }
+
+include "../app/config/data_connect.php"; // Kết nối database
 
 $user_id = (int) $_SESSION['user']['user_id']; // Ép kiểu để đảm bảo an toàn
 $username = $_SESSION['user']['username'];

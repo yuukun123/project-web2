@@ -25,71 +25,6 @@
             </button>
         </div>
     </div>
-
-    <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
-        <div class="text">
-            <button class="choose">
-                View more
-            </button>
-        </div>
-    </div>
-
-    <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
-        <div class="text">
-            <button class="choose">
-                View more
-            </button>
-        </div>
-    </div>
-
-    <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
-        <div class="text">
-            <button class="choose">
-                View more
-            </button>
-        </div>
-    </div>
-
-    <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
-        <div class="text">
-            <button class="choose">
-                View more
-            </button>
-        </div>
-    </div>
-
-    <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
-        <div class="text">
-            <button class="choose">
-                View more
-            </button>
-        </div>
-    </div>
 </div>
 
 <div class="more-infor">
@@ -154,8 +89,8 @@
     </div>
 
     <div class="total-price">
-            <p><strong>Total Price:</strong> 5,100,000 VND</p>
-        </div>
+        <p><strong>Total Price:</strong> 5,100,000 VND</p>
+    </div>
 
 </div>
 
