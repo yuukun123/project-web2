@@ -1,44 +1,97 @@
-<div class="pg-12 ">
-    <!-- Searching Pro -->
+<?php
+include __DIR__ . '/../app/config/data_connect.php'; // Kết nối database
+
+// Lấy danh sách danh mục từ bảng CATEGORY
+$categoryQuery = "SELECT category_id, category_name FROM CATEGORY";
+$categoryResult = $conn->query($categoryQuery);
+$categories = [];
+if ($categoryResult && $categoryResult->num_rows > 0) {
+    while ($catRow = $categoryResult->fetch_assoc()) {
+        $categories[] = $catRow;
+    }
+}
+
+// Kiểm tra nếu form đã được gửi
+$searchName = isset($_GET['searchName']) ? strtolower(trim($_GET['searchName'])) : '';
+$searchCategory = isset($_GET['searchCategory']) ? (int)$_GET['searchCategory'] : 0;
+$minPrice = isset($_GET['minPrice']) && is_numeric($_GET['minPrice']) ? (int)$_GET['minPrice'] : null;
+$maxPrice = isset($_GET['maxPrice']) && is_numeric($_GET['maxPrice']) ? (int)$_GET['maxPrice'] : null;
+
+// Tạo câu lệnh SQL
+$sql = "SELECT * FROM PRODUCT WHERE 1=1";
+
+if (!empty($searchName)) {
+    $sql .= " AND LOWER(product_name) LIKE '%" . $conn->real_escape_string($searchName) . "%'";
+}
+if ($searchCategory > 0) {
+    $sql .= " AND category_id = $searchCategory";
+}
+if (!is_null($minPrice)) {
+    $sql .= " AND price >= $minPrice";
+}
+if (!is_null($maxPrice)) {
+    $sql .= " AND price <= $maxPrice";
+}
+
+// Thực hiện truy vấn
+$result = $conn->query($sql);
+if (!$result) {
+    die("Lỗi SQL: " . $conn->error . "\nQuery: " . $sql);
+}
+?>
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm</title>
+</head>
+<body>
     <div class="bsearchpro">
-        <div class="search-container-pro">
-            <span class="search-price-title">name:
-                <input type="text" id="searchName" placeholder="Search for names..">
-            </span>
-            <!-- <input type="text" id="searchCategory" placeholder="Search for category.."> -->
-
-            <!-- <label for="category">Search for category: </label> -->
-            <select name="category" id="searchCategory">
-                <option value="Mousse">Category</option>
-                <option value="Mousse">Mousse</option>
-                <option value="Croissant">Croissant</option>
-                <option value="Drink">Drink</option>
+        <form class="search-container-pro" method="GET" action="">
+            <input type="text" name="searchName" placeholder="Search name" 
+                value="<?php echo isset($_GET['searchName']) ? htmlspecialchars($_GET['searchName']) : ''; ?>">
+            
+            <select name="searchCategory" class="category-select">
+                <option value="0">Category</option>
+                <?php foreach ($categories as $category): ?>
+                    <option value="<?php echo $category['category_id']; ?>" 
+                        <?php echo ($searchCategory == $category['category_id']) ? 'selected' : ''; ?>>
+                        <?php echo htmlspecialchars($category['category_name']); ?>
+                    </option>
+                <?php endforeach; ?>
             </select>
+            
+            <div class="search-price">
+                <input type="number" name="minPrice" placeholder="Giá tối thiểu" 
+                    value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>">
 
-        </div>
-        <div class="search-price">
-            <span class="search-price-title">Price from:
-                <input type="number" id="minPrice" min="0" placeholder="0đ">
-                To:
-                <input type="number" id="maxPrice" max="600000" placeholder="600.000đ">
-            </span>
-        </div>
-        <button type="button" class="btn-searchpro" onclick="search()">Search</button>
-
-        <div class="tab_content_pro" id="productList">
-            <!-- Kết quả tìm kiếm sẽ hiển thị ở đây -->
-        </div>
-
+                <input type="number" name="maxPrice" placeholder="Giá tối đa" 
+                    value="<?php echo isset($_GET['maxPrice']) && $_GET['maxPrice'] !== '' ? htmlspecialchars($_GET['maxPrice']) : ''; ?>">
+            </div>
+            
+            <button type="submit" class="btn-searchpro">Search</button>
+        </form>
     </div>
-
-    <!-- <input type="radio" name="filter" id="filter-all" class="filter-input" checked> -->
-    <!-- m coi khúc trên thoi bỏ qua khúc này  -->
-    <div class="tab_content" id="All"></div>
-
-    <div class="container">
-        <div class="pagination">
-            <button class="page-link active"></button>
-        </div>
+    
+    <div class="tab_content_pro">
+        <?php if ($result->num_rows > 0): ?>
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <div class="movie-item">
+                    <a href="product_detail.php?id=<?php echo isset($row['id']) ? $row['id'] : '#'; ?>">
+                        <img class="poster-img" src="<?php echo isset($row['image']) ? $row['image'] : 'default.jpg'; ?>" 
+                             alt="<?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Sản phẩm'; ?>">
+                    </a>
+                    <p class="title"> <?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Không có tên'; ?> </p>
+                    <button class="butn">
+                        <p class="text-color">Giá: <?php echo isset($row['price']) ? number_format($row['price'], 0, ',', '.') : '0'; ?> VND</p>
+                    </button>
+                </div>
+            <?php endwhile; ?>
+        <?php else: ?>
+            <p>Không tìm thấy sản phẩm phù hợp.</p>
+        <?php endif; ?>
     </div>
-
-</div>
+</body>
+</html>
