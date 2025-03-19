@@ -1,8 +1,4 @@
 <?php
-// include "../Api_php/check-session-admin.php";
-session_name("admin"); // Đảm bảo session dành riêng cho admin
-session_start();
-
 $page = basename($_SERVER['PHP_SELF']);
 
 switch ($page) {
