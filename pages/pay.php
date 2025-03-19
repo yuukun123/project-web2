@@ -20,6 +20,10 @@
                     <label for="delivery_date">Delivery Date <span style="color: red;">(*)</span></label>
                     <input type="date" id="delivery_date" name="delivery_date" value="">
                 </div>
+                <div class="note">
+                <label for="note">Greeting Message</label>
+                    <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
+                </div>
 
 
                 <div class="choose">   
@@ -50,21 +54,21 @@
             <div class="payment-method">
                 <label>
                     <input type="radio" name="payment_method" value="cash" checked> 
-                    <img width="60" height="69" src="../Img/Pay_final/cash.png" alt="Cash">
+                    <img width="60" height="69" src="public/assets/Img/Pay_final/cash.png" alt="Cash">
                     COD
                 </label>
             </div>
             <div class="payment-method">
                 <label>
                     <input type="radio" name="payment_method" value="momo"> 
-                    <img width="60" height="69" src="../Img/Pay_final/momo_icon.png" alt="Momo">
+                    <img width="60" height="69" src="public/assets/Img/Pay_final/momo_icon.png" alt="Momo">
                     Momo
                 </label>
             </div>
             <div class="payment-method">
                 <label>
                     <input type="radio" id="credit-card-radio" name="payment_method" value="credit-card"> 
-                    <img width="60" height="69" src="../Img/Pay_final/visamaster_logo.png" alt="Visa">
+                    <img width="60" height="69" src="public/assets/Img/Pay_final/visamaster_logo.png" alt="Visa">
                     Credit Card (Visa, Master, American Express, JCB)
                 </label>
                 <div class="card-input" id="card-input">
@@ -80,7 +84,7 @@
             <div class="payment-method">
                 <label>
                     <input type="radio" name="payment_method" value="VNPay">
-                    <img width="60" height="69" src="../Img/Pay_final/vnpay_newlogo.png" alt="VNPay"> 
+                    <img width="60" height="69" src="public/assets/Img/Pay_final/vnpay_newlogo.png" alt="VNPay"> 
                     VNPay
                 </label>
             </div>
@@ -89,32 +93,10 @@
     
     <!-- Thông Tin Đơn Hàng -->
     <div class="my-order">
-        <div class="Text-head">
-            <h1>Your Orders</h1>
-        </div>
+            <div class="Text-head">
+                <h1>Your Orders</h1>
+            </div>
         <div class="product">
-            <div class="item">
-                <img width="55" height="69" src="../Img/Mousse/Corn_Mousse.jpg" alt="Corn Mousse">
-                <div class="details">
-                    <div>Corn Mousse - 16cm</div>
-                    <div class="btn-quantity">Quantity: 
-                        <button class="click">
-                            <ion-icon name="caret-back-outline"></ion-icon>
-                        </button>
-                        <p style="background: #ffdd00; border-radius: 100%; padding: 0px 10px;">1</p>
-                        <button class="click">
-                            <ion-icon name="caret-forward-outline"></ion-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="price">520.000 VND</div>
-            </div>
-
-            <div class="note">
-                <label for="note">Greeting Message</label>
-                <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
-            </div>
-
             <div class="item">
                 <img width="55" height="69" src="../Img/Mousse/Melon_Mousse.jpg" alt="Melon Mousse">
                 <div class="details">
@@ -131,12 +113,15 @@
                 </div>
                 <div class="price">550.000 VND</div>
             </div>
+
+            <div class="note">
+                <label for="note">Greeting Message</label>
+                <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
+            </div>
+
         </div>
 
-        <div class="note">
-            <label for="note">Greeting Message</label>
-            <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
-        </div>
+
 
         <div class="subtotal">
             <div class="total">
@@ -144,12 +129,6 @@
                     <div>Provisional</div>
                     <div class="price">1.070.000 VND</div>
                 </div>
-                <!--
-                <div class="ship">
-                    <div>Delivery</div>
-                    <div>Free Shipping</div>
-                </div>
-                -->
                 <div class="total-sum">
                     <div>Total</div>
                     <div class="price">1.070.000 VND</div>
@@ -186,6 +165,6 @@
     <p class="total">Total <span> 1.000.000 VND</span></p>
     <p style="font-size: 14px;">Thank you for choosing our service!</p>
     <p style="font-size: 14px;">Your order is on its way with love. </p>
-    <a href="./user-receipt.html" class="back-home">Click here to view the invoice</a>
+    <a href="receipt" class="back-home">Click here to view the invoice</a>
     <p>Wishing you the sweetest day!</p>
 </div>
