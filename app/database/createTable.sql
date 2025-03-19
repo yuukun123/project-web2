@@ -50,6 +50,14 @@ CREATE TABLE orders (
     status ENUM('Pending', 'Processing', 'Completed', 'Cancelled', 'Paid') DEFAULT 'Pending',
     user_id INT NOT NULL,
     notes TEXT,
+
+    
+    -- Địa chỉ giao hàng khác (lưu trực tiếp vào bảng orders)
+    shipping_city VARCHAR(100) NOT NULL,
+    shipping_district VARCHAR(100) NOT NULL,
+    shipping_ward VARCHAR(100) NOT NULL,
+    shipping_street VARCHAR(255) NOT NULL,
+    
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

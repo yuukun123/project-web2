@@ -48,10 +48,12 @@ INSERT INTO users (user_name, phone, email, city, district, ward, street, passwo
 ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password);
 
 -- Thêm dữ liệu vào bảng orders (có ngày nhận và giờ nhận)
-INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time, order_date) VALUES
-(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00')),
-(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00')),
-(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:00'));
+-- Thêm dữ liệu vào bảng orders với địa chỉ giao hàng khác
+INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time, order_date, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES
+(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Ho Chi Minh', 'District 7', 'Tan Phong', 'R4-20 Phu My Hung'),
+(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', NOW(), 'Ha Noi', 'Hoan Kiem', 'Hang Bac', '35 Hang Bac'),
+(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Ho Chi Minh', 'District 1', 'Da Kao', '10 Nguyen Binh Khiem');
+
 
 -- Thêm dữ liệu vào bảng order_detail
 INSERT INTO order_detail (order_id, product_id, quantity, price) VALUES
