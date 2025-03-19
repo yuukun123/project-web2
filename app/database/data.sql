@@ -1,21 +1,21 @@
-use webdata;
+USE webdata;
 
--- Chèn dữ liệu vào bảng CATEGORY (tránh chèn trùng lặp)
-INSERT INTO CATEGORY (category_name) VALUES
+-- Thêm dữ liệu vào bảng category (tránh trùng lặp)
+INSERT INTO category (category_name) VALUES
 ('Mousse'),
 ('Croissant'),
 ('Drink')
 ON DUPLICATE KEY UPDATE category_name = VALUES(category_name);
 
--- Chèn dữ liệu vào bảng SIZE (tránh chèn trùng lặp)
-INSERT INTO SIZE (size_name) VALUES 
+-- Thêm dữ liệu vào bảng size (tránh trùng lặp)
+INSERT INTO size (size_name) VALUES 
 ('L'), 
 ('10cm'),
 ('16cm')
 ON DUPLICATE KEY UPDATE size_name = VALUES(size_name);
 
--- Chèn dữ liệu vào bảng PRODUCT (Không cần chỉ định product_id)
-INSERT INTO PRODUCT (product_name, price, category_id, size_id, status, description, image) VALUES
+-- Thêm dữ liệu vào bảng product
+INSERT INTO product (product_name, price, category_id, size_id, status, description, image) VALUES
 -- Mousse
 ('Avocado Mousse', 510000, 1, 3, 'Available', 'A creamy avocado mousse with a smooth texture.', 'public/assets/Img/Mousse/Avocado_Mousse.jpg'),
 ('Blueberry Mousse', 510000, 1, 3, 'Available', 'Delicious blueberry mousse with a tangy flavor.', 'public/assets/Img/Mousse/Blueberry_Mousse.jpg'),
@@ -40,30 +40,28 @@ INSERT INTO PRODUCT (product_name, price, category_id, size_id, status, descript
 ('Matcha Mallow', 80000, 3, 1, 'Available', 'Matcha drink topped with fluffy marshmallow.', 'public/assets/Img/Drink/Matcha_Mallow.png'),
 ('Matcha Misu', 85000, 3, 1, 'Available', 'Matcha tiramisu-inspired drink.', 'public/assets/Img/Drink/Matcha_Misu.png');
 
-
--- Chèn dữ liệu vào bảng USERS (tránh lỗi trùng email)
-INSERT INTO USERS (user_name, phone, email, city, district, ward, street, password, role) VALUES
+-- Thêm dữ liệu vào bảng users
+INSERT INTO users (user_name, phone, email, city, district, ward, street, password, role) VALUES
 ('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Ho Chi Minh', 'District 1', 'Ben Nghe', '123 Le Loi', 'hashed_password_1', 'customer'),
 ('TranThiB', '0912345678', 'tranthib@example.com', 'Ho Chi Minh', 'District 3', 'Vo Thi Sau', '456 Nguyen Hue', 'hashed_password_2', 'customer'),
 ('LeVanC', '0923456789', 'levanc@example.com', 'Ha Noi', 'Ba Dinh', 'Kim Ma', '789 Tran Hung Dao', 'hashed_password_3', 'admin')
 ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password);
 
--- Chèn thêm dữ liệu vào bảng ORDERS
-INSERT INTO ORDERS (user_id, total_cost, status, notes) VALUES
-(2, 1300000, 'Pending', 'Giao hàng sau 18h'),
-(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần'),
-(1, 450000, 'Processing', 'Giao buổi sáng sớm');
+-- Thêm dữ liệu vào bảng orders (có ngày nhận và giờ nhận)
+INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time) VALUES
+(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00'),
+(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00'),
+(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00');
 
--- Chèn thêm dữ liệu vào bảng ORDER_DETAIL
-INSERT INTO ORDER_DETAIL (order_id, product_id, quantity, price) VALUES
+-- Thêm dữ liệu vào bảng order_detail
+INSERT INTO order_detail (order_id, product_id, quantity, price) VALUES
 (1, 7, 2, 110000),
 (2, 10, 1, 130000),
 (3, 15, 2, 60000);
 
--- Chèn thêm dữ liệu vào bảng CART (tránh lỗi trùng dữ liệu)
-INSERT INTO CART (user_id, product_id, quantity) VALUES
+-- Thêm dữ liệu vào bảng cart (tránh lỗi trùng dữ liệu)
+INSERT INTO cart (user_id, product_id, quantity) VALUES
 (1, 12, 1),
 (2, 8, 3),
 (3, 9, 2)
 ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);
-
