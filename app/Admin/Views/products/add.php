@@ -64,23 +64,30 @@
         </div>
 
     </div>
+    
+    <div class="items-pic-3">
+        <div class="items-pic">
+            <div class="product-pic">Insert Picture</div>
+            <label class="insert">
+                <input type="button" value="Browse..." onclick="document.getElementById('fileInput').click();" />
+                <!-- <ion-icon name="cloud-upload-outline"></ion-icon> -->
+            </label>
+            <input type="text" id="filePath" name="filePath" readonly />
+            <input type="file" id="fileInput" name="image" style="display:none;" />
+            <div class="product-pic describe">Describe</div>
+            <div class="write-describe">
+                
+                <textarea name="description" id="description" rows="6" cols="145" style="overflow:auto;" required></textarea>
+            </div>
+        </div>
 
-    <div class="product-pic">Insert Picture</div>
-    <div class="items-pic">
-        <label class="insert">
-            <input type="button" value="Browse..." onclick="document.getElementById('fileInput').click();" />
-            <ion-icon name="cloud-upload-outline"></ion-icon>
-        </label>
-            
-        <input type="text" id="filePath" name="filePath" readonly />
-        <input type="file" id="fileInput" name="image" style="display:none;" />
+        <div class="imgPreview">
+            <img id="imagePreview" />
+        </div>
 
     </div>
 
-    <div class="product-pic describe">Describe</div>
-    <div class="write-describe">
-        <textarea name="description" id="description" rows="6" cols="150" style="overflow:auto;" required></textarea>
-    </div>
+
 
     <div class="button-click">
         <button type="submit" class="save">

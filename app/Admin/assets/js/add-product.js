@@ -149,7 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     // Đường dẫn ảnh
-    document.getElementById("fileInput").addEventListener("change", function () {
+    document.getElementById("fileInput").addEventListener("change", function (event) {
+        previewImage(event);  // 👉 Gọi hàm preview
+    
         let file = this.files[0];
         let category = document.getElementById("category").value; // Lấy category từ select
     
@@ -180,7 +182,25 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error("❌ Lỗi khi upload ảnh:", error));
     });
     
+    function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('imagePreview');
+        const filePathInput = document.getElementById('filePath');
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+            filePathInput.value = file.name;
+        } else {
+            preview.src = '';
+            preview.style.display = 'none';
+            filePathInput.value = '';
+        }
+    }
     
-    
-    
+
 });

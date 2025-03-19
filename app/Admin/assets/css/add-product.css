@@ -118,6 +118,12 @@
     background: #EF99B4;
 }
 
+.items-pic-3{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
 .product-pic{
     font-weight: bold;
     text-align: left;
@@ -128,9 +134,26 @@
 
 .items-pic {
     display: flex;
-    align-items: center;
-    gap: 5px; /* Adjust the gap between the button and the icon */
+    align-items: flex-start;
+    gap: 15px; /* Adjust the gap between the button and the icon */
+    flex-direction: column ;
+    width: 120%;
 }
+
+.imgPreview{
+    display: flex;
+    /* width: 100%; */
+    padding: 25px 50px;
+    height: 100%;
+        justify-content: center;
+        align-items: center;
+}
+
+.imgPreview img {
+    max-width: 100%;
+}
+
+
 
 .insert {
     display: flex;
@@ -177,11 +200,12 @@
 }
 
 .items-pic input[type="text"]{
-    width: 80%;
+    width: 92%;
     height: 5vh;
     padding: 10px;
-    margin-right: 50px;
+    /* margin-right: 50px; */
     font-size: 18px;
+    margin-left: 50px;
 }
 
 .describe{
@@ -190,7 +214,7 @@
 
 .write-describe{
     margin-bottom: 50px;
-    margin: 0 50px;
+    margin-left: 50px;
 }
 
 .write-describe textarea{
@@ -200,7 +224,7 @@
 
 .button-click{
     display: flex;
-    margin-top: 30px;
+    margin-top: 50px;
     justify-content: center;
     gap: 40px;
 }
@@ -557,15 +581,21 @@ button.go-to a:hover {
         width: 100%;
     }
 
-    .write-describe textarea{
+    /* .write-describe textarea{
         width: 92%;
-    }
+    } */
 
     .items-pic input[type="text"] {
-        width: 60%;
-        height: 6.5vh;
-        padding: 10px;
-        margin-right: 50px;
+        /* width: 60%; */
+        height: 4.5vh;
+        /* padding: 10px;
+        margin-right: 50px; */
+    }
+
+    .imgPreview img{
+        width: 90%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .grid-full {
@@ -614,16 +644,24 @@ button.go-to a:hover {
         width: 70%;
     }
 
-    .write-describe textarea{
+    /* .write-describe textarea{
         width: 90%;
-    }
+    } */
 
     .items-pic input[type="text"] {
-        width: 55%;
-        height: 40px;
+        /* width: 55%;
         padding: 10px;
-        margin-right: 50px;
+        margin-right: 50px; */
+        height: 40px;
         font-size: 18px;
+    }
+
+    .items-pic{
+        width: 100%;
+    }
+
+    .imgPreview img{
+        width: 90%;
     }
 
     .grid-full {
@@ -699,9 +737,9 @@ button.go-to a:hover {
         font-size: 18px;
     }
 
-    .items-pic{
+    /* .items-pic{
         display: contents;
-    }
+    } */
 
     .insert {
         width: auto;
@@ -732,6 +770,14 @@ button.go-to a:hover {
         /* margin-left: auto; */
         width: 80%;
         font-size: 14px;
+    }
+
+    .write-describe textarea{
+        width: 90%;
+    }
+
+    .items-pic-3{
+        flex-wrap: wrap;
     }
 
     .text-heading h1{
@@ -819,13 +865,13 @@ button.go-to a:hover {
 
     .items-pic input[type="text"] {
         margin: 0 50px;
-        max-width: 74%;
-        width: auto;
+        /* max-width: 74%; */
+        /* width: auto; */
         font-size: 14px;
     }
 
     .write-describe textarea {
-        width: 95%;
+        width: 85%;
         height: 100px
     }
 
