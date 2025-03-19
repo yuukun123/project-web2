@@ -43,9 +43,9 @@ CREATE TABLE product (
 -- Bảng orders (đã có delivery_date và delivery_time)
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Ngày đặt
-    delivery_date DATE,                             -- Ngày nhận hàng
-    delivery_time TIME,                             -- Giờ nhận hàng
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- lưu đầy đủ nhưng có thể định dạng khi hiển thị
+    delivery_date DATE,
+    delivery_time TIME,
     total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
     status ENUM('Pending', 'Processing', 'Completed', 'Cancelled', 'Paid') DEFAULT 'Pending',
     user_id INT NOT NULL,

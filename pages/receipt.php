@@ -1,5 +1,34 @@
-<div class="receipt">
+<?php
+include "app/config/data_connect.php"; 
 
+if (
+    !isset($_SESSION['user']) || 
+    !isset($_SESSION['user']['user_id']) || 
+    !isset($_SESSION['user']['username']) || 
+    !isset($_SESSION['user']['role']) || 
+    !is_numeric($_SESSION['user']['user_id'])
+) {
+    exit;
+}
+
+$user_id = (int) $_SESSION['user']['user_id'];
+
+$sql = "SELECT o.order_id, 
+            DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i') AS order_date, 
+            o.total_cost, 
+            o.status, 
+            (SELECT SUM(od.quantity) FROM order_detail od WHERE od.order_id = o.order_id) AS quantity 
+        FROM orders o 
+        WHERE o.user_id = ? 
+        ORDER BY o.order_date DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+
+<div class="receipt">
     <div class="big-text">
         <h1>Your Receipt</h1>
     </div>
@@ -13,84 +42,22 @@
         <div class="text-top"><p>Action</p></div>
     </div>
 
+    <?php while ($row = $result->fetch_assoc()): ?>
     <div class="custumer">
-        <div class="text"><p>C0001</p></div>
-        <div class="text"><p>13/06/2025</p></div>
-        <div class="text"><p>10</p></div>
-        <div class="text"><p>5,100,000 VND</p></div>
-        <div class="text"><p>Paid</p></div>
+        <div class="text"><p><?= htmlspecialchars($row['order_id']) ?></p></div>
+        <div class="text"><p><?= htmlspecialchars($row['order_date']) ?></p></div>
+        <div class="text"><p><?= htmlspecialchars($row['quantity']) ?></p></div>
+        <div class="text"><p><?= number_format($row['total_cost'], 0, ',', '.') ?> VND</p></div>
+        <div class="text"><p><?= htmlspecialchars($row['status']) ?></p></div>
         <div class="text">
-            <button class="choose">
+            <button class="choose" data-order-id="<?= $row['order_id'] ?>">
                 View more
             </button>
         </div>
     </div>
+    <?php endwhile; ?>
 </div>
 
-<div class="more-infor">
-    <span class="icon-close">
-        <ion-icon name="close-outline"></ion-icon>
-    </span>
-
-    <div class="big-text more"><p>My Order</p></div>
-
-    <div class="scroll-see">
-
-        <div class="customer-infor">
-            <p><strong>Name:</strong> John</p>
-            <p><strong>Address:</strong> 273 Đ. An Dương Vương, Phường 3, Quận 5, Hồ Chí Minh</p>
-            <P><strong>Phone:</strong> 123456789</P>
-            <p><strong>Time:</strong> 25h90 AM</p>
-            <p><strong>Status:</strong> <span style="color: rgb(26, 255, 0);">Paid</span></p>
-        </div>
-
-
-        <div class="img-infor">
-            <!-- <img src="../Img/Croissant/Avocado_Croissant.jpg" alt=""> -->
-            <div class="name-type">
-                <div class="name">
-                    <p>Avocado Croissant</p>
-                    <p>1</p>
-                    <p>510,000 VND</p>
-                </div>
-                <div class="type">
-                    <div>Category: Croissant</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="img-infor">
-            <!-- <img src="../Img/Croissant/Avocado_Croissant.jpg" alt=""> -->
-            <div class="name-type">
-                <div class="name">
-                    <p>Avocado Croissant</p>
-                    <p>1</p>
-                    <p>510,000 VND</p>
-                </div>
-                <div class="type">
-                    <div>Category: Croissant</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="img-infor">
-            <!-- <img src="../Img/Croissant/Avocado_Croissant.jpg" alt=""> -->
-            <div class="name-type">
-                <div class="name">
-                    <p>Avocado Croissant</p>
-                    <p>1</p>
-                    <p>510,000 VND</p>
-                </div>
-                <div class="type">
-                    <div>Category: Croissant</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="total-price">
-        <p><strong>Total Price:</strong> 5,100,000 VND</p>
-    </div>
-
-</div>
-
+<!-- Thêm khung chứa chi tiết để load nội dung -->
+<div class="more-infor-content"></div>
+<div class="blur-overlay"></div>

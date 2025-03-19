@@ -84,7 +84,6 @@ $page = $_GET['pages'];
             default:
                 include 'includes/banner.php';
                 include 'includes/products.php';
-
                 break;
             case 'about':
                 include 'includes/banner.php';
@@ -107,9 +106,9 @@ $page = $_GET['pages'];
             case 'product':
                 require __DIR__ . '/pages/product-detail.php';
                 break;
-            // case 'cart':
-            //     require __DIR__ . '/includes/cart.php';
-            //     break;
+            case 'pay':
+                require __DIR__ . '/pages/pay.php';
+                break;
             // case 'cart_action':
             //     require __DIR__ . '/includes/cart_action.php';
             //     break;

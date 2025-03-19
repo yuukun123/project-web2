@@ -74,6 +74,38 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
+
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get('error');
+
+    if (error) {
+        let message = '';
+        switch (error) {
+            case 'role_not_allowed':
+                message = 'Tài khoản của bạn không có quyền đăng nhập vào khu vực này.';
+                break;
+            case 'wrong_password':
+                message = 'Mật khẩu không đúng. Vui lòng thử lại.';
+                break;
+            case 'user_not_found':
+                message = 'Không tìm thấy tài khoản với tên đăng nhập này.';
+                break;
+            case 'method_not_allowed':
+                message = 'Phương thức gửi không hợp lệ.';
+                break;
+            default:
+                message = 'Đã xảy ra lỗi không xác định.';
+        }
+
+        if (message) {
+            alert(message);
+
+            // Xóa tham số ?error sau khi hiện alert
+            const cleanUrl = window.location.origin + window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+    }
+    
 });
 
 // Kiểm tra trước khi gán sự kiện cho input

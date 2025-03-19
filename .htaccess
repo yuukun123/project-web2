@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteBase /project-web2/
 
 RewriteCond %{REQUEST_URI} !^/index\\.php$
-RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product)$ index.php?pages=$1 [QSA,L]
+RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product|pay)$ index.php?pages=$1 [QSA,L]
 
 # Nếu người dùng gõ / (trống), chuyển hướng về home
 RewriteCond %{REQUEST_URI} !^/index\\.php$
