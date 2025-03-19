@@ -21,65 +21,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $user = $result->fetch_assoc();
 
         if (strtolower($user['role']) !== 'customer') {
-            echo "Tài khoản không phải là khách hàng. Không thể đăng nhập!";
-            header("Refresh: 2; URL=http://localhost/project-web2/login?error=role_not_allowed");
+            header("Location: /login?error=role_not_allowed");
             exit();
         }
 
-        $db_password = $user['password']; // Lấy mật khẩu từ database
+        $db_password = $user['password'];
 
-        // Kiểm tra nếu mật khẩu chưa hash (giả sử mật khẩu cũ có độ dài < 60 ký tự)
+        // Nếu mật khẩu chưa hash (giả sử <60 ký tự)
         if (strlen($db_password) < 60) {
-            if ($password === $db_password) { // Nếu mật khẩu trùng khớp
-                // Hash lại mật khẩu và cập nhật vào database
+            if ($password === $db_password) {
+                // Hash lại mật khẩu và lưu
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
                 $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
                 $update_stmt->bind_param("si", $hashed_password, $user['user_id']);
                 $update_stmt->execute();
                 $update_stmt->close();
 
-                // Lưu thông tin đăng nhập vào session riêng biệt
                 $_SESSION['user'] = [
                     'user_id' => $user['user_id'],
                     'username' => $user['user_name'],
                     'role' => $user['role']
                 ];
 
-                echo "Đăng nhập thành công! Đang chuyển hướng...";
-                header("Refresh: 2; URL=http://localhost/project-web2/home");
+                header("Location: /home");
                 exit();
             } else {
-                echo "Sai mật khẩu!";
-                header("Refresh: 2; URL=http://localhost/project-web2/login?error=wrong_password");
+                header("Location: /login?error=wrong_password");
                 exit();
             }
         } 
-        // Nếu mật khẩu đã được hash, dùng password_verify
+        // Mật khẩu đã hash
         elseif (password_verify($password, $db_password)) {
-            // Lưu thông tin đăng nhập vào session riêng biệt
             $_SESSION['user'] = [
                 'user_id' => $user['user_id'],
                 'username' => $user['user_name'],
                 'role' => $user['role']
             ];
-            
 
-            echo "Đăng nhập thành công! Đang chuyển hướng...";
-            header("Refresh: 2; URL=http://localhost/project-web2/home");
+            header("Location: /home");
             exit();
         } else {
-            echo "Sai mật khẩu!";
-            header("Refresh: 2; URL=http://localhost/project-web2/login?error=wrong_password");
+            header("Location: /login?error=wrong_password");
             exit();
         }
     } else {
-        echo "Không tìm thấy người dùng!";
-        header("Refresh: 2; URL=http://localhost/project-web2/login?error=user_not_found");
+        header("Location: /login?error=user_not_found");
         exit();
     }
 } else {
-    echo "Yêu cầu không hợp lệ!";
-    header("Refresh: 2; URL=http://localhost/project-web2/login?error=invalid_request");
+    header("Location: /login?error=invalid_request");
     exit();
 }
 ?>

@@ -60,22 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bind_param("sssssssss", $username, $phone, $email, $street, $ward, $district, $city, $default_role, $hashed_password);
 
         if ($stmt->execute()) {
-            // Lấy ID của user vừa đăng ký
-            $user_id = $stmt->insert_id;
             $stmt->close();
 
-            // **Lưu session ngay sau khi đăng ký thành công**
-            $_SESSION['user'] = [
-                'user_id' => $user_id,
-                'username' => $username,
-                'role' => $default_role,
-                'email' => $email
-            ];
-
+            // KHÔNG lưu session user ở đây nữa
             echo json_encode([
                 'success' => true,
-                'message' => "Đăng ký thành công! Bạn đã được đăng nhập.",
-                'user' => $_SESSION['user']
+                'message' => "Đăng ký thành công! Vui lòng đăng nhập."
             ]);
         } else {
             $errors[] = "Lỗi khi đăng ký. Vui lòng thử lại.";

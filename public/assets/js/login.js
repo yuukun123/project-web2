@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then(data => {
                     if (data.success) {
                         alert(data.message);
-                        window.location.href = 'http://localhost/project-web2/login';
+                        window.location.href = 'login';
                     } else {
                         alert('Đã xảy ra lỗi:\n' + data.errors.join('\n'));
                     }
