@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Kiểm tra trạng thái đăng nhập từ session
     function checkLoginStatus(callback) {
-        fetch("http://localhost/project-web2/includes/session.php", {
+        fetch("includes/session.php", {
             method: "GET",
             credentials: "include"
         })

@@ -43,10 +43,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     'role' => $user['role']
                 ];
 
-                header("Location: /home");
+                header("Location: ../../home");
                 exit();
             } else {
-                header("Location: /login?error=wrong_password");
+                header("Location: /project-web2/login?error=wrong_password");
                 exit();
             }
         } 
@@ -58,18 +58,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 'role' => $user['role']
             ];
 
-            header("Location: /home");
+            header("Location: ../../home");
             exit();
         } else {
-            header("Location: /login?error=wrong_password");
+            header("Location: /project-web2/login?error=wrong_password");
             exit();
         }
     } else {
-        header("Location: /login?error=user_not_found");
+        header("Location: /project-web2/login?error=user_not_found");
         exit();
     }
 } else {
-    header("Location: /login?error=invalid_request");
+    header("Location: /project-web2/login?error=method_not_allowed");
     exit();
 }
 ?>

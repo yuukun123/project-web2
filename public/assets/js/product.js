@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 🔄 Hàm cập nhật số lượng giỏ hàng
     function updateCartCount() {
-        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1", {
+        fetch("includes/cart_action.php?cart_count=1", {
             method: "GET",
             credentials: "include"
         })
