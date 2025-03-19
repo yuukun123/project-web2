@@ -176,7 +176,7 @@
     background: none; /* Optional: Remove background from button input */
     cursor: pointer; /* Show pointer cursor */
     color: white;
-    margin: 0 30px;
+    margin: 0 60px;
 
 }
 
@@ -200,7 +200,7 @@
 }
 
 .items-pic input[type="text"]{
-    width: 92%;
+    width: 91%;
     height: 5vh;
     padding: 10px;
     /* margin-right: 50px; */

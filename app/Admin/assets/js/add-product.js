@@ -201,6 +201,17 @@ document.addEventListener('DOMContentLoaded', function() {
             filePathInput.value = '';
         }
     }
+
+    // Xóa dữ liệu khi form reset
+    const form = document.getElementById("add-product-form");  // �� Đúng ID của form
+    form.addEventListener("reset", function() {
+        const preview = document.getElementById('imagePreview');
+        preview.src = '';
+        preview.style.display = 'none';
+    
+        // Cũng nên xóa đường dẫn trong input filePath:
+        document.getElementById('filePath').value = '';
+    });
     
 
 });

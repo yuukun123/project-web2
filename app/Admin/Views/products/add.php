@@ -95,7 +95,7 @@
             <ion-icon name="save-outline"></ion-icon>
         </button>
 
-        <button  class="cancel">
+        <button  class="cancel" type="reset">
             Cancel
             <ion-icon name="close-outline"></ion-icon>
         </button>
