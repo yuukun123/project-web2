@@ -58,6 +58,9 @@ $page = $_GET['pages'];
     } elseif ($page === 'product') {
         echo '<link rel="stylesheet" href="public/assets/css/product_detail.css">';
     }
+    elseif ($page ==='pay') {
+        echo '<link rel="stylesheet" href="public/assets/css/pay.css">';
+    }
     ?>
 
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -125,9 +128,9 @@ $page = $_GET['pages'];
             <?php include 'includes/cart.php'; ?>
         </div>
         
-        <div class="Pay">
-            <a href="./user-pay.html" target="_blank" class="pay-link">
-                <button class="pay">Pay</button>
+        <div class="Pay_button">
+            <a href="pay" target="_blank" class="pay-link">
+                <button class="pay-btn-link">Pay</button>
             </a>
         </div>
     </div>
@@ -154,6 +157,9 @@ $page = $_GET['pages'];
     if ($page === 'product') :
         echo '<script src="public/assets/js/product.js"></script>';
     endif;  // End of if statement
+    if ($page === 'pay') :
+        echo '<script src="public/assets/js/pay.js"></script>';
+    endif;
     ?>
     <script src="public/assets/js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

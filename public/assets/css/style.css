@@ -769,14 +769,14 @@ header.hide {
     border-bottom: 0.5px solid #464646;
 }
 
-.Pay{
+.Pay_button{
     display: flex;
     justify-content: center;
     padding: 25px 0;
     flex-direction: column-reverse;
 }
 
-.pay{
+.pay-btn-link{
     color: white;
     background: #455265;
     border: none;
@@ -785,7 +785,7 @@ header.hide {
     width: 330px;
 }
 
-.pay a{
+.pay-btn-link a{
     text-decoration: none;
     color: white;
 }
