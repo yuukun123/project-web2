@@ -26,7 +26,9 @@
             <div class="Home">
                 <div class="text-big">Statistical Product</div>
                 <!-- include file dưới này -->
-                
+                <?php
+                 include("../Views/statistical/product.php")
+                ?>
                 
             </div>
         </div>

@@ -94,12 +94,14 @@ function filterData(){
     });
     //render values
     filterOrders.forEach(order=>{
+        let no = 0;
+        no++;
         let row = `
             <tr>
+                <td>#${no}</td>
                 <td>${order.date}</td>
                 <td>${order.product}</td>
                 <td>${order.quantity}</td>
-                <td>${order.amount}</td>
                 <td >
                      <div class="detail">
                         <button class="js-detail-btn">
@@ -110,6 +112,7 @@ function filterData(){
             </tr>
         `;
         tableBody.innerHTML += row;
+        
     });
     let detailButton = document.querySelector(".div-receipt");
     let closeBtn = document.querySelector(".close-btn");
