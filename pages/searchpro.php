@@ -64,10 +64,10 @@ if (!$result) {
             </select>
             
             <div class="search-price">
-                <input type="number" name="minPrice" placeholder="Giá tối thiểu" 
+                <input type="number" name="minPrice" placeholder="Minimum price" 
                     value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>">
 
-                <input type="number" name="maxPrice" placeholder="Giá tối đa" 
+                <input type="number" name="maxPrice" placeholder="Maximum price" 
                     value="<?php echo isset($_GET['maxPrice']) && $_GET['maxPrice'] !== '' ? htmlspecialchars($_GET['maxPrice']) : ''; ?>">
             </div>
             
