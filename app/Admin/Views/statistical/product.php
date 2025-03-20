@@ -85,28 +85,28 @@
     </thead>
     <tbody id="orderBody">
 
-        <!-- <tr>
-            <td class="text item">15/01/2025</td>
-            <td class="text item">
-                <div class="div-unpopular">
-                Avocado Mousse
-                <div class="unpopular">
-                    <p>unpopular</p>
-                </div>
-                </div>
-                    
-            </td>
-            
-            <td class="text item">2 </td>
-            <td class="text item">1.020.000đ</td>
-            <td >
+         <?php
+         $no = 1;
+         foreach($order_data as $items){
+            echo'<tr>';
+            echo'
+                <td class="text item">'.$no.'</td>
+                <td class="text item">'.$items["delivery_date"].'</td>
+                <td class="text item">'.$items["product_name"].'</td>
+                <td class="text item">'.$items["quantity"].'</td>
+                <td >
                 <div class="detail">
                     <button class="js-detail-btn">
                         <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
+                        </button>  
                 </div>
                 </td>
-        </tr>
+            ';
+            echo'</tr>';
+            $no++;
+         }
+         ?>
+        <!--
         <tr>
             <td class="text item">30/01/2025</td>
             <td class="text item">
@@ -213,6 +213,27 @@
         </tr>
     </thead>
     <tbody id="orderBody">
+    <?php
+         $no = 1;
+         foreach($order_data_1 as $items){
+            echo'<tr>';
+            echo'
+                <td class="text item">'.$no.'</td>
+                <td class="text item">'.$items["delivery_date"].'</td>
+                <td class="text item">'.$items["product_name"].'</td>
+                <td class="text item">'.$items["quantity"].'</td>
+                <td >
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>  
+                </div>
+                </td>
+            ';
+            echo'</tr>';
+            $no++;
+         }
+         ?>
         <!-- <tr>
             <td class="text item">15/01/2025</td>
             <td class="text item">
