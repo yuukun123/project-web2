@@ -28,20 +28,6 @@
 //     }
 // });
 
-
-
-
-// Select hamburger and mobile menu
-function toggleMenu(hamburger) {
-    const mobileMenu = document.getElementById('mobileMenu');
-    mobileMenu.classList.toggle('active');
-    
-    // Toggle active class for both hamburger icons
-    document.querySelectorAll('.hamburger').forEach(icon => {
-        icon.classList.toggle('active');
-    });
-}
-
 // 1) Lấy ảnh hiện tại và hiển thị đường dẫn theo định dạng "uploads/TênFile.jpg"
 const imgElement = document.getElementById('imagePreview');
 const filePathInput = document.getElementById('filePath');
@@ -73,9 +59,6 @@ function handleFileChange(inputElement) {
 
 /*admin data*/
 document.addEventListener('DOMContentLoaded', function() {
-
-
-
 
     function getCurrentUser() {
         const admins = localStorage.getItem('AdminUser');

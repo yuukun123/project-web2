@@ -1,13 +1,3 @@
-function toggleMenu(hamburger) {
-  const mobileMenu = document.getElementById('mobileMenu');
-  mobileMenu.classList.toggle('active');
-
-  // Toggle active class for both hamburger icons
-  document.querySelectorAll('.hamburger').forEach(icon => {
-    icon.classList.toggle('active');
-  });
-}
-
 /* admin data */
 document.addEventListener("DOMContentLoaded", function () {
   function getCurrentUser() {

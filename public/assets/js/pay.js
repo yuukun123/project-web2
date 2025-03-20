@@ -101,3 +101,33 @@
 
 
 // });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const cardDetailsSection = document.querySelector('.card-details');
+    const creditCardFields = document.getElementById('credit-card-fields');
+  
+    if (cardDetailsSection && creditCardFields) {
+      const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+  
+      paymentMethods.forEach(method => {
+        method.addEventListener('change', function() {
+          if (this.value === 'credit-card') {
+            cardDetailsSection.classList.add('show');
+            creditCardFields.style.display = 'flex';
+          } else {
+            cardDetailsSection.classList.remove('show');
+            creditCardFields.style.display = 'none';
+          }
+        });
+      });
+  
+      const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
+      if (!selectedMethod || selectedMethod.value !== 'credit-card') {
+        cardDetailsSection.classList.remove('show');
+        creditCardFields.style.display = 'none';
+      } else {
+        cardDetailsSection.classList.add('show');
+        creditCardFields.style.display = 'flex';
+      }
+    }
+  });
