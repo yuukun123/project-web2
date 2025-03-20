@@ -1,133 +1,96 @@
-// /*admin data*/
-// document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    const citySelect = document.getElementById("registerCity");
+    const districtSelect = document.getElementById("registerDistrict");
+    const wardSelect = document.getElementById("registerWard");
+    const streetInput = document.getElementById("registerStreet");
 
-//     const paymentMethodRadios = document.querySelectorAll('input[name="payment_method"]');
-//     const cardInput = document.getElementById('card-input');
+    const autoFillRadio = document.getElementById("autoFill");
+    const otherRadio = document.getElementById("sendOther");
 
-//     // Add an event listener to all radio buttons
-//     paymentMethodRadios.forEach(radio => {
-//         radio.addEventListener('change', () => {
-//             if (radio.value === 'credit-card' && radio.checked) {
-//                 cardInput.classList.add('active'); // Show card input
-//             } else {
-//                 cardInput.classList.remove('active'); // Hide card input
-//             }
-//         });
-//     });
-
-
-
-//     const btn = document.querySelector('.pay-button');
-
-//     // Function to show confirmation
-//     function showConfirmation() {
-//         document.querySelector('.my-order').style.display = 'none';
-//         document.getElementById('overlay').style.display = 'block';
-//         document.getElementById('confirmation').style.display = 'block';
-//     }
-
-//     // Function to auto-fill the form from local storage for a logged-in user
-//     function autoFillForm() {
-
-//         // document.getElementById("full_name").value = currentUser.username;
-//         // document.getElementById("phone").value = localStorage.getItem("user_phone") || "";
-//         // document.getElementById("address").value = localStorage.getItem("user_address") || "";
-//         // document.getElementById("delivery_date").value = localStorage.getItem("user_delivery_date") || "";
-//         // document.getElementById("note").value = localStorage.getItem("user_note") || "";
+    const userCity = userAddressInfo.city;
+    const userDistrict = userAddressInfo.district;
+    const userWard = userAddressInfo.ward;
+    const userStreet = userAddressInfo.street;
     
-        
 
-//         console.log("Auto-fill function called");
-//         console.log("Full Name from Local Storage:", currentUser.username);
-//         // document.getElementById("full_name").value = currentUser.username || "";
-//         document.getElementById("phone").value = currentUser.phone;
-//         document.getElementById("address").value = currentUser.address;
-    
-//     }
+    // Khi chọn Auto-fill
+    autoFillRadio.addEventListener("change", function () {
+        if (this.checked) {
+            // Set toàn bộ địa chỉ từ database
+            citySelect.innerHTML = `<option selected>${userCity}</option>`;
+            districtSelect.innerHTML = `<option selected>${userDistrict}</option>`;
+            wardSelect.innerHTML = `<option selected>${userWard}</option>`;
+            streetInput.value = userStreet;
+            // Disable chọn city/district/ward
+            citySelect.disabled = true;
+            districtSelect.disabled = true;
+            wardSelect.disabled = true;
+            streetInput.readOnly = true;
+        }
+    });
 
-//     // Function to clear the form
-//     function clearForm() {
-//         document.getElementById("full_name").value = "";
-//         document.getElementById("phone").value = "";
-//         document.getElementById("address").value = "";
-//         document.getElementById("delivery_date").value = "";
-//         document.getElementById("note").value = "";
-//     }
+    // Khi chọn Send to other
+    otherRadio.addEventListener("change", function () {
+        if (this.checked) {
+            citySelect.disabled = false;
+            districtSelect.disabled = false;
+            wardSelect.disabled = false;
+            streetInput.readOnly = false;
+            streetInput.value = '';
 
-//     // Event listener for the pay button
-//     btn.addEventListener('click', function() {
-//         const name = document.querySelector("#full_name");
-//         const phone = document.querySelector("#phone");
-//         const address = document.querySelector("#address");
-//         const date = document.querySelector("#delivery_date");
+            // Load lại city từ API
+            citySelect.innerHTML = "<option value=''>Select City</option>";
+            districtSelect.innerHTML = "<option value=''>Select District</option>";
+            wardSelect.innerHTML = "<option value=''>Select Ward</option>";
 
-//         const fields = [
-//             { field: name, message: "Please enter YOUR NAME." },
-//             { field: phone, message: "Please enter YOUR PHONE NUMBER." },
-//             { field: address, message: "Please enter YOUR ADDRESS." },
-//             { field: date, message: "Please select a DATE." }
-//         ];
-        
-//         const emptyFields = fields.filter(({ field }) => field.value === "");
-        
-//         if (emptyFields.length === fields.length) {
-//             alert("All fields are required. Please fill in all the fields.");
-//         } else if (emptyFields.length > 0) {
-//             alert(emptyFields[0].message); // Thông báo lỗi đầu tiên
-//         } else {
-//             showConfirmation();
-//         }
-//     });
+            fetch("https://provinces.open-api.vn/api/p/")
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(city => {
+                        let option = new Option(city.name, city.code);
+                        citySelect.add(option);
+                    });
+                });
+        }
+    });
 
-//     // Event listeners for radio buttons
-//     document.getElementById("autoFill").addEventListener("change", function() {
-//         if (this.checked) {
-//             autoFillForm();
-//         }
-//     });
+    // Khi chọn city => load district
+    citySelect.addEventListener("change", function () {
+        let cityCode = citySelect.value;
+        districtSelect.innerHTML = "<option value=''>Select District</option>";
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
 
-//     document.getElementById("clearFill").addEventListener("change", function() {
-//         if (this.checked) {
-//             clearForm();
-//         }
-//     });
+        if (cityCode) {
+            fetch(`https://provinces.open-api.vn/api/p/${cityCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.districts.forEach(district => {
+                        let option = new Option(district.name, district.code);
+                        districtSelect.add(option);
+                    });
+                });
+        }
+    });
 
-//     // Initial auto-fill if 'Auto fill' is selected by default
-//     window.onload = function() {
-//         if (document.getElementById("autoFill").checked) {
-//             autoFillForm();
-//         }
-//     };
+    // Khi chọn district => load ward
+    districtSelect.addEventListener("change", function () {
+        let districtCode = districtSelect.value;
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
 
+        if (districtCode) {
+            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.wards.forEach(ward => {
+                        let option = new Option(ward.name, ward.code);
+                        wardSelect.add(option);
+                    });
+                });
+        }
+    });
 
-// });
-
-document.addEventListener('DOMContentLoaded', function() {
-    const cardDetailsSection = document.querySelector('.card-details');
-    const creditCardFields = document.getElementById('credit-card-fields');
-  
-    if (cardDetailsSection && creditCardFields) {
-      const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
-  
-      paymentMethods.forEach(method => {
-        method.addEventListener('change', function() {
-          if (this.value === 'credit-card') {
-            cardDetailsSection.classList.add('show');
-            creditCardFields.style.display = 'flex';
-          } else {
-            cardDetailsSection.classList.remove('show');
-            creditCardFields.style.display = 'none';
-          }
-        });
-      });
-  
-      const selectedMethod = document.querySelector('input[name="payment_method"]:checked');
-      if (!selectedMethod || selectedMethod.value !== 'credit-card') {
-        cardDetailsSection.classList.remove('show');
-        creditCardFields.style.display = 'none';
-      } else {
-        cardDetailsSection.classList.add('show');
-        creditCardFields.style.display = 'flex';
-      }
+    // Khi load page, nếu auto-fill được chọn sẵn:
+    if (autoFillRadio.checked) {
+        autoFillRadio.dispatchEvent(new Event('change'));
     }
-  });
+});

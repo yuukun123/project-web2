@@ -51,8 +51,32 @@ $total_cost = 0;
                 </div>
                 <div class="address">
                     <label for="address">Address <span style="color: red;">(*)</span></label>
-                    <input type="text" id="address" name="address" value="<?= $user['street'] . ', ' . $user['ward'] . ', ' . $user['district'] . ', ' . $user['city'] ?>">
+                    <input type="text" id="registerStreet" name="address" value="<?= htmlspecialchars($user['street']) ?>">
                 </div>
+                <div class="address">
+                    <label for="email">City <span style="color: red;">(*)</span></label>
+                    <select id="registerCity" name="city" required>
+                        <option value="">Select City</option>
+                    </select>
+                    <!-- <label>City</label> -->
+                </div>
+
+                <div class="address">
+                    <label for="registerStreet">District <span style="color: red;">(*)</span></label>
+                    <select id="registerDistrict" name="district" required>
+                        <option value="">Select District</option>
+                    </select>
+                    <!-- <label>District</label> -->
+                </div>
+
+                <div class="address">
+                    <label for="registerWard">Ward <span style="color: red;">(*)</span></label>
+                    <select id="registerWard" name="ward" required>
+                        <option value="">Select Ward</option>
+                    </select>
+                    <!-- <label>Ward</label> -->
+                </div>
+
                 <div class="delivery-date">
                     <label for="delivery_date">Delivery Date <span style="color: red;">(*)</span></label>
                     <input type="date" id="delivery_date" name="delivery_date" required>
@@ -69,8 +93,8 @@ $total_cost = 0;
                     </div>
 
                     <div class="clear">
-                        <input type="radio" name="auto-fill" id="clearFill" value="Clear fill">
-                        <label for="clearFill">Send To Others</label>
+                        <input type="radio" id="sendOther" name="auto-fill"  value="Clear fill">
+                        <label for="sendOther">Send To Others</label>
                     </div>
                 </div>
 
@@ -111,10 +135,21 @@ $total_cost = 0;
                                 <div><?= $row['product_name'] ?> - <?= $row['size_name'] ?></div>
                                 <div class="btn-quantity">Quantity: <?= $row['quantity'] ?></div>
                             </div>
+
+                            <?php if (!empty($row['note'])): ?>
+                                <label for="note">Greeting Message</label>
+                                <div class="product-note"><strong>Note:</strong> <?= htmlspecialchars($row['note']) ?></div>
+                            <?php endif; ?>
+
                             <div class="price"><?= number_format($subtotal, 0, '.', '.') ?> VND</div>
                         </div>
                     </div>
                     <?php } ?>
+
+                    <div class="note">
+                        <label for="note">Greeting Message</label>
+                        <textarea id="note" name="note" rows="2" cols="90" style="overflow:auto;"></textarea>
+                    </div>
 
                     <div class="subtotal">
                         <div class="total">
@@ -144,19 +179,10 @@ $total_cost = 0;
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const creditCardOption = document.getElementById('credit-card-option');
-    const creditCardFields = document.getElementById('credit-card-fields');
-    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
-
-    paymentMethods.forEach(method => {
-        method.addEventListener('change', function() {
-            if (creditCardOption.checked) {
-                creditCardFields.style.display = 'block';
-            } else {
-                creditCardFields.style.display = 'none';
-            }
-        });
-    });
-});
+    const userAddressInfo = {
+        city: "<?= $user['city'] ?>",
+        district: "<?= $user['district'] ?>",
+        ward: "<?= $user['ward'] ?>",
+        street: "<?= $user['street'] ?>"
+    };
 </script>

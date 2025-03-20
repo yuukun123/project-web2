@@ -562,6 +562,7 @@
 .input-information input[type="text"],
 .input-information input[type="number"],
 .input-information input[type="date"],
+.input-information select,
 .input-information textarea {
     width: 100%;
     padding: 10px;
@@ -571,6 +572,18 @@
     background-color: #fff;
     box-sizing: border-box;
 }
+
+.input-information select:disabled {
+    opacity: 1 !important;
+    color: #000 !important;
+    background-color: #f5f5f5 !important;
+}
+
+.choose input[type="radio"] {
+    transform: scale(1.5);  /* tăng kích thước lên 1.5 lần */
+    margin-right: 8px;      /* thêm khoảng cách cho đẹp */
+}
+
 
 
 .payment-method input[type="radio"] {
@@ -613,16 +626,15 @@
 }
 
 /* card credit */
-.credit-card-fields {
+#credit-card-fields {
     display: none;
-
-  }
-  .credit-card-fields.show {
-    display: flex !important;
     gap: 10px;
     flex-wrap: wrap;
     margin-bottom: 30px;
     transition: all 0.3s ease;
+  }
+  #credit-card-fields.show {
+    display: flex !important;
   }
   
   .card-details {
@@ -630,7 +642,7 @@
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    display: none !important;
+    display: none;
     background-color: #f9f9f9;
     transition: all 0.3s ease;
   }
