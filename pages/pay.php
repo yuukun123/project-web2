@@ -40,7 +40,7 @@ $total_cost = 0;
     <div class="pay-infor">
         <div class="input-information">
             <h1>Customer Information</h1>
-            <form action="order_process.php" method="post">
+            <form id="payment-form" >
                 <div class="name">
                     <label for="full_name">Full name <span style="color: red;">(*)</span></label>
                     <input type="text" id="full_name" name="full_name" value="<?= $user['user_name'] ?>">
@@ -51,11 +51,11 @@ $total_cost = 0;
                 </div>
                 <div class="address">
                     <label for="address">Address <span style="color: red;">(*)</span></label>
-                    <input type="text" id="registerStreet" name="address" value="<?= htmlspecialchars($user['street']) ?>">
+                    <input type="text" id="registerStreet" name="shipping_street" value="<?= htmlspecialchars($user['street']) ?>">
                 </div>
                 <div class="address">
                     <label for="email">City <span style="color: red;">(*)</span></label>
-                    <select id="registerCity" name="city" required>
+                    <select id="registerCity" name="shipping_city" required>
                         <option value="">Select City</option>
                     </select>
                     <!-- <label>City</label> -->
@@ -63,7 +63,7 @@ $total_cost = 0;
 
                 <div class="address">
                     <label for="registerStreet">District <span style="color: red;">(*)</span></label>
-                    <select id="registerDistrict" name="district" required>
+                    <select id="registerDistrict" name="shipping_district" required>
                         <option value="">Select District</option>
                     </select>
                     <!-- <label>District</label> -->
@@ -71,7 +71,7 @@ $total_cost = 0;
 
                 <div class="address">
                     <label for="registerWard">Ward <span style="color: red;">(*)</span></label>
-                    <select id="registerWard" name="ward" required>
+                    <select id="registerWard" name="shipping_ward" required>
                         <option value="">Select Ward</option>
                     </select>
                     <!-- <label>Ward</label> -->
@@ -100,11 +100,12 @@ $total_cost = 0;
 
                 <h1>Final Payment</h1>
                 <div class="payment-method">
-                    <label><input type="radio" name="payment_method" value="cash" checked> COD</label>
-                    <label><input type="radio" name="payment_method" value="momo"> Momo</label>
-                    <label><input type="radio" name="payment_method" value="credit-card" id="credit-card-option"> Credit Card</label>
-                    <label><input type="radio" name="payment_method" value="vnpay"> VNPay</label>
+                    <label><input type="radio" name="payment_method" value="COD" checked> COD</label>
+                    <label><input type="radio" name="payment_method" value="Momo"> Momo</label>
+                    <label><input type="radio" name="payment_method" value="Credit Card"> Credit Card</label>
+                    <label><input type="radio" name="payment_method" value="VNPay"> VNPay</label>
                 </div>
+
 
                 <div id="credit-card-fields" class="credit-details active">
                     <label for="card_number">Card Number <span style="color: red;">(*)</span></label>
@@ -135,21 +136,15 @@ $total_cost = 0;
                                 <div><?= $row['product_name'] ?> - <?= $row['size_name'] ?></div>
                                 <div class="btn-quantity">Quantity: <?= $row['quantity'] ?></div>
                             </div>
-
-                            <?php if (!empty($row['note'])): ?>
-                                <label for="note">Greeting Message</label>
-                                <div class="product-note"><strong>Note:</strong> <?= htmlspecialchars($row['note']) ?></div>
-                            <?php endif; ?>
-
                             <div class="price"><?= number_format($subtotal, 0, '.', '.') ?> VND</div>
+                        </div>
+
+                        <div class="note">
+                            <label for="note_<?= $row['cart_id'] ?>">Greeting Message for this product</label>
+                            <input type="text" name="product_note[<?= $row['cart_id'] ?>]" id="note_<?= $row['cart_id'] ?>" value="<?= htmlspecialchars($row['note'] ?? '') ?>" placeholder="Enter message for this product">
                         </div>
                     </div>
                     <?php } ?>
-
-                    <div class="note">
-                        <label for="note">Greeting Message</label>
-                        <textarea id="note" name="note" rows="2" cols="90" style="overflow:auto;"></textarea>
-                    </div>
 
                     <div class="subtotal">
                         <div class="total">
@@ -177,6 +172,24 @@ $total_cost = 0;
         </div>
     </div>
 </div>
+
+<div class="confirmation" id="confirmation">
+    <div class="icon-wrapper">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </div>
+    <h1>SUCCESS</h1>
+    <p class="order-id"><span style="font-weight: bold;">Your Order ID </span><strong class="order-id-number" id="order-id-number">#...</strong></p>
+    <div id="order-items"></div>
+    <p class="total" id="total-cost-display">Total <span>0 VND</span></p>
+    <p style="font-size: 14px;">Thank you for choosing our service!</p>
+    <p style="font-size: 14px;">Your order is on its way with love.</p>
+    <!-- <a href="./user-receipt.html" class="back-home">Click here to view the invoice</a> -->
+    <a id="view-invoice-link" href="receipt" class="view-invoice-btn">Click here to view the invoice</a>
+    <p>Wishing you the sweetest day!</p>
+</div>
+
+<div class="blur-overlay" id="confirmation-overlay"></div>
+
 
 <script>
     const userAddressInfo = {

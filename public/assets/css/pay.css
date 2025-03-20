@@ -780,6 +780,11 @@
     width: 90%;
 }
 
+.confirmation.show {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
+}
+
 .confirmation .icon-wrapper {
     font-size: 50px;
     color: #4CAF50;

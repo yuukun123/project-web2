@@ -11,17 +11,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const userDistrict = userAddressInfo.district;
     const userWard = userAddressInfo.ward;
     const userStreet = userAddressInfo.street;
-    
 
-    // Khi chọn Auto-fill
+    // Auto-fill địa chỉ
     autoFillRadio.addEventListener("change", function () {
         if (this.checked) {
-            // Set toàn bộ địa chỉ từ database
             citySelect.innerHTML = `<option selected>${userCity}</option>`;
             districtSelect.innerHTML = `<option selected>${userDistrict}</option>`;
             wardSelect.innerHTML = `<option selected>${userWard}</option>`;
             streetInput.value = userStreet;
-            // Disable chọn city/district/ward
+
             citySelect.disabled = true;
             districtSelect.disabled = true;
             wardSelect.disabled = true;
@@ -29,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Khi chọn Send to other
+    // Chọn "Gửi đến địa chỉ khác"
     otherRadio.addEventListener("change", function () {
         if (this.checked) {
             citySelect.disabled = false;
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
             streetInput.readOnly = false;
             streetInput.value = '';
 
-            // Load lại city từ API
             citySelect.innerHTML = "<option value=''>Select City</option>";
             districtSelect.innerHTML = "<option value=''>Select District</option>";
             wardSelect.innerHTML = "<option value=''>Select Ward</option>";
@@ -50,13 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         let option = new Option(city.name, city.code);
                         citySelect.add(option);
                     });
-                });
+                })
+                .catch(err => console.error("Lỗi tải danh sách thành phố:", err));
         }
     });
 
-    // Khi chọn city => load district
+    // Load district khi chọn city
     citySelect.addEventListener("change", function () {
-        let cityCode = citySelect.value;
+        const cityCode = this.value;
         districtSelect.innerHTML = "<option value=''>Select District</option>";
         wardSelect.innerHTML = "<option value=''>Select Ward</option>";
 
@@ -68,13 +66,14 @@ document.addEventListener('DOMContentLoaded', function () {
                         let option = new Option(district.name, district.code);
                         districtSelect.add(option);
                     });
-                });
+                })
+                .catch(err => console.error("Lỗi tải quận/huyện:", err));
         }
     });
 
-    // Khi chọn district => load ward
+    // Load ward khi chọn district
     districtSelect.addEventListener("change", function () {
-        let districtCode = districtSelect.value;
+        const districtCode = this.value;
         wardSelect.innerHTML = "<option value=''>Select Ward</option>";
 
         if (districtCode) {
@@ -85,12 +84,61 @@ document.addEventListener('DOMContentLoaded', function () {
                         let option = new Option(ward.name, ward.code);
                         wardSelect.add(option);
                     });
-                });
+                })
+                .catch(err => console.error("Lỗi tải phường/xã:", err));
         }
     });
 
-    // Khi load page, nếu auto-fill được chọn sẵn:
+    // Khi load trang nếu autoFill đã được chọn
     if (autoFillRadio.checked) {
         autoFillRadio.dispatchEvent(new Event('change'));
     }
+
+    // Submit form và hiện confirmation
+    document.getElementById('payment-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('pages/order_process.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Hiển thị confirmation popup
+                document.getElementById('confirmation-overlay').style.display = 'block';
+                document.getElementById('confirmation').classList.add('show');
+
+                document.getElementById('order-id-number').textContent = `#${data.order_id}`;
+                document.getElementById('view-invoice-link').href = `receipt?order_id=${data.order_id}`;
+
+                // Load danh sách sản phẩm đã đặt
+                fetch('pages/get_last_order_items.php')
+                    .then(res => res.json())
+                    .then(items => {
+                        let orderItemsHtml = '';
+                        let totalCost = 0;
+                        items.forEach(item => {
+                            orderItemsHtml += `
+                                <div class="receipt-rev">
+                                    <div class="name-food">${item.product_name}</div>
+                                    <div class="number">x${item.quantity}</div>
+                                </div>
+                            `;
+                            totalCost += item.price * item.quantity;
+                        });
+                        document.getElementById('order-items').innerHTML = orderItemsHtml;
+                        document.getElementById('total-cost-display').innerHTML = `Total: <span>${totalCost.toLocaleString()} VND</span>`;
+                    });
+            } else {
+                alert(data.message || "Đặt hàng thất bại.");
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Có lỗi xảy ra khi đặt hàng.");
+        });
+    });
 });
