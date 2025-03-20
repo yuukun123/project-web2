@@ -49,10 +49,12 @@ ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = V
 
 -- Thêm dữ liệu vào bảng orders (có ngày nhận và giờ nhận)
 -- Thêm dữ liệu vào bảng orders với địa chỉ giao hàng khác
-INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time, order_date, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES
-(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Ho Chi Minh', 'District 7', 'Tan Phong', 'R4-20 Phu My Hung'),
-(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', NOW(), 'Ha Noi', 'Hoan Kiem', 'Hang Bac', '35 Hang Bac'),
-(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Ho Chi Minh', 'District 1', 'Da Kao', '10 Nguyen Binh Khiem');
+-- Thêm dữ liệu vào bảng orders (có payment_method)
+INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time, order_date, shipping_city, shipping_district, shipping_ward, shipping_street, payment_method) VALUES
+(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Ho Chi Minh', 'District 7', 'Tan Phong', 'R4-20 Phu My Hung', 'COD'),
+(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', NOW(), 'Ha Noi', 'Hoan Kiem', 'Hang Bac', '35 Hang Bac', 'Momo'),
+(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Ho Chi Minh', 'District 1', 'Da Kao', '10 Nguyen Binh Khiem', 'Credit Card (Visa, Master, American Express, JCB)'),
+(1, 950000, 'Paid', 'Thanh toán online', '2025-03-25', '14:00:00', NOW(), 'Ho Chi Minh', 'Binh Thanh', 'Ward 15', '22 Dinh Bo Linh', 'VNPay');
 
 
 -- Thêm dữ liệu vào bảng order_detail
