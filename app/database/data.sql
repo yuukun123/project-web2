@@ -58,10 +58,17 @@ INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_
 
 
 -- Thêm dữ liệu vào bảng order_detail
-INSERT INTO order_detail (order_id, product_id, quantity, price) VALUES
-(1, 7, 2, 110000),
-(2, 10, 1, 130000),
-(3, 15, 2, 60000);
+-- Thêm dữ liệu vào bảng order_detail (có thêm note cho từng sản phẩm)
+INSERT INTO order_detail (order_id, product_id, quantity, price, note) VALUES
+(1, 7, 2, 110000, 'Không lấy sốt'),
+(1, 14, 1, 55000, 'Ít đường'),
+(2, 10, 1, 130000, 'Giao nóng, không bỏ tủ lạnh'),
+(2, 5, 1, 540000, 'Trang trí thêm hoa quả'),
+(3, 15, 2, 60000, 'Thêm đá viên'),
+(3, 18, 1, 75000, 'Không dùng ống hút nhựa'),
+(4, 4, 1, 530000, 'Hộp quà kèm thiệp chúc mừng'),
+(4, 11, 2, 140000, 'Gói riêng từng cái croissant');
+
 
 -- Thêm dữ liệu vào bảng cart (tránh lỗi trùng dữ liệu)
 INSERT INTO cart (user_id, product_id, quantity) VALUES
