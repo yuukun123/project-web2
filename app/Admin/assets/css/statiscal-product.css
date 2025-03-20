@@ -9,13 +9,13 @@
 }
 
 /* Cấu hình chung cho bảng */
-.table-total-order {
-    width: 95%;
+.table-best-seller, .table-unpopular {
+    width: 90%;
     margin: 20px 30px;
     border-collapse: collapse;
     text-align: center;
     border: 1px solid rgba(0, 0, 0, 0.403);
-
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 /* Định dạng cho tiêu đề các cột */
@@ -33,7 +33,7 @@ th {
 td{
     border: 0.5px solid rgba(0, 0, 0, 0.403);
     padding: 12px;
-    text-align: left;
+    text-align: center;
 }
 
 
@@ -259,7 +259,7 @@ tr .js-detail-btn:hover{
 .Home{
     border: 1px solid black;
     border-radius: 10px;
-    height: 100vh;
+    /* height: 100vh; */
     background: #fff;
     padding-bottom: 30px;
     

@@ -1,3 +1,4 @@
+<?php include __DIR__ .("../../../Controllers/statistical-process.php") ?>
 <div class="div-receipt">
     <div class="receipt">
         <p class="title-receipt">Detail Receipt</p>
@@ -19,20 +20,14 @@
                 <tr>
                     <th>Name product</th>
                     <th>Quantity</th>
-                    <th>Unit price</th>
-                    <th>Amount</th>
+                    <th>Total Amount</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Avocado Mousse</td>
                     <td>2</td>
-                    <td>510.000đ</td>
                     <td>1.020.000đ</td>
-                </tr>
-                <tr>
-                    <td style="font-weight: bold; text-align: right;">Total price:</td>
-                    <td colspan="3">1.020.000đ</td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold; text-align: right;">Describe:</td>
@@ -73,17 +68,147 @@
 </div>
 
 
+<div class="both-table">
 
-<p class="main-title">TOTAL ORDER</p>
+
+<table class="table-best-seller">
+<p class="main-title">TOTAL 10 BEST SELLER PRODUCT</p>
 <div class="bd-bt"></div>
-
-<table class="table-total-order">
     <thead>
         <tr>
+            <th class="title item">No</th>
             <th class="title item">Date</th>
             <th class="title item">Product Name</th>
             <th class="title item">Quantity sales</th>
-            <th class="title item">Total amount</th>
+            <th class="title item">Receipt</th>
+        </tr>
+    </thead>
+    <tbody id="orderBody">
+
+        <!-- <tr>
+            <td class="text item">15/01/2025</td>
+            <td class="text item">
+                <div class="div-unpopular">
+                Avocado Mousse
+                <div class="unpopular">
+                    <p>unpopular</p>
+                </div>
+                </div>
+                    
+            </td>
+            
+            <td class="text item">2 </td>
+            <td class="text item">1.020.000đ</td>
+            <td >
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>
+                </div>
+                </td>
+        </tr>
+        <tr>
+            <td class="text item">30/01/2025</td>
+            <td class="text item">
+                <div class="div-unpopular">
+                Avocado Mousse
+                <div class="unpopular">
+                    <p>unpopular</p>
+                </div>
+                </div>
+                    
+            </td>
+            
+            <td class="text item">3 </td>
+            <td class="text item">1.620.000đ</td>
+            <td >
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>  
+                </div>
+                </td>
+        </tr>
+        <tr>
+            <td class="text item ">05/02/2025</td>
+            <td class="text item ">
+                <div class="div-best-seller">
+                    Matcha Croissant
+                
+                </div>
+                    
+            </td>
+            
+            <td class="text item">7 </td>
+            <td class="text item">980.000đ</td>
+            <td >
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>
+                </div>
+                </td>
+        </tr>
+        <tr>
+            <td class="text item ">10/02/2025</td>
+            <td class="text item ">
+                <div class="div-best-seller">
+                    Lemon Tea
+                
+                </div>
+                
+            </td>
+            
+            <td class="text item">10 </td>
+            <td class="text item">600.000đ</td>
+            <td >
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>
+                        </td>
+                </div>
+        </tr>
+        <tr>
+            <td class="text item ">22/02/2025</td>
+            <td class="text item ">
+                <div class="div-best-seller">
+                    Matcha Latte
+                <div class="best-seller">
+                    <p>best-seller</p>
+                    </div>
+                </div>
+                
+            </td>
+            
+            <td class="text item">15 </td>
+            <td class="text item">1.125.000đ</td>
+            <td>
+                <div class="detail">
+                    <button class="js-detail-btn">
+                        <ion-icon name="receipt-outline"></ion-icon>
+                        </button>
+                </div>
+                </td>
+        </tr>
+        <tr>
+            <td colspan="4" class="item-total">Total amount all:</td>
+            <td class="item-price">5.372.000đ</td>
+        </tr>
+            -->
+
+    </tbody>
+</table>
+
+<table class="table-unpopular">
+<p class="main-title">TOTAL 10 UNPOPULAR PRODUCT</p>
+<div class="bd-bt"></div>
+    <thead>
+        <tr>
+            <th class="title item">No</th>
+            <th class="title item">Date</th>
+            <th class="title item">Product Name</th>
+            <th class="title item">Quantity sales</th>
             <th class="title item">Receipt</th>
         </tr>
     </thead>
@@ -202,6 +327,7 @@
 
     </tbody>
 </table>
+</div>
 <div class="receipt-detail">
     <div class="receipt">
         
