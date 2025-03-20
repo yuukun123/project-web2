@@ -40,24 +40,21 @@ CREATE TABLE product (
     FOREIGN KEY (size_id) REFERENCES size(size_id) ON DELETE SET NULL
 );
 
--- Bảng orders (đã có delivery_date và delivery_time)
+-- Bảng orders (có thêm payment_method và thông tin địa chỉ giao hàng)
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
-    order_date DATETIME DEFAULT CURRENT_TIMESTAMP, -- lưu đầy đủ nhưng có thể định dạng khi hiển thị
+    order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     delivery_date DATE,
     delivery_time TIME,
     total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
     status ENUM('Pending', 'Processing', 'Completed', 'Cancelled', 'Paid') DEFAULT 'Pending',
+    payment_method ENUM('COD', 'Momo', 'Credit Card', 'VNPay') DEFAULT 'COD',
     user_id INT NOT NULL,
     notes TEXT,
-
-    
-    -- Địa chỉ giao hàng khác (lưu trực tiếp vào bảng orders)
     shipping_city VARCHAR(100) NOT NULL,
     shipping_district VARCHAR(100) NOT NULL,
     shipping_ward VARCHAR(100) NOT NULL,
     shipping_street VARCHAR(255) NOT NULL,
-    
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
