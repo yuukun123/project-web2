@@ -1,11 +1,11 @@
 <?php
-include __DIR__ . '/../../config/data_connect.php'; // Kết nối database
-
+include_once __DIR__ . '/../../config/config.php'; // Kết nối database
+include __DIR__ . '/../../config/data_connect.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['status'])) {
     $order_id = intval($_POST['order_id']);
     $new_status = $_POST['status'];
 
-    // Lấy trạng thái hiện tại của đơn hàng
+    // Lấy trạng thái hiện tại từ database
     $sql_check = "SELECT status FROM orders WHERE order_id = ?";
     $stmt_check = $conn->prepare($sql_check);
     $stmt_check->bind_param("i", $order_id);
@@ -14,7 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        die("Đơn hàng không tồn tại.");
+        echo "<script>alert('Lỗi: Đơn hàng không tồn tại!'); window.history.back();</script>";
+        exit;
     }
 
     $current_status = $row['status'];
@@ -28,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     ];
 
     if (!isset($valid_transitions[$current_status]) || !in_array($new_status, $valid_transitions[$current_status])) {
-        die("Không thể cập nhật trạng thái đơn hàng từ '$current_status' sang '$new_status'.");
+        echo "<script>alert('Không thể cập nhật trạng thái từ $current_status sang $new_status!'); window.history.back();</script>";
+        exit;
     }
 
     // Cập nhật trạng thái nếu hợp lệ
@@ -37,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     $stmt_update->bind_param("si", $new_status, $order_id);
 
     if ($stmt_update->execute()) {
-        header("Location: ../Views/receipt.php"); // chuyen huong sau khi update thanh cog
-        exit();
+        echo "<script>alert('Cập nhật thành công!'); window.history.back();</script>";
     } else {
-        die("Lỗi cập nhật đơn hàng: " . $stmt_update->error);
+        echo "<script>alert('Lỗi cập nhật đơn hàng: " . $stmt_update->error . "'); window.history.back();</script>";
     }
+    exit;
 }
 ?>
