@@ -42,7 +42,7 @@ if ($result->num_rows > 0): ?>
                         <button class="button lock" onclick="toggleLockUser(<?php echo $user_id; ?>, '<?php echo $row['status']; ?>')">
                             <?php echo $toggleAction; ?>
                         </button>
-                        <button class="button edit" onclick="showEditUserForm('<?php echo $user_id; ?>')">
+                        <button class="button edit" onclick="editUser('<?php echo $user_id; ?>')">
                             <ion-icon name="create-outline"></ion-icon>
                         </button>
                     </td>

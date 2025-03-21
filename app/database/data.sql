@@ -42,9 +42,9 @@ INSERT INTO product (product_name, price, category_id, size_id, status, descript
 
 -- Thêm dữ liệu vào bảng users
 INSERT INTO users (user_name, phone, email, city, district, ward, street, password, role, status) VALUES
-('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Ho Chi Minh', 'District 1', 'Ben Nghe', '123 Le Loi', 'hashed_password_1', 'customer', 'active'),
-('TranThiB', '0912345678', 'tranthib@example.com', 'Ho Chi Minh', 'District 3', 'Vo Thi Sau', '456 Nguyen Hue', 'hashed_password_2', 'customer', 'locked'),
-('LeVanC', '0923456789', 'levanc@example.com', 'Ha Noi', 'Ba Dinh', 'Kim Ma', '789 Tran Hung Dao', 'hashed_password_3', 'admin', 'active')
+('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Hồ Chí Minh', 'Quận 1', 'Bến Nghé', '123 Lê Lợi', 'hashed_password_1', 'customer', 'active'),
+('TranThiB', '0912345678', 'tranthib@example.com', 'Hồ Chí Minh', 'Quận 3', 'Võ Thị Sáu', '456 Nguyễn Huệ', 'hashed_password_2', 'customer', 'locked'),
+('LeVanC', '0923456789', 'levanc@example.com', 'Hà Nội', 'Ba Đình', 'Kim Mã', '789 Trần Hưng Đạo', 'hashed_password_3', 'admin', 'active')
 ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password), status = VALUES(status);
 
 
@@ -52,12 +52,10 @@ ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = V
 -- Thêm dữ liệu vào bảng orders với địa chỉ giao hàng khác
 -- Thêm dữ liệu vào bảng orders (có payment_method)
 INSERT INTO orders (user_id, total_cost, status, notes, delivery_date, delivery_time, order_date, shipping_city, shipping_district, shipping_ward, shipping_street, payment_method) VALUES
-(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Ho Chi Minh', 'District 7', 'Tan Phong', 'R4-20 Phu My Hung', 'COD'),
-(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', NOW(), 'Ha Noi', 'Hoan Kiem', 'Hang Bac', '35 Hang Bac', 'Momo'),
-(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Ho Chi Minh', 'District 1', 'Da Kao', '10 Nguyen Binh Khiem', 'Credit Card (Visa, Master, American Express, JCB)'),
-(1, 950000, 'Cancelled', 'Thanh toán online', '2025-03-25', '14:00:00', NOW(), 'Ho Chi Minh', 'Binh Thanh', 'Ward 15', '22 Dinh Bo Linh', 'VNPay');
-
-
+(2, 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Hồ Chí Minh', 'Quận 7', 'Tân Phong', 'R4-20 Phú Mỹ Hưng', 'COD'),
+(3, 850000, 'Completed', 'Chỉ giao vào cuối tuần', '2025-03-22', '10:00:00', NOW(), 'Hà Nội', 'Hoàn Kiếm', 'Hàng Bạc', '35 Hàng Bạc', 'Momo'),
+(1, 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Hồ Chí Minh', 'Quận 1', 'Đa Kao', '10 Nguyễn Bình Khiêm', 'Credit Card (Visa, Master, American Express, JCB)'),
+(1, 950000, 'Cancelled', 'Thanh toán online', '2025-03-25', '14:00:00', NOW(), 'Hồ Chí Minh', 'Bình Thạnh', 'Phường 15', '22 Đinh Bộ Lĩnh', 'VNPay');
 
 -- Thêm dữ liệu vào bảng order_detail
 -- Thêm dữ liệu vào bảng order_detail (có thêm note cho từng sản phẩm)
@@ -71,10 +69,10 @@ INSERT INTO order_detail (order_id, product_id, quantity, price, note) VALUES
 (4, 4, 1, 530000, 'Hộp quà kèm thiệp chúc mừng'),
 (4, 11, 2, 140000, 'Gói riêng từng cái croissant');
 
-
 -- Thêm dữ liệu vào bảng cart (tránh lỗi trùng dữ liệu)
 INSERT INTO cart (user_id, product_id, quantity) VALUES
 (1, 12, 1),
 (2, 8, 3),
 (3, 9, 2)
 ON DUPLICATE KEY UPDATE quantity = quantity + VALUES(quantity);
+

@@ -39,16 +39,23 @@
         </div>
         <div class="form-group">
             <label for="city">City:</label>
-            <input type="text" id="city" placeholder="Enter city" />
+            <select id="city" onchange="loadDistricts()">
+                <option value="">Select city</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="district">District:</label>
-            <input type="text" id="district" placeholder="Enter district" />
+            <select id="district" onchange="loadWards()">
+                <option value="">Select district</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="ward">Ward:</label>
-            <input type="text" id="ward" placeholder="Enter ward" />
+            <select id="ward">
+                <option value="">Select ward</option>
+            </select>
         </div>
+
         <div class="form-group">
             <label for="street">Street:</label>
             <input type="text" id="street" placeholder="Enter street" />
