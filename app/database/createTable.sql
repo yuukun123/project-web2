@@ -10,6 +10,7 @@ CREATE TABLE users (
     street VARCHAR(255) NOT NULL,    -- Địa chỉ chi tiết (Số nhà, tên đường)
     password VARCHAR(255) NOT NULL,
     role ENUM('customer', 'admin') DEFAULT 'customer',
+    status ENUM('active', 'locked') DEFAULT 'active',  -- Thêm cột trạng thái
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );

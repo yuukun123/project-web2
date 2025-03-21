@@ -1,3 +1,4 @@
+
 <div class="add-more">
     <button class="add-user" onclick="showAddUserForm()">
         <ion-icon name="add-circle-outline"></ion-icon>
@@ -6,50 +7,73 @@
     <input class="find" type="text" placeholder="find user" />
 </div>
 
-<table id="userTable" >
-    <thead>
-        <tr>
-        <th>ID</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th class="hide1">Password</th>
-        <th class="hide2">Address</th>
-        <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- User rows will be added dynamically here -->
-    </tbody>
-</table>
+
+<div id="userTableContainer">
+    <!-- Phần table sẽ được load vào đây từ manager_processing.php -->
+</div>
 
     <!-- Modal for adding/editing users -->
 <div id="userModal">
     <div id="userFormContainer">
-        <h2 style="text-align: center; margin-bottom: 30px" id="modalTitle" > Add User </h2>
-
+        <h2 style="text-align: center; margin-bottom: 30px" id="modalTitle">Edit User</h2>
+        <div class="form-grid">
         <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" placeholder="Enter username" />
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" disabled />
         </div>
         <div class="form-group">
-        <label for="email">Email:</label>
-        <input type="email" id="email" placeholder="Enter email" />
+            <label for="username">Username:</label>
+            <input type="text" id="username" placeholder="Enter username" />
         </div>
         <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="text" id="password" placeholder="Enter password" />
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter email" />
         </div>
         <div class="form-group">
-        <label for="address">Address:</label>
-        <input type="text" id="address" placeholder="Enter address" />
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" placeholder="Enter phone" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="text" id="password" placeholder="Enter password" />
+        </div>
+        <div class="form-group">
+            <label for="city">City:</label>
+            <input type="text" id="city" placeholder="Enter city" />
+        </div>
+        <div class="form-group">
+            <label for="district">District:</label>
+            <input type="text" id="district" placeholder="Enter district" />
+        </div>
+        <div class="form-group">
+            <label for="ward">Ward:</label>
+            <input type="text" id="ward" placeholder="Enter ward" />
+        </div>
+        <div class="form-group">
+            <label for="street">Street:</label>
+            <input type="text" id="street" placeholder="Enter street" />
+        </div>
+        <div class="form-group">
+            <label for="role">Role:</label>
+            <input type="text" id="role" placeholder="Enter role" />
+        </div>
+        <div class="form-group">
+            <label for="created_at">Created At:</label>
+            <input type="text" id="created_at" disabled />
+        </div>
+        <div class="form-group">
+            <label for="updated_at">Updated At:</label>
+            <input type="text" id="updated_at" disabled />
+        </div>
         </div>
         <div class="modal-buttons">
-        <button class="save-btn" onclick="saveUser()">Save</button>
-        <button class="close-btn" onclick="closeModal()">Cancel</button>
+            <button class="save-btn" onclick="saveUser()">Save</button>
+            <button class="close-btn" onclick="closeModal()">Cancel</button>
         </div>
-
     </div>
 </div>
+
+
 
 <!-- Confirmation Modal for Lock -->
 <div id="confirmLockModal" style="display: none">

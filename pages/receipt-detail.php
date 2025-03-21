@@ -5,11 +5,18 @@ $order_id = (int) $_GET['order_id'];
 
 $sql_order = "SELECT o.order_id, 
                     DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i') AS order_date, 
-                    o.total_cost, o.status, u.user_name, u.phone, 
+                    o.delivery_date,
+                    o.delivery_time,
+                    o.total_cost, 
+                    o.status, 
+                    o.payment_method,
+                    u.user_name, 
+                    u.phone, 
                     CONCAT(u.street, ', ', u.ward, ', ', u.district, ', ', u.city) AS full_address
             FROM orders o
             JOIN users u ON o.user_id = u.user_id
             WHERE o.order_id = ?";
+
 $stmt = $conn->prepare($sql_order);
 $stmt->bind_param("i", $order_id);
 $stmt->execute();
@@ -24,6 +31,15 @@ $stmt = $conn->prepare($sql_details);
 $stmt->bind_param("i", $order_id);
 $stmt->execute();
 $details = $stmt->get_result();
+
+// màu cho status
+$statusColor = match($order['status']) {
+    'Completed' => 'rgb(26, 255, 0)',    // xanh lá
+    'Cancelled' => 'red',                // đỏ
+    'Processing' => 'deepskyblue',       // xanh biển
+    'Pending' => 'orange',               // vàng
+    default => 'black'
+};
 ?>
 
 <div class="more-infor">
@@ -38,9 +54,13 @@ $details = $stmt->get_result();
             <p><strong>Name:</strong> <?= htmlspecialchars($order['user_name']) ?></p>
             <p><strong>Address:</strong> <?= htmlspecialchars($order['full_address']) ?></p>
             <p><strong>Phone:</strong> <?= htmlspecialchars($order['phone']) ?></p>
-            <p><strong>Time:</strong> <?= htmlspecialchars($order['order_date']) ?></p>
+            <p><strong>Order date :</strong> <?= htmlspecialchars($order['order_date']) ?></p>
+            <p><strong>Delivery date:</strong> <?= htmlspecialchars($order['delivery_date']) ?></p>
+            <p><strong>Delivery time:</strong> <?= htmlspecialchars($order['delivery_time']) ?></p>
+            <p><strong>Payment method:</strong> <?= htmlspecialchars($order['payment_method']) ?></p>
+
             <p><strong>Status:</strong>
-                <span style="color: <?= ($order['status'] === 'Paid') ? 'rgb(26, 255, 0)' : 'orange' ?>;">
+                <span style="color: <?= $statusColor ?>;">
                     <?= htmlspecialchars($order['status']) ?>
                 </span>
             </p>

@@ -12,7 +12,7 @@
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <link rel="icon" href="../../../public/assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />v
+  <link rel="icon" href="../../../public/assets/Img/Sweets1.png" type="image/x-icon" class="icon-page" />
   <title>Admin</title>
 </head>
 
@@ -23,6 +23,7 @@
 
       <div class="Home">
         <div class="text-big">Manage User</div>
+          <?php include ("../Views/users/manager.php"); ?>
         
       </div>
     </div>

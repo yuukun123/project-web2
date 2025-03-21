@@ -41,11 +41,12 @@ INSERT INTO product (product_name, price, category_id, size_id, status, descript
 ('Matcha Misu', 85000, 3, 1, 'Available', 'Matcha tiramisu-inspired drink.', 'public/assets/Img/Drink/Matcha_Misu.png');
 
 -- Thêm dữ liệu vào bảng users
-INSERT INTO users (user_name, phone, email, city, district, ward, street, password, role) VALUES
-('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Ho Chi Minh', 'District 1', 'Ben Nghe', '123 Le Loi', 'hashed_password_1', 'customer'),
-('TranThiB', '0912345678', 'tranthib@example.com', 'Ho Chi Minh', 'District 3', 'Vo Thi Sau', '456 Nguyen Hue', 'hashed_password_2', 'customer'),
-('LeVanC', '0923456789', 'levanc@example.com', 'Ha Noi', 'Ba Dinh', 'Kim Ma', '789 Tran Hung Dao', 'hashed_password_3', 'admin')
-ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password);
+INSERT INTO users (user_name, phone, email, city, district, ward, street, password, role, status) VALUES
+('NguyenVanA', '0901234567', 'nguyenvana@example.com', 'Ho Chi Minh', 'District 1', 'Ben Nghe', '123 Le Loi', 'hashed_password_1', 'customer', 'active'),
+('TranThiB', '0912345678', 'tranthib@example.com', 'Ho Chi Minh', 'District 3', 'Vo Thi Sau', '456 Nguyen Hue', 'hashed_password_2', 'customer', 'locked'),
+('LeVanC', '0923456789', 'levanc@example.com', 'Ha Noi', 'Ba Dinh', 'Kim Ma', '789 Tran Hung Dao', 'hashed_password_3', 'admin', 'active')
+ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password), status = VALUES(status);
+
 
 -- Thêm dữ liệu vào bảng orders (có ngày nhận và giờ nhận)
 -- Thêm dữ liệu vào bảng orders với địa chỉ giao hàng khác

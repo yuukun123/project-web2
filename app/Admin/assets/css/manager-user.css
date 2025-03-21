@@ -222,6 +222,21 @@ th {
     margin-right: 5px;
 }
   /* Modal Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+#userModal input[disabled] {
+    background-color: #f0f0f0;
+}
+
 #userModal {
     display: none;
     position: fixed;
@@ -235,11 +250,15 @@ th {
     z-index: 1;
 }
 
+#userModal.show {
+    display: flex;
+}
+
 #userFormContainer {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 400px;
+    width: 800px;
     max-width: 100%;
 }
 
