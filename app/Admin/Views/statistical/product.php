@@ -1,4 +1,20 @@
-<?php include __DIR__ .("../../../Controllers/statistical-process.php") ?>
+<form id="filterForm" action="../Controllers/filter-statiscal-process.php" class="filter">
+
+    <div class="time">
+        
+        <div class="to">
+            <p>From:</p>
+            <input type="date" name="" id="fromDate">
+            <p>To</p>
+            <input type="date" name="" id="toDate">
+        </div>
+    </div>
+    <div class="div">
+        <button id="filter-button" type="submit" class="sta-btn" >Filter</button>
+    </div>
+</form>
+
+<form id="form-product" action="../Controllers/statistical-process.php" method="post">
 <div class="div-receipt">
     <div class="receipt">
         <p class="title-receipt">Detail Receipt</p>
@@ -49,31 +65,11 @@
     </div>
 </div>
 
-
-
-<div class="filter">
-
-    <div class="time">
-        
-        <div class="to">
-            <p>From:</p>
-            <input type="date" name="" id="fromDate">
-            <p>To</p>
-            <input type="date" name="" id="toDate">
-        </div>
-    </div>
-    <div class="div">
-        <button class="sta-btn" onclick="filterData()">Filter</button>
-    </div>
-</div>
-
-
 <div class="both-table">
 
-
-<table class="table-best-seller">
-<p class="main-title">TOTAL 10 BEST SELLER PRODUCT</p>
+<p  class="main-title">TOP 10 BEST SELLER PRODUCT</p>
 <div class="bd-bt"></div>
+<table class="table-best-seller">
     <thead>
         <tr>
             <th class="title item">No</th>
@@ -83,126 +79,15 @@
             <th class="title item">Receipt</th>
         </tr>
     </thead>
-    <tbody id="orderBody">
+    <tbody id="orderBodyBestSeller">
 
-         <?php
-         $no = 1;
-         foreach($order_data as $items){
-            echo'<tr>';
-            echo'
-                <td class="text item">'.$no.'</td>
-                <td class="text item">'.$items["delivery_date"].'</td>
-                <td class="text item">'.$items["product_name"].'</td>
-                <td class="text item">'.$items["quantity"].'</td>
-                <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>  
-                </div>
-                </td>
-            ';
-            echo'</tr>';
-            $no++;
-         }
-         ?>
-        <!--
-        <tr>
-            <td class="text item">30/01/2025</td>
-            <td class="text item">
-                <div class="div-unpopular">
-                Avocado Mousse
-                <div class="unpopular">
-                    <p>unpopular</p>
-                </div>
-                </div>
-                    
-            </td>
-            
-            <td class="text item">3 </td>
-            <td class="text item">1.620.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>  
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td class="text item ">05/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Matcha Croissant
-                
-                </div>
-                    
-            </td>
-            
-            <td class="text item">7 </td>
-            <td class="text item">980.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td class="text item ">10/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Lemon Tea
-                
-                </div>
-                
-            </td>
-            
-            <td class="text item">10 </td>
-            <td class="text item">600.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                        </td>
-                </div>
-        </tr>
-        <tr>
-            <td class="text item ">22/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Matcha Latte
-                <div class="best-seller">
-                    <p>best-seller</p>
-                    </div>
-                </div>
-                
-            </td>
-            
-            <td class="text item">15 </td>
-            <td class="text item">1.125.000đ</td>
-            <td>
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td colspan="4" class="item-total">Total amount all:</td>
-            <td class="item-price">5.372.000đ</td>
-        </tr>
-            -->
-
+        
     </tbody>
 </table>
 
-<table class="table-unpopular">
-<p class="main-title">TOTAL 10 UNPOPULAR PRODUCT</p>
+<p  class="main-title">TOP 10 UNPOPULAR PRODUCT</p>
 <div class="bd-bt"></div>
+<table class="table-unpopular">
     <thead>
         <tr>
             <th class="title item">No</th>
@@ -212,140 +97,8 @@
             <th class="title item">Receipt</th>
         </tr>
     </thead>
-    <tbody id="orderBody">
-    <?php
-         $no = 1;
-         foreach($order_data_1 as $items){
-            echo'<tr>';
-            echo'
-                <td class="text item">'.$no.'</td>
-                <td class="text item">'.$items["delivery_date"].'</td>
-                <td class="text item">'.$items["product_name"].'</td>
-                <td class="text item">'.$items["quantity"].'</td>
-                <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>  
-                </div>
-                </td>
-            ';
-            echo'</tr>';
-            $no++;
-         }
-         ?>
-        <!-- <tr>
-            <td class="text item">15/01/2025</td>
-            <td class="text item">
-                <div class="div-unpopular">
-                Avocado Mousse
-                <div class="unpopular">
-                    <p>unpopular</p>
-                </div>
-                </div>
-                    
-            </td>
-            
-            <td class="text item">2 </td>
-            <td class="text item">1.020.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td class="text item">30/01/2025</td>
-            <td class="text item">
-                <div class="div-unpopular">
-                Avocado Mousse
-                <div class="unpopular">
-                    <p>unpopular</p>
-                </div>
-                </div>
-                    
-            </td>
-            
-            <td class="text item">3 </td>
-            <td class="text item">1.620.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>  
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td class="text item ">05/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Matcha Croissant
-                
-                </div>
-                    
-            </td>
-            
-            <td class="text item">7 </td>
-            <td class="text item">980.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td class="text item ">10/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Lemon Tea
-                
-                </div>
-                
-            </td>
-            
-            <td class="text item">10 </td>
-            <td class="text item">600.000đ</td>
-            <td >
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                        </td>
-                </div>
-        </tr>
-        <tr>
-            <td class="text item ">22/02/2025</td>
-            <td class="text item ">
-                <div class="div-best-seller">
-                    Matcha Latte
-                <div class="best-seller">
-                    <p>best-seller</p>
-                    </div>
-                </div>
-                
-            </td>
-            
-            <td class="text item">15 </td>
-            <td class="text item">1.125.000đ</td>
-            <td>
-                <div class="detail">
-                    <button class="js-detail-btn">
-                        <ion-icon name="receipt-outline"></ion-icon>
-                        </button>
-                </div>
-                </td>
-        </tr>
-        <tr>
-            <td colspan="4" class="item-total">Total amount all:</td>
-            <td class="item-price">5.372.000đ</td>
-        </tr>
-            -->
-
+    <tbody id="orderBodyUnpopular">
+   
     </tbody>
 </table>
 </div>
@@ -354,3 +107,4 @@
         
     </div>
 </div>
+</form>

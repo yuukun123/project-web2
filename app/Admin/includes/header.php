@@ -1,4 +1,5 @@
 <?php
+ob_start();
 $page = basename($_SERVER['PHP_SELF']);
 
 switch ($page) {
@@ -42,6 +43,7 @@ if (isset($_SESSION['admin']) && isset($_SESSION['admin']['username'])) {
         </div>
     ';
 }
+ob_end_flush();
 ?>
 
 <div class="header">
@@ -49,7 +51,6 @@ if (isset($_SESSION['admin']) && isset($_SESSION['admin']['username'])) {
         <h1><?php echo $title; ?></h1>
     </div>
     <?php echo $authButtons; ?>
-
     <div class="hamburger"  id="hamburger" onclick="toggleMenu()">
         <div class="bar"></div>
         <div class="bar"></div>
