@@ -1,3 +1,4 @@
+
     document.addEventListener("DOMContentLoaded", function () {
         loadInitialData();
         document.getElementById("filterForm").addEventListener("submit", function (event) {
@@ -5,7 +6,6 @@
             console.log("✅ Form submit, gọi filterData()");
             filterData();
         });
-        
     });
     // Lấy dữ liệu khi trang load
     function loadInitialData() {

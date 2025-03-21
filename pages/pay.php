@@ -1,170 +1,201 @@
+<?php
+include __DIR__ . "/../app/config/data_connect.php"; // Kết nối database với đường dẫn tuyệt đối
+
+header("Content-Type: text/html; charset=UTF-8");
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Kiểm tra đăng nhập
+if (
+    !isset($_SESSION['user']) || 
+    !isset($_SESSION['user']['user_id']) || 
+    !isset($_SESSION['user']['username']) || 
+    !isset($_SESSION['user']['role']) || 
+    !is_numeric($_SESSION['user']['user_id'])
+) {
+    echo json_encode([
+        "success" => false,
+        "message" => "Vui lòng đăng nhập trước khi thao tác."
+    ]);
+    exit;
+}
+
+$user_id = (int) $_SESSION['user']['user_id'];
+$username = $_SESSION['user']['username'];
+$role = $_SESSION['user']['role'];
+
+$user_query = mysqli_query($conn, "SELECT * FROM users WHERE user_id = '$user_id'");
+$user = mysqli_fetch_assoc($user_query);
+
+// Lấy thông tin cart (chỉnh sửa cho đúng cột size_id trong product)
+$cart_query = mysqli_query($conn, "SELECT c.*, p.product_name, p.price, p.image, s.size_name FROM cart c JOIN product p ON c.product_id = p.product_id JOIN size s ON p.size_id = s.size_id WHERE c.user_id = '$user_id'");
+if (!$cart_query) {
+    die("Lỗi truy vấn: " . mysqli_error($conn));
+}
+$total_cost = 0;
+
+?>
+
 <div class="Pay_big">
-    <!-- Thông tin người mua hàng -->
     <div class="pay-infor">
         <div class="input-information">
             <h1>Customer Information</h1>
-            <form action="">
+            <form id="payment-form" >
                 <div class="name">
                     <label for="full_name">Full name <span style="color: red;">(*)</span></label>
-                    <input type="text" id="full_name" name="full_name" value="">
+                    <input type="text" id="full_name" name="full_name" value="<?= $user['user_name'] ?>">
                 </div>
                 <div class="phone">
                     <label for="phone">Phone <span style="color: red;">(*)</span></label>
-                    <input type="number" id="phone" name="phone" value="">
+                    <input type="number" id="phone" name="phone" value="<?= $user['phone'] ?>">
                 </div>
                 <div class="address">
                     <label for="address">Address <span style="color: red;">(*)</span></label>
-                    <input type="text" id="address" name="address" value="">
+                    <input type="text" id="registerStreet" name="shipping_street" value="<?= htmlspecialchars($user['street']) ?>">
                 </div>
-                <div class="delivery-date">
-                    <label for="delivery_date">Delivery Date <span style="color: red;">(*)</span></label>
-                    <input type="date" id="delivery_date" name="delivery_date" value="">
-                </div>
-                <div class="note">
-                <label for="note">Greeting Message</label>
-                    <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
+                <div class="address">
+                    <label for="email">City <span style="color: red;">(*)</span></label>
+                    <select id="registerCity" name="shipping_city" required>
+                        <option value="">Select City</option>
+                    </select>
+                    <!-- <label>City</label> -->
                 </div>
 
+                <div class="address">
+                    <label for="registerStreet">District <span style="color: red;">(*)</span></label>
+                    <select id="registerDistrict" name="shipping_district" required>
+                        <option value="">Select District</option>
+                    </select>
+                    <!-- <label>District</label> -->
+                </div>
+
+                <div class="address">
+                    <label for="registerWard">Ward <span style="color: red;">(*)</span></label>
+                    <select id="registerWard" name="shipping_ward" required>
+                        <option value="">Select Ward</option>
+                    </select>
+                    <!-- <label>Ward</label> -->
+                </div>
+
+                <div class="delivery-date">
+                    <label for="delivery_date">Delivery Date <span style="color: red;">(*)</span></label>
+                    <input type="date" id="delivery_date" name="delivery_date" required>
+                </div>
+                <div class="note">
+                    <label for="note">Greeting Message</label>
+                    <textarea id="note" name="note" rows="2" cols="90" style="overflow:auto;"></textarea>
+                </div>
 
                 <div class="choose">   
                     <div class="fill">
                         <input type="radio" name="auto-fill" id="autoFill" value="Auto fill" checked>
-                        <label for="autoFill">
-                            Use Saved Information
-                        </label>
+                        <label for="autoFill">Use Saved Information</label>
                     </div>
 
                     <div class="clear">
-                        <input type="radio" name="auto-fill" id="clearFill" value="Clear fill">
-                        <label for="clearFill">
-                            Send To Others
-                        </label>
+                        <input type="radio" id="sendOther" name="auto-fill"  value="Clear fill">
+                        <label for="sendOther">Send To Others</label>
+                    </div>
+                </div>
+
+                <h1>Final Payment</h1>
+                <div class="payment-method">
+                    <label><input type="radio" name="payment_method" value="COD" checked> COD</label>
+                    <label><input type="radio" name="payment_method" value="Momo"> Momo</label>
+                    <label><input type="radio" name="payment_method" value="Credit Card"> Credit Card</label>
+                    <label><input type="radio" name="payment_method" value="VNPay"> VNPay</label>
+                </div>
+
+
+                <div id="credit-card-fields" class="credit-details active">
+                    <label for="card_number">Card Number <span style="color: red;">(*)</span></label>
+                    <input type="text" name="card_number" id="card_number" placeholder="Enter your card number">
+
+                    <label for="card_holder">Card Holder Name <span style="color: red;">(*)</span></label>
+                    <input type="text" name="card_holder" id="card_holder" placeholder="Enter card holder name">
+
+                    <label for="expiry_date">Expiry Date <span style="color: red;">(*)</span></label>
+                    <input type="month" name="expiry_date" id="expiry_date">
+
+                    <label for="cvv">CVC/CVV <span style="color: red;">(*)</span></label>
+                    <input type="text" name="cvv" id="cvv" placeholder="Enter CVC/CVV code">
+                </div>
+
+                <div class="my-order">
+                    <div class="Text-head">
+                        <h1>Your Orders</h1>
+                    </div>
+                    <?php while ($row = mysqli_fetch_assoc($cart_query)) { 
+                        $subtotal = $row['quantity'] * $row['price'];
+                        $total_cost += $subtotal;
+                    ?>
+                    <div class="product">
+                        <div class="item">
+                            <img width="55" height="69" src="<?= $row['image'] ?>" alt="<?= $row['product_name'] ?>">
+                            <div class="details">
+                                <div><?= $row['product_name'] ?> - <?= $row['size_name'] ?></div>
+                                <div class="btn-quantity">Quantity: <?= $row['quantity'] ?></div>
+                            </div>
+                            <div class="price"><?= number_format($subtotal, 0, '.', '.') ?> VND</div>
+                        </div>
+
+                        <div class="note">
+                            <label for="note_<?= $row['cart_id'] ?>">Greeting Message for this product</label>
+                            <input type="text" name="product_note[<?= $row['cart_id'] ?>]" id="note_<?= $row['cart_id'] ?>" value="<?= htmlspecialchars($row['note'] ?? '') ?>" placeholder="Enter message for this product">
+                        </div>
+                    </div>
+                    <?php } ?>
+
+                    <div class="subtotal">
+                        <div class="total">
+                            <div class="provisional">
+                                <div>Provisional</div>
+                                <div class="price"><?= number_format($total_cost, 0, '.', '.') ?> VND</div>
+                            </div>
+                            <div class="total-sum">
+                                <div>Total</div>
+                                <div class="price"><?= number_format($total_cost, 0, '.', '.') ?> VND</div>
+                            </div>
+                        </div>
                     </div>
 
+                    <div class="notification">
+                        <p>Notification: Please review your order before proceeding to payment.</p>
+                    </div>
+
+                    <div class="pay">
+                        <button type="submit" class="pay-button">Pay</button>
+                    </div>
                 </div>
-                
+
             </form>
-        </div>
-    </div>
-
-    <div class="payment">
-        <!-- Phương Thức Thanh Toán -->
-        <h1>Final Payment</h1>
-        <form action="">
-            <div class="payment-method">
-                <label>
-                    <input type="radio" name="payment_method" value="cash" checked> 
-                    <img width="60" height="69" src="public/assets/Img/Pay_final/cash.png" alt="Cash">
-                    COD
-                </label>
-            </div>
-            <div class="payment-method">
-                <label>
-                    <input type="radio" name="payment_method" value="momo"> 
-                    <img width="60" height="69" src="public/assets/Img/Pay_final/momo_icon.png" alt="Momo">
-                    Momo
-                </label>
-            </div>
-            <div class="payment-method">
-                <label>
-                    <input type="radio" id="credit-card-radio" name="payment_method" value="credit-card"> 
-                    <img width="60" height="69" src="public/assets/Img/Pay_final/visamaster_logo.png" alt="Visa">
-                    Credit Card (Visa, Master, American Express, JCB)
-                </label>
-                <div class="card-input" id="card-input">
-                    <div class="card-number">
-                        <input type="text" placeholder="card number" />
-                    </div>
-                    <div class="card-details">
-                        <input type="date" placeholder="MM/YY" class="expiry-date" />
-                        <input type="text" placeholder="CVC/CVV" class="cvc" />
-                    </div>
-                </div>
-            </div>
-            <div class="payment-method">
-                <label>
-                    <input type="radio" name="payment_method" value="VNPay">
-                    <img width="60" height="69" src="public/assets/Img/Pay_final/vnpay_newlogo.png" alt="VNPay"> 
-                    VNPay
-                </label>
-            </div>
-        </form>
-    </div>
-    
-    <!-- Thông Tin Đơn Hàng -->
-    <div class="my-order">
-            <div class="Text-head">
-                <h1>Your Orders</h1>
-            </div>
-        <div class="product">
-            <div class="item">
-                <img width="55" height="69" src="../Img/Mousse/Melon_Mousse.jpg" alt="Melon Mousse">
-                <div class="details">
-                    <div>Melon Mousse - 16cm</div>
-                    <div class="btn-quantity">Quantity: 
-                        <button class="click">
-                            <ion-icon name="caret-back-outline"></ion-icon>
-                        </button>
-                        <p style="background: #ffdd00; border-radius: 100%; padding: 0px 10px;">1</p>
-                        <button class="click">
-                            <ion-icon name="caret-forward-outline"></ion-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="price">550.000 VND</div>
-            </div>
-
-            <div class="note">
-                <label for="note">Greeting Message</label>
-                <textarea id="note" name="note" value="" rows="2" cols="90" style="overflow:auto;"></textarea>
-            </div>
-
-        </div>
-
-
-
-        <div class="subtotal">
-            <div class="total">
-                <div class="provisional">
-                    <div>Provisional</div>
-                    <div class="price">1.070.000 VND</div>
-                </div>
-                <div class="total-sum">
-                    <div>Total</div>
-                    <div class="price">1.070.000 VND</div>
-                </div>
-            </div>
-        </div>
-        <div class="notification">
-            <p>Notification: Please review your order before proceeding to payment.</p>
-        </div>
-        <div class="pay">
-            <button class="pay-button" >Pay</button>
         </div>
     </div>
 </div>
 
-
-
-<!-- Confirmation Section -->
 <div class="confirmation" id="confirmation">
     <div class="icon-wrapper">
         <ion-icon name="checkmark-circle-outline"></ion-icon>
     </div>
     <h1>SUCCESS</h1>
-    <!-- <h2>Mr./Ms. Bui Minh Ngoc</h2> -->
-    <p class="order-id"><span style="font-weight: bold;">Your Order ID </span><strong class="order-id-number">#ND002</strong></p>
-    <div class="receipt-rev">
-        <div class="name-food">Corn Mousse</div> 
-        <div class="number">1</div>
-    </div>
-    <div class="receipt-rev">
-        <div class="name-food">Melon Mousse</div> 
-        <div class="number">1</div>
-    </div>
-    <p class="total">Total <span> 1.000.000 VND</span></p>
+    <p class="order-id"><span style="font-weight: bold;">Your Order ID </span><strong class="order-id-number" id="order-id-number">#...</strong></p>
+    <div id="order-items"></div>
+    <p class="total" id="total-cost-display">Total <span>0 VND</span></p>
     <p style="font-size: 14px;">Thank you for choosing our service!</p>
-    <p style="font-size: 14px;">Your order is on its way with love. </p>
-    <a href="receipt" class="back-home">Click here to view the invoice</a>
+    <p style="font-size: 14px;">Your order is on its way with love.</p>
+    <!-- <a href="./user-receipt.html" class="back-home">Click here to view the invoice</a> -->
+    <a id="view-invoice-link" href="receipt" class="view-invoice-btn">Click here to view the invoice</a>
     <p>Wishing you the sweetest day!</p>
 </div>
+
+<div class="blur-overlay" id="confirmation-overlay"></div>
+
+
+<script>
+    const userAddressInfo = {
+        city: "<?= $user['city'] ?>",
+        district: "<?= $user['district'] ?>",
+        ward: "<?= $user['ward'] ?>",
+        street: "<?= $user['street'] ?>"
+    };
+</script>

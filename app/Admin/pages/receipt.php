@@ -26,6 +26,7 @@
             <div class="Home">
                 <div class="text-big">Manage Receipt</div>
                 <!-- include file dưới này -->
+                    <?php include ("../Views/receipt.php"); ?>
                 
             </div>
         </div>                

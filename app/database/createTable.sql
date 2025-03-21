@@ -47,7 +47,7 @@ CREATE TABLE orders (
     delivery_date DATE,
     delivery_time TIME,
     total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
-    status ENUM('Pending', 'Processing', 'Completed', 'Cancelled', 'Paid') DEFAULT 'Pending',
+    status ENUM('Pending', 'Processing', 'Completed', 'Cancelled') DEFAULT 'Pending',
     payment_method ENUM('COD', 'Momo', 'Credit Card', 'VNPay') DEFAULT 'COD',
     user_id INT NOT NULL,
     notes TEXT,
@@ -58,12 +58,13 @@ CREATE TABLE orders (
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
--- Bảng order_detail
+-- Bảng order_detail (đã thêm cột note)
 CREATE TABLE order_detail (
     order_id INT,
     product_id INT,
     quantity INT NOT NULL CHECK (quantity > 0),
     price DECIMAL(15,2) NOT NULL CHECK (price > 0),
+    note TEXT,
     PRIMARY KEY (order_id, product_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE

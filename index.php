@@ -57,8 +57,7 @@ $page = $_GET['pages'];
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     } elseif ($page === 'product') {
         echo '<link rel="stylesheet" href="public/assets/css/product_detail.css">';
-    }
-    elseif ($page ==='pay') {
+    }elseif ($page ==='pay') {
         echo '<link rel="stylesheet" href="public/assets/css/pay.css">';
     }
     ?>

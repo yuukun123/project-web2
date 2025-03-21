@@ -17,6 +17,7 @@
     margin: 30px;
 }
 
+
 /* Responsive Design */
 @media screen and (min-width: 1390px) and (min-width: 1281px) {
     /* .text-head{
@@ -242,6 +243,7 @@ thead{
     display: flex;
     align-items: center;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 .subtitle_table{
     display: flex;
@@ -253,8 +255,14 @@ thead{
     font-weight: 600;
     color: #455265;
     text-align: center;
+
     
-    
+}
+
+.filter-address{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
 }
 table {
     width: 95%;
@@ -279,6 +287,8 @@ td {
     color: #455265;
     padding: 12px;
 }
+
+
 .btn_filter{
     display: grid;
     justify-items: center;
@@ -299,6 +309,29 @@ td {
 }
 
 input[type="date"]{
+    margin-left: 5px;
+    text-align: center;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: none;
+    background: #f0f0f0;
+    margin-right: 20px;
+
+}
+
+
+
+.btn_filter button {
+    border-radius: 4px;
+    background-color: #28a745;
+    border: none;
+    padding: 7px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #ffffff;
+}
+
+input[type="text"]{
     margin-left: 5px;
     text-align: center;
     padding: 6px 10px;
