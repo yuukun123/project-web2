@@ -44,7 +44,7 @@ $result = $conn->query($sql);
 
         <div class="filter-address">
             <label for="address">Address:</label>
-                <input type="text" name="location" placeholder="Enter City, Wards,.." value="<?= htmlspecialchars($locationFilter) ?>">
+                <input type="text" name="location" placeholder="Enter City, District, .." value="<?= htmlspecialchars($locationFilter) ?>">
 
         </div>
         
