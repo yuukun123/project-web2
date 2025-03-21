@@ -49,6 +49,12 @@ $total_cost = 0;
                     <label for="phone">Phone <span style="color: red;">(*)</span></label>
                     <input type="number" id="phone" name="phone" value="<?= $user['phone'] ?>">
                 </div>
+
+                <input type="hidden" name="shipping_city_name" id="shipping_city_name">
+                <input type="hidden" name="shipping_district_name" id="shipping_district_name">
+                <input type="hidden" name="shipping_ward_name" id="shipping_ward_name">
+
+                
                 <div class="address">
                     <label for="address">Address <span style="color: red;">(*)</span></label>
                     <input type="text" id="registerStreet" name="shipping_street" value="<?= htmlspecialchars($user['street']) ?>">
@@ -102,49 +108,42 @@ $total_cost = 0;
                 <div class="payment-method">
                     <label><input type="radio" name="payment_method" value="COD" checked> COD</label>
                     <label><input type="radio" name="payment_method" value="Momo"> Momo</label>
-                    <label><input type="radio" name="payment_method" value="Credit Card"> Credit Card</label>
                     <label><input type="radio" name="payment_method" value="VNPay"> VNPay</label>
                 </div>
 
 
                 <div id="credit-card-fields" class="credit-details active">
-                    <label for="card_number">Card Number <span style="color: red;">(*)</span></label>
-                    <input type="text" name="card_number" id="card_number" placeholder="Enter your card number">
-
-                    <label for="card_holder">Card Holder Name <span style="color: red;">(*)</span></label>
-                    <input type="text" name="card_holder" id="card_holder" placeholder="Enter card holder name">
-
-                    <label for="expiry_date">Expiry Date <span style="color: red;">(*)</span></label>
-                    <input type="month" name="expiry_date" id="expiry_date">
-
-                    <label for="cvv">CVC/CVV <span style="color: red;">(*)</span></label>
-                    <input type="text" name="cvv" id="cvv" placeholder="Enter CVC/CVV code">
+                    
                 </div>
 
                 <div class="my-order">
                     <div class="Text-head">
                         <h1>Your Orders</h1>
                     </div>
-                    <?php while ($row = mysqli_fetch_assoc($cart_query)) { 
-                        $subtotal = $row['quantity'] * $row['price'];
-                        $total_cost += $subtotal;
-                    ?>
-                    <div class="product">
-                        <div class="item">
-                            <img width="55" height="69" src="<?= $row['image'] ?>" alt="<?= $row['product_name'] ?>">
-                            <div class="details">
-                                <div><?= $row['product_name'] ?> - <?= $row['size_name'] ?></div>
-                                <div class="btn-quantity">Quantity: <?= $row['quantity'] ?></div>
-                            </div>
-                            <div class="price"><?= number_format($subtotal, 0, '.', '.') ?> VND</div>
-                        </div>
 
-                        <div class="note">
-                            <label for="note_<?= $row['cart_id'] ?>">Greeting Message for this product</label>
-                            <input type="text" name="product_note[<?= $row['cart_id'] ?>]" id="note_<?= $row['cart_id'] ?>" value="<?= htmlspecialchars($row['note'] ?? '') ?>" placeholder="Enter message for this product">
+                    <div class="product-list">
+                        <?php while ($row = mysqli_fetch_assoc($cart_query)) { 
+                            $subtotal = $row['quantity'] * $row['price'];
+                            $total_cost += $subtotal;
+                        ?>
+                        <div class="product">
+                            <div class="item">
+                                <img width="55" height="69" src="<?= $row['image'] ?>" alt="<?= $row['product_name'] ?>">
+                                <div class="details">
+                                    <div><?= $row['product_name'] ?> - <?= $row['size_name'] ?></div>
+                                    <div class="btn-quantity">Quantity: <?= $row['quantity'] ?></div>
+                                </div>
+                                <div class="price"><?= number_format($subtotal, 0, '.', '.') ?> VND</div>
+                            </div>
+
+                            <div class="note">
+                                <label for="note_<?= $row['cart_id'] ?>">Greeting Message for this product</label>
+                                <input type="text" name="product_note[<?= $row['cart_id'] ?>]" id="note_<?= $row['cart_id'] ?>" value="<?= htmlspecialchars($row['note'] ?? '') ?>" placeholder="Enter message for this product">
+                            </div>
                         </div>
+                        <?php } ?>
                     </div>
-                    <?php } ?>
+
 
                     <div class="subtotal">
                         <div class="total">
@@ -179,7 +178,7 @@ $total_cost = 0;
     </div>
     <h1>SUCCESS</h1>
     <p class="order-id"><span style="font-weight: bold;">Your Order ID </span><strong class="order-id-number" id="order-id-number">#...</strong></p>
-    <div id="order-items"></div>
+    <div id="order-items" class="order-items"></div>
     <p class="total" id="total-cost-display">Total <span>0 VND</span></p>
     <p style="font-size: 14px;">Thank you for choosing our service!</p>
     <p style="font-size: 14px;">Your order is on its way with love.</p>

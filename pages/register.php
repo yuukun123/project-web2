@@ -13,6 +13,12 @@ if (!isset($showRegister)) {
 
             <div class="input-infor">
                 <div class="left-input">
+
+                    <input type="hidden" name="city_name" id="city_name">
+                    <input type="hidden" name="district_name" id="district_name">
+                    <input type="hidden" name="ward_name" id="ward_name">
+
+
                     <div class="input-box">
                         <span class="icon">
                             <ion-icon name="person-outline"></ion-icon>
@@ -67,7 +73,7 @@ if (!isset($showRegister)) {
                         <span class="icon">
                             <ion-icon name="business-outline"></ion-icon>
                         </span>
-                        <select id="registerCity" name="city" required>
+                        <select id="registerCity"  required>
                             <option value="">Select City</option>
                         </select>
                         <!-- <label>City</label> -->
@@ -77,7 +83,7 @@ if (!isset($showRegister)) {
                         <span class="icon">
                             <ion-icon name="map-outline"></ion-icon>
                         </span>
-                        <select id="registerDistrict" name="district" required>
+                        <select id="registerDistrict"  required>
                                 <option value="">Select District</option>
                             </select>
                         <!-- <label>District</label> -->
@@ -87,7 +93,7 @@ if (!isset($showRegister)) {
                         <span class="icon">
                             <ion-icon name="home-outline"></ion-icon>
                         </span>
-                        <select id="registerWard" name="ward" required>
+                        <select id="registerWard" required>
                                 <option value="">Select Ward</option>
                             </select>
                         <!-- <label>Ward</label> -->

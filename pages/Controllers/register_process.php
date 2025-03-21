@@ -12,9 +12,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = trim($_POST['phone']);
     $email = trim($_POST['email']);
     $street = trim($_POST['street']);
-    $city = trim($_POST['city']);
-    $district = trim($_POST['district']);
-    $ward = trim($_POST['ward']);
+
+    $city = trim($_POST['city_name']);
+    $district = trim($_POST['district_name']);
+    $ward = trim($_POST['ward_name']);
+
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     $default_role = "customer"; // Vai trò mặc định
@@ -57,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $conn->prepare("INSERT INTO users (user_name, phone, email, street, ward, district, city, role, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $username, $phone, $email, $street, $ward, $district, $city, $default_role, $hashed_password);
+        $stmt->bind_param("sssssssss", $username, $phone, $email, $street, $ward, $district, $city, $default_role, $hashed_password);        
 
         if ($stmt->execute()) {
             $stmt->close();
@@ -75,6 +77,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo json_encode(['success' => false, 'errors' => $errors]);
     }
 }
+else {
+    echo json_encode(['success' => false, 'errors' => ['Phương thức gửi không hợp lệ.']]);
+    exit();
+}
+
 
 $conn->close();
 ?>

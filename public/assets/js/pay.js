@@ -13,33 +13,35 @@ document.addEventListener('DOMContentLoaded', function () {
     const userStreet = userAddressInfo.street;
 
     // Auto-fill địa chỉ
-    autoFillRadio.addEventListener("change", function () {
-        if (this.checked) {
-            citySelect.innerHTML = `<option selected>${userCity}</option>`;
-            districtSelect.innerHTML = `<option selected>${userDistrict}</option>`;
-            wardSelect.innerHTML = `<option selected>${userWard}</option>`;
-            streetInput.value = userStreet;
+    // autoFillRadio.addEventListener("change", function () {
+    //     if (this.checked) {
+    //         citySelect.innerHTML = `<option selected>${userCity}</option>`;
+    //         districtSelect.innerHTML = `<option selected>${userDistrict}</option>`;
+    //         wardSelect.innerHTML = `<option selected>${userWard}</option>`;
+    //         streetInput.value = userStreet;
 
-            citySelect.disabled = true;
-            districtSelect.disabled = true;
-            wardSelect.disabled = true;
-            streetInput.readOnly = true;
-        }
-    });
+    //         citySelect.disabled = true;
+    //         districtSelect.disabled = true;
+    //         wardSelect.disabled = true;
+    //         streetInput.readOnly = true;
+    //     }
+    // });
 
     // Chọn "Gửi đến địa chỉ khác"
     otherRadio.addEventListener("change", function () {
         if (this.checked) {
-            citySelect.disabled = false;
-            districtSelect.disabled = false;
-            wardSelect.disabled = false;
-            streetInput.readOnly = false;
+            citySelect.classList.remove('select-disabled');
+            districtSelect.classList.remove('select-disabled');
+            wardSelect.classList.remove('select-disabled');
+            streetInput.classList.remove('readonly-input');
             streetInput.value = '';
-
+    
+            // Reset option
             citySelect.innerHTML = "<option value=''>Select City</option>";
             districtSelect.innerHTML = "<option value=''>Select District</option>";
             wardSelect.innerHTML = "<option value=''>Select Ward</option>";
-
+    
+            // Load city data
             fetch("https://provinces.open-api.vn/api/p/")
                 .then(response => response.json())
                 .then(data => {
@@ -51,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .catch(err => console.error("Lỗi tải danh sách thành phố:", err));
         }
     });
+    
 
     // Load district khi chọn city
     citySelect.addEventListener("change", function () {
@@ -89,22 +92,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    const creditCardFields = document.getElementById('credit-card-fields');
-    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    // const creditCardFields = document.getElementById('credit-card-fields');
+    // const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     
-    paymentMethods.forEach(method => {
-        method.addEventListener('change', function() {
-            if (this.value === 'Credit Card') {
-                creditCardFields.classList.add('show');
-            } else {
-                creditCardFields.classList.remove('show');
-            }
-        });
-    });
+    // paymentMethods.forEach(method => {
+    //     method.addEventListener('change', function() {
+    //         if (this.value === 'Credit Card') {
+    //             creditCardFields.classList.add('show');
+    //         } else {
+    //             creditCardFields.classList.remove('show');
+    //         }
+    //     });
+    // });
     
-    window.addEventListener('load', () => {
-        creditCardFields.classList.remove('show');
-    });
+    // window.addEventListener('load', () => {
+    //     creditCardFields.classList.remove('show');
+    // });
     
     
 
@@ -112,7 +115,13 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('payment-form').addEventListener('submit', function (e) {
         e.preventDefault();
 
+        updateAddressNames(); // Cập nhật tên city/district/ward
+
         const formData = new FormData(this);
+
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
         fetch('pages/order_process.php', {
             method: 'POST',
@@ -155,4 +164,39 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Có lỗi xảy ra khi đặt hàng.");
         });
     });
+
+    function autoFillAddress() {
+        citySelect.innerHTML = `<option value="${userCity}" selected>${userCity}</option>`;
+        districtSelect.innerHTML = `<option value="${userDistrict}" selected>${userDistrict}</option>`;
+        wardSelect.innerHTML = `<option value="${userWard}" selected>${userWard}</option>`;
+        streetInput.value = userStreet;
+    
+        citySelect.classList.add('select-disabled');
+        districtSelect.classList.add('select-disabled');
+        wardSelect.classList.add('select-disabled');
+        streetInput.classList.add('readonly-input');
+    }
+    
+
+    autoFillRadio.addEventListener("change", function () {
+        if (this.checked) {
+            autoFillAddress();
+        }
+    });
+    
+    if (autoFillRadio.checked) {
+        autoFillAddress();
+    }
+    
+    function updateAddressNames() {
+        const selectedCityText = citySelect.options[citySelect.selectedIndex]?.text || '';
+        const selectedDistrictText = districtSelect.options[districtSelect.selectedIndex]?.text || '';
+        const selectedWardText = wardSelect.options[wardSelect.selectedIndex]?.text || '';
+    
+        document.getElementById("shipping_city_name").value = selectedCityText;
+        document.getElementById("shipping_district_name").value = selectedDistrictText;
+        document.getElementById("shipping_ward_name").value = selectedWardText;
+    }
+    
+    
 });
