@@ -56,7 +56,6 @@ $result = $conn->query($sql);
                 <option value="Processing" <?= $statusFilter == 'Processing' ? 'selected' : '' ?>>Processing</option>
                 <option value="Completed" <?= $statusFilter == 'Completed' ? 'selected' : '' ?>>Completed</option>
                 <option value="Cancelled" <?= $statusFilter == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                <option value="Paid" <?= $statusFilter == 'Paid' ? 'selected' : '' ?>>Paid</option>
             </select>
         </div>
             <div class="btn_filter">
@@ -102,7 +101,6 @@ $result = $conn->query($sql);
                         <option value="Processing" <?= $row['status'] == 'Processing' ? 'selected' : '' ?>>Processing</option>
                         <option value="Completed" <?= $row['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
                         <option value="Cancelled" <?= $row['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                        <option value="Paid" <?= $row['status'] == 'Paid' ? 'selected' : '' ?>>Paid</option>
                     </select>
                     <button type="submit">Update</button>
                 </form>
