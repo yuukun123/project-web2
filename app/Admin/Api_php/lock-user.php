@@ -1,18 +1,20 @@
 <?php
 include '../../config/data_connect.php';
 
-if (isset($_POST['id']) && isset($_POST['lock'])) {
-    $id = $_POST['id'];
-    $lock = $_POST['lock']; // 1 = lock, 0 = unlock
+$user_id = $_POST['id'];
+$action = $_POST['action']; // 'lock' or 'unlock'
 
-    $stmt = $conn->prepare("UPDATE users SET is_locked = ? WHERE user_id = ?");
-    $stmt->bind_param("ii", $lock, $id);
-    if ($stmt->execute()) {
-        echo $lock ? "User locked successfully." : "User unlocked successfully.";
-    } else {
-        echo "Failed to update user status.";
-    }
+$status = ($action === 'lock') ? 'locked' : 'active';
+
+$stmt = $conn->prepare("UPDATE users SET status = ? WHERE user_id = ?");
+$stmt->bind_param("si", $status, $user_id);
+
+if ($stmt->execute()) {
+    echo "User " . ($action === 'lock' ? "locked" : "unlocked") . " successfully.";
 } else {
-    echo "Invalid request.";
+    echo "Error updating user status.";
 }
+
+$stmt->close();
+$conn->close();
 ?>

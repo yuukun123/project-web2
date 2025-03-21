@@ -128,6 +128,9 @@ document.addEventListener("DOMContentLoaded", function () {
             case 'user_not_found':
                 message = 'Không tìm thấy tài khoản với tên đăng nhập này.';
                 break;
+            case 'account_locked':
+                message = 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.';
+                break;
             case 'method_not_allowed':
                 message = 'Phương thức gửi không hợp lệ.';
                 break;
@@ -140,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
             window.history.replaceState({}, document.title, cleanUrl);
         }
     }
+    
 });
 
 // Hiệu ứng cho input: thêm class "has-content" khi có nội dung

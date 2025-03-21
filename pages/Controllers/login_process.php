@@ -10,8 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    // Truy vấn người dùng từ database
-    $sql = "SELECT user_id, user_name, password, role FROM users WHERE user_name = ?";
+    // Truy vấn người dùng từ database (lấy thêm status)
+    $sql = "SELECT user_id, user_name, password, role, status FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -19,6 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result->num_rows > 0) {
         $user = $result->fetch_assoc();
+
+        // Kiểm tra nếu tài khoản bị khóa
+        if (strtolower($user['status']) === 'locked') {
+            header("Location: /project-web2/login?error=account_locked");
+            exit();
+        }
 
         if (strtolower($user['role']) !== 'customer') {
             header("Location: /login?error=role_not_allowed");
