@@ -146,7 +146,7 @@ function saveUser() {
     const userId = document.getElementById('user_id').value;
     if (userId) formData.append('id', userId);
 
-    fetch('../Api_php/save_user.php', { method: 'POST', body: formData })
+    fetch('../Api_php/save-user.php', { method: 'POST', body: formData })
         .then(response => response.text())
         .then(data => {
             alert(data);

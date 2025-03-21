@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($id) {
         // UPDATE
-        $stmt = $conn->prepare("UPDATE users SET phone=?, role=?, street=?, city=?, district=?, ward=?, updated_at=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE users SET phone=?, role=?, street=?, city=?, district=?, ward=?, updated_at=? WHERE user_id=?");
         $stmt->bind_param("sssssssi", $phone, $role, $street, $city, $district, $ward, $current_time, $id);
         if ($stmt->execute()) {
             echo "User updated successfully!";
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     } else {
         // INSERT
-        $stmt = $conn->prepare("INSERT INTO users (username, email, phone, password, role, street, city, district, ward, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO users (user_name, email, phone, password, role, street, city, district, ward, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("sssssssssss", $username, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $current_time);
         if ($stmt->execute()) {
             echo "New user added successfully!";
