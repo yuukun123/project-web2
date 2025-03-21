@@ -47,7 +47,7 @@ CREATE TABLE orders (
     delivery_date DATE,
     delivery_time TIME,
     total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
-    status ENUM('Pending', 'Processing', 'Completed', 'Cancelled', 'Paid') DEFAULT 'Pending',
+    status ENUM('Pending', 'Processing', 'Completed', 'Cancelled') DEFAULT 'Pending',
     payment_method ENUM('COD', 'Momo', 'Credit Card', 'VNPay') DEFAULT 'COD',
     user_id INT NOT NULL,
     notes TEXT,

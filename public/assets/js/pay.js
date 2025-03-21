@@ -89,10 +89,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Khi load trang nếu autoFill đã được chọn
-    if (autoFillRadio.checked) {
-        autoFillRadio.dispatchEvent(new Event('change'));
-    }
+    const creditCardFields = document.getElementById('credit-card-fields');
+    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', function() {
+            if (this.value === 'Credit Card') {
+                creditCardFields.classList.add('show');
+            } else {
+                creditCardFields.classList.remove('show');
+            }
+        });
+    });
+    
+    window.addEventListener('load', () => {
+        creditCardFields.classList.remove('show');
+    });
+    
+    
 
     // Submit form và hiện confirmation
     document.getElementById('payment-form').addEventListener('submit', function (e) {

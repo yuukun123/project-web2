@@ -632,11 +632,12 @@
     flex-wrap: wrap;
     margin-bottom: 30px;
     transition: all 0.3s ease;
-  }
-  #credit-card-fields.show {
-    display: flex !important;
-  }
-  
+}
+
+#credit-card-fields.show {
+    display: flex;
+}
+
   .card-details {
     margin-top: 15px;
     padding: 15px;
