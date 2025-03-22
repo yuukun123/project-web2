@@ -26,6 +26,8 @@ if ($result->num_rows > 0): ?>
                 $user_id = (int)$row['user_id'];
                 $statusText = ($row['status'] === 'locked') ? 'Locked' : 'Active';
                 $toggleAction = ($row['status'] === 'locked') ? 'Unlock' : 'Lock';
+                // Đặt icon phù hợp với trạng thái
+                $icon = ($row['status'] === 'locked') ? 'lock-open-outline' : 'lock-closed-outline'; // Chỉnh lại icon
             ?>
                 <tr id="<?php echo $user_id; ?>">
                     <td><?php echo ltrim($row['user_id'], "0"); ?></td>
@@ -39,8 +41,9 @@ if ($result->num_rows > 0): ?>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>
 
                     <td>
+                        <!-- Sử dụng icon đúng cho trạng thái lock/unlock -->
                         <button class="button lock" onclick="toggleLockUser(<?php echo $user_id; ?>, '<?php echo $row['status']; ?>')">
-                            <?php echo $toggleAction; ?>
+                            <ion-icon name="<?php echo $icon; ?>"></ion-icon> <?php echo $toggleAction; ?>
                         </button>
                         <button class="button edit" onclick="editUser('<?php echo $user_id; ?>')">
                             <ion-icon name="create-outline"></ion-icon>
