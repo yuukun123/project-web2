@@ -33,7 +33,7 @@ echo '
         </div>
         <div class="footer_section">
             <div class="footer_logo">
-                <img src="' . BASE_URL . 'img/Sweets1.png" alt="">
+                <img src="' . BASE_URL . 'Img/Sweets1.png" alt="">
             </div>
             <ul class="Footer_connect_icon ">
                 <li><a href="#"><ion-icon name="logo-youtube"></ion-icon></a></li>

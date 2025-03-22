@@ -47,7 +47,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
     // Nếu chưa có, tự động chuyển hướng sang ?pages=home
-    header('Location: /project-web2/home');
+    header('Location: /home');
     exit; // Dừng script để tránh chạy tiếp
 }
 // Bây giờ chắc chắn đã có ?pages
