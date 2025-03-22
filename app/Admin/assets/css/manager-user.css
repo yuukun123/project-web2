@@ -192,14 +192,22 @@ th {
     background-color: #ffc400;
 }   
 
+/* Định nghĩa class disabled cho nút vô hiệu */
+button.disabled {
+    background-color: #cccccc; /* Màu xám */
+    cursor: not-allowed; /* Hiển thị chuột là hình dấu chéo khi di chuột vào */
+    pointer-events: none; /* Tắt mọi sự kiện chuột (không thể click) */
+}
+
+
 .edit {
-    background-color: #4caf50;
+    background-color: #11b717;
     color: white;
     border-radius: 10px;
 }
 
 .edit:hover {
-    background-color: #4f514fcb;
+    background-color: #1d7c1dcb;
 }
 
 .delete {
