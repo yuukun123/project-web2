@@ -1,10 +1,10 @@
 <?php
-$host = 'db'; // hostname chính là tên service db
-$user = 'user';
-$password = '123';
-$dbname = 'webdata';
+$host     = "localhost";
+$username = "root";
+$password = "";
+$database = "webdata";
 
-$conn = new mysqli($host, $user, $password, $dbname);
+$conn = mysqli_connect($host, $username, $password, $database);
 mysqli_set_charset($conn, 'utf8');
 
 if (!$conn) {
