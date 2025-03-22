@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hàm cập nhật số lượng sản phẩm trên icon giỏ hàng
     function updateCartCount() {
-        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1", {
+        fetch("includes/cart_action.php?cart_count=1", {
             method: "GET",
             credentials: "include"
         })
@@ -311,7 +311,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`http://localhost/project-web2/pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`)
+        fetch(`pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`)
             .then(response => response.json())
             .then(products => {
                 hintContainer.innerHTML = "";
