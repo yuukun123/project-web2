@@ -137,15 +137,53 @@ async function loadWards() {
 
 function saveUser() {
     const formData = new FormData();
-    ['username', 'email', 'phone', 'password', 'role', 'street'].forEach(id => {
-        formData.append(id, document.getElementById(id).value);
-    });
-    ['city', 'district', 'ward'].forEach(id => {
-        formData.append(id, document.getElementById(id).options[document.getElementById(id).selectedIndex].text);
-    });
-    const userId = document.getElementById('user_id').value;
-    if (userId) formData.append('id', userId);
+    let errors = [];
 
+    const fields = ['username', 'email', 'phone', 'password', 'role', 'street', 'city', 'district', 'ward'];
+
+    // Lấy dữ liệu từ input và kiểm tra nếu trống
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            formData.append(id, element.value.trim());
+            if (!element.value.trim()) {
+                errors.push(`Vui lòng nhập ${id.replace('_', ' ')}.`);
+            }
+        } else {
+            console.warn(`⚠️ Không tìm thấy phần tử với ID: ${id}`);
+        }
+    });
+
+    const userId = document.getElementById('user_id');
+    if (userId) formData.append('id', userId.value.trim());
+
+    // 📌 Kiểm tra email hợp lệ
+    const emailElement = document.getElementById('email');
+    if (emailElement && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailElement.value.trim())) {
+        errors.push("Email không hợp lệ.");
+    }
+
+    // 📌 Kiểm tra số điện thoại hợp lệ
+    const phoneElement = document.getElementById('phone');
+    const phonePattern = /^(03[2-9]|05[2,6,8,9]|07[0-9]|08[1-9]|09[0-9])\d{7}$/;
+    if (phoneElement && !phonePattern.test(phoneElement.value.trim())) {
+        errors.push("Số điện thoại không hợp lệ.");
+    }
+
+    // 📌 Kiểm tra mật khẩu hợp lệ
+    const passwordElement = document.getElementById('password');
+    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (passwordElement && !passwordPattern.test(passwordElement.value.trim())) {
+        errors.push("Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
+    }
+
+    // Nếu có lỗi, hiển thị thông báo lỗi bằng alert
+    if (errors.length > 0) {
+        alert(errors.join("\n"));
+        return;
+    }
+
+    // Gửi dữ liệu nếu hợp lệ
     fetch('../Api_php/save-user.php', { method: 'POST', body: formData })
         .then(response => response.text())
         .then(data => {
@@ -155,6 +193,8 @@ function saveUser() {
         })
         .catch(console.error);
 }
+
+
 
 function loadUserTable() {
     fetch('../Controllers/user-process.php')
