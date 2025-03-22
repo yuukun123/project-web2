@@ -57,6 +57,6 @@ if ($loggedIn) {
             <p>No orders found.</p>
         <?php endif; ?>
     <?php else: ?>
-        <p style="text-align: center; color: red;">Bạn chưa đăng nhập. Vui lòng đăng nhập để xem hóa đơn.</p>
+        <p style="text-align: center; color: red; margin-bottom: 20px; margin-top: 30px;">Bạn chưa đăng nhập. Vui lòng đăng nhập để xem hóa đơn.</p>
     <?php endif; ?>
 </div>
