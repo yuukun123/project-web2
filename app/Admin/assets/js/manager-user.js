@@ -194,6 +194,48 @@ function saveUser() {
         .catch(console.error);
 }
 
+let currentPage = 1;
+const rowsPerPage = 8;
+
+function paginateTable() {
+    const rows = Array.from(document.querySelectorAll('#userTableContainer table tbody tr'))
+        .filter(row => row.style.display !== 'none'); // chỉ lấy các hàng đang hiển thị (sau tìm kiếm)
+    
+    const rowsPerPage = 8;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+    let currentPage = 1;
+
+    function showPage(page) {
+        currentPage = page;
+        rows.forEach((row, index) => {
+            row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+        });
+
+        renderPagination();
+    }
+
+    function renderPagination() {
+        const paginationContainer = document.getElementById('paginationContainer');
+        paginationContainer.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const button = document.createElement('button');
+            button.innerText = i;
+            if (i === currentPage) button.classList.add('active');
+            button.addEventListener('click', () => showPage(i));
+            paginationContainer.appendChild(button);
+        }
+    }
+
+    // Gọi lần đầu
+    if (rows.length > 0) {
+        showPage(1);
+    } else {
+        document.getElementById('paginationContainer').innerHTML = '';
+    }
+}
+
+
 
 
 function loadUserTable() {
@@ -201,9 +243,11 @@ function loadUserTable() {
         .then(response => response.text())
         .then(html => {
             document.getElementById('userTableContainer').innerHTML = html;
+            paginateTable();  // Gọi phân trang sau khi load bảng
         })
         .catch(console.error);
 }
+
 
 function showAddUserForm() {
     document.getElementById('modalTitle').innerText = "Add New User";
@@ -266,13 +310,14 @@ function searchUser() {
     rows.forEach(row => {
         const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
         const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-        if (username.includes(filter) || email.includes(filter)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
+        row.style.display = (username.includes(filter) || email.includes(filter)) ? '' : 'none';
     });
+
+    currentPage = 1; // reset về trang đầu
+    paginateTable(); // Phân trang lại với danh sách đã lọc
 }
+
+
 
 document.querySelector('.find').addEventListener('input', function () {
     const filter = this.value.toLowerCase();

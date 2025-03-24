@@ -12,6 +12,8 @@
 <div id="userTableContainer">
     <!-- Phần table sẽ được load vào đây từ manager_processing.php -->
 </div>
+<div id="paginationContainer" class="pagination"></div>
+
 
     <!-- Modal for adding/editing users -->
 <div id="userModal">

@@ -60,3 +60,7 @@ if ($loggedIn) {
         <p style="text-align: center; color: red;  margin-bottom: 20px; margin-top: 30px;">Bạn chưa đăng nhập. Vui lòng đăng nhập để xem hóa đơn.</p>
     <?php endif; ?>
 </div>
+
+<!-- Thêm khung chứa chi tiết để load nội dung -->
+<div class="more-infor-content"></div>
+<div class="blur-overlay"></div>

@@ -149,7 +149,7 @@ $page = $_GET['pages'];
         </div>
         
         <div class="Pay_button">
-            <a href="pay" target="_blank" class="pay-link">
+            <a href="pay" class="pay-link">
                 <button class="pay-btn-link">Pay</button>
             </a>
         </div>
