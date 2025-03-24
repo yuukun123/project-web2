@@ -137,7 +137,7 @@ $total_cost = 0;
                             </div>
 
                             <div class="note">
-                                <label for="note_<?= $row['cart_id'] ?>">Greeting Message for this product</label>
+                                <label for="note_<?= $row['cart_id'] ?>">Note for this product</label>
                                 <input type="text" name="product_note[<?= $row['cart_id'] ?>]" id="note_<?= $row['cart_id'] ?>" value="<?= htmlspecialchars($row['note'] ?? '') ?>" placeholder="Enter message for this product">
                             </div>
                         </div>
