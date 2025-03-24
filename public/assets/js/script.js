@@ -266,10 +266,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     window.addEventListener("pageshow", function (event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
             location.reload();
         }
-    });
+    });    
     
 
     // Khi trang tải xong, kiểm tra trạng thái đăng nhập và cập nhật số lượng giỏ hàng
