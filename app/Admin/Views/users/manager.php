@@ -4,7 +4,8 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         add more users
     </button>
-    <input class="find" type="text" placeholder="find user" />
+    <input class="find" type="text" placeholder="find user" onkeyup="searchUser()" />
+
 </div>
 
 

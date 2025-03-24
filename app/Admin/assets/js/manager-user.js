@@ -255,3 +255,38 @@ function closeConfirmModal() {
 }
 
 window.onload = loadUserTable;
+
+// tìm kiếm user
+function searchUser() {
+    const filter = document.querySelector('.find').value.toLowerCase();
+    const table = document.querySelector('#userTableContainer table');
+    if (!table) return;
+
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+        if (username.includes(filter) || email.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+
+document.querySelector('.find').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const table = document.querySelector('#userTableContainer table');
+    if (!table) return; // Nếu chưa có table thì không làm gì
+
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+        if (username.includes(filter) || email.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
