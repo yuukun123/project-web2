@@ -116,6 +116,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     displayWelcomeMessage();
 
+    checkLoginStatus((isLoggedIn)=>{
+        if (!isLoggedIn) {
+            console.log("Không đăng nhập, xóa flag welcomeShown");
+            localStorage.removeItem("welcomeShown");
+            console.log("welcomeShown flag removed:", localStorage.getItem("welcomeShown"));
+        }
+    });
+    
+    
+
     // Khi nhấn nút đóng giỏ hàng
     document.addEventListener("click", function (event) {
         if (event.target.classList.contains("close")) {
