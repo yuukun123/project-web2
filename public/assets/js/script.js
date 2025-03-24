@@ -265,6 +265,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));
     }
 
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            location.reload();
+        }
+    });
+    
+
     // Khi trang tải xong, kiểm tra trạng thái đăng nhập và cập nhật số lượng giỏ hàng
     checkLoginStatus();
     updateCartCount();
