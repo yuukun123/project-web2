@@ -17,6 +17,43 @@ body {
     overflow-y: auto;
 }
 
+/* wellcome back */
+.notificate{
+    position: fixed;
+    top: -100px; /* Start above the viewport */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0; /* Hidden initially */
+    transition: top 0.5s ease, opacity 0.5s ease;
+    z-index: 999999;
+}
+
+.notificate.show {
+    top: 20px; /* Slide into view */
+    opacity: 1; /* Make it visible */
+}
+
+.notificate.hide {
+    top: -100px; /* Slide back up */
+    opacity: 0; /* Hide it */
+}
+
+.notificate p {
+    display: flex;
+    justify-content: center;
+    margin: 0; /* Remove default margin */
+    text-align: center;
+    /* align-items: baseline; */
+}
+
+
 .grid-full{
     display: grid;
     grid-template-columns: 5fr 1fr ;
