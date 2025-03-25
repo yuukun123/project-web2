@@ -4,13 +4,16 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         add more users
     </button>
-    <input class="find" type="text" placeholder="find user" />
+    <input class="find" type="text" placeholder="find user" onkeyup="searchUser()" />
+
 </div>
 
 
 <div id="userTableContainer">
     <!-- Phần table sẽ được load vào đây từ manager_processing.php -->
 </div>
+<div id="paginationContainer" class="pagination"></div>
+
 
     <!-- Modal for adding/editing users -->
 <div id="userModal">

@@ -20,6 +20,47 @@ function myFunction() {
     // Add your search functionality here
 }
 
+// Hàm kiểm tra trạng thái đăng nhập và hiển thị lời chào
+function displayWelcomeMessage() {
+    // Nếu đã hiển thị lời chào trước đó, không làm gì cả
+    if (localStorage.getItem("welcomeShown") === "true") {
+        return;
+    }
+
+    fetch('includes/session.php', {
+        method: 'GET',
+        credentials: 'include'  // đảm bảo gửi cookie phiên
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.loggedIn && data.username) {
+            const notificate = document.getElementById("notificate");
+            const message = document.getElementById("message");
+
+            // Hiển thị lời chào cá nhân hóa dựa trên dữ liệu từ session.php
+            message.innerHTML = `Welcome back, ${data.username}!<br>Have a good day!`;
+            notificate.classList.add("show");
+
+            // Sau 2 giây, ẩn thông báo với hiệu ứng chuyển động
+            setTimeout(() => {
+                notificate.classList.remove("show");
+                notificate.classList.add("hide");
+
+                // Sau khi animation hoàn tất, ẩn hoàn toàn phần thông báo
+                setTimeout(() => {
+                    notificate.style.display = "none";
+                }, 1000); // thời gian này cần khớp với CSS transition duration
+            }, 2000);
+
+            // Đánh dấu đã hiển thị lời chào để lần sau không hiển thị lại
+            localStorage.setItem("welcomeShown", "true");
+        }
+    })
+    .catch(error => console.error("Error fetching session data:", error));
+}
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     const blurOverlay = document.querySelector(".blur-overlay");
     const btnCart = document.querySelectorAll(".add-to-cart"); // Nút thêm sản phẩm
@@ -72,6 +113,18 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
     }
+
+    displayWelcomeMessage();
+
+    checkLoginStatus((isLoggedIn)=>{
+        if (!isLoggedIn) {
+            console.log("Không đăng nhập, xóa flag welcomeShown");
+            localStorage.removeItem("welcomeShown");
+            console.log("welcomeShown flag removed:", localStorage.getItem("welcomeShown"));
+        }
+    });
+    
+    
 
     // Khi nhấn nút đóng giỏ hàng
     document.addEventListener("click", function (event) {
@@ -251,7 +304,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Hàm cập nhật số lượng sản phẩm trên icon giỏ hàng
     function updateCartCount() {
-        fetch("http://localhost/project-web2/includes/cart_action.php?cart_count=1", {
+        fetch("includes/cart_action.php?cart_count=1", {
             method: "GET",
             credentials: "include"
         })
@@ -264,6 +317,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));
     }
+
+    window.addEventListener("pageshow", function (event) {
+        if (event.persisted || performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+            location.reload();
+        }
+    });    
+    
 
     // Khi trang tải xong, kiểm tra trạng thái đăng nhập và cập nhật số lượng giỏ hàng
     checkLoginStatus();
@@ -311,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch(`http://localhost/project-web2/pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`)
+        fetch(`pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`)
             .then(response => response.json())
             .then(products => {
                 hintContainer.innerHTML = "";

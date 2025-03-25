@@ -43,13 +43,12 @@ if ($result->num_rows > 0): ?>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>
 
                     <td>
-                        <!-- Kiểm tra nếu là admin thì vô hiệu hóa nút -->
                         <button class="button lock <?php echo $isAdmin ? 'disabled' : ''; ?>" 
                                 onclick="<?php echo $isAdmin ? '' : 'toggleLockUser(' . $user_id . ', \'' . $row['status'] . '\')'; ?>">
-                            <ion-icon name="<?php echo $icon; ?>"></ion-icon> <?php echo $toggleAction; ?>
+                            <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
                         </button>
                         <button class="button edit" onclick="editUser('<?php echo $user_id; ?>')">
-                            <ion-icon name="create-outline"></ion-icon>
+                            <ion-icon name="create-outline" style="color: black;"></ion-icon>
                         </button>
                     </td>
                 </tr>

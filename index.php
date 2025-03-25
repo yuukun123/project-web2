@@ -47,7 +47,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
 // Kiểm tra xem có ?pages hay chưa
 if (!isset($_GET['pages'])) {
     // Nếu chưa có, tự động chuyển hướng sang ?pages=home
-    header('Location: /project-web2/home');
+    header('Location: home');
     exit; // Dừng script để tránh chạy tiếp
 }
 // Bây giờ chắc chắn đã có ?pages
@@ -149,7 +149,7 @@ $page = $_GET['pages'];
         </div>
         
         <div class="Pay_button">
-            <a href="pay" target="_blank" class="pay-link">
+            <a href="pay" class="pay-link">
                 <button class="pay-btn-link">Pay</button>
             </a>
         </div>

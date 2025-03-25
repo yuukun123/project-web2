@@ -5,7 +5,7 @@ if (!isset($conn)) {
 }
 
 // Truy vấn sản phẩm từ database
-$sql = "SELECT product_id, product_name, price, image, category_id, status FROM PRODUCT WHERE status IN ('Available', 'Out of Stock', 'Discontinued')";
+$sql = "SELECT product_id, product_name, price, image, category_id, status FROM product WHERE status IN ('Available', 'Out of Stock', 'Discontinued')";
 $result = $conn->query($sql);
 if (!$result) {
     die("Query error: " . $conn->error);

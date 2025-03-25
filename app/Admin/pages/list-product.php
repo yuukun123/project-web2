@@ -31,6 +31,7 @@
             <div class="Home">
                 <div class="text-big"><?php echo $title; ?></div>
                 <!-- include file dưới này -->
+                <?php include ("../Views/products/list.php");?>
                 
             </div>
         </div>

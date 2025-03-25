@@ -10,7 +10,7 @@ $term = '%' . $term . '%';
 
 // Truy vấn MySQL
 $sql = "SELECT product_id, product_name, price, image, category_id
-        FROM PRODUCT
+        FROM product
         WHERE product_name LIKE ?
           AND status = 'Available'";
 $stmt = $conn->prepare($sql);
