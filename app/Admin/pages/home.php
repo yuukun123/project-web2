@@ -36,6 +36,10 @@
         <?php include ("../includes/nav.php"); ?>
     </div>
 
+    <div class="notificate" id="notificate">
+        <p id="message"></p>
+    </div>
+
     <script src="../assets/js/script.js"></script>
 </body> 
 
