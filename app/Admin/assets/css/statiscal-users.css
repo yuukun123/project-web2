@@ -227,6 +227,16 @@ td {
     background: rgb(196, 7, 7);
     cursor: pointer;
 }
+.close-btn.fixed {
+    position: sticky;
+    bottom: -22px;
+    width: 100%;
+    text-align: center;
+    background: white;
+    padding: 10px;
+    z-index: 1000;
+}
+
 .div-receipt.open{
     display: flex;
 }

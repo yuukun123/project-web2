@@ -45,7 +45,7 @@
         <table class="table-receipt">
         
         </table>
-            <div class="close-btn">
+            <div class="close-btn fixed">
                 <button >Cancel<ion-icon name="close-outline"></ion-icon></button>
             </div>
     </div>
