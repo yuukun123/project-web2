@@ -26,7 +26,7 @@
             <div class="Home">
                 <div class="text-big">Statistical User</div>
                 <!-- include file dưới này -->
-                
+                <?php include("../Views/statistical/user.php") ?>
 
             </div>
             
