@@ -109,8 +109,8 @@ $result = $conn->query($sql);
             <th>Order Id</th>
             <th>Customer</th>
             <th>Order Date</th>
-            <th>Delivery Date/th>
-            <th>Delivery Hours</th>
+            <th>Delivery Date</th>
+            <th>Delivered Hours</th>
             <th>Status</th>
             <th>Payment Method</th>
             <th>Delivery Address</th>
