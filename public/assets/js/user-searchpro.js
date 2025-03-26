@@ -75,23 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateLoginButtons();
-    
 
-    // // Create wrapper functions for localStorage
-    // window.userStorage = {
-    //     setCurrentUser: function(userData) {
-    //         localStorage.setItem('currentUser', JSON.stringify(userData));
-    //         updateLoginButtons();
-    //     },
-    //     getCurrentUser: function() {
-    //         return getCurrentUser();
-    //     },
-    //     removeCurrentUser: function() {
-    //         localStorage.removeItem('currentUser');
-    //         updateLoginButtons();
-    //     }
-    // };
-    
     // Setup storage event listener for cross-tab updates
     window.addEventListener('storage', function(e) {
         if (e.key === 'UserStr') {

@@ -79,7 +79,7 @@ if (!$result) {
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="movie-item">
-                    <a href="product_detail.php?id=<?php echo isset($row['id']) ? $row['id'] : '#'; ?>">
+                    <a href="home?pages=product&id=<?php echo isset($row['product_id']) ? $row['product_id'] : '#'; ?>">
                         <img class="poster-img" src="<?php echo isset($row['image']) ? $row['image'] : 'default.jpg'; ?>" 
                              alt="<?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Sản phẩm'; ?>">
                     </a>
