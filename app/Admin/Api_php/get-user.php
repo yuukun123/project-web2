@@ -2,8 +2,8 @@
 include '../../config/data_connect.php';
 header("Content-Type: application/json; charset=UTF-8");
 
-if (isset($_GET['username']) && !empty($_GET['username'])) {
-    $user_name = intval($_GET['username']);
+if (isset($_GET['user_name']) && !empty($_GET['user_name'])) {
+    $user_name = trim($_GET['user_name']);
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_name = ?");
     $stmt->bind_param("s", $user_name);
     $stmt->execute();
@@ -14,11 +14,11 @@ if (isset($_GET['username']) && !empty($_GET['username'])) {
 
         echo json_encode([
             'username'    => $user['user_name'],
-            'firstname'   => $user['first_name'],
-            'lastname'    => $user['last_name'],
+            'first_name'   => $user['first_name'],
+            'last_name'    => $user['last_name'],
+            'password'    => $user['password'],
             'email'       => $user['email'],
             'phone'       => $user['phone'],
-            'password'    => $user['password'],
             'city'        => $user['city'],
             'district'    => $user['district'],
             'ward'        => $user['ward'],

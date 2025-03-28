@@ -4,7 +4,12 @@
         <ion-icon name="add-circle-outline"></ion-icon>
         add more users
     </button>
-    <input class="find" type="text" placeholder="find user" onkeyup="searchUser()" />
+    <div class="find-user">
+        <input class="find" type="text" placeholder="find user"  />
+        <button class="search" type="button" onclick="searchUser()">
+            search
+        </button>
+    </div>
 
 </div>
 
@@ -21,12 +26,20 @@
         <h2 style="text-align: center; margin-bottom: 30px" id="modalTitle">Edit User</h2>
         <div class="form-grid">
         <div class="form-group">
-            <label for="user_id">User ID:</label>
-            <input type="text" id="user_id" disabled />
-        </div>
-        <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Enter username" />
+        </div>
+        <div class="form-group">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter first name" />
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter last name" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter password" />
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
@@ -35,10 +48,6 @@
         <div class="form-group">
             <label for="phone">Phone:</label>
             <input type="text" id="phone" name="phone" placeholder="Enter phone" />
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="text" id="password" name="password" placeholder="Enter password" />
         </div>
         <div class="form-group">
             <label for="city">City:</label>

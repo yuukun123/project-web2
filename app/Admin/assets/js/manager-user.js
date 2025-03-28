@@ -16,9 +16,12 @@ async function showEditUserForm(user) {
     document.getElementById('modalTitle').innerText = "Edit User";
 
     document.getElementById('username').value = user.username;
+    document.getElementById('first_name').value = user.first_name;
+    document.getElementById('last_name').value = user.last_name;
+    document.getElementById('password').value = user-password;
     document.getElementById('email').value = user.email;
     document.getElementById('phone').value = user.phone;
-    document.getElementById('password').value = user.password;
+
     document.getElementById('role').value = user.role;
     document.getElementById('street').value = user.street;
     document.getElementById('created_at').value = user.created_at;
@@ -301,36 +304,70 @@ window.onload = loadUserTable;
 
 // tìm kiếm user
 function searchUser() {
-    const filter = document.querySelector('.find').value.toLowerCase();
+    const inputField = document.querySelector('.find');
+    const filter = inputField.value.trim().toLowerCase();
     const table = document.querySelector('#userTableContainer table');
     if (!table) return;
 
     const rows = table.querySelectorAll('tbody tr');
+
+    if (filter === "") {
+        // Nếu ô tìm kiếm rỗng, hiển thị tất cả hàng và cập nhật lại phân trang
+        rows.forEach(row => row.style.display = '');
+        currentPage = 1; // Reset về trang đầu
+        paginateTable(); // Cập nhật phân trang
+        return;
+    }
+
+    let found = false; // Kiểm tra có tìm thấy kết quả hay không
     rows.forEach(row => {
         const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
         const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-        row.style.display = (username.includes(filter) || email.includes(filter)) ? '' : 'none';
-    });
 
-    currentPage = 1; // reset về trang đầu
-    paginateTable(); // Phân trang lại với danh sách đã lọc
-}
-
-
-
-document.querySelector('.find').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const table = document.querySelector('#userTableContainer table');
-    if (!table) return; // Nếu chưa có table thì không làm gì
-
-    const rows = table.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
         if (username.includes(filter) || email.includes(filter)) {
             row.style.display = '';
+            found = true;
         } else {
             row.style.display = 'none';
         }
     });
+
+    if (!found) {
+        alert("Không tìm thấy người dùng phù hợp!");
+    }
+
+    currentPage = 1; // Reset về trang đầu
+    paginateTable(); // Cập nhật phân trang
+}
+
+// Gán sự kiện vào nút tìm kiếm để chỉ tìm khi nhấn nút
+document.querySelector('.search').addEventListener('click', searchUser);
+
+// Ngăn việc tìm kiếm khi nhập chữ, chỉ tìm khi nhấn nút
+document.querySelector('.find').addEventListener('input', function () {
+    if (this.value.trim() === "") {
+        searchUser(); // Khi ô tìm kiếm trống, gọi lại để reset bảng
+    }
 });
+
+
+
+
+
+
+// document.querySelector('.find').addEventListener('input', function () {
+//     const filter = this.value.toLowerCase();
+//     const table = document.querySelector('#userTableContainer table');
+//     if (!table) return; // Nếu chưa có table thì không làm gì
+
+//     const rows = table.querySelectorAll('tbody tr');
+//     rows.forEach(row => {
+//         const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+//         const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+//         if (username.includes(filter) || email.includes(filter)) {
+//             row.style.display = '';
+//         } else {
+//             row.style.display = 'none';
+//         }
+//     });
+// });

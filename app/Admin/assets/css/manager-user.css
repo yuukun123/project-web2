@@ -120,7 +120,7 @@
 }
 
 .find{
-    width: 36%;
+    width: 85%;
     height: 35px;
     padding: 0px 10px;
     border-radius: 10px;
@@ -129,6 +129,12 @@
 
 .find:hover{
     border: 1px solid rgba(255, 68, 0, 0.877);
+}
+
+.find-user{
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
 }
 
 table {
@@ -309,11 +315,11 @@ h2 {
     margin: 10px 0;
 }
 
-.modal-buttons {
+/* .modal-buttons {
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
-}
+} */
 
 .yes-button {
     background-color: #ff4d4d; /* Red for Yes button */
@@ -362,7 +368,7 @@ h2 {
 .modal-buttons {
     margin-top: 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .modal-buttons button {
