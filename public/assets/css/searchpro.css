@@ -272,7 +272,6 @@
     color: #000000;
 }
 
-
 @media (max-width: 320px){
     .search-price-title{
         font-size: 12px;
@@ -402,12 +401,6 @@
 }
 
 
-.butn:hover {
-    color: white;
-    background: #fbd5e5;
-    border: 2px solid white;
-}
-
 .title {
     font-size: 14px;
     margin-left: auto;
@@ -446,7 +439,7 @@
 
 .poster-img {
     width: 240px;
-    /* height: auto; */
+    height: 300px;
     object-fit: cover;
     /* aspect-ratio: 2 / 3; */
     border-radius: 15px;
@@ -472,11 +465,45 @@
     height: 35px;
     width: 218px;
 }
+.butn {
+    position: relative;
+    width: 240px; /* Điều chỉnh kích thước nút */
+    height: 40px;
+    color: #455265;
+    border: 1px solid #455265;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    overflow: hidden;
+}
 
-.butn:hover{
-    color: white;
+.butn .text-color {
+    transition: opacity 0.3s;
+}
+
+.butn:hover {
+    background-color: #ff4500;
     background: #fbd5e5;
-    border: 2px solid white;
+    border: none;
+}
+
+.butn:hover .text-color {
+    opacity: 0;
+}
+
+.butn::after {
+    content: "Add to Cart";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-weight: bold;
+}
+
+.butn:hover::after {
+    opacity: 1;
 }
 
 .text-color{

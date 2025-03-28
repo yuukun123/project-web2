@@ -6,6 +6,20 @@
             console.log("✅ Form submit, gọi filterData()");
             filterData();
         });
+         // Lắng nghe sự kiện click của các button `.js-detail-btn`
+         document.addEventListener("click", function (event) {
+            let detailBtn = event.target.closest(".js-detail-btn");
+            if (detailBtn) {
+                event.preventDefault();
+                let productId = detailBtn.getAttribute("data-id");
+                console.log("📝 Lấy chi tiết hóa đơn của sản phẩm ID:", productId);
+                if (productId) {
+                    showDetail(productId);
+                } else {
+                    console.warn("⚠ Không có product_id hợp lệ");
+                }
+            }
+        });
     });
     // Lấy dữ liệu khi trang load
     function loadInitialData() {
@@ -13,6 +27,8 @@
             .then(response => response.json())
             .then(data => {
                 console.log("Dữ liệu từ PHP:", data);
+                console.log("📌 Best Seller:", data.bestseller);
+                console.log("📌 Unpopular:", data.unpopular);
                 renderData(data.bestseller, "orderBodyBestSeller");
                 renderData(data.unpopular, "orderBodyUnpopular");
             })
@@ -66,7 +82,7 @@
                     <td>${order.product_name}</td>
                     <td>${order.quantity}</td>
                     <td>
-                        <button class="js-detail-btn" data-id="${order.id}">
+                        <button class="js-detail-btn" data-id="${order.product_id || ''}">
                             <ion-icon name="receipt-outline"></ion-icon>
                         </button>
                     </td>
@@ -75,31 +91,116 @@
         });
         tableBody.innerHTML = rows;
     }
+// Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
+function showDetail(productId) {
+    console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", productId);
+    fetch(`../../Admin/Controllers/detail-statistical-process.php?product_id=${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("📦 Dữ liệu hóa đơn nhận được:", data);
 
-    // const detailBtns = document.querySelectorAll('.js-detail-btn')
-    // const receipt = document.querySelector('.div-receipt ')
-    // const removedetailBtn = document.querySelector('.close-btn')
-    // function showDetail() {
-    //     receipt.classList.add('open')
-    // }
-    // for(const detailBtn of detailBtns ){
-    //     detailBtn.addEventListener('click',showDetail)
-    // }
-    // removedetailBtn.addEventListener('click', function(){
-    //     receipt.classList.remove('open')
-    // })
+            if (data.length > 0) {
+                renderReceipt(data);
+                document.querySelector(".div-receipt").classList.add("open");
+            } else {
+                alert("Không có hóa đơn nào chứa sản phẩm này.");
+            }
+        })
+        .catch(error => console.error("❌ Lỗi khi tải hóa đơn:", error));
+}
+// Hiển thị thông tin hóa đơn
+function renderReceipt(data) {
+    let receiptContainer = document.querySelector(".receipt");
 
-    //     let detailButton = document.querySelector(".div-receipt");
-    //     let closeBtn = document.querySelector(".close-btn");
+    // Nhóm sản phẩm theo từng order_id
+    let ordersMap = {};
+    data.forEach(order => {
+        if (!ordersMap[order.order_id]) {
+            ordersMap[order.order_id] = {
+                orderInfo: order,
+                products: []
+            };
+        }
+        ordersMap[order.order_id].products.push(order);
+    });
 
-    //     tableBody.addEventListener("click", (event) => {
-    //         if (event.target.closest(".js-detail-btn")) {
-    //         // Thêm class để hiện
-    //              detailButton.classList.add("open");
-    //             }
-    //     });
+    let orderIds = Object.keys(ordersMap);
+    
+    let receiptsHTML = orderIds.map(orderId => {
+        let orderData = ordersMap[orderId];
+        let order = orderData.orderInfo;
+        let rows = orderData.products.map(product => `
+            <tr>
+                <td>${product.product_name}</td>
+                <td>${product.quantity}</td>
+                <td>${new Intl.NumberFormat('vi-VN').format(product.price * product.quantity)} đ</td>
+                <td>${product.note}</td>
+            </tr>
+        `).join("");
 
-    //     closeBtn.addEventListener("click", function () {
-    //     // Gỡ class để ẩn
-    //     detailButton.classList.remove("open");
-    // });
+        return `
+            <div class="receipt-box">
+                <p class="title-receipt">ID Receipt: <strong>#${order.order_id}</strong></p>
+
+                <div class="form-group">
+                    <label><strong>Customer name:</strong></label>
+                    <input type="text" value="${order.user_name}" readonly>
+                </div>
+                <div class="form-group">
+                    <label><strong>Phone number:</strong></label>
+                    <input type="text" value="${order.phone}" readonly>
+                </div>
+                <div class="form-group">
+                    <label><strong>Delivery address:</strong></label>
+                    <input type="text" id="shippingAddress" value=" ${order.shipping_street}, ${order.shipping_ward}, ${order.shipping_district}, ${order.shipping_city}" readonly>
+                </div>
+                <div class="form-group">
+                    <label><strong>Status:</strong></label>
+                    <input type="text" value="${order.status}" readonly>
+                </div>
+                <div class="form-group">
+                    <label><strong>Greeting message:</strong></label>
+                    <input type="text" value="${order.notes}" readonly>
+                </div>
+                <table class="table-detail">
+                    <thead>
+                        <tr>
+                            <th>Name product</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Note</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${rows}
+                        
+                        <tr>
+                            <td style="font-weight: bold; text-align: right;">Total:</td>
+                            <td colspan="3">${new Intl.NumberFormat('vi-VN').format(order.total_cost)} đ</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight: bold; text-align: right;">Payment method:</td>
+                            <td colspan="3">${order.payment_method}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }).join("");
+
+    // Thêm nút Cancel cố định bên ngoài các hóa đơn
+    receiptsHTML += `
+        <div class="close-btn fixed">
+            <button onclick="closeDetail()">Cancel<ion-icon name="close-outline"></ion-icon></button>
+        </div>
+    `;
+
+    receiptContainer.innerHTML = receiptsHTML;
+}
+
+
+
+// Đóng hóa đơn
+function closeDetail() {
+    document.querySelector(".div-receipt").classList.remove("open");
+}

@@ -96,7 +96,7 @@ td{
 .table-detail{
     border-collapse:collapse ;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 70px;
 }
 /* Nút thống kê */
 .div {
@@ -159,6 +159,25 @@ td{
     border-radius: 10px;
     font-size: 10px;
 }
+.close-btn.fixed {
+    position: sticky;
+    bottom: -22px;
+    width: 100%;
+    text-align: center;
+    background: white;
+    padding: 10px;
+    z-index: 1000;
+}
+.close-btn.fixed button {
+    background: rgb(221, 9, 9);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 tr .js-detail-btn{
     cursor: pointer;
     border: 2px solid #3f546f;
@@ -197,6 +216,18 @@ tr .js-detail-btn:hover{
     overflow: hidden;
     overflow-y: scroll;
 }
+.div-receipt .receipt::-webkit-scrollbar {
+    width: 5px;
+}
+
+.div-receipt .receipt::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.div-receipt .receipt::-webkit-scrollbar-thumb {
+    background: #e4b95b;
+    border-radius: 10px;
+}
 .table-receipt{
     display: flex;
     gap: 40px;
@@ -205,7 +236,7 @@ tr .js-detail-btn:hover{
 }
 .title-receipt{
     text-align: center;
-    color: #F6B1CE;
+    color: #030303;
     font-size: 25px;
     font-weight: 800;
 }
@@ -445,16 +476,4 @@ tr .js-detail-btn:hover{
 
 @media (max-width: 320px) {
     
-}
-::-webkit-scrollbar {
-    width: 1px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #e4b95b;
-    border-radius: 10px;
 }

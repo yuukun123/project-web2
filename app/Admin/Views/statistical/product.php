@@ -4,9 +4,9 @@
         
         <div class="to">
             <p>From:</p>
-            <input type="date" name="" id="fromDate">
+            <input type="date" name="fromDate" id="fromDate">
             <p>To</p>
-            <input type="date" name="" id="toDate">
+            <input type="date" name="toDate" id="toDate">
         </div>
     </div>
     <div class="div">
@@ -14,22 +14,21 @@
     </div>
 </form>
 
-<form id="form-product" action="../Controllers/statistical-process.php" method="post">
 <div class="div-receipt">
     <div class="receipt">
         <p class="title-receipt">Detail Receipt</p>
         <p class="id-receipt">ID Receipt: <strong> #ND002</strong></p>
         <div class="form-group">
             <label for="customer_name"><strong>Customer name:</strong> </label>
-            <input type="text" value="Võ Anh Hào" id="customer_name" readonly>
+            <input type="text" value="" id="customer_name" readonly>
         </div>
         <div class="form-group">
             <label for="phone_number"><strong>Phone number:</strong> </label>
-            <input type="text" value="0868137377" id="phone_number" readonly>
+            <input type="text" value="" id="phone_number" readonly>
         </div>
         <div class="form-group">
             <label for="address"><strong>Delivery address</strong></label>
-            <input type="text" value="100/9 Chiến Thắng, Phường 9, Quận Phú Nhuận, Tp.HCM" id="address" readonly>
+            <input type="text" value="" id="address" readonly>
         </div>
         <table class="table-detail">
             <thead>
@@ -65,6 +64,7 @@
     </div>
 </div>
 
+<form id="form-product" action="../Controllers/statistical-process.php" method="post">
 <div class="both-table">
 
 <p  class="main-title">TOP 10 BEST SELLER PRODUCT</p>

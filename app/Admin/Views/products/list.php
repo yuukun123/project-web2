@@ -1,3 +1,16 @@
+<?php
+include '../../config/data_connect.php'; // Đảm bảo đường dẫn đúng với tệp kết nối CSDL
+
+// Truy vấn dữ liệu sản phẩm
+$sql = "SELECT product_id, product_name, image, status, price, category_id FROM product";
+$result = $conn->query($sql);
+
+if (!$result) {
+    die("Lỗi truy vấn: " . $conn->error);
+}
+?>
+<link rel="stylesheet" href="assets/css/list-rpoduct.css">
+
 <div class="product-grid">
     <div class="product-head">ID</div>
     <div class="product-head">NAME</div>
@@ -8,20 +21,31 @@
     <div class="product-head">FUNCTION</div>
 
     <?php while ($row = $result->fetch_assoc()) { ?>
-        <div class="product-items"> <?php echo $row['id']; ?> </div>
-        <div class="product-items"> <?php echo $row['name']; ?> </div>
-        <div class="product-items"><img src="<?php echo $row['image']; ?>" width="100" height="90" alt=""></div>
+        <div class="product-items"> <?php echo $row['product_id']; ?> </div>
+        <div class="product-items"> <?php echo $row['product_name']; ?> </div>
+        <div class="product-items">
+            <?php 
+                $base_url = "/project-web2/"; // Thay đổi nếu cần
+                $image_path = $base_url . htmlspecialchars($row['image']);
+            ?>
+            <img src="<?php echo $image_path; ?>" width="90" height="90" alt="">
+        </div>
         <div class="product-items"><span class="in-stock"> <?php echo $row['status']; ?> </span></div>
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
-        <div class="product-items"> <?php echo $row['category']; ?> </div>
+        <div class="product-items"> <?php echo $row['category_id']; ?> </div>
         <div class="product-items">
-            <button class="edit-button" onclick="editProduct('<?php echo $row['id']; ?>')">Edit</button>
-            <button class="delete-button" onclick="deleteProduct('<?php echo $row['id']; ?>')">Delete</button>
+            <button class="edit-button" onclick="editProduct(
+                <?php echo $row['product_id']; ?>, 
+                '<?php echo addslashes($row['product_name']); ?>', 
+                '<?php echo $base_url . htmlspecialchars($row['image']); ?>', 
+                '<?php echo $row['status']; ?>', 
+                <?php echo $row['price']; ?>, 
+                '<?php echo addslashes($row['category_id']); ?>')"> Edit
+            </button>
+            <button class="delete-button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
         </div>
     <?php } ?>
 </div>
-
-    
 
 
 <!-- Edit Notification -->
@@ -33,7 +57,7 @@
         
         <label for="product_image">Product Image</label>
         <input type="file" id="product_image" name="product_image">
-        <img src="../../Img/Mousse/Avocado_Mousse.jpg" width="100" height="75" alt="Current Image">
+        <img id="current_product_image" src="" width="100" height="75" alt="Current Image" style="display:none;">
 
         <label for="product_status">Status</label>
         <select id="product_status" name="product_status">

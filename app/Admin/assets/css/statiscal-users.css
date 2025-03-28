@@ -1,6 +1,25 @@
+/* detail order */
+.detail{
+    display: flex;
+    justify-content: center;
+}
+.form-group{
+    display: flex;
+    flex-direction: column;
+}
+.form-group input{
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.table-detail{
+    border-collapse:collapse ;
+    width: 100%;
+    margin-bottom: 70px;
+}
 /* Home */
-
-
 .table-customer {
     width: 95%;
     margin-left: 30px;
@@ -65,11 +84,12 @@
 .sta-btn {
     border-radius: 4px;
     background-color: #28a745;
+    color: white;
     border: none;
     padding: 8px 10px;
     display: flex;
     align-items: center;
-
+    cursor: pointer;
 }
 
 .sta-btn:hover {
@@ -120,7 +140,38 @@
     overflow: auto; 
     max-height: 90vh; 
 }
+.div-receipt .receipt::-webkit-scrollbar {
+    width: 10px;
+}
 
+.div-receipt .receipt::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.div-receipt .receipt::-webkit-scrollbar-thumb {
+    background: #e4b95b;
+    border-radius: 10px;
+}
+.title-receipt {
+    text-align: center;
+    color: #030303;
+    font-size: 25px;
+    font-weight: 800;
+}
+th {
+    font-weight: bold;
+    background-color: #EF99B4;
+    padding: 10px;
+    text-align: left;
+    border: 0.5px solid #845c5c;
+    text-align: center;
+    color: #455265;
+}
+td {
+    border: 0.5px solid rgba(0, 0, 0, 0.403);
+    padding: 12px;
+    text-align: center;
+}
 .flex {
     display: flex;
     justify-content: space-between;
@@ -176,6 +227,16 @@
     background: rgb(196, 7, 7);
     cursor: pointer;
 }
+.close-btn.fixed {
+    position: sticky;
+    bottom: -22px;
+    width: 100%;
+    text-align: center;
+    background: white;
+    padding: 10px;
+    z-index: 1000;
+}
+
 .div-receipt.open{
     display: flex;
 }
@@ -371,16 +432,4 @@
 
 @media (max-width: 320px) {
     
-}
-::-webkit-scrollbar {
-    width: 1px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #e4b95b;
-    border-radius: 10px;
 }

@@ -6,12 +6,12 @@
     header("Content-Type: application/json");
     
     //truy vấn best-seller
-    $sql_bestseller = "SELECT o.delivery_date, p.product_name, od.quantity FROM order_detail as od 
+    $sql_bestseller = "SELECT o.delivery_date, p.product_name,p.product_id, od.quantity FROM order_detail as od 
             JOIN orders as o on o.order_id = od.order_id 
             JOIN product as p on od.product_id = p.product_id 
             ORDER BY `od`.`quantity` DESC LIMIT 10
             ";
-    $sql_unpopular ="SELECT o.delivery_date, p.product_name, od.quantity FROM order_detail as od 
+    $sql_unpopular ="SELECT o.delivery_date, p.product_name, od.quantity,p.product_id FROM order_detail as od 
                     JOIN orders as o on o.order_id = od.order_id 
                     JOIN product as p on od.product_id = p.product_id 
                     ORDER BY `od`.`quantity` ASC LIMIT 10";
