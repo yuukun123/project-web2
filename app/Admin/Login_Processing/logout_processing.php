@@ -5,18 +5,18 @@ include('../../config/data_connect.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    if (!isset($_SESSION['admin']) || !isset($_SESSION['admin']['user_id'])) {
+    if (!isset($_SESSION['admin']) || !isset($_SESSION['admin']['username'])) {
         // Chuyển hướng nếu chưa đăng nhập thay vì echo để tránh headers sent
         header("Location: ../index.php");
         exit();
     }
 
-    $admin_id = $_SESSION['admin']['user_id'];
+    $admin_id = $_SESSION['admin']['username'];
 
     // Nếu có remember_token thì xóa
     $check_column = $conn->query("SHOW COLUMNS FROM users LIKE 'remember_token'");
     if ($check_column && $check_column->num_rows > 0) {
-        $sql = "UPDATE users SET remember_token = NULL WHERE user_id = ?";
+        $sql = "UPDATE users SET remember_token = NULL WHERE user_name = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
             $stmt->bind_param("i", $admin_id);

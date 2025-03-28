@@ -60,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hashed_password)) {
             // **🔹 Cập nhật phần lưu session**
             $_SESSION['admin'] = [
-                'user_id'  => $row['user_id'],
                 'username' => $row['user_name'],
                 'role'     => $row['role']
             ];

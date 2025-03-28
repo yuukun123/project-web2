@@ -14,7 +14,7 @@ $sql_order = "SELECT o.order_id,
                     u.phone, 
                     CONCAT(u.street, ', ', u.ward, ', ', u.district, ', ', u.city) AS full_address
             FROM orders o
-            JOIN users u ON o.user_id = u.user_id
+            JOIN users u ON o.user_name = u.user_name
             WHERE o.order_id = ?";
 
 $stmt = $conn->prepare($sql_order);

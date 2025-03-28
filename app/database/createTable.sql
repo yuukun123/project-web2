@@ -1,24 +1,26 @@
--- Bảng users
+-- Bảng users (Cập nhật)
 CREATE TABLE users (
-    user_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_name VARCHAR(255) NOT NULL,
+    user_name VARCHAR(255) PRIMARY KEY,
+    first_name NVARCHAR(100) NOT NULL,
+    last_name NVARCHAR(100) NOT NULL,
     phone VARCHAR(20) UNIQUE,
     email VARCHAR(255) UNIQUE NOT NULL,
-    city VARCHAR(100) NOT NULL,      -- Thành phố / Tỉnh
-    district VARCHAR(100) NOT NULL,  -- Quận / Huyện
-    ward VARCHAR(100) NOT NULL,      -- Phường / Xã
-    street VARCHAR(255) NOT NULL,    -- Địa chỉ chi tiết (Số nhà, tên đường)
+    city VARCHAR(100) NOT NULL,
+    district VARCHAR(100) NOT NULL,
+    ward VARCHAR(100) NOT NULL,
+    street VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role ENUM('customer', 'admin') DEFAULT 'customer',
-    status ENUM('active', 'locked') DEFAULT 'active',  -- Thêm cột trạng thái
+    status ENUM('active', 'locked') DEFAULT 'active',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Bảng category
+-- Bảng category (Cập nhật)
 CREATE TABLE category (
     category_id INT PRIMARY KEY AUTO_INCREMENT,
-    category_name VARCHAR(255) UNIQUE NOT NULL
+    category_name VARCHAR(255) UNIQUE NOT NULL,
+    description TEXT DEFAULT NULL  -- Tạm thời để trống
 );
 
 -- Bảng size
@@ -27,7 +29,7 @@ CREATE TABLE size (
     size_name VARCHAR(50) UNIQUE NOT NULL
 );
 
--- Bảng product
+-- Bảng product (Cập nhật)
 CREATE TABLE product (
     product_id INT PRIMARY KEY AUTO_INCREMENT,
     product_name VARCHAR(255) NOT NULL,
@@ -35,13 +37,16 @@ CREATE TABLE product (
     category_id INT,
     size_id INT,
     status ENUM('Available', 'Out of Stock', 'Discontinued') DEFAULT 'Available',
-    description TEXT,
+    ingredients TEXT,  -- Thành phần bánh
+    expiration_date TEXT,  -- Hạn sử dụng
+    storage_instructions TEXT,  -- Cách bảo quản
     image VARCHAR(255),
     FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE SET NULL,
     FOREIGN KEY (size_id) REFERENCES size(size_id) ON DELETE SET NULL
 );
 
--- Bảng orders (có thêm payment_method và thông tin địa chỉ giao hàng)
+
+-- Bảng orders (Cập nhật)
 CREATE TABLE orders (
     order_id INT PRIMARY KEY AUTO_INCREMENT,
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -50,13 +55,15 @@ CREATE TABLE orders (
     total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
     status ENUM('Pending', 'Processing', 'Completed', 'Cancelled') DEFAULT 'Pending',
     payment_method ENUM('COD', 'Momo', 'Credit Card', 'VNPay') DEFAULT 'COD',
-    user_id INT NOT NULL,
+    user_name VARCHAR(255) NOT NULL,  -- Khóa ngoại thay vì user_id
+    recipient_name VARCHAR(255) NOT NULL,  -- Tên người nhận
+    recipient_phone VARCHAR(20) NOT NULL,  -- Số điện thoại người nhận
     notes TEXT,
     shipping_city VARCHAR(100) NOT NULL,
     shipping_district VARCHAR(100) NOT NULL,
     shipping_ward VARCHAR(100) NOT NULL,
     shipping_street VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+    FOREIGN KEY (user_name) REFERENCES users(user_name) ON DELETE CASCADE
 );
 
 -- Bảng order_detail (đã thêm cột note)
@@ -74,10 +81,10 @@ CREATE TABLE order_detail (
 -- Bảng cart
 CREATE TABLE cart (
     cart_id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
+    user_name VARCHAR(255) NOT NULL,
     product_id INT NOT NULL,
     quantity INT NOT NULL CHECK (quantity > 0),
     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (user_name) REFERENCES users(user_name) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE
 );

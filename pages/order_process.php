@@ -10,10 +10,8 @@ ini_set('display_errors', 1);
 // Kiểm tra đăng nhập
 if (
     !isset($_SESSION['user']) || 
-    !isset($_SESSION['user']['user_id']) || 
     !isset($_SESSION['user']['username']) || 
-    !isset($_SESSION['user']['role']) || 
-    !is_numeric($_SESSION['user']['user_id'])
+    !isset($_SESSION['user']['role'])
 ) {
     echo json_encode([
         "success" => false,
@@ -22,12 +20,13 @@ if (
     exit;
 }
 
-$user_id = (int) $_SESSION['user']['user_id'];
 $username = $_SESSION['user']['username'];
 $role = $_SESSION['user']['role'];
 $order_date = date('Y-m-d H:i:s');
 
 // Lấy dữ liệu từ form
+$fullname = mysqli_real_escape_string($conn, $_POST['full_name'] ?? '');
+$phone = mysqli_real_escape_string($conn, $_POST['phone'] ?? '');
 $shipping_city = mysqli_real_escape_string($conn, $_POST['shipping_city_name'] ?? '');
 $shipping_district = mysqli_real_escape_string($conn, $_POST['shipping_district_name'] ?? '');
 $shipping_ward = mysqli_real_escape_string($conn, $_POST['shipping_ward_name'] ?? '');
@@ -48,7 +47,7 @@ $cart_query = mysqli_query($conn, "
     SELECT c.*, p.price 
     FROM cart c 
     JOIN product p ON c.product_id = p.product_id 
-    WHERE c.user_id = '$user_id'
+    WHERE c.user_name = '$username'
 ") or die(json_encode(["success" => false, "message" => "Lỗi truy vấn giỏ hàng!"]));
 
 
@@ -70,8 +69,8 @@ if (empty($cart_items)) {
 }
 
 // Tạo đơn hàng
-$stmt = $conn->prepare("INSERT INTO orders (user_id, order_date, delivery_date, total_cost, payment_method, notes, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("issdssssss", $user_id, $order_date, $delivery_date, $total_cost, $payment_method, $note, $shipping_city, $shipping_district, $shipping_ward, $shipping_street);
+$stmt = $conn->prepare("INSERT INTO orders (user_name, recipient_name, recipient_phone, order_date, delivery_date, total_cost, payment_method, notes, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("sssssdssssss", $username, $fullname, $phone, $order_date, $delivery_date, $total_cost, $payment_method, $note, $shipping_city, $shipping_district, $shipping_ward, $shipping_street);
 
 if (!$stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Lỗi khi tạo đơn hàng: " . $stmt->error]);
@@ -98,8 +97,8 @@ foreach ($cart_items as $item) {
 }
 
 // Xóa giỏ hàng sau khi đặt hàng thành công
-$stmt = $conn->prepare("DELETE FROM cart WHERE user_id = ?");
-$stmt->bind_param("i", $user_id);
+$stmt = $conn->prepare("DELETE FROM cart WHERE user_name = ?");
+$stmt->bind_param("s", $username);
 $stmt->execute();
 $stmt->close();
 

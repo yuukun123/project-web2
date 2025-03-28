@@ -14,7 +14,6 @@ if (isset($_SESSION['admin']) && is_array($_SESSION['admin'])) {
     if ($_SESSION['admin']['role'] !== 'admin') {
         $response = [
             'loggedIn' => false,
-            'user_id' => null,
             'username' => null,
             'role' => null,
             'message' => 'Bạn không có quyền truy cập trang admin.'
@@ -26,7 +25,6 @@ if (isset($_SESSION['admin']) && is_array($_SESSION['admin'])) {
     // Nếu role hợp lệ, trả về thông tin phiên admin
     $response = [
         'loggedIn' => true,
-        'user_id' => $_SESSION['admin']['user_id'] ?? null,
         'username' => $_SESSION['admin']['username'] ?? null,
         'role' => $_SESSION['admin']['role'] ?? null
     ];
@@ -34,7 +32,6 @@ if (isset($_SESSION['admin']) && is_array($_SESSION['admin'])) {
     // Nếu không có session admin, trả về trạng thái chưa đăng nhập
     $response = [
         'loggedIn' => false,
-        'user_id' => null,
         'username' => null,
         'role' => null
     ];

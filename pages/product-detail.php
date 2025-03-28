@@ -45,12 +45,16 @@ if (!empty($product)) {
         <div class="content">
             <h1>' . $product['product_name'] . '</h1>
             <div class="describe">
-                <p>' . $product['description'] . '</p>
+                <p>' . $product['ingredients'] . '</p>
             </div>
+
+            <div class="date-use">Use: <span class="date-span">' .$product['expiration_date']. '</span> </div>
             <div class="buy-cake">
+
                 <div class="size-cake">
                     <p class="title-size">Size:</p>
-                    <button class="size">' . $product['size_name'] . '</button>
+                    <p class="size">' . $product['size_name'] . '</p>
+                    
                 </div>
                 <div class="border"></div>
                 <div class="size-descibe">

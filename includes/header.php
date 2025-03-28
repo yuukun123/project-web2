@@ -18,7 +18,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
                 <button type="submit" class="btnLogout-popup">Logout</button>
             </form>
         </div>
-    ';
+    ';                                                      
 }
 
 echo '

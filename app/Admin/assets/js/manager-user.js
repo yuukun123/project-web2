@@ -15,7 +15,6 @@ function findBestMatchByName(list, name) {
 async function showEditUserForm(user) {
     document.getElementById('modalTitle').innerText = "Edit User";
 
-    document.getElementById('user_id').value = user.user_id;
     document.getElementById('username').value = user.username;
     document.getElementById('email').value = user.email;
     document.getElementById('phone').value = user.phone;
@@ -74,8 +73,8 @@ async function showEditUserForm(user) {
 }
 
 
-async function editUser(userId) {
-    const response = await fetch(`../Api_php/get-user.php?id=${userId}`);
+async function editUser(username) {
+    const response = await fetch(`../Api_php/get-user.php?user_name=${username}`);
     const user = await response.json();
     showEditUserForm(user);
 }
@@ -266,19 +265,19 @@ function closeModal() {
     document.querySelectorAll('#userFormContainer input').forEach(input => input.value = '');
 }
 
-let pendingUserId = null;
+let pendingUserName = null;
 let pendingStatus = null;
 
-function toggleLockUser(userId, currentStatus) {
-    pendingUserId = userId;
+function toggleLockUser(username, currentStatus) {
+    pendingUserName = username;
     pendingStatus = currentStatus === 'locked';
     document.getElementById('confirmLockModal').style.display = 'flex';
 }
 
 document.getElementById('confirmLockBtn').addEventListener('click', () => {
-    if (pendingUserId !== null) {
+    if (pendingUserName !== null) {
         const formData = new FormData();
-        formData.append('id', pendingUserId);
+        formData.append('user_name', pendingUserName);
         formData.append('action', pendingStatus ? 'unlock' : 'lock');
 
         fetch('../Api_php/lock-user.php', { method: 'POST', body: formData })
@@ -294,7 +293,7 @@ document.getElementById('confirmLockBtn').addEventListener('click', () => {
 
 function closeConfirmModal() {
     document.getElementById('confirmLockModal').style.display = 'none';
-    pendingUserId = null;
+    pendingUserName = null;
     pendingStatus = null;
 }
 

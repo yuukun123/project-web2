@@ -9,6 +9,8 @@ $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = trim($_POST['username']);
+    $lastname = trim($_POST['lastname']);
+    $firstname = trim($_POST['firstname']);
     $phone = trim($_POST['phone']);
     $email = trim($_POST['email']);
     $street = trim($_POST['street']);
@@ -22,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $default_role = "customer"; // Vai trò mặc định
 
     // Kiểm tra thông tin đầu vào
-    if (empty($username) || empty($phone) || empty($email) || empty($street) || empty($city) || empty($district) || empty($ward) || empty($password) || empty($confirm_password)) {
+    if (empty($username) || empty($lastname) || empty($firstname) || empty($phone) || empty($email) || empty($street) || empty($city) || empty($district) || empty($ward) || empty($password) || empty($confirm_password)) {
         $errors[] = "Vui lòng điền đầy đủ thông tin.";
     }
 
@@ -45,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Kiểm tra tài khoản đã tồn tại chưa
-    $stmt = $conn->prepare("SELECT user_id FROM users WHERE user_name = ? OR email = ? OR phone = ?");
+    $stmt = $conn->prepare("SELECT user_name FROM users WHERE user_name = ? OR email = ? OR phone = ?");
     $stmt->bind_param("sss", $username, $email, $phone);
     $stmt->execute();
     $stmt->store_result();
@@ -58,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Nếu không có lỗi, thêm vào database
     if (empty($errors)) {
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-        $stmt = $conn->prepare("INSERT INTO users (user_name, phone, email, street, ward, district, city, role, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $username, $phone, $email, $street, $ward, $district, $city, $default_role, $hashed_password);        
+        $stmt = $conn->prepare("INSERT INTO users (user_name, last_name, first_name, phone, email, street, ward, district, city, role, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssssssss" , $username, $lastname, $firstname, $phone, $email, $street, $ward, $district, $city, $default_role, $hashed_password);        
 
         if ($stmt->execute()) {
             $stmt->close();

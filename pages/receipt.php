@@ -2,10 +2,10 @@
 // session_start();
 include "app/config/data_connect.php"; 
 
-$loggedIn = isset($_SESSION['user']) && isset($_SESSION['user']['user_id']) && is_numeric($_SESSION['user']['user_id']);
+$loggedIn = isset($_SESSION['user']) && isset($_SESSION['user']['username']);
 
 if ($loggedIn) {
-    $user_id = (int) $_SESSION['user']['user_id'];
+    $user_name = $_SESSION['user']['username'];
 
     $sql = "SELECT o.order_id, 
                 DATE_FORMAT(o.order_date, '%Y-%m-%d %H:%i') AS order_date, 
@@ -13,11 +13,11 @@ if ($loggedIn) {
                 o.status, 
                 (SELECT SUM(od.quantity) FROM order_detail od WHERE od.order_id = o.order_id) AS quantity 
             FROM orders o 
-            WHERE o.user_id = ? 
+            WHERE o.user_name = ? 
             ORDER BY o.order_date DESC";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("s", $user_name);
     $stmt->execute();
     $result = $stmt->get_result();
 } 

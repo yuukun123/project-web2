@@ -1,6 +1,0 @@
-Array
-(
-    [user_id] => 1
-    [username] => NguyenVanA
-    [test] => Session hoạt động!
-)

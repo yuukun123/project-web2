@@ -58,6 +58,19 @@
     background: #e4b95b;
     border-radius: 10px;
 }
+
+.date-use{
+    font-size: 20px;
+    margin-top: 25px;
+    color: #d5909f;
+    font-weight: bolder;
+}
+
+.date-span{
+    color: red;
+    font-size: 20px;
+}
+
 .size-cake{
     display: flex;
     column-gap: 10px;

@@ -11,11 +11,11 @@ if ($result->num_rows > 0): ?>
     <table id="userTable">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Username</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
                 <th>Email</th>
                 <th>Phone</th>
-                <th class="hide1">Password</th>
                 <th class="hide2">Address</th>
                 <th>Role</th>
                 <th>Actions</th>
@@ -23,7 +23,9 @@ if ($result->num_rows > 0): ?>
         </thead>
         <tbody>
             <?php while($row = $result->fetch_assoc()):
-                $user_id = (int)$row['user_id'];
+                $user_name = $row['user_name'];
+                $lastname = $row['last_name'];
+                $firstname = $row['first_name'];
                 $statusText = ($row['status'] === 'locked') ? 'Locked' : 'Active';
                 $toggleAction = ($row['status'] === 'locked') ? 'Unlock' : 'Lock';
                 // Đặt icon phù hợp với trạng thái
@@ -31,12 +33,12 @@ if ($result->num_rows > 0): ?>
                 // Kiểm tra nếu role là admin
                 $isAdmin = ($row['role'] === 'admin');
             ?>
-                <tr id="<?php echo $user_id; ?>">
-                    <td><?php echo ltrim($row['user_id'], "0"); ?></td>
+                <tr user_name="<?php echo $user_name; ?>">
                     <td><?php echo htmlspecialchars($row['user_name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['first_name']); ?></td>
+                    <td><?php echo htmlspecialchars($row['last_name']); ?></td>
                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                     <td><?php echo htmlspecialchars($row['phone']); ?></td>
-                    <td class="hide1"><?php echo htmlspecialchars($row['password']); ?></td>
                     <td class="hide2">
                         <?php echo htmlspecialchars($row['street'] . ', ' . $row['ward'] . ', ' . $row['district'] . ', ' . $row['city']); ?>
                     </td>
@@ -44,10 +46,11 @@ if ($result->num_rows > 0): ?>
 
                     <td>
                         <button class="button lock <?php echo $isAdmin ? 'disabled' : ''; ?>" 
-                                onclick="<?php echo $isAdmin ? '' : 'toggleLockUser(' . $user_id . ', \'' . $row['status'] . '\')'; ?>">
+                                onclick="<?php echo $isAdmin ? '' : 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')'; ?>">
                             <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
                         </button>
-                        <button class="button edit" onclick="editUser('<?php echo $user_id; ?>')">
+
+                        <button class="button edit" onclick="editUser('<?php echo $user_name; ?>')">
                             <ion-icon name="create-outline" style="color: black;"></ion-icon>
                         </button>
                     </td>

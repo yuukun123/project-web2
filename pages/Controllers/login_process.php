@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = trim($_POST['password']);
 
     // Truy vấn người dùng từ database (lấy thêm status)
-    $sql = "SELECT user_id, user_name, password, role, status FROM users WHERE user_name = ?";
+    $sql = "SELECT user_name, password, role, status FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -38,13 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($password === $db_password) {
                 // Hash lại mật khẩu và lưu
                 $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-                $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
-                $update_stmt->bind_param("si", $hashed_password, $user['user_id']);
+                $update_stmt = $conn->prepare("UPDATE users SET password = ? WHERE user_name = ?");
+                $update_stmt->bind_param("ss", $hashed_password, $user['user_name']);
                 $update_stmt->execute();
                 $update_stmt->close();
 
                 $_SESSION['user'] = [
-                    'user_id' => $user['user_id'],
                     'username' => $user['user_name'],
                     'role' => $user['role']
                 ];
@@ -59,7 +58,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Mật khẩu đã hash
         elseif (password_verify($password, $db_password)) {
             $_SESSION['user'] = [
-                'user_id' => $user['user_id'],
                 'username' => $user['user_name'],
                 'role' => $user['role']
             ];

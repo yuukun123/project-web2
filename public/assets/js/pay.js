@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const wardSelect = document.getElementById("registerWard");
     const streetInput = document.getElementById("registerStreet");
 
+    const receiverName = document.getElementById("full_name");
+    const receiverPhone = document.getElementById("phone");
+
     const autoFillRadio = document.getElementById("autoFill");
     const otherRadio = document.getElementById("sendOther");
 
@@ -34,12 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
             districtSelect.classList.remove('select-disabled');
             wardSelect.classList.remove('select-disabled');
             streetInput.classList.remove('readonly-input');
+
+            receiverName.value = '';
+            receiverPhone.value = '';
             streetInput.value = '';
     
             // Reset option
             citySelect.innerHTML = "<option value=''>Select City</option>";
             districtSelect.innerHTML = "<option value=''>Select District</option>";
             wardSelect.innerHTML = "<option value=''>Select Ward</option>";
+
+            
     
             // Load city data
             fetch("https://provinces.open-api.vn/api/p/")

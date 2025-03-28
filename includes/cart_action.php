@@ -10,10 +10,9 @@ ini_set('display_errors', 1);
 // Kiểm tra đăng nhập
 if (
     !isset($_SESSION['user']) || 
-    !isset($_SESSION['user']['user_id']) || 
     !isset($_SESSION['user']['username']) || 
-    !isset($_SESSION['user']['role']) || 
-    !is_numeric($_SESSION['user']['user_id'])
+    !isset($_SESSION['user']['role'])
+    
 ) {
     echo json_encode([
         "success" => false,
@@ -22,7 +21,6 @@ if (
     exit;
 }
 
-$user_id = (int) $_SESSION['user']['user_id']; // Ép kiểu để đảm bảo an toàn
 $username = $_SESSION['user']['username'];
 $role = $_SESSION['user']['role'];
 
@@ -31,17 +29,17 @@ $action = $data['action'] ?? '';
 
 switch ($action) {
     case "update":
-        updateQuantity($conn, $user_id, $data);
+        updateQuantity($conn, $username, $data);
         break;
     case "remove":
-        removeItem($conn, $user_id, $data);
+        removeItem($conn, $username, $data);
         break;
     case "add":
-        addToCart($conn, $user_id, $data);
+        addToCart($conn, $username, $data);
         break;
     default:
         if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["cart_count"])) {
-            getCartCount($conn, $user_id);
+            getCartCount($conn, $username);
         } else {
             echo json_encode(["success" => false, "message" => "Hành động không hợp lệ"]);
         }
@@ -49,28 +47,28 @@ switch ($action) {
 }
 
 /* 🛒 Thêm sản phẩm vào giỏ hàng */
-function addToCart($conn, $user_id, $data) {
+function addToCart($conn, $username, $data) {
     $product_id = $data['product_id'] ?? 0;
     if (!$product_id) {
         echo json_encode(["success" => false, "message" => "Thiếu product_id"]);
         exit;
     }
 
-    $sql_check = "SELECT quantity FROM cart WHERE user_id = ? AND product_id = ?";
+    $sql_check = "SELECT quantity FROM cart WHERE user_name = ? AND product_id = ?";
     $stmt_check = $conn->prepare($sql_check);
-    $stmt_check->bind_param("ii", $user_id, $product_id);
+    $stmt_check->bind_param("si", $username, $product_id);
     $stmt_check->execute();
     $result = $stmt_check->get_result();
 
     if ($result->num_rows > 0) {
-        $sql_update = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = ? AND product_id = ?";
+        $sql_update = "UPDATE cart SET quantity = quantity + 1 WHERE user_name = ? AND product_id = ?";
         $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("ii", $user_id, $product_id);
+        $stmt_update->bind_param("si", $username, $product_id);
         $stmt_update->execute();
     } else {
-        $sql_insert = "INSERT INTO cart (user_id, product_id, quantity) VALUES (?, ?, 1)";
+        $sql_insert = "INSERT INTO cart (user_name, product_id, quantity) VALUES (?, ?, 1)";
         $stmt_insert = $conn->prepare($sql_insert);
-        $stmt_insert->bind_param("ii", $user_id, $product_id);
+        $stmt_insert->bind_param("si", $username, $product_id);
         $stmt_insert->execute();
     }
 
@@ -78,7 +76,7 @@ function addToCart($conn, $user_id, $data) {
 }
 
 /* 🔄 Cập nhật số lượng sản phẩm */
-function updateQuantity($conn, $user_id, $data) {
+function updateQuantity($conn, $username, $data) {
     $product_id = $data['product_id'] ?? 0;
     $new_quantity = $data['quantity'] ?? 1;
 
@@ -87,16 +85,16 @@ function updateQuantity($conn, $user_id, $data) {
         exit;
     }
 
-    $sql = "UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?";
+    $sql = "UPDATE cart SET quantity = ? WHERE user_name = ? AND product_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $new_quantity, $user_id, $product_id);
+    $stmt->bind_param("iii", $new_quantity, $username, $product_id);
     $stmt->execute();
 
     echo json_encode(["success" => true, "message" => "Cập nhật số lượng thành công"]);
 }
 
 /* ❌ Xóa sản phẩm khỏi giỏ hàng */
-function removeItem($conn, $user_id, $data) {
+function removeItem($conn, $username, $data) {
     $product_id = $data['product_id'] ?? 0;
 
     if (!$product_id) {
@@ -104,19 +102,19 @@ function removeItem($conn, $user_id, $data) {
         exit;
     }
 
-    $sql = "DELETE FROM cart WHERE user_id = ? AND product_id = ?";
+    $sql = "DELETE FROM cart WHERE user_name = ? AND product_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ii", $user_id, $product_id);
+    $stmt->bind_param("si", $username, $product_id);
     $stmt->execute();
 
     echo json_encode(["success" => true, "message" => "Sản phẩm đã được xóa"]);
 }
 
 /* 🛍️ Lấy số lượng sản phẩm trong giỏ hàng */
-function getCartCount($conn, $user_id) {
-    $sql = "SELECT SUM(quantity) AS total FROM cart WHERE user_id = ?";
+function getCartCount($conn, $username) {
+    $sql = "SELECT SUM(quantity) AS total FROM cart WHERE user_name = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $user_id);
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();

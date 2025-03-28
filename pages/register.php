@@ -29,6 +29,22 @@ if (!isset($showRegister)) {
 
                     <div class="input-box">
                         <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <input id="registerFullname" type="text" name="lastname" required>
+                        <label>Last name</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="person-outline"></ion-icon>
+                        </span>
+                        <input id="registerFirstname" type="text" name="firstname" required>
+                        <label>First name</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="icon">
                             <ion-icon name="mail-outline"></ion-icon>
                         </span>
                         <input id="registerEmail" type="email" name="email" required>
@@ -43,21 +59,6 @@ if (!isset($showRegister)) {
                         <label>Phone number</label>
                     </div>
 
-                    <div class="input-box">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <input id="registerPassword" type="password" name="password" required>
-                        <label>Password</label>
-                    </div>
-
-                    <div class="input-box">
-                        <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
-                        </span>
-                        <input id="registerConfirmPassword" type="password" name="confirm_password" required>
-                        <label>Confirm Password</label>
-                    </div>
                 </div>
 
                 <div class="right-input">
@@ -99,6 +100,21 @@ if (!isset($showRegister)) {
                         <!-- <label>Ward</label> -->
                     </div>
 
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <input id="registerPassword" type="password" name="password" required>
+                        <label>Password</label>
+                    </div>
+
+                    <div class="input-box">
+                        <span class="icon">
+                            <ion-icon name="lock-closed-outline"></ion-icon>
+                        </span>
+                        <input id="registerConfirmPassword" type="password" name="confirm_password" required>
+                        <label>Confirm Password</label>
+                    </div>
 
                 </div>
 

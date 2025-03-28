@@ -6,11 +6,11 @@ header('Content-Type: application/json');
 include('../app/config/data_connect.php');
 
 if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
-    $user_id = $_SESSION['user']['user_id'] ?? null;
-    if ($user_id) {
+    $user_name = $_SESSION['user']['user_name'] ?? null;
+    if ($user_name) {
         // Kiểm tra trạng thái của tài khoản từ cơ sở dữ liệu
-        $stmt = $conn->prepare("SELECT status FROM users WHERE user_id = ?");
-        $stmt->bind_param("i", $user_id);
+        $stmt = $conn->prepare("SELECT status FROM users WHERE user_name = ?");
+        $stmt->bind_param("i", $user_name);
         $stmt->execute();
         $result = $stmt->get_result();
         $userData = $result->fetch_assoc();
@@ -29,7 +29,6 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
 
             $response = [
                 'loggedIn' => false,
-                'user_id' => null,
                 'username' => null,
                 'role' => null,
                 'message' => 'Tài khoản của bạn đã bị khóa.'
@@ -42,14 +41,12 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
     // Nếu không bị khóa, trả về thông tin session hiện tại
     $response = [
         'loggedIn' => true,
-        'user_id' => $_SESSION['user']['user_id'] ?? null,
         'username' => $_SESSION['user']['username'] ?? null,
         'role' => $_SESSION['user']['role'] ?? null
     ];
 } else {
     $response = [
         'loggedIn' => false,
-        'user_id' => null,
         'username' => null,
         'role' => null
     ];

@@ -12,22 +12,16 @@ if (!isset($conn)) {
     include_once "../app/config/data_connect.php";
 }
 
-// Kiểm tra đăng nhập dựa trên cấu trúc session mới
-// if (!isset($_SESSION['user']) || !isset($_SESSION['user']['user_id'])) {
-//     echo json_encode(["success" => false, "message" => "Vui lòng đăng nhập để xem giỏ hàng."]);
-//     exit;
-// }
-
-$user_id = (int) $_SESSION['user']['user_id']; // Ép kiểu đảm bảo an toàn
+$user_name = $_SESSION['user']['username']; // Ép kiểu đảm bảo an toàn
 
 // Lấy danh sách sản phẩm trong giỏ hàng
 $sql = "SELECT cart.product_id, product.product_name, product.price, product.image, cart.quantity
         FROM cart
         INNER JOIN product ON cart.product_id = product.product_id
-        WHERE cart.user_id = ?";
+        WHERE cart.user_name = ?";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("s", $user_name);
 $stmt->execute();
 $result = $stmt->get_result();
 

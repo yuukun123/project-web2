@@ -8,11 +8,11 @@ include_once 'app/config/data_connect.php'; // Kết nối database
 
 // Nếu người dùng đã đăng nhập, kiểm tra trạng thái tài khoản
 if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
-    $user_id = $_SESSION['user']['user_id'] ?? null;
-    if ($user_id) {
-        $stmt = $conn->prepare("SELECT status FROM users WHERE user_id = ?");
+    $user_name = $_SESSION['user']['user_name'] ?? null;
+    if ($user_name) {
+        $stmt = $conn->prepare("SELECT status FROM users WHERE user_name = ?");
         if ($stmt) {
-            $stmt->bind_param("i", $user_id);
+            $stmt->bind_param("i", $user_name);
             $stmt->execute();
             $result = $stmt->get_result();
             $userData = $result->fetch_assoc();
@@ -35,11 +35,9 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
 
 // Nếu chưa đăng nhập, hoặc sau khi kiểm tra thì lấy thông tin session (dành cho hiển thị thông tin)
 if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
-    $user_id = $_SESSION['user']['user_id'] ?? 'Chưa đăng nhập';
     $username = $_SESSION['user']['username'] ?? 'Chưa đăng nhập';
     $role = $_SESSION['user']['role'] ?? 'Chưa đăng nhập';
 } else {
-    $user_id = "Không có dữ liệu";
     $username = "Không có dữ liệu";
     $role = "Không có dữ liệu";
 }
@@ -83,12 +81,12 @@ $page = $_GET['pages'];
     }
     ?>
 
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <link rel="icon" href="<?php echo 'public/assets/Img/Sweets1.png'; ?>" type="image/x-icon" />

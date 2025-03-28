@@ -8,10 +8,8 @@ ini_set('display_errors', 1);
 // Kiểm tra đăng nhập
 if (
     !isset($_SESSION['user']) || 
-    !isset($_SESSION['user']['user_id']) || 
     !isset($_SESSION['user']['username']) || 
-    !isset($_SESSION['user']['role']) || 
-    !is_numeric($_SESSION['user']['user_id'])
+    !isset($_SESSION['user']['role'])
 ) {
     echo json_encode([
         "success" => false,
@@ -20,15 +18,15 @@ if (
     exit;
 }
 
-$user_id = (int) $_SESSION['user']['user_id'];
+
 $username = $_SESSION['user']['username'];
 $role = $_SESSION['user']['role'];
 
-$user_query = mysqli_query($conn, "SELECT * FROM users WHERE user_id = '$user_id'");
+$user_query = mysqli_query($conn, "SELECT * FROM users WHERE user_name = '$username'");
 $user = mysqli_fetch_assoc($user_query);
 
 // Lấy thông tin cart (chỉnh sửa cho đúng cột size_id trong product)
-$cart_query = mysqli_query($conn, "SELECT c.*, p.product_name, p.price, p.image, s.size_name FROM cart c JOIN product p ON c.product_id = p.product_id JOIN size s ON p.size_id = s.size_id WHERE c.user_id = '$user_id'");
+$cart_query = mysqli_query($conn, "SELECT c.*, p.product_name, p.price, p.image, s.size_name FROM cart c JOIN product p ON c.product_id = p.product_id JOIN size s ON p.size_id = s.size_id WHERE c.user_name = '$username'");
 if (!$cart_query) {
     die("Lỗi truy vấn: " . mysqli_error($conn));
 }
@@ -43,7 +41,8 @@ $total_cost = 0;
             <form id="payment-form" >
                 <div class="name">
                     <label for="full_name">Full name <span style="color: red;">(*)</span></label>
-                    <input type="text" id="full_name" name="full_name" value="<?= $user['user_name'] ?>">
+                    <input type="text" id="full_name" name="full_name" value="<?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>">
+
                 </div>
                 <div class="phone">
                     <label for="phone">Phone <span style="color: red;">(*)</span></label>

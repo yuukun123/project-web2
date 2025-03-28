@@ -49,6 +49,6 @@ echo '
 </div>
 
 <button id="backToTop" onclick="scrollToTop()">
-    <ion-icon name="arrow-up-outline"></ion-icon>
+    <ion-icon name="chevron-up-outline"></ion-icon>
 </button>';
 ?>
