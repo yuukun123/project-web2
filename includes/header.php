@@ -69,12 +69,14 @@ echo '
     </div>
 
     <div class="mobile-menu-off">
-        <a href="../index.html">HOME</a>
-        <a href="../Home/searchpro.html">SEARCH</a>
-        <a href="../Home/receipt.html">RECEIPT</a>
-        <a href="#">
+        <a href="home">HOME</a>
+        <a href="about">ABOUT</a>
+        <a href="receipt">RECEIPT</a>
+
+        <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
-        </a>
+        </button>
+        <span class="cart-count cart-count-mobile"></span>
 
         <div class="btn-log">
             ' . $authButtons . '

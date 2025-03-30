@@ -513,9 +513,14 @@ header.hide {
     margin-top: 25px;
 }
 
-.btn-log{
+/* .btn-log{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+} */
+
+.user-menu{
+    display: flex;
+    gap: 20px;
 }
 
 .mobile-menu-off .sp-cart{
@@ -789,6 +794,12 @@ header.hide {
     text-decoration: none;
     color: white;
 }
+
+.pay-btn-link.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 
 @keyframes fadeIn {
     from {

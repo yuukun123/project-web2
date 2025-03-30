@@ -87,7 +87,7 @@ function updateQuantity($conn, $username, $data) {
 
     $sql = "UPDATE cart SET quantity = ? WHERE user_name = ? AND product_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $new_quantity, $username, $product_id);
+    $stmt->bind_param("isi", $new_quantity, $username, $product_id);
     $stmt->execute();
 
     echo json_encode(["success" => true, "message" => "Cập nhật số lượng thành công"]);
