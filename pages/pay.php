@@ -111,8 +111,16 @@ $total_cost = 0;
                 </div>
 
 
-                <div id="credit-card-fields" class="credit-details active">
-                    
+                <div id="Momo-fields" class="credit-details active">
+                    <p>Card Number: 1234567890</p>
+                    <p>Name: Vo Anh Hao</p>
+                    <p style="color: red">Staff will call you to confirm your order after payment.</p>
+                </div>
+
+                <div id="VNPay-fields" class="credit-details">
+                    <p>Card Number: 1234567890</p>
+                    <p>Name: Vo Anh Hao</p>
+                    <p style="color: red">Staff will call you to confirm your order after payment.</p>
                 </div>
 
                 <div class="my-order">

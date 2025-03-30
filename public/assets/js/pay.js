@@ -100,22 +100,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // const creditCardFields = document.getElementById('credit-card-fields');
-    // const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    // hiện thông tin thanh toán
+    const Momo = document.getElementById('Momo-fields');
+    const VNPay = document.getElementById('VNPay-fields');
+    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     
-    // paymentMethods.forEach(method => {
-    //     method.addEventListener('change', function() {
-    //         if (this.value === 'Credit Card') {
-    //             creditCardFields.classList.add('show');
-    //         } else {
-    //             creditCardFields.classList.remove('show');
-    //         }
-    //     });
-    // });
+    paymentMethods.forEach(method => {
+        method.addEventListener('change', function() {
+            // Ẩn tất cả các phương thức thanh toán trước
+            Momo.classList.remove('show');
+            VNPay.classList.remove('show');
     
-    // window.addEventListener('load', () => {
-    //     creditCardFields.classList.remove('show');
-    // });
+            // Hiển thị phương thức thanh toán được chọn
+            if (this.value === 'Momo') {
+                Momo.classList.add('show');
+            } else if (this.value === 'VNPay') {
+                VNPay.classList.add('show');
+            }
+        });
+    });
+    
+    // Ẩn tất cả các phương thức thanh toán khi tải trang
+    window.addEventListener('load', () => {
+        Momo.classList.remove('show');
+        VNPay.classList.remove('show');
+    });
+    
     
     
 
