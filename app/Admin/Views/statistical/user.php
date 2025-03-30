@@ -3,7 +3,7 @@
         
         <div class="to">
             <p>Find User: </p>
-            <input id="searchUser" placeholder="Name,ID.." type="text">
+            <input id="searchUser" placeholder="User name" type="text">
         </div>
     </div>
     <div class="div">

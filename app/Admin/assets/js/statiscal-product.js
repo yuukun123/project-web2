@@ -112,6 +112,8 @@ function showDetail(productId) {
 function renderReceipt(data) {
     let receiptContainer = document.querySelector(".receipt");
 
+    console.log("📦 Dữ liệu hóa đơn nhận được:", data); // ✅ Debug 1: Xem dữ liệu đầu vào
+
     // Nhóm sản phẩm theo từng order_id
     let ordersMap = {};
     data.forEach(order => {
@@ -124,17 +126,23 @@ function renderReceipt(data) {
         ordersMap[order.order_id].products.push(order);
     });
 
+    console.log("📊 Nhóm hóa đơn theo order_id:", ordersMap); // ✅ Debug 2: Kiểm tra dữ liệu nhóm
+
     let orderIds = Object.keys(ordersMap);
     
     let receiptsHTML = orderIds.map(orderId => {
         let orderData = ordersMap[orderId];
         let order = orderData.orderInfo;
-        let rows = orderData.products.map(product => `
+
+        console.log(`📝 Hóa đơn ID: ${order.order_id} có ${orderData.products.length} sản phẩm`, orderData.products); // ✅ Debug 3: Xác nhận số lượng sản phẩm trong hóa đơn
+
+        // ✅ Lấy tất cả sản phẩm của hóa đơn này
+        let rows = orderData.products.map(product => `  
             <tr>
                 <td>${product.product_name}</td>
                 <td>${product.quantity}</td>
                 <td>${new Intl.NumberFormat('vi-VN').format(product.price * product.quantity)} đ</td>
-                <td>${product.note}</td>
+                <td>${product.note || "Không có"}</td>
             </tr>
         `).join("");
 
@@ -152,7 +160,7 @@ function renderReceipt(data) {
                 </div>
                 <div class="form-group">
                     <label><strong>Delivery address:</strong></label>
-                    <input type="text" id="shippingAddress" value=" ${order.shipping_street}, ${order.shipping_ward}, ${order.shipping_district}, ${order.shipping_city}" readonly>
+                    <input type="text" value="${order.shipping_street}, ${order.shipping_ward}, ${order.shipping_district}, ${order.shipping_city}" readonly>
                 </div>
                 <div class="form-group">
                     <label><strong>Status:</strong></label>
@@ -160,8 +168,9 @@ function renderReceipt(data) {
                 </div>
                 <div class="form-group">
                     <label><strong>Greeting message:</strong></label>
-                    <input type="text" value="${order.notes}" readonly>
+                    <input type="text" value="${order.notes || "Không có"}" readonly>
                 </div>
+
                 <table class="table-detail">
                     <thead>
                         <tr>
@@ -172,8 +181,7 @@ function renderReceipt(data) {
                         </tr>
                     </thead>
                     <tbody>
-                        ${rows}
-                        
+                        ${rows}  
                         <tr>
                             <td style="font-weight: bold; text-align: right;">Total:</td>
                             <td colspan="3">${new Intl.NumberFormat('vi-VN').format(order.total_cost)} đ</td>
@@ -194,6 +202,8 @@ function renderReceipt(data) {
             <button onclick="closeDetail()">Cancel<ion-icon name="close-outline"></ion-icon></button>
         </div>
     `;
+
+    console.log("📜 HTML hóa đơn được tạo:", receiptsHTML); // ✅ Debug 4: Xem HTML trước khi gán vào DOM
 
     receiptContainer.innerHTML = receiptsHTML;
 }

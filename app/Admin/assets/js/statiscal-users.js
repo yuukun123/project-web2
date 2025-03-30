@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', function() {
         let detailBtn = event.target.closest(".js-function-detail");
         if (detailBtn) {
             event.preventDefault();
-            let userId = detailBtn.getAttribute("data-id");
-            console.log("📝 Lấy chi tiết hóa đơn của user ID:", userId);
-            if (userId) {
-                showDetail(userId);
+            let userName = detailBtn.getAttribute("data-name");
+            console.log("📝 Lấy chi tiết hóa đơn của user ID:", userName);
+            if (userName) {
+                showDetail(userName);
             } else {
-                console.warn("⚠ Không có user_id hợp lệ");
+                console.warn("⚠ Không có user_name hợp lệ");
             }
         }
     });
@@ -40,6 +40,7 @@ function search() {
     const searchValue = searchBox.value.trim();
     if (!searchValue) {
         alert("⚠️ Please enter keyword search!");
+        loadInitialData();
         return;
     }
 
@@ -89,7 +90,7 @@ function renderUser(data) {
                 <td>${user.total_order}</td>
                 <td>${user.total_spending}</td>
                 <td>
-                    <button class="js-function-detail" data-id="${user.user_id || ""}"><ion-icon name="receipt-outline"></ion-icon></button>
+                    <button class="js-function-detail" data-name="${user.user_name || ""}"><ion-icon name="receipt-outline"></ion-icon></button>
                 </td>
             </tr>
         `;
@@ -98,9 +99,9 @@ function renderUser(data) {
     tableBody.innerHTML = rows;
 }
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
-function showDetail(userId) {
-    console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", userId);
-    fetch(`../../Admin/Controllers/detail-statistical-user.php?user_id=${userId}`)
+function showDetail(userName) {
+    console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", userName);
+    fetch(`../../Admin/Controllers/detail-statistical-user.php?user_name=${userName}`)
         .then(response => response.json())
         .then(data => {
             console.log("📦 Dữ liệu hóa đơn nhận được:", data);

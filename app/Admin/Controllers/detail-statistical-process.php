@@ -13,13 +13,21 @@ $product_id = $_GET['product_id'];
 // Lấy danh sách hóa đơn chứa sản phẩm
 $query = "
     SELECT o.order_id, o.total_cost, o.payment_method, 
-           c.user_id, c.user_name, c.phone, c.street, c.ward, c.district, c.city,
-           p.product_name, od.quantity, o.status, od.price, o.shipping_street, o.shipping_ward, o.shipping_district, o.shipping_city,o.notes,od.note
-    FROM orders AS o
-    JOIN users AS c ON o.user_id = c.user_id
-    JOIN order_detail AS od ON o.order_id = od.order_id
-    JOIN product AS p ON od.product_id = p.product_id
-    WHERE p.product_id = ? 
+       c.user_name, c.phone, c.street, c.ward, c.district, c.city,
+       p.product_name, od.quantity, o.status, od.price, 
+       o.shipping_street, o.shipping_ward, o.shipping_district, o.shipping_city, 
+       o.notes, od.note
+FROM orders AS o
+JOIN users AS c ON o.user_name = c.user_name
+JOIN order_detail AS od ON o.order_id = od.order_id
+JOIN product AS p ON od.product_id = p.product_id
+WHERE o.order_id IN (
+    SELECT DISTINCT od2.order_id 
+    FROM order_detail AS od2
+    WHERE od2.product_id = ?
+)
+ORDER BY o.order_id DESC;
+
 ";
 
 $stmt = $conn->prepare($query);
