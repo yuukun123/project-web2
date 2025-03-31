@@ -43,7 +43,7 @@ $sql = "SELECT o.order_id, u.user_name, o.order_date, o.delivery_date, o.deliver
                o.total_cost, o.status, o.payment_method, 
                CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) AS full_address
         FROM orders o
-        LEFT JOIN users u ON o.user_id = u.user_id
+        LEFT JOIN users u ON o.user_name = u.user_name
         WHERE 1=1";
 
 if (!empty($statusFilter)) {
@@ -151,7 +151,7 @@ $result = $conn->query($sql);
 <!-- Phan trang  -->
 <div class="pagination">
     <?php if ($page > 1): ?>
-        <a href="?search=<?= urlencode($search); ?>&status=<?= urlencode($statusFilter); ?>&location=<?= urlencode($locationFilter); ?>&from_date=<?= urlencode($fromDate); ?>&to_date=<?= urlencode($toDate); ?>&page=<?= $page - 1; ?>" class="btn">Previous</a>
+        <a href="?search=<?= urlencode($search); ?>&status=<?= urlencode($statusFilter); ?>&location=<?= urlencode($locationFilter); ?>&from_date=<?= urlencode($fromDate); ?>&to_date=<?= urlencode($toDate); ?>&page=<?= $page - 1; ?>" class="btn"><</a>
     <?php endif; ?>
 
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
@@ -161,6 +161,6 @@ $result = $conn->query($sql);
     <?php endfor; ?>
 
     <?php if ($page < $totalPages): ?>
-        <a href="?search=<?= urlencode($search); ?>&status=<?= urlencode($statusFilter); ?>&location=<?= urlencode($locationFilter); ?>&from_date=<?= urlencode($fromDate); ?>&to_date=<?= urlencode($toDate); ?>&page=<?= $page + 1; ?>" class="btn">Next</a>
+        <a href="?search=<?= urlencode($search); ?>&status=<?= urlencode($statusFilter); ?>&location=<?= urlencode($locationFilter); ?>&from_date=<?= urlencode($fromDate); ?>&to_date=<?= urlencode($toDate); ?>&page=<?= $page + 1; ?>" class="btn">></a>
     <?php endif; ?>
 </div>
