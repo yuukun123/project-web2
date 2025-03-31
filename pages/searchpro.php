@@ -1,6 +1,7 @@
 <?php
 include __DIR__ . '/../app/config/data_connect.php'; // Kết nối database
 
+
 // Lấy danh sách danh mục từ bảng CATEGORY
 $categoryQuery = "SELECT category_id, category_name FROM CATEGORY";
 $categoryResult = $conn->query($categoryQuery);
@@ -46,6 +47,7 @@ if (!$result) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danh sách sản phẩm</title>
+
 </head>
 <body>
     <div class="bsearchpro">
@@ -66,7 +68,6 @@ if (!$result) {
             <div class="search-price">
                 <input type="number" name="minPrice" placeholder="Minimum price" 
                     value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>">
-
                 <input type="number" name="maxPrice" placeholder="Maximum price" 
                     value="<?php echo isset($_GET['maxPrice']) && $_GET['maxPrice'] !== '' ? htmlspecialchars($_GET['maxPrice']) : ''; ?>">
             </div>
@@ -82,9 +83,9 @@ if (!$result) {
                     <a href="home?pages=product&id=<?php echo isset($row['product_id']) ? $row['product_id'] : '#'; ?>">
                         <img class="poster-img" src="<?php echo isset($row['image']) ? $row['image'] : 'default.jpg'; ?>" 
                              alt="<?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Sản phẩm'; ?>">
-                    </a>
+                    </a>    
                     <p class="title"> <?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Không có tên'; ?> </p>
-                    <button class="butn">
+                    <button class="butn" onclick="addToCartBtn(<?php echo $row['product_id']; ?>, '<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo $row['price']; ?>)">
                         <p class="text-color">Giá: <?php echo isset($row['price']) ? number_format($row['price'], 0, ',', '.') : '0'; ?> VND</p>
                     </button>
                 </div>
