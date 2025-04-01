@@ -100,7 +100,7 @@ function renderUser(data) {
 }
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
 function showDetail(userName) {
-    console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", userName);
+    console.log("📤 Gửi yêu cầu lấy hóa đơn cho user:", userName);
     fetch(`../../Admin/Controllers/detail-statistical-user.php?user_name=${userName}`)
         .then(response => response.json())
         .then(data => {

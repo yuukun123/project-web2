@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
  ini_set('display_errors', 1);
 if (!isset($_GET['user_name'])) {
-    echo json_encode(["error" => " user_Name"]);
+    echo json_encode(["error" => " user_name"]);
     exit();
 }
 
@@ -22,7 +22,7 @@ $query = "
 ";
 
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $user_name);
+$stmt->bind_param("s", $user_name);
 $stmt->execute();
 $result = $stmt->get_result();
 
