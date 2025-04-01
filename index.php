@@ -1,8 +1,8 @@
 <?php
 // Khởi động phiên
-
 session_name("user");
 session_start(); // Đảm bảo session được khởi động
+
 
 include_once 'app/config/data_connect.php'; // Kết nối database
 
