@@ -76,14 +76,14 @@ if (!$stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Lỗi khi tạo đơn hàng: " . $stmt->error]);
     exit;
 }
-$order_id = $stmt->insert_id;
+
+// Lấy order_id tự động tăng từ cơ sở dữ liệu
+$order_id = $stmt->insert_id;  // Chú ý: Đây sẽ lấy giá trị `order_id` mới nhất được chèn
 $stmt->close();
 
-
-$order_id = mysqli_insert_id($conn);
 $_SESSION['last_order_id'] = $order_id; // Lưu ID đơn hàng vào session để dùng cho get_last_order_items.php
 
-// Thêm chi tiết đơn hàng
+// Tiến hành thêm chi tiết đơn hàng như trước
 foreach ($cart_items as $item) {
     $product_id = $item['product_id'];
     $quantity = $item['quantity'];
@@ -95,6 +95,7 @@ foreach ($cart_items as $item) {
         VALUES ('$order_id', '$product_id', '$quantity', '$price', '$product_note')
     ");
 }
+
 
 // Xóa giỏ hàng sau khi đặt hàng thành công
 $stmt = $conn->prepare("DELETE FROM cart WHERE user_name = ?");

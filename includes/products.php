@@ -81,12 +81,12 @@ if (!empty($productsAll)) {
         echo '<p class="title">' . htmlspecialchars($item['product_name']) . '</p>';
     
         if ($item['status'] === 'Available') {
-            echo '<button class="sp-cart add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
+            echo '<button class=" add-to-cart butn title" data-id="' . htmlspecialchars($item['product_id']) . '">';
             echo '<p class="text-color">Price: ' . number_format($item['price']) . ' VND</p>';
             echo '</button>';
         } else {
             // Hiển thị nút disabled
-            echo '<button class="sp-cart butn title disabled-btn" disabled>';
+            echo '<button class="butn title disabled-btn" disabled>';
             echo '<p class="text-color">' . htmlspecialchars($item['status']) . '</p>';
             echo '</button>';
         }
