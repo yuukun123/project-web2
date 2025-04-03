@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     cartContent.innerHTML = `
                         <div class="emptyCart">
                             <div class="close-icon"> <ion-icon name="alert-circle-outline"></ion-icon> </div>
-                            <p class="empty-cart">Giỏ hàng của bạn đang trống.</p>
+                            <p class="empty-cart">Your cart is empty.</p>
                         </div>
                     `;
                 } else {

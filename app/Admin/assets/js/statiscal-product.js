@@ -103,7 +103,7 @@ function showDetail(productId) {
                 renderReceipt(data);
                 document.querySelector(".div-receipt").classList.add("open");
             } else {
-                alert("Không có hóa đơn nào chứa sản phẩm này.");
+                alert("No invoice contains this product.");
             }
         })
         .catch(error => console.error("❌ Lỗi khi tải hóa đơn:", error));
