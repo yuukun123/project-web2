@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     $row = $result->fetch_assoc();
 
     if (!$row) {
-        echo "<script>alert('Lỗi: Đơn hàng không tồn tại!'); window.history.back();</script>";
+        echo "<script>alert('Error: Order does not exist!'); window.history.back();</script>";
         exit;
     }
 
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     ];
 
     if (!isset($valid_transitions[$current_status]) || !in_array($new_status, $valid_transitions[$current_status])) {
-        echo "<script>alert('Không thể cập nhật trạng thái từ $current_status sang $new_status!'); window.history.back();</script>";
+        echo "<script>alert('Unable to update the status from $current_status to $new_status!'); window.history.back();</script>";
         exit;
     }
 
@@ -46,9 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     $stmt_update->bind_param("si", $new_status, $order_id);
 
     if ($stmt_update->execute()) {
-        echo "<script>alert('Cập nhật thành công!'); window.history.back();</script>";
+        echo "<script>alert('Update successful!'); window.history.back();</script>";
     } else {
-        echo "<script>alert('Lỗi cập nhật đơn hàng: " . $stmt_update->error . "'); window.history.back();</script>";
+        echo "<script>alert('Order update error: " . $stmt_update->error . "'); window.history.back();</script>";
     }
     exit;
 }
