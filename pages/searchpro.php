@@ -41,17 +41,9 @@ if (!$result) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách sản phẩm</title>
-
-</head>
-<body>
     <div class="bsearchpro">
         <form class="search-container-pro" method="GET" action="">
+            <div class="flex">
             <input type="text" name="searchName" placeholder="Search name" 
                 value="<?php echo isset($_GET['searchName']) ? htmlspecialchars($_GET['searchName']) : ''; ?>">
             
@@ -64,28 +56,29 @@ if (!$result) {
                     </option>
                 <?php endforeach; ?>
             </select>
-            
-            <div class="search-price">
+            </div>
+            <div class="search-price flex">
                 <input type="number" name="minPrice" placeholder="Minimum price" 
                     value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>">
                 <input type="number" name="maxPrice" placeholder="Maximum price" 
                     value="<?php echo isset($_GET['maxPrice']) && $_GET['maxPrice'] !== '' ? htmlspecialchars($_GET['maxPrice']) : ''; ?>">
             </div>
-            
+            <div class="btn-submit">
             <button type="submit" class="btn-searchpro">Search</button>
+            </div>
         </form>
     </div>
-    
-    <div class="tab_content_pro">
+    <div class="pg-12">
+    <div class="tab_content">
         <?php if ($result->num_rows > 0): ?>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="movie-item">
                     <a href="home?pages=product&id=<?php echo isset($row['product_id']) ? $row['product_id'] : '#'; ?>">
-                        <img class="poster-img" src="<?php echo isset($row['image']) ? $row['image'] : 'default.jpg'; ?>" 
+                        <img class="poster-img" height="300" width="300" src="<?php echo isset($row['image']) ? $row['image'] : 'default.jpg'; ?>" 
                              alt="<?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Sản phẩm'; ?>">
                     </a>    
                     <p class="title"> <?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Không có tên'; ?> </p>
-                    <button class="butn" onclick="addToCartBtn(<?php echo $row['product_id']; ?>, '<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo $row['price']; ?>)">
+                    <button class="butn  add-to-cart title" onclick="addToCartBtn(<?php echo $row['product_id']; ?>, '<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo $row['price']; ?>)">
                         <p class="text-color">Giá: <?php echo isset($row['price']) ? number_format($row['price'], 0, ',', '.') : '0'; ?> VND</p>
                     </button>
                 </div>
@@ -94,5 +87,4 @@ if (!$result) {
             <p>Không tìm thấy sản phẩm phù hợp.</p>
         <?php endif; ?>
     </div>
-</body>
-</html>
+    </div>

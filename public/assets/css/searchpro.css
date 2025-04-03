@@ -87,7 +87,10 @@
     display: grid;
     padding: 0 138px;
 }
-
+.flex{
+    display: flex;
+    gap: 60px;
+}
 /*flex-full*/
 .flex-full {
     display: flex;
@@ -171,13 +174,9 @@
     display: grid;
     grid-template-columns: repeat(4,1fr);
     gap: 50px;
-    max-width: 1300px;
     height: 100%;
-    margin: 0px auto;
-    /* margin-left: auto;
-    margin-right: auto; */
-    justify-content: center;
     padding: 0 0px 45px;
+    justify-items: center;
     transition: width 0.5s ease, height 0.5s ease; 
 }
 
@@ -209,7 +208,7 @@
 }
 
 .search-container-pro input {
-    margin-right: 60px;
+   
     padding: 1px 10px;
     font-size: 15px;
     border: 1px solid #ccc;
@@ -239,7 +238,7 @@
 }
 
 .search-price input{
-    margin-right: 60px;
+    
     margin-bottom: 14px;
     padding: 1px 10px;
     font-size: 15px;
@@ -263,7 +262,7 @@
     font-weight: 100;
     transition: .2s;
     margin-bottom: 30px;
-    margin-left: 124px;
+   
 }
 
 .btn-searchpro:hover{
@@ -271,7 +270,10 @@
     background-color: #ffdee5;
     color: #000000;
 }
-
+.btn-submit{
+    display: flex;
+    justify-content: center;
+}
 @media (max-width: 320px){
     .search-price-title{
         font-size: 12px;
@@ -339,10 +341,14 @@
         justify-content: center;
         align-items: center;
         align-content: center;
+        flex-direction: column;
+        gap: 8px;
     }
-    
+    .search-container-pro select{
+        width: 200px;
+    }
     .search-container-pro input {
-        margin-right: 25px;
+        
         padding: 1px 10px;
         font-size: 10px;
         border: 1px solid #ccc;
@@ -354,21 +360,20 @@
     }
 
     .search-price input{
-        margin-right: 20px;
         margin-bottom: 8px;
-        padding: 1px 4px;
+        padding: 8px 10px;
         font-size: 10px;
         border: 1px solid #ccc;
         border-radius: 6px;
         outline: none;
-        width: 80px;
+        width: 200px;
         background-color: transparent;
     }
 
     .btn-searchpro{
         border-radius: 8px;
         width: 68px;
-        height: 20px;
+        /* height: 20px; */
         background: transparent;
         border: 1px solid #1f1c1c;
         outline-width: 1px;
@@ -445,10 +450,6 @@
     border-radius: 15px;
     margin-bottom: 6px;
     transition: transform 0.3s ease, all 0.3s ease; 
-}
-
-.poster-img:hover{
-    transform: scale(1.1);
 }
 
 .title{
@@ -634,7 +635,7 @@
     }
 
     .pg-12{
-        padding: 0 153px;
+        padding: 0 130px;
     }
 
     .tab_content{
@@ -650,12 +651,18 @@
         transition: width 0.5s ease, height 0.5s ease; 
     }
 
+    .tab_content_pro{
+        gap: 20px;
+    }
+
     .poster-img{
         width: 210px;
         height: 262px;
         transition: width 0.5s ease, height 0.5s ease; 
     }
-
+    .butn{
+        width: 210px;
+    }
 
     .Footer_footer_contain{
         grid-template-columns: repeat(4, 1fr);
@@ -1047,7 +1054,7 @@
     }
 
     .search-container-pro input {
-        margin-right: 10px;
+        
         padding: 1px 10px;
         font-size: 10px;
         border: 1px solid #ccc;

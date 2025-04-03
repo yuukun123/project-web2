@@ -72,6 +72,7 @@ $page = $_GET['pages'];
         echo '<link rel="stylesheet" href="public/assets/css/receipt.css">';
     } elseif ($page === 'advance') {
         echo '<link rel="stylesheet" href="public/assets/css/searchpro.css">';
+        echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     } elseif ($page === 'home') {
         echo '<link rel="stylesheet" href="public/assets/css/index.css">';
     } elseif ($page === 'product') {
