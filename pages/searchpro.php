@@ -88,7 +88,11 @@ if (!$result) {
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
+<<<<<<< Updated upstream
             <p>No matching products found.</p>
+=======
+            <p>No matching product found.</p>
+>>>>>>> Stashed changes
         <?php endif; ?>
     </div>
     </div>

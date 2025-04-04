@@ -25,25 +25,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Kiểm tra thông tin đầu vào
     if (empty($username) || empty($lastname) || empty($firstname) || empty($phone) || empty($email) || empty($street) || empty($city) || empty($district) || empty($ward) || empty($password) || empty($confirm_password)) {
-        $errors[] = "Vui lòng điền đầy đủ thông tin.";
+        $errors[] = "Please fill in all the information.";
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Email không hợp lệ.";
+        $errors[] = "Invalid email.";
     }
 
     $phone_pattern = '/^(03[2-9]|05[2,6,8,9]|07[0-9]|08[1-9]|09[0-9])\d{7}$/';
     if (!preg_match($phone_pattern, $phone)) {
-        $errors[] = "Số điện thoại không hợp lệ.";
+        $errors[] = "Invalid phone number.";
     }
 
     $password_pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
     if (!preg_match($password_pattern, $password)) {
-        $errors[] = "Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.";
+        $errors[] = "Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.";
     }
 
     if ($password !== $confirm_password) {
-        $errors[] = "Mật khẩu không khớp.";
+        $errors[] = "The passwords do not match.";
     }
 
     // Kiểm tra tài khoản đã tồn tại chưa
@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $errors[] = "Tên tài khoản, email hoặc số điện thoại đã được sử dụng.";
+        $errors[] = "Username, email, or phone number has already been used.";
     }
     $stmt->close();
 
@@ -69,10 +69,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // KHÔNG lưu session user ở đây nữa
             echo json_encode([
                 'success' => true,
-                'message' => "Đăng ký thành công! Vui lòng đăng nhập."
+                'message' => "Registration successful! Please log in."
             ]);
         } else {
-            $errors[] = "Lỗi khi đăng ký. Vui lòng thử lại.";
+            $errors[] = "Registration error. Please try again.";
             echo json_encode(['success' => false, 'errors' => $errors]);
         }
     } else {
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 else {
-    echo json_encode(['success' => false, 'errors' => ['Phương thức gửi không hợp lệ.']]);
+    echo json_encode(['success' => false, 'errors' => ['Invalid submission method.']]);
     exit();
 }
 

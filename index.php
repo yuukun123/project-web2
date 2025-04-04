@@ -8,30 +8,41 @@ include_once 'app/config/data_connect.php'; // Kết nối database
 
 // Nếu người dùng đã đăng nhập, kiểm tra trạng thái tài khoản
 if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
-    $user_name = $_SESSION['user']['user_name'] ?? null;
+    $user_name = $_SESSION['user']['username'] ?? null;
     if ($user_name) {
         $stmt = $conn->prepare("SELECT status FROM users WHERE user_name = ?");
         if ($stmt) {
-            $stmt->bind_param("i", $user_name);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $userData = $result->fetch_assoc();
-            $stmt->close();
-            // Nếu tài khoản bị khóa, thực hiện logout và chuyển hướng
-            if ($userData && $userData['status'] === 'locked') {
-                // Xóa session và cookie
-                $_SESSION = [];
-                session_unset();
-                session_destroy();
-                setcookie(session_name(), '', time() - 3600, '/');
-                setcookie("remember_token", "", time() - 3600, "/");
-                // Chuyển hướng về trang đăng nhập kèm thông báo lỗi (bạn có thể tùy chỉnh URL)
-                header("Location: /project-web2/login?error=account_locked");
-                exit();
+            $stmt->bind_param("s", $user_name);
+            if ($stmt->execute()) {
+                $result = $stmt->get_result();
+                $userData = $result->fetch_assoc();
+                $stmt->close();
+                // Kiểm tra trạng thái tài khoản
+                if (!empty($userData['status']) && $userData['status'] === 'locked') {
+                    session_start();
+                    $_SESSION = [];
+                    session_unset();
+                    session_destroy();
+                    if (ini_get("session.use_cookies")) {
+                        $params = session_get_cookie_params();
+                        setcookie(session_name(), '', time() - 42000,
+                            $params["path"], $params["domain"],
+                            $params["secure"], $params["httponly"]
+                        );
+                    }
+                    setcookie("remember_token", "", time() - 3600, "/");
+                    header("Location: /project-web2/login?error=account_locked");
+                    die();
+                }
+            } else {
+                error_log("Query execution failed: " . $stmt->error);
             }
+        } else {
+            error_log("Statement preparation failed: " . $conn->error);
         }
     }
 }
+
 
 // Nếu chưa đăng nhập, hoặc sau khi kiểm tra thì lấy thông tin session (dành cho hiển thị thông tin)
 if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
