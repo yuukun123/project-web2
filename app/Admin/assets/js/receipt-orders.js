@@ -36,7 +36,7 @@ orderList.innerHTML = filteredOrders.map(order => `
 `).join('');
 
     if(filteredOrders.length === 0){
-        orderList.innerHTML = "<tr><td colspan = '6'>Không tồn tại đơn hàng!</td></tr>";
+        orderList.innerHTML = "<tr><td colspan = '6'>Order does not exist!</td></tr>";
     }
 }
 

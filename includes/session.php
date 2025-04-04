@@ -31,7 +31,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
                 'loggedIn' => false,
                 'username' => null,
                 'role' => null,
-                'message' => 'Tài khoản của bạn đã bị khóa.'
+                'message' => "Your account has been locked."
             ];
             echo json_encode($response);
             exit();
