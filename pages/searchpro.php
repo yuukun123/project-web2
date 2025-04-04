@@ -84,7 +84,7 @@ if (!$result) {
                 </div>
             <?php endwhile; ?>
         <?php else: ?>
-            <p>Không tìm thấy sản phẩm phù hợp.</p>
+            <p>No matching products found.</p>
         <?php endif; ?>
     </div>
     </div>
