@@ -565,21 +565,21 @@ button.go-to a:hover {
         gap: 49px;
     }
 
-    .id , .name, .price{
+    .name, .price, .status{
         width: 30%;
     }
 
-    .status , .category, .capital{
+    .category, .capital, .expiration-date{
         width: 30%;
     }
 
-    .product-items input{
+    .product-items {
         width: 100%;
     } 
-
-    .product-items .select{
+/* 
+    .product-items {
         width: 100%;
-    }
+    } */
 
     /* .write-describe textarea{
         width: 92%;

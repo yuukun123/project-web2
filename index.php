@@ -31,7 +31,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
                         );
                     }
                     setcookie("remember_token", "", time() - 3600, "/");
-                    header("Location: /project-web2/login?error=account_locked");
+                    header("Location: login?error=account_locked");
                     die();
                 }
             } else {

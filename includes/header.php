@@ -72,13 +72,13 @@ echo '
         <a href="home">HOME</a>
         <a href="about">ABOUT</a>
         <a href="receipt">RECEIPT</a>
-
+        <a href="advance" class="searchAdvancemobile">ADVANCED SEARCH</a>
         <button class="sp-cart" id="cart-btn">
             <ion-icon name="cart-outline"></ion-icon>
         </button>
         <span class="cart-count cart-count-mobile"></span>
 
-        <a href="advance" class="searchAdvance">ADVANCED SEARCH</a>
+        
         <div class="btn-log">
             ' . $authButtons . '
         </div>

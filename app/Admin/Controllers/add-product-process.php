@@ -6,21 +6,36 @@ include '../../config/data_connect.php';
 header("Content-Type: application/json");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $product_name = trim($_POST['name']);
-    $price = trim($_POST['price']);
-    $category_name = trim($_POST['category']);
-    $size_id = trim($_POST['size']);
-    $status = trim($_POST['status']);
-    $description = trim($_POST['description']);
-
+    $product_name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $price = isset($_POST['price']) ? trim($_POST['price']) : '';
+    $category_name = isset($_POST['category']) ? trim($_POST['category']) : '';
+    $size_id = isset($_POST['size']) ? trim($_POST['size']) : '';
+    $status = isset($_POST['status']) ? trim($_POST['status']) : '';
+    $ingredient = isset($_POST['ingredient']) ? trim($_POST['ingredient']) : '';
+    $expiration_date = isset($_POST['expiration_date']) ? trim($_POST['expiration_date']) : '';
+    $storage = isset($_POST['storage']) ? trim($_POST['storage']) : '';
+    
     $response = ["status" => "error", "message" => ""];
+    
 
-    if (empty($product_name) || empty($price) || empty($category_name) || empty($size_id) || empty($status)) {
-        $response["message"] = "Please fill in all required fields.";
+    // Kiểm tra các trường bắt buộc
+    $missingFields = [];
+
+    if (empty($product_name)) $missingFields[] = "Product name";
+    if (empty($price)) $missingFields[] = "Price";
+    if (empty($category_name)) $missingFields[] = "Category";
+    if (empty($size_id)) $missingFields[] = "Size";
+    if (empty($status)) $missingFields[] = "Status";
+    if (empty($ingredient)) $missingFields[] = "Ingredient";
+    if (empty($expiration_date)) $missingFields[] = "Expiration date";
+    if (empty($storage)) $missingFields[] = "Storage instructions";
+    
+    if (!empty($missingFields)) {
+        $response["message"] = "Please fill in the following required fields: " . implode(", ", $missingFields);
         echo json_encode($response);
         exit();
     }
-
+    
     if (!is_numeric($price) || $price <= 0) {
         $response["message"] = "Invalid price.";
         echo json_encode($response);
@@ -105,8 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // ✅ Thêm vào cơ sở dữ liệu
-    $stmt = $conn->prepare("INSERT INTO product (product_name, price, category_id, size_id, status, description, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sdiisss", $product_name, $price, $category_id, $size_id, $status, $description, $imagePath);
+    $stmt = $conn->prepare("INSERT INTO product (product_name, price, category_id, size_id, status, ingredients, expiration_date, storage_instructions, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sdiisssss", $product_name, $price, $category_id, $size_id, $status, $ingredient, $expiration_date, $storage, $imagePath);
 
     if ($stmt->execute()) {
         $response["status"] = "success";
