@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         if (!found) {
-            document.getElementById("product-container").innerHTML = "<p>Không tìm thấy sản phẩm nào!</p>";
+            document.getElementById("product-container").innerHTML = "<p>No products found!</p>";
         }
     }
 

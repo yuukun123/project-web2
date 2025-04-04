@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 error_reporting(E_ALL);
  ini_set('display_errors', 1);
 if (!isset($_GET['product_id'])) {
-    echo json_encode(["error" => "Thiếu product_id"]);
+    echo json_encode(["error" => "Missing product_id."]);
     exit();
 }
 
