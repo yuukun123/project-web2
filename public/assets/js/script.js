@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         shoppingCart.classList.add("active");
                         if (blurOverlay) blurOverlay.classList.add("active");
                     } else {
-                        alert("Bạn cần đăng nhập để xem giỏ hàng!");
+                        alert("You need to log in to view the cart!");
                         window.location.href = "login";
                     }
                 });
@@ -170,12 +170,12 @@ document.addEventListener("DOMContentLoaded", function () {
             event.stopPropagation();
             checkLoginStatus((isLoggedIn) => {
                 if (!isLoggedIn) {
-                    alert("Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                    alert("You need to log in to add products to the cart!");
                     window.location.href = "login";
                 } else {
                     let productId = this.getAttribute("data-id");
                     if (!productId) {
-                        alert("Lỗi: Không tìm thấy ID sản phẩm!");
+                        alert("Error: Product ID not found!");
                         return;
                     }
                     addToCart(productId);
@@ -197,11 +197,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             console.log("Response từ server:", data);
             if (data.success) {
-                alert("Đã thêm sản phẩm vào giỏ hàng!");
+                alert("Product has been added to the cart!");
                 fetchCart();
                 updateCartCount();
             } else {
-                alert("Lỗi: " + data.message);
+                alert("Error: " + data.message);
             }
         })
         .catch(error => console.error("Lỗi khi thêm vào giỏ hàng:", error));
@@ -221,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 fetchCart();
                 updateCartCount();
             } else {
-                alert("Lỗi khi xóa sản phẩm: " + data.message);
+                alert("Error deleting product: " + data.message);
             }
         })
         .catch(error => console.error("Lỗi khi xóa sản phẩm:", error));
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 updateCartCount(); // Cập nhật số lượng sản phẩm trên icon giỏ hàng
                 updateTotalPrice(); // Cập nhật tổng tiền ngay lập tức
             } else {
-                alert("Có lỗi xảy ra khi cập nhật giỏ hàng!");
+                alert("An error occurred while updating the cart!");
             }
         })
         .catch(error => console.error("Lỗi:", error));
@@ -310,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     cartContent.innerHTML = `
                         <div class="emptyCart">
                             <div class="close-icon"> <ion-icon name="alert-circle-outline"></ion-icon> </div>
-                            <p class="empty-cart">Giỏ hàng của bạn đang trống.</p>
+                            <p class="empty-cart">Your cart is empty.</p>
                         </div>
                     `;
                 }
@@ -363,7 +363,7 @@ document.addEventListener("DOMContentLoaded", function () {
     payLink.addEventListener("click", function(event) {
         if (payButton.hasAttribute("disabled")) {
             event.preventDefault(); // Ngăn chặn chuyển trang
-            alert("Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm trước khi thanh toán!");
+            alert("Your cart is empty. Please add products before proceeding to checkout!");
         }
     });
     
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         if (!found) {
-            document.getElementById("product-container").innerHTML = "<p>Không tìm thấy sản phẩm nào!</p>";
+            document.getElementById("product-container").innerHTML = "<p>No products found!</p>";
         }
     }
 

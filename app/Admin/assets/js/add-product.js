@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Kiểm tra nếu có trường nào bị thiếu
         if (!name || !price || !status || !category || !size || !imagePath) {
-            alert("⚠️ Vui lòng điền đầy đủ thông tin!");
+            alert("⚠️ Please fill in all the information!");
             isSubmitting = false;  // reset flag
             return;
         }
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 blurOverlay.classList.add('active');
                 
                 // Hiển thị thông báo
-                alert("✅ Thêm sản phẩm thành công!");
+                alert("✅ Product added successfully.!");
                 
                 // Reset form sau khi lưu
                 let form = document.getElementById("add-product-form"); // 🔹 Đúng ID của form
@@ -77,12 +77,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 }                
 
             } else {
-                alert("❌ Lỗi khi lưu sản phẩm: " + data.message);
+                alert("❌ Error saving product: " + data.message);
             }
         })
         .catch(error => {
             console.error("❌ Lỗi khi gửi dữ liệu:", error);
-            alert("❌ Có lỗi xảy ra! Vui lòng thử lại.");
+            alert("❌ An error occurred! Please try again.");
         })
         .finally(() => {
             // Reset lại flag sau khi hoàn thành gửi
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let category = document.getElementById("category").value; // Lấy category từ select
     
         if (!category) {
-            alert("⚠️ Vui lòng chọn category trước khi upload hình!");
+            alert("⚠️ Please select a category before uploading the image!");
             return;
         }
     

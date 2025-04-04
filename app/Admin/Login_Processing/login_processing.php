@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!in_array(strtolower($row['role']), $allowed_roles)){
             echo json_encode([
                 "status" => "error",
-                "message" => "Tài khoản này không có quyền truy cập trang quản trị."
+                "message" => "This account does not have permission to access the admin page."
             ]);
             exit;
         }
@@ -67,20 +67,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Trả về dữ liệu JSON
             echo json_encode([
                 "status" => "success",
-                "message" => "Đăng nhập thành công",
+                "message" => "Login successful",
                 "redirect" => "pages/home.php",
                 "user" => $_SESSION['admin'] // Trả về session đã lưu
             ]);
         } else {
             echo json_encode([
                 "status" => "error",
-                "message" => "Sai mật khẩu",
+                "message" => "Wrong password",
             ]);
         }
     } else {
         echo json_encode([
             "status" => "error",
-            "message" => "Tài khoản không tồn tại",
+            "message" => "Account does not exist",
         ]);
     }
 

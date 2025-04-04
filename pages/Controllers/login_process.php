@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $_SESSION['user'] = [
                     'username' => $user['user_name'],
-                    'role' => $user['role']
+                    'role' => $user['role'],
+                    'status' => $user['status']
                 ];
 
                 header("Location: ../../home");
@@ -59,7 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         elseif (password_verify($password, $db_password)) {
             $_SESSION['user'] = [
                 'username' => $user['user_name'],
-                'role' => $user['role']
+                'role' => $user['role'],
+                'status' => $user['status']
             ];
 
             header("Location: ../../home");

@@ -14,6 +14,7 @@ if (
 ) 
 
 
+
 include "../app/config/data_connect.php"; // Kết nối database
 
 $username = $_SESSION['user']['username'];
@@ -32,7 +33,7 @@ $stmt_check_user->execute();
 $result_user = $stmt_check_user->get_result();
 
 if ($result_user->num_rows === 0) {
-    echo json_encode(["success" => false, "message" => "Người dùng không tồn tại."]);
+    echo json_encode(["success" => false, "message" => "User does not exist."]);
     exit;
 }
 
@@ -71,10 +72,10 @@ if ($action == "add" && $product_id > 0) {
 
     echo json_encode([
         "success" => true,
-        "message" => "Sản phẩm đã được thêm vào giỏ hàng",
+        "message" => "Product has been added to the cart.",
         "cart_count" => $cart_count
     ]);
 } else {
-    echo json_encode(["success" => false, "message" => "Có lỗi xảy ra"]);
+    echo json_encode(["success" => false, "message" => "An error occurred."]);
 }
 ?>

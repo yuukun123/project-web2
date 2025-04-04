@@ -14,10 +14,10 @@ if (isset($_GET['id'])) {
     if ($result->num_rows > 0) {
         $product = $result->fetch_assoc(); // Lấy dữ liệu sản phẩm
     } else {
-        die("Sản phẩm không tồn tại!");
+        die("Product does not exist!");
     }
 } else {
-    die("Không có sản phẩm nào được chọn!");
+    die("No product selected!");
 }
 
 // Truy vấn sản phẩm ngẫu nhiên
@@ -29,7 +29,7 @@ if($result->num_rows > 0){
         $product_rand[] = $row; 
     }
 }else{
-    die("Sản phẩm không tồn tại");
+    die("Product does not exist");
 }
 ?>
 

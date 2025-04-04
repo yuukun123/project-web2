@@ -16,7 +16,7 @@ if (isset($_SESSION['admin']) && is_array($_SESSION['admin'])) {
             'loggedIn' => false,
             'username' => null,
             'role' => null,
-            'message' => 'Bạn không có quyền truy cập trang admin.'
+            'message' => 'You do not have permission to access the admin page.'
         ];
         echo json_encode($response);
         exit();

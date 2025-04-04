@@ -15,7 +15,7 @@ if (
 ) {
     echo json_encode([
         "success" => false,
-        "message" => "Vui lòng đăng nhập trước khi thao tác."
+        "message" => "Please log in before performing this action."
     ]);
     exit;
 }
@@ -48,7 +48,7 @@ $cart_query = mysqli_query($conn, "
     FROM cart c 
     JOIN product p ON c.product_id = p.product_id 
     WHERE c.user_name = '$username'
-") or die(json_encode(["success" => false, "message" => "Lỗi truy vấn giỏ hàng!"]));
+") or die(json_encode(["success" => false, "message" => "Cart query error!"]));
 
 
 $total_cost = 0;
@@ -63,7 +63,7 @@ while ($row = mysqli_fetch_assoc($cart_query)) {
 if (empty($cart_items)) {
     echo json_encode([
         "success" => false,
-        "message" => "Giỏ hàng của bạn đang trống!"
+        "message" => "Your cart is empty!"
     ]);
     exit;
 }
@@ -73,7 +73,7 @@ $stmt = $conn->prepare("INSERT INTO orders (user_name, recipient_name, recipient
 $stmt->bind_param("sssssdssssss", $username, $fullname, $phone, $order_date, $delivery_date, $total_cost, $payment_method, $note, $shipping_city, $shipping_district, $shipping_ward, $shipping_street);
 
 if (!$stmt->execute()) {
-    echo json_encode(["success" => false, "message" => "Lỗi khi tạo đơn hàng: " . $stmt->error]);
+    echo json_encode(["success" => false, "message" => "Error creating order: " . $stmt->error]);
     exit;
 }
 
@@ -106,7 +106,7 @@ $stmt->close();
 // Trả kết quả về JSON
 echo json_encode([
     "success" => true,
-    "message" => "Đặt hàng thành công!",
+    "message" => "Order placed successfully!",
     "order_id" => $order_id
 ]);
 exit;

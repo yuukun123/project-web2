@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 572522c3bed05c655e11b4fae26632a3508c76e1
 -- Thêm dữ liệu vào bảng category (tránh trùng lặp)
 INSERT INTO category (category_name) VALUES
 ('Mousse'),

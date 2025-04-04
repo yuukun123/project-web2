@@ -149,10 +149,10 @@ function saveUser() {
         if (element) {
             formData.append(id, element.value.trim());
             if (!element.value.trim()) {
-                errors.push(`Vui lòng nhập ${id.replace('_', ' ')}.`);
+                errors.push(`Please enter ${id.replace('_', ' ')}.`);
             }
         } else {
-            console.warn(`⚠️ Không tìm thấy phần tử với ID: ${id}`);
+            console.warn(`⚠️ Element with ID: ${id} not found`);
         }
     });
 
@@ -162,21 +162,21 @@ function saveUser() {
     // 📌 Kiểm tra email hợp lệ
     const emailElement = document.getElementById('email');
     if (emailElement && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailElement.value.trim())) {
-        errors.push("Email không hợp lệ.");
+        errors.push("Invalid email.");
     }
 
     // 📌 Kiểm tra số điện thoại hợp lệ
     const phoneElement = document.getElementById('phone');
     const phonePattern = /^(03[2-9]|05[2,6,8,9]|07[0-9]|08[1-9]|09[0-9])\d{7}$/;
     if (phoneElement && !phonePattern.test(phoneElement.value.trim())) {
-        errors.push("Số điện thoại không hợp lệ.");
+        errors.push("Invalid phone number.");
     }
 
     // 📌 Kiểm tra mật khẩu hợp lệ
     const passwordElement = document.getElementById('password');
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (passwordElement && !passwordPattern.test(passwordElement.value.trim())) {
-        errors.push("Mật khẩu phải có ít nhất 8 ký tự, bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.");
+        errors.push("Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.");
     }
 
     // Nếu có lỗi, hiển thị thông báo lỗi bằng alert
@@ -333,7 +333,7 @@ function searchUser() {
     });
 
     if (!found) {
-        alert("Không tìm thấy người dùng phù hợp!");
+        alert("No matching user found!");
     }
 
     currentPage = 1; // Reset về trang đầu

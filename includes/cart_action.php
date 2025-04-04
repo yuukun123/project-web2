@@ -16,7 +16,7 @@ if (
 ) {
     echo json_encode([
         "success" => false,
-        "message" => "Vui lòng đăng nhập trước khi thao tác."
+        "message" => "Please log in before performing this action."
     ]);
     exit;
 }
@@ -41,7 +41,7 @@ switch ($action) {
         if ($_SERVER["REQUEST_METHOD"] === "GET" && isset($_GET["cart_count"])) {
             getCartCount($conn, $username);
         } else {
-            echo json_encode(["success" => false, "message" => "Hành động không hợp lệ"]);
+            echo json_encode(["success" => false, "message" => "Invalid action."]);
         }
         break;
 }
@@ -50,7 +50,7 @@ switch ($action) {
 function addToCart($conn, $username, $data) {
     $product_id = $data['product_id'] ?? 0;
     if (!$product_id) {
-        echo json_encode(["success" => false, "message" => "Thiếu product_id"]);
+        echo json_encode(["success" => false, "message" => "Missing product_id."]);
         exit;
     }
 
@@ -72,7 +72,7 @@ function addToCart($conn, $username, $data) {
         $stmt_insert->execute();
     }
 
-    echo json_encode(["success" => true, "message" => "Sản phẩm đã được thêm vào giỏ hàng"]);
+    echo json_encode(["success" => true, "message" => "The product has been added to the cart."]);
 }
 
 /* 🔄 Cập nhật số lượng sản phẩm */
@@ -81,7 +81,7 @@ function updateQuantity($conn, $username, $data) {
     $new_quantity = $data['quantity'] ?? 1;
 
     if (!$product_id || $new_quantity < 1) {
-        echo json_encode(["success" => false, "message" => "Dữ liệu không hợp lệ"]);
+        echo json_encode(["success" => false, "message" => "Invalid data."]);
         exit;
     }
 
@@ -90,7 +90,7 @@ function updateQuantity($conn, $username, $data) {
     $stmt->bind_param("isi", $new_quantity, $username, $product_id);
     $stmt->execute();
 
-    echo json_encode(["success" => true, "message" => "Cập nhật số lượng thành công"]);
+    echo json_encode(["success" => true, "message" => "Quantity updated successfully."]);
 }
 
 /* ❌ Xóa sản phẩm khỏi giỏ hàng */
@@ -98,7 +98,7 @@ function removeItem($conn, $username, $data) {
     $product_id = $data['product_id'] ?? 0;
 
     if (!$product_id) {
-        echo json_encode(["success" => false, "message" => "Dữ liệu không hợp lệ"]);
+        echo json_encode(["success" => false, "message" => "Invalid data."]);
         exit;
     }
 
@@ -107,7 +107,7 @@ function removeItem($conn, $username, $data) {
     $stmt->bind_param("si", $username, $product_id);
     $stmt->execute();
 
-    echo json_encode(["success" => true, "message" => "Sản phẩm đã được xóa"]);
+    echo json_encode(["success" => true, "message" => "The product has been deleted."]);
 }
 
 /* 🛍️ Lấy số lượng sản phẩm trong giỏ hàng */

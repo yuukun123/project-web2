@@ -36,7 +36,7 @@ while ($row = $result->fetch_assoc()) {
 if (empty($products)) {
     echo '<div class="empty-cart">
             <ion-icon name="close-circle-outline"></ion-icon>    
-            Không có sản phẩm trong giỏ hàng.
+            There are no products in the cart.
         </div>';
 }
 

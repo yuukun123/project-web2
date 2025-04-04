@@ -13,7 +13,7 @@ if (
 ) {
     echo json_encode([
         "success" => false,
-        "message" => "Vui lòng đăng nhập trước khi thao tác."
+        "message" => "Please log in before performing this action."
     ]);
     exit;
 }

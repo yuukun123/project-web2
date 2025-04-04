@@ -174,12 +174,12 @@ document.addEventListener('DOMContentLoaded', function () {
                         document.getElementById('total-cost-display').innerHTML = `Total: <span>${totalCost.toLocaleString()} VND</span>`;
                     });
             } else {
-                alert(data.message || "Đặt hàng thất bại.");
+                alert(data.message || "Order failed.");
             }
         })
         .catch(err => {
             console.error(err);
-            alert("Có lỗi xảy ra khi đặt hàng.");
+            alert("An error occurred while placing the order.");
         });
     });
 

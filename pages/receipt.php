@@ -15,6 +15,7 @@ $mysqlTime = $row['mysql_time'];
 $phpTime = date('Y-m-d H:i:s');
 
 
+
 // Kiểm tra nếu người dùng đã đăng nhập
 $loggedIn = isset($_SESSION['user']) && isset($_SESSION['user']['username']);
 

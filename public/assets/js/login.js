@@ -102,12 +102,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         alert(data.message);
                         window.location.href = 'login';
                     } else {
-                        alert('Đã xảy ra lỗi:\n' + data.errors.join('\n'));
+                        alert('An error occurred:\n' + data.errors.join('\n'));
                     }
                 })
                 .catch(error => {
                     console.error('Error submitting form:', error);
-                    alert('Đã xảy ra lỗi không xác định.');
+                    alert('An unknown error occurred.');
                 });
             });
         }
@@ -120,22 +120,22 @@ document.addEventListener("DOMContentLoaded", function () {
         let message = '';
         switch (error) {
             case 'role_not_allowed':
-                message = 'Tài khoản của bạn không có quyền đăng nhập vào khu vực này.';
+                message = 'Your account does not have permission to access this area.';
                 break;
             case 'wrong_password':
-                message = 'Mật khẩu không đúng. Vui lòng thử lại.';
+                message = 'Incorrect password. Please try again.';
                 break;
             case 'user_not_found':
-                message = 'Không tìm thấy tài khoản với tên đăng nhập này.';
+                message = 'No account found with this username.';
                 break;
             case 'account_locked':
-                message = 'Tài khoản của bạn đã bị khóa. Vui lòng liên hệ quản trị viên.';
+                message = 'Your account has been locked. Please contact the administrator.';
                 break;
             case 'method_not_allowed':
-                message = 'Phương thức gửi không hợp lệ.';
+                message = 'Invalid submission method.';
                 break;
             default:
-                message = 'Đã xảy ra lỗi không xác định.';
+                message = 'An unknown error occurred.';
         }
         if (message) {
             alert(message);
