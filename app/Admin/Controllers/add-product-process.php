@@ -117,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Thay img thành Img và viết hoa chữ đầu danh mục
-        $imagePath = preg_replace_callback('/public\/assets\/img\/([^\/]+)\//', function ($matches) {
+        $imagePath = preg_replace_callback('/public\/assets\/Img\/([^\/]+)\//', function ($matches) {
             return 'public/assets/Img/' . ucfirst(strtolower($matches[1])) . '/';
         }, $imagePath);
 

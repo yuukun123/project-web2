@@ -7,13 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Xác định thư mục theo category
     $categoryFolders = [
-        "Mousse" => "mousse",
-        "Drink" => "drink",
-        "Croissant" => "croissant"
+        "Mousse" => "Mousse",
+        "Drink" => "Drink",
+        "Croissant" => "Croissant"
     ];
 
     $folder = isset($categoryFolders[$category]) ? $categoryFolders[$category] : "other";
-    $uploadDir = __DIR__ . "/../../../public/assets/img/$folder/";
+    $uploadDir = __DIR__ . "/../../../public/assets/Img/$folder/";
 
     // Tạo thư mục nếu chưa tồn tại
     if (!file_exists($uploadDir)) {
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // Trả về đường dẫn để lưu vào DB & frontend
             echo json_encode([
                 "success" => true,
-                "filePath" => "/assets/img/$folder/" . $uniqueName
+                "filePath" => "/assets/Img/$folder/" . $uniqueName
             ]);
         } else {
             echo json_encode([
