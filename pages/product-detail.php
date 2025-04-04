@@ -49,6 +49,7 @@ if (!empty($product)) {
             </div>
 
             <div class="date-use">Use: <span class="date-span">' .$product['expiration_date']. '</span> </div>
+            <div class="date-use">Preserves: <span class="date-span">' .$product['storage_instructions']. '</span></div>
             <div class="buy-cake">
 
                 <div class="size-cake">
