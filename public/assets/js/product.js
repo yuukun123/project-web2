@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const addToCartBtn = document.querySelector(".add-to-cart-detail");
     const cartCount = document.querySelector(".cart-count"); // Số lượng hiển thị trên giỏ hàng
     const blurOverlay = document.querySelector(".blur-overlay");
-
+    let inputElement = document.querySelector('.quantity-button input');
     // 🔼 Tăng số lượng
     plusBtn.addEventListener("click", function () {
         let currentValue = parseInt(quantityInput.value);
@@ -20,7 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
             quantityInput.value = currentValue - 1;
         }
     });
-
+    inputElement.addEventListener("input", function () {
+        this.value = this.value.replace(/\D/g, ''); // Loại bỏ tất cả ký tự không phải số
+    });
+    // Khi mất focus, nếu input rỗng thì đặt lại thành 1
+    inputElement.addEventListener("blur", function () {
+        if (this.value === "") {
+            this.value = 1;
+        }
+    });
     // 🛒 Xử lý thêm vào giỏ hàng
     addToCartBtn.addEventListener("click", function () {
         const productId = addToCartBtn.dataset.id;
