@@ -1,4 +1,3 @@
-USE webdata;
 
 -- Thêm dữ liệu vào bảng category (tránh trùng lặp)
 INSERT INTO category (category_name) VALUES
