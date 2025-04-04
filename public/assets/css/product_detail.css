@@ -60,15 +60,15 @@
 }
 
 .date-use{
-    font-size: 20px;
-    margin-top: 25px;
+    font-size: 17px;
+    margin-top: 10px;
     color: #d5909f;
     font-weight: bolder;
 }
 
 .date-span{
     color: red;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .size-cake{
@@ -1377,7 +1377,9 @@
         border: none;
         cursor: pointer;
     }
-
+    .date-use, .date-span{
+        font-size: 11px;
+    }
 }
 @media screen and (max-width:550px){
     
@@ -1464,7 +1466,9 @@
         border: none;
         cursor: pointer;
     }
-    
+    .date-use{
+        text-align: center;
+    }
 }
 @media screen and (max-width:450px){
     
