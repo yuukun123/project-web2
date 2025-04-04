@@ -12,15 +12,7 @@ if (
     !isset($_SESSION['user']['username']) || 
     !isset($_SESSION['user']['role'])
 ) 
-{
-    echo json_encode([
-        "success" => false,
-        "redirect" => "login",
-        "message" => "Vui lòng đăng nhập trước khi thao tác."
-    ]);
-    exit;
 
-}
 
 include "../app/config/data_connect.php"; // Kết nối database
 
