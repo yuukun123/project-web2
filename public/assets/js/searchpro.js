@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(data => {
-            alert(data.message); 
             if (data.success) {
                 fetchCart(); 
                 updateCartCount(); 
