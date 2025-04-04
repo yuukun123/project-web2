@@ -190,9 +190,10 @@
 }
 
 .img-infor p{
-    color: rgba(255, 0, 0, 0.739);
+    color: rgba(0, 0, 0, 0.739);
     border-radius: 100px;
     font-size: 20px;
+    font-weight: bold;
 }
 
 .total-price{

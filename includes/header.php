@@ -78,6 +78,7 @@ echo '
         </button>
         <span class="cart-count cart-count-mobile"></span>
 
+        <a href="advance" class="searchAdvance">ADVANCED SEARCH</a>
         <div class="btn-log">
             ' . $authButtons . '
         </div>
@@ -90,6 +91,4 @@ echo '
 </div>
 
 ';
-
-
 ?>

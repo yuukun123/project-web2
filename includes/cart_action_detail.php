@@ -37,8 +37,6 @@ if ($result_user->num_rows === 0) {
     exit;
 }
 
-
-
 if ($action == "add" && $product_id > 0) {
     // Kiểm tra xem sản phẩm đã có trong giỏ chưa
     $sql_check = "SELECT quantity FROM cart WHERE user_name = ? AND product_id = ?";
