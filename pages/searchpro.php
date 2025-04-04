@@ -78,8 +78,12 @@ if (!$result) {
                              alt="<?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Sản phẩm'; ?>">
                     </a>    
                     <p class="title"> <?php echo isset($row['product_name']) ? htmlspecialchars($row['product_name']) : 'Không có tên'; ?> </p>
-                    <button class="butn  add-to-cart title" onclick="addToCartBtn(<?php echo $row['product_id']; ?>, '<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo $row['price']; ?>)">
-                        <p class="text-color">Giá: <?php echo isset($row['price']) ? number_format($row['price'], 0, ',', '.') : '0'; ?> VND</p>
+                    <button class="butn add-to-cart title"
+                            data-id="<?php echo $row['product_id']; ?>"
+                            onclick="addToCartBtn(<?php echo $row['product_id']; ?>, '<?php echo htmlspecialchars($row['product_name']); ?>', <?php echo $row['price']; ?>)">
+                        <p class="text-color">
+                            Giá: <?php echo isset($row['price']) ? number_format($row['price'], 0, ',', '.') : '0'; ?> VND
+                        </p>
                     </button>
                 </div>
             <?php endwhile; ?>
