@@ -3,7 +3,7 @@ include __DIR__ . '/../app/config/data_connect.php'; // Kết nối database
 
 
 // Lấy danh sách danh mục từ bảng CATEGORY
-$categoryQuery = "SELECT category_id, category_name FROM CATEGORY";
+$categoryQuery = "SELECT category_id, category_name FROM category";
 $categoryResult = $conn->query($categoryQuery);
 $categories = [];
 if ($categoryResult && $categoryResult->num_rows > 0) {
@@ -51,7 +51,7 @@ $totalPages = ceil($totalRows / $ordersPerPage);
 
 
 // Tạo câu lệnh SQL
-$sql = "SELECT * FROM PRODUCT WHERE 1=1";
+$sql = "SELECT * FROM product WHERE 1=1";
 
 if (!empty($searchName)) {
     $sql .= " AND LOWER(product_name) LIKE '%" . $conn->real_escape_string($searchName) . "%'";
