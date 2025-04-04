@@ -46,15 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("SELECT category_id FROM category WHERE category_name = ?");
     $stmt->bind_param("s", $category_name);
     $stmt->execute();
-    $stmt->bind_result($category_id);
-    $stmt->fetch();
-    $stmt->close();
-
-    if (!$category_id) {
+    $stmt->store_result();
+    
+    if ($stmt->num_rows === 0) {
         $response["message"] = "Invalid category selection.";
         echo json_encode($response);
         exit();
     }
+    
+    $stmt->bind_result($category_id);
+    $stmt->fetch();
+    $stmt->close();
 
     // Kiểm tra size
     $stmt = $conn->prepare("SELECT size_id FROM size WHERE size_id = ?");
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     $stmt->close();
+    
 
     $imagePath = "";
 
@@ -89,17 +92,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($targetDir, 0777, true);
         }
 
-        $originalFileName = basename($_FILES['image']['name']); // giữ tên gốc
-        $targetFilePath = $targetDir . $originalFileName;
-
+        do {
+            $uniqueName = uniqid() . "_" . basename($_FILES['image']['name']);
+            $targetFilePath = $targetDir . $uniqueName;
+        } while (file_exists($targetFilePath)); // Lặp lại nếu tên đã tồn tại
+        
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
-            // Đường dẫn lưu vào DB: public/assets/Img/CategoryName/Filename.png
-            $imagePath = "public/assets/Img/$folderName/" . $originalFileName;
+            $imagePath = "public/assets/Img/$folderName/" . $uniqueName;
         } else {
             $response["message"] = "Image upload failed.";
             echo json_encode($response);
             exit();
         }
+        
+        
     } 
     // ✅ Trường hợp nhận link ảnh từ input text
     elseif (isset($_POST['image']) && !empty(trim($_POST['image']))) {
@@ -116,7 +122,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }, $imagePath);
 
         // Bỏ phần hash nếu có (ví dụ: /mousse/67d8e37fc0884_filename.png => /mousse/filename.png)
-        $imagePath = preg_replace('/\/[a-z0-9]{6,}_(.+)$/i', '/$1', $imagePath);
+        $cleanPath = preg_replace('/\/[a-z0-9]{6,}_(.+)$/i', '/$1', $imagePath);
+        if (!file_exists("../../" . $cleanPath)) {
+            $cleanPath = $imagePath; // Giữ nguyên nếu file không tồn tại
+        }
+        $imagePath = $cleanPath;
+
     }
 
     // ✅ Thêm vào cơ sở dữ liệu

@@ -47,25 +47,6 @@ INSERT INTO users (user_name, first_name, last_name, phone, email, city, distric
 ON DUPLICATE KEY UPDATE phone = VALUES(phone), city = VALUES(city), district = VALUES(district), ward = VALUES(ward), street = VALUES(street), password = VALUES(password), status = VALUES(status);
 
 
--- Thêm dữ liệu vào bảng orders (có ngày nhận và giờ nhận)
--- Thêm dữ liệu vào bảng orders với địa chỉ giao hàng khác
--- Thêm dữ liệu vào bảng orders (có payment_method)
--- Thêm dữ liệu vào bảng orders
-INSERT INTO orders (user_name, recipient_name, recipient_phone, total_cost, status, notes, delivery_date, delivery_time, order_date, shipping_city, shipping_district, shipping_ward, shipping_street, payment_method) VALUES
-('NguyenVanA', 'Nguyen Van A', '0901234567', 1300000, 'Pending', 'Giao hàng sau 18h', '2025-03-21', '18:30:00', NOW(), 'Hồ Chí Minh', 'Quận 7', 'Tân Phong', 'R4-20 Phú Mỹ Hưng', 'COD'),
-('TranThiB', 'Tran Thi B', '0912345678', 450000, 'Processing', 'Giao buổi sáng sớm', '2025-03-20', '07:30:00', NOW(), 'Hồ Chí Minh', 'Quận 1', 'Đa Kao', '10 Nguyễn Bình Khiêm', 'MOMO'),
-('NguyenVanA', 'Nguyen Van A', '0901234567', 950000, 'Cancelled', 'Thanh toán online', '2025-03-25', '14:00:00', NOW(), 'Hồ Chí Minh', 'Bình Thạnh', 'Phường 15', '22 Đinh Bộ Lĩnh', 'VNPay');
-
-
--- Thêm dữ liệu vào bảng order_detail
-INSERT INTO order_detail (order_id, product_id, quantity, price, note) VALUES
-(1, 1, 2, 110000, 'Không lấy sốt'),
-(1, 3, 1, 55000, 'Ít đường'),
-(2, 2, 1, 130000, 'Giao nóng, không bỏ tủ lạnh'),
-(2, 4, 1, 540000, 'Trang trí thêm hoa quả'),
-(3, 1, 1, 530000, 'Hộp quà kèm thiệp chúc mừng'),
-(3, 5, 2, 140000, 'Gói riêng từng cái croissant');
-
 -- Thêm dữ liệu vào bảng cart (tránh lỗi trùng dữ liệu)
 INSERT INTO cart (user_name, product_id, quantity) VALUES
 ('NguyenVanA', 5, 1),

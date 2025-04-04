@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     ];
 
     $folder = isset($categoryFolders[$category]) ? $categoryFolders[$category] : "other";
-    $uploadDir = "../../../public/assets/img/$folder/";
+    $uploadDir = __DIR__ . "/../../../public/assets/img/$folder/";
 
     // Tạo thư mục nếu chưa tồn tại
     if (!file_exists($uploadDir)) {
