@@ -32,7 +32,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
                 'username' => null,
                 'role' => null,
                 'status' => null,
-                'message' => 'Tài khoản của bạn đã bị khóa.'
+                'message' => 'Your account has been locked.'
             ];
             echo json_encode($response);
             exit();
@@ -55,7 +55,7 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
         'username' => null,
         'role' => null
         ,'status' => null,
-       'message' => 'Bạn chưa đăng nhập.'
+       'message' => 'You are not logged in.'
     ];
 }
 

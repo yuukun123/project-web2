@@ -75,7 +75,7 @@ if ($loggedIn) {
         <?php endif; ?>
     <?php else: ?>
         <p style="text-align: center; color: red;  margin-bottom: 20px; margin-top: 30px;">
-            Bạn chưa đăng nhập. Vui lòng đăng nhập để xem hóa đơn.
+            You are not logged in. Please log in to view the invoice.
         </p>
     <?php endif; ?>
 </div>
