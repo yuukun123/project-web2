@@ -144,6 +144,58 @@ function toggleGrade(contentId, chevronId) {
 
 
 
+// Hàm hiển thị form sửa và điền dữ liệu vào form
+function editProduct(product) {
+    // Hiển thị form sửa và overlay
+    document.getElementById('editNotification').style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
+
+    // Gán dữ liệu sản phẩm vào form
+    document.getElementById('product_name').value = product.product_name;
+    document.getElementById('product_price').value = product.price;
+    document.getElementById('product_category').value = product.category_name || product.category_id;
+    document.getElementById('product_status').value = product.status;
+
+    // Hiển thị ảnh hiện tại
+    const img = document.getElementById('current_product_image');
+    img.src = product.image;
+    img.style.display = 'block';
+
+    // Đảm bảo nút "Save" xử lý gửi dữ liệu mới
+    const form = document.querySelector('#editNotification form');
+    form.onsubmit = function (e) {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append('product_id', product.product_id);
+        formData.append('product_name', document.getElementById('product_name').value);
+        formData.append('price', document.getElementById('product_price').value);
+        formData.append('category_id', document.getElementById('product_category').value);
+        formData.append('status', document.getElementById('product_status').value);
+
+        const imageInput = document.getElementById('product_image');
+        if (imageInput.files.length > 0) {
+            formData.append('product_image', imageInput.files[0]);
+        }
+
+        fetch(`/project-web2/app/Admin/Views/products/list.product.php?id=${productId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert('Cập nhật sản phẩm thành công!');
+                hideNotification('editNotification');
+                location.reload(); // Hoặc cập nhật giao diện nếu cần
+            } else {
+                alert('Cập nhật thất bại: ' + data.message);
+            }
+        })
+        .catch(err => {
+            console.error(err);
+            alert('Có lỗi xảy ra khi gửi dữ liệu!');
+        });
+    };
+}
+
 function showEditNotification() {
     document.getElementById('editNotification').style.display = 'block';
     document.getElementById('overlay').style.display = 'block';
