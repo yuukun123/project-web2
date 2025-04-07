@@ -1,9 +1,9 @@
 RewriteEngine On
-RewriteBase /project-web2/
+RewriteBase /project-web2
 
-RewriteCond %{REQUEST_URI} !^/index\\.php$
+# Rule cho URL trống phải được ưu tiên
+RewriteCond %{REQUEST_URI} !^/index\.php$
+RewriteRule ^$ index.php?pages=home [QSA,L]
+
+RewriteCond %{REQUEST_URI} !^/index\.php$
 RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product|pay)$ index.php?pages=$1 [QSA,L]
-
-# Nếu người dùng gõ / (trống), chuyển hướng về home
-RewriteCond %{REQUEST_URI} !^/index\\.php$
-RewriteRule ^home$ index.php?pages=home [QSA,L]

@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const blurOverlay = document.querySelector('.blur-overlay');
     const save_suc = document.querySelector('.save-success');
     const close = document.querySelector('.close');
+    const fileInput = document.getElementById("fileInput")
+    const categorySelect = document.getElementById("category");
     
     // Biến flag để ngăn double submit
     let isSubmitting = false;
@@ -21,8 +23,25 @@ document.addEventListener('DOMContentLoaded', function() {
         let status = document.getElementById("status").value.trim();
         let category = document.getElementById("category").value.trim();
         let size = document.getElementById("size").value.trim();
-        let description = document.getElementById("description").value.trim();
+        let ingredient = document.getElementById("ingredient").value.trim();
         let imagePath = document.getElementById("filePath").value.trim();
+        let expirationDate = document.getElementById("expiration_date").value.trim();
+        let storage = document.getElementById("storage").value.trim();
+        // Kiểm tra giá trị của giá trị đã nhập
+        if (!/^\d+(\.\d{1,2})?$/.test(price)) {
+            alert("���️ Price must be a valid number (e.g., 12.34)");
+            isSubmitting = false;  // reset flag
+            return;
+        }
+        
+        if (!expirationDate) {
+            alert("⚠️ Please select an expiration date!");
+            isSubmitting = false;  // reset flag
+            return;
+        }
+        
+        // Đảm bảo định dạng ngày tháng kiểu TEXT (YYYY-MM-DD)
+        let expirationDateText = expirationDate; 
 
         // In ra console để debug
         console.log("📌 Dữ liệu nhập vào:");
@@ -31,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("📌 Status:", status);
         console.log("📁 Category:", category);
         console.log("📏 Size:", size);
-        console.log("📃 Description:", description);
+        console.log("📃 Ingredient:", ingredient);
+        console.log("📅 Expiration Date:", expirationDate);
+        console.log("🏠 Storage:", storage);
         console.log("🖼 Image Path:", imagePath);
 
         // Kiểm tra nếu có trường nào bị thiếu
@@ -48,7 +69,9 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("status", status);
         formData.append("category", category);
         formData.append("size", size);
-        formData.append("description", description);
+        formData.append("ingredient", ingredient);
+        formData.append("expiration_date", expirationDateText); // Đảm bảo định dạng kiểu TEXT
+        formData.append("storage", storage); // Nếu cần thiết
         formData.append("image", imagePath);
 
         // Gửi request AJAX để lưu sản phẩm
@@ -149,20 +172,23 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
     // Đường dẫn ảnh
-    document.getElementById("fileInput").addEventListener("change", function (event) {
+    fileInput.addEventListener("change", function (event) {
+
+        // Kiểm tra lại lần nữa nếu có thay đổi trong category
+        // Kiểm tra nếu category vẫn là giá trị mặc định "--Select category--"
+        if (!categorySelect.value || categorySelect.value === "--Select category--") {
+            alert("⚠️ Please select a category before uploading an image!");
+            fileInput.value = "";  // Reset lại giá trị file input
+            return;
+        }
+
         previewImage(event);  // 👉 Gọi hàm preview
     
         let file = this.files[0];
-        let category = document.getElementById("category").value; // Lấy category từ select
-    
-        if (!category) {
-            alert("⚠️ Please select a category before uploading the image!");
-            return;
-        }
     
         let formData = new FormData();
         formData.append("file", file);
-        formData.append("category", category);
+        formData.append("category", categorySelect.value);
     
         fetch("../Api_php/upload-img.php", {
             method: "POST",
@@ -213,5 +239,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('filePath').value = '';
     });
     
+    document.getElementById('expiration_date').setAttribute('min', new Date().toISOString().split('T')[0]);
 
 });

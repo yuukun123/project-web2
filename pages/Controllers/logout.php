@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setcookie("remember_token", "", time() - 3600, "/");
 
     // Chuyển hướng về trang chủ
-    header("Location: ../../index.php");
+    header("Location: ../../home");
     exit();
 }
 
 // Nếu truy cập bằng GET, tự động quay về trang chủ
-header("Location: ../../index.php");
+header("Location: ../../home");
 exit();
 ?>

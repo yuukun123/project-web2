@@ -61,6 +61,19 @@
                 </div>
             </div>
 
+            <div class="expiration-date">
+                <div class="product-head">Expiration date</div>
+                <div class="product-items">
+                    <input type="date" name="expiration_date" id="expiration_date" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="storage">
+            <div class="product-head">Storage</div>
+            <div class="product-items">
+                <input type="text" name="storage" id="storage" required>
+            </div>
         </div>
 
     </div>
@@ -74,10 +87,10 @@
             </label>
             <input type="text" id="filePath" name="filePath" readonly />
             <input type="file" id="fileInput" name="image" style="display:none;" />
-            <div class="product-pic describe">Describe</div>
+            <div class="product-pic describe">Ingredients</div>
             <div class="write-describe">
                 
-                <textarea name="description" id="description" rows="6" cols="145" style="overflow:auto;" required></textarea>
+                <textarea name="ingredient" id="ingredient" rows="6" cols="145" style="overflow:auto;" required></textarea>
             </div>
         </div>
 

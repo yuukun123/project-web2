@@ -124,13 +124,6 @@ header.hide {
     display: inline-block; /* Đảm bảo kích thước phù hợp */
 }
 
-.cart-count-mobile{
-    font-size: 12px;
-    color: orange;
-    position: relative;
-    top: -47px;
-    left: 129px;
-}
 
 .navigation a:hover {
     color: #ed8a9f;
@@ -417,7 +410,7 @@ header.hide {
     position: fixed;
     top: 80px; /* Adjust as per header height */
     right: 0;
-    width: 250px;
+    width: 230px;
     height: 100%;
     background-color: white;
     padding: 10px 0;
@@ -428,14 +421,6 @@ header.hide {
 
 .mobile-menu.active {
     right: 0; /* Show when active */
-}
-
-
-.mobile-menu-off a {
-    padding: 10px;
-    color: black;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
 }
 
 .mobile-menu-off .hover {
@@ -472,7 +457,8 @@ header.hide {
     padding: 10px;
     color: black;
     text-decoration: none;
-    border-bottom: 1px solid #ddd;
+    text-align: center;
+    border-bottom: 2px solid #ddd;
 }
 
 /* Style for sub-menu items */
@@ -513,11 +499,6 @@ header.hide {
     margin-top: 25px;
 }
 
-/* .btn-log{
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-} */
-
 .user-menu{
     display: flex;
     gap: 20px;
@@ -529,6 +510,18 @@ header.hide {
 
 .mobile-menu-off .sp-cart :hover{
     color: orange;
+}
+
+.btn-log{
+    display: flex;
+}
+
+.cart-count-mobile{
+    font-size: 12px;
+    color: orange;
+    position: relative;
+    top: -47px;
+    left: 132px;
 }
 
 @media (max-width: 860px) {
@@ -559,7 +552,7 @@ header.hide {
         display: flex;
         position: fixed;
         right: 0;
-        width: 255px;
+        width: 240px;
         margin-top: -80px;
         padding: 35px 10px;
         z-index: 5;

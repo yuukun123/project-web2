@@ -12,7 +12,7 @@ const logo = document.querySelector('.logo');
 logo.addEventListener('click', function(e) {
 
     e.preventDefault();
-    window.location.href = '/project-web2/home'; 
+    window.location.href = 'home'; 
 });
 
 function myFunction() {

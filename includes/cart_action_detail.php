@@ -12,15 +12,8 @@ if (
     !isset($_SESSION['user']['username']) || 
     !isset($_SESSION['user']['role'])
 ) 
-{
-    echo json_encode([
-        "success" => false,
-        "redirect" => "login",
-        "message" => "Please log in before performing this action."
-    ]);
-    exit;
 
-}
+
 
 include "../app/config/data_connect.php"; // Kết nối database
 
@@ -43,8 +36,6 @@ if ($result_user->num_rows === 0) {
     echo json_encode(["success" => false, "message" => "User does not exist."]);
     exit;
 }
-
-
 
 if ($action == "add" && $product_id > 0) {
     // Kiểm tra xem sản phẩm đã có trong giỏ chưa

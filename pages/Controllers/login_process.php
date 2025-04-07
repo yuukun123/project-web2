@@ -22,12 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Kiểm tra nếu tài khoản bị khóa
         if (strtolower($user['status']) === 'locked') {
-            header("Location: /project-web2/login?error=account_locked");
+            header("Location: ../../login?error=account_locked");
             exit();
         }
 
         if (strtolower($user['role']) !== 'customer') {
-            header("Location: /login?error=role_not_allowed");
+            header("Location: ../../login?error=role_not_allowed");
             exit();
         }
 
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 header("Location: ../../home");
                 exit();
             } else {
-                header("Location: /project-web2/login?error=wrong_password");
+                header("Location: ../../login?error=wrong_password");
                 exit();
             }
         } 
@@ -67,15 +67,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             header("Location: ../../home");
             exit();
         } else {
-            header("Location: /project-web2/login?error=wrong_password");
+            header("Location: ../../login?error=wrong_password");
             exit();
         }
     } else {
-        header("Location: /project-web2/login?error=user_not_found");
+        header("Location: ../../login?error=user_not_found");
         exit();
     }
 } else {
-    header("Location: /project-web2/login?error=method_not_allowed");
+    header("Location: ../../login?error=method_not_allowed");
     exit();
 }
 ?>

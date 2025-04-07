@@ -126,6 +126,16 @@ document.addEventListener('DOMContentLoaded', function () {
         VNPay.classList.remove('show');
     });
     
+    // Lấy ngày hôm nay và định dạng lại theo định dạng yyyy-mm-dd
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    var yyyy = today.getFullYear();
+
+    today = yyyy + '-' + mm + '-' + dd;
+
+    // Đặt ngày hôm nay là giá trị min của input
+    document.getElementById("delivery_date").setAttribute("min", today);
     
     
 

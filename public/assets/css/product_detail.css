@@ -60,15 +60,15 @@
 }
 
 .date-use{
-    font-size: 20px;
-    margin-top: 25px;
+    font-size: 17px;
+    margin-top: 10px;
     color: #d5909f;
     font-weight: bolder;
 }
 
 .date-span{
     color: red;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .size-cake{
@@ -301,9 +301,7 @@
 
 /* Responsive Design */
 @media screen and (min-width: 1390px){
-    .header{
-        padding: 0 100px;
-    }
+
     .tab_content{
         grid-template-columns: repeat(4,1fr);
         gap: 40px;
@@ -328,24 +326,6 @@
 }
 
 @media screen and (max-width: 1280px){
-   
-
-    .header{
-        padding: 0px 59px;
-        will-change: padding;
-    }
-
-    .search-container{
-        margin-left: 70px;
-    }
-
-    .input-wrapper input{
-        width: 260px;
-    }
-
-    .search-icon button {
-        width: 55px;
-    }
 
     .pg-12{
         padding: 0 153px;
@@ -384,28 +364,6 @@
 
 /* Tablet */
 @media screen and (max-width: 1024px) {
-    .header{
-        height: 165px;
-        font-size: 15px;
-        padding: 0px 55px;
-        transition: width 0.5s ease-in-out;
-    }
-
-    .navigation a {
-        padding: 0px 11px;
-    }
-
-    .search-container{
-        margin-left: 25px;
-    }
-
-    .input-wrapper input{
-        width: 215px;
-    }
-
-    .search-icon button {
-        width: 55px;
-    }
     .pg-12{
         padding: 0 46px;
     }
@@ -503,60 +461,6 @@
 
 
 @media screen and (max-width: 890px) {
-    .header {
-        padding: 0 20px;
-        position: relative;
-        top: 0;
-        left: 0;
-        width: 100%;
-        max-width: 100vw;
-        box-sizing: border-box;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-content: space-between;
-        align-items: center;
-        padding: 0px 120px;
-        height: 150px;
-        transition: transform 0.3s ease-in-out;
-    }
-
-    /* Hide the navigation by default on screens <= 1000px */
-    .navigation {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background-color: #fff;
-        flex-direction: column;
-        padding: 20px 0;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    /* Show the navigation when it has the 'active' class */
-    .navigation.active {
-        display: flex;
-    }
-
-    /* Adjust styles for navigation items in responsive mode */
-    .navigation a {
-        padding: 10px 20px;
-        width: 100%;
-        text-align: left;
-    }
-
-    /* Show the hamburger menu */
-    .hamburger {
-        display: flex;
-        justify-content: space-around;
-        margin-left: auto;
-    }
-
-    .logo img {
-        width: 150px;
-        height: auto;
-        margin-right: auto;
-    }
     .pg-12{
         padding:0 40px;
     }
@@ -617,49 +521,6 @@
     }
 }
 @media screen and (max-width: 768px) {
-    .wrapper{
-        font-size: 17.5px;
-        width: 620px;
-        height: auto;
-        transition: width 0.5s ease, height 0.5s ease-in-out; 
-    }
-
-    .wrapper .form-box.register{
-        padding: 20px;
-    }
-
-    .wrapper .form-box.register .input-infor{
-        font-size: 15px;
-    }
-    .flex-full {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        margin-left: -205px;
-    }
-    
-    .film-title {
-        display: flex;
-        align-items: center;
-        margin-left: 200px;
-    }
-    
-    .film-title h1 {
-        margin: 0;
-        padding: 0 10px;
-        font-size: 30px;
-        text-transform: uppercase;
-        color: #4a5568;
-    }
-    
-    .vertical-line {
-        width: 4px;
-        height: 24px;
-        background-color: #3182ce;
-        margin-right: 10px;
-    }
 
     .tab_content{
         grid-template-columns: repeat(4,1fr);
@@ -685,25 +546,6 @@
 }
 
 @media screen and (max-width: 640px) {
-    .header{
-        padding: 0px 50px;
-    }
-
-    .wrapper{
-        font-size: 12.5px;
-        width: 450px;
-        height: auto;
-        transition: width 0.5s ease, height 0.5s ease-in-out; 
-    }
-
-    .wrapper .form-box.register{
-        padding: 20px;
-    }
-
-    .wrapper .form-box.register .input-infor{
-        font-size: 12.5px;
-    }
-
     .pg-12{
         padding: 0 0;
     }
@@ -725,59 +567,7 @@
         height: 275px;
     }
 
-    .flex-full {
-        display: flex;
-        /* justify-content: flex-start; */
-        align-items: center;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        margin-left: -165px;
-    }
-    
-    .film-title {
-        display: flex;
-        align-items: center;
-        margin-left: 200px;
-    }
 
-    .film-title h1{
-        display: none;
-    }
-    
-    .film-title h1 {
-        margin: 0;
-        padding: 0 10px;
-        font-size: 30px;
-        text-transform: uppercase;
-        color: #4a5568;
-    }
-    
-    .vertical-line {
-        width: 4px;
-        height: 24px;
-        background-color: #3182ce;
-        margin-right: 10px;
-        display: none;
-    }
-
-    .slide-banner-img{
-        width:100%; 
-        height:auto;
-        transition: width 0.5s ease, height 0.5s ease; 
-    }
-
-    .carousel-dots{
-        bottom: 1px;
-    }
-
-    .carousel-dots li{
-        margin: 0 3px;
-    }
-
-    .carousel-dots li button{
-        width: 2px;
-        height: 2px;
-    }
     
     .Footer_footer_contain {
         width: 500px;
@@ -794,34 +584,6 @@
 
 /* Mobile */
 @media (max-width: 480px) {
-    .header {
-        flex-direction: column;
-        padding: 10px;
-    }
-
-    .navigation {
-        flex-direction: column;
-    }
-
-    .navigation a {
-        margin: 5px 0;
-    }
-
-    .wrapper{
-        font-size: 12.5px;
-        width: 300px;
-        height: auto;
-        transition: width 0.5s ease, height 0.5s ease-in-out; 
-    }
-
-    .wrapper .form-box.register{
-        padding: 20px;
-    }
-
-    .wrapper .form-box.register .input-infor{
-        font-size: 9px;
-    }
-
     .Home_main {
         padding-top: 10px;
     }
@@ -841,51 +603,6 @@
         margin-left: -85px;
     }
     
-    .film-title {
-        display: flex;
-        align-items: center;
-        margin-left: 200px;
-    }
-
-    .film-title h1{
-        display: none;
-    }
-    
-    .film-title h1 {
-        margin: 0;
-        padding: 0 10px;
-        font-size: 30px;
-        text-transform: uppercase;
-        color: #4a5568;
-    }
-    
-    .vertical-line {
-        display: none;
-        width: 4px;
-        height: 24px;
-        background-color: #3182ce;
-        margin-right: 10px;
-    }
-
-    .nav-links {
-        display: flex;
-        list-style-type: none;
-        padding: 0;
-        margin: 0 0 0 -163px;
-    }
-    
-    .nav-links li {
-        /* margin-right: 30px; */
-    }
-    
-    .nav-links a {
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 15px;
-        font-weight: 500;
-    }
-
-
     .tab_content{
         grid-template-columns: repeat(2,1fr);
         gap: 20px;
@@ -906,37 +623,6 @@
     .poster-img{
         width: 174px;
         height: auto;
-    }
-
-    .slide-banner-img{
-        width:100%; 
-        height:auto;
-        transition: width 0.5s ease, height 0.5s ease; 
-    }
-
-    .carousel-dots{
-        bottom: 1px;
-    }
-
-    .carousel-dots li{
-        margin: 0 3px;
-    }
-
-    .carousel-dots li button{
-        width: 2px;
-        height: 2px;
-    }
-
-    .custom-prev,
-    .custom-next {
-        display: none;
-        /* padding: 6px; */
-    }
-
-    .custom-prev svg,
-    .custom-next svg {
-        width: 15px;
-        height: 15px;
     }
 
     .footer {
@@ -970,67 +656,6 @@
 }
 
 @media (max-width: 360px) {
-    .search-input .search-icon button{
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        margin-top: -230px;
-        margin-right: 2px;
-    }
-
-    .flex-full {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 50px;
-        padding-bottom: 50px;
-        margin-left: -30px;
-    }
-    
-    .film-title {
-        display: flex;
-        align-items: center;
-        margin-left: 200px;
-    }
-
-    .film-title h1{
-        display: none;
-    }
-    
-    .film-title h1 {
-        margin: 0;
-        padding: 0 10px;
-        font-size: 30px;
-        text-transform: uppercase;
-        color: #4a5568;
-    }
-    
-    .vertical-line {
-        display: none;
-        width: 4px;
-        height: 24px;
-        background-color: #3182ce;
-        margin-right: 10px;
-    }
-
-    .nav-links {
-        display: flex;
-        list-style-type: none;
-        padding: 0;
-        margin: 0 0 0 -163px;
-    }
-    
-    .nav-links li {
-        /* margin-right: 30px; */
-    }
-    
-    .nav-links a {
-        text-decoration: none;
-        color: #4a5568;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
     .tab_content{
         grid-template-columns: repeat(2,1fr);
         gap: 24px;
@@ -1377,7 +1002,9 @@
         border: none;
         cursor: pointer;
     }
-
+    .date-use, .date-span{
+        font-size: 11px;
+    }
 }
 @media screen and (max-width:550px){
     
@@ -1464,7 +1091,9 @@
         border: none;
         cursor: pointer;
     }
-    
+    .date-use{
+        text-align: center;
+    }
 }
 @media screen and (max-width:450px){
     

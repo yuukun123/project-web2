@@ -7,17 +7,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Xác định thư mục theo category
     $categoryFolders = [
-        "Mousse" => "mousse",
-        "Drink" => "drink",
-        "Croissant" => "croissant"
+        "Mousse" => "Mousse",
+        "Drink" => "Drink",
+        "Croissant" => "Croissant"
     ];
 
     $folder = isset($categoryFolders[$category]) ? $categoryFolders[$category] : "other";
-    $uploadDir = "../../public/assets/img/$folder/";
+    $uploadDir = __DIR__ . "/../../../public/assets/Img/$folder/";
 
     // Tạo thư mục nếu chưa tồn tại
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
+        echo json_encode([
+            "success" => false,
+            "error" => "Failed to create directory."
+        ]);
+        exit();
     }
 
     if (isset($_FILES["file"]) && $_FILES["file"]["error"] === 0) {
@@ -35,15 +40,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Tạo tên file duy nhất
-        $uniqueName = uniqid() . "_" . $fileName;
-        $targetPath = $uploadDir . $uniqueName;
+        do {
+            $uniqueName = uniqid() . "_" . $fileName;
+            $targetPath = $uploadDir . $uniqueName;
+        } while (file_exists($targetPath));
 
         // Di chuyển file
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
             // Trả về đường dẫn để lưu vào DB & frontend
             echo json_encode([
                 "success" => true,
-                "filePath" => "/assets/img/$folder/" . $uniqueName
+                "filePath" => "/assets/Img/$folder/" . $uniqueName
             ]);
         } else {
             echo json_encode([

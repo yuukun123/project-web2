@@ -84,6 +84,6 @@ $statusColor = match($order['status']) {
     </div>
 
     <div class="total-price">
-        <p><strong>Total Price:</strong> <?= number_format($order['total_cost'], 0, '.', ',') ?> VND</p>
+        <p style="color: red;"><strong>Total Price:</strong> <?= number_format($order['total_cost'], 0, '.', ',') ?> VND</p>
     </div>
 </div>

@@ -6,21 +6,36 @@ include '../../config/data_connect.php';
 header("Content-Type: application/json");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $product_name = trim($_POST['name']);
-    $price = trim($_POST['price']);
-    $category_name = trim($_POST['category']);
-    $size_id = trim($_POST['size']);
-    $status = trim($_POST['status']);
-    $description = trim($_POST['description']);
-
+    $product_name = isset($_POST['name']) ? trim($_POST['name']) : '';
+    $price = isset($_POST['price']) ? trim($_POST['price']) : '';
+    $category_name = isset($_POST['category']) ? trim($_POST['category']) : '';
+    $size_id = isset($_POST['size']) ? trim($_POST['size']) : '';
+    $status = isset($_POST['status']) ? trim($_POST['status']) : '';
+    $ingredient = isset($_POST['ingredient']) ? trim($_POST['ingredient']) : '';
+    $expiration_date = isset($_POST['expiration_date']) ? trim($_POST['expiration_date']) : '';
+    $storage = isset($_POST['storage']) ? trim($_POST['storage']) : '';
+    
     $response = ["status" => "error", "message" => ""];
+    
 
-    if (empty($product_name) || empty($price) || empty($category_name) || empty($size_id) || empty($status)) {
-        $response["message"] = "Please fill in all required fields.";
+    // Kiểm tra các trường bắt buộc
+    $missingFields = [];
+
+    if (empty($product_name)) $missingFields[] = "Product name";
+    if (empty($price)) $missingFields[] = "Price";
+    if (empty($category_name)) $missingFields[] = "Category";
+    if (empty($size_id)) $missingFields[] = "Size";
+    if (empty($status)) $missingFields[] = "Status";
+    if (empty($ingredient)) $missingFields[] = "Ingredient";
+    if (empty($expiration_date)) $missingFields[] = "Expiration date";
+    if (empty($storage)) $missingFields[] = "Storage instructions";
+    
+    if (!empty($missingFields)) {
+        $response["message"] = "Please fill in the following required fields: " . implode(", ", $missingFields);
         echo json_encode($response);
         exit();
     }
-
+    
     if (!is_numeric($price) || $price <= 0) {
         $response["message"] = "Invalid price.";
         echo json_encode($response);
@@ -31,15 +46,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("SELECT category_id FROM category WHERE category_name = ?");
     $stmt->bind_param("s", $category_name);
     $stmt->execute();
-    $stmt->bind_result($category_id);
-    $stmt->fetch();
-    $stmt->close();
-
-    if (!$category_id) {
+    $stmt->store_result();
+    
+    if ($stmt->num_rows === 0) {
         $response["message"] = "Invalid category selection.";
         echo json_encode($response);
         exit();
     }
+    
+    $stmt->bind_result($category_id);
+    $stmt->fetch();
+    $stmt->close();
 
     // Kiểm tra size
     $stmt = $conn->prepare("SELECT size_id FROM size WHERE size_id = ?");
@@ -52,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     $stmt->close();
+    
 
     $imagePath = "";
 
@@ -74,17 +92,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($targetDir, 0777, true);
         }
 
-        $originalFileName = basename($_FILES['image']['name']); // giữ tên gốc
-        $targetFilePath = $targetDir . $originalFileName;
-
+        do {
+            $uniqueName = uniqid() . "_" . basename($_FILES['image']['name']);
+            $targetFilePath = $targetDir . $uniqueName;
+        } while (file_exists($targetFilePath)); // Lặp lại nếu tên đã tồn tại
+        
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
-            // Đường dẫn lưu vào DB: public/assets/Img/CategoryName/Filename.png
-            $imagePath = "public/assets/Img/$folderName/" . $originalFileName;
+            $imagePath = "public/assets/Img/$folderName/" . $uniqueName;
         } else {
             $response["message"] = "Image upload failed.";
             echo json_encode($response);
             exit();
         }
+        
+        
     } 
     // ✅ Trường hợp nhận link ảnh từ input text
     elseif (isset($_POST['image']) && !empty(trim($_POST['image']))) {
@@ -96,17 +117,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         // Thay img thành Img và viết hoa chữ đầu danh mục
-        $imagePath = preg_replace_callback('/public\/assets\/img\/([^\/]+)\//', function ($matches) {
+        $imagePath = preg_replace_callback('/public\/assets\/Img\/([^\/]+)\//', function ($matches) {
             return 'public/assets/Img/' . ucfirst(strtolower($matches[1])) . '/';
         }, $imagePath);
 
         // Bỏ phần hash nếu có (ví dụ: /mousse/67d8e37fc0884_filename.png => /mousse/filename.png)
-        $imagePath = preg_replace('/\/[a-z0-9]{6,}_(.+)$/i', '/$1', $imagePath);
+        $cleanPath = preg_replace('/\/[a-z0-9]{6,}_(.+)$/i', '/$1', $imagePath);
+        if (!file_exists("../../" . $cleanPath)) {
+            $cleanPath = $imagePath; // Giữ nguyên nếu file không tồn tại
+        }
+        $imagePath = $cleanPath;
+
     }
 
     // ✅ Thêm vào cơ sở dữ liệu
-    $stmt = $conn->prepare("INSERT INTO product (product_name, price, category_id, size_id, status, description, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sdiisss", $product_name, $price, $category_id, $size_id, $status, $description, $imagePath);
+    $stmt = $conn->prepare("INSERT INTO product (product_name, price, category_id, size_id, status, ingredients, expiration_date, storage_instructions, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sdiisssss", $product_name, $price, $category_id, $size_id, $status, $ingredient, $expiration_date, $storage, $imagePath);
 
     if ($stmt->execute()) {
         $response["status"] = "success";
