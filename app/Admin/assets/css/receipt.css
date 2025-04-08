@@ -56,7 +56,19 @@
     background: #ffa0c8;
     border: 1px solid white;
 }
-
+.btn-update{
+    margin-left: 5px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: none;
+    padding: 5px 10px;
+    background: #0e990e;
+    color: white;
+    cursor: pointer;
+}
+.btn-update:hover{
+    background: #0a6f0a;
+}
 /* Responsive Design */
 @media screen and (min-width: 1390px) and (min-width: 1281px) {
     /* .text-head{
@@ -218,7 +230,7 @@
         padding: 6px 7px;
     }
     select{
-        padding: 6px 7px !important;
+        padding: 6px 0px !important;
         font-size: 8px;
     }
 

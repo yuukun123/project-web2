@@ -139,7 +139,7 @@ $result = $conn->query($sql);
                         <option value="Completed" <?= $row['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
                         <option value="Cancelled" <?= $row['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
                     </select>
-                    <button type="submit">Update</button>
+                    <button class="btn-update" type="submit">Update</button>
                 </form>
             </td>
         </tr>
