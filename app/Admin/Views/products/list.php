@@ -1,15 +1,30 @@
 <?php
-include '../../config/data_connect.php'; // Đảm bảo đường dẫn đúng với tệp kết nối CSDL
+include '../../config/data_connect.php'; // Kết nối CSDL
 
-// Truy vấn dữ liệu sản phẩm
+// 🔹 Phân trang: cần đặt TRƯỚC khi truy vấn
+$productsPerPage = 6;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+if ($page < 1) $page = 1;
+$offset = ($page - 1) * $productsPerPage;
+
+// 🔹 Lấy tổng số sản phẩm
+$totalQuery = "SELECT COUNT(*) as total FROM product";
+$totalResult = $conn->query($totalQuery);
+$totalRow = $totalResult->fetch_assoc();
+$totalProducts = $totalRow['total'];
+$totalPages = ceil($totalProducts / $productsPerPage);
+
+// 🔹 Truy vấn sản phẩm có phân trang
 $sql = "SELECT product_id, product_name, image, status, price, category_id 
-        FROM product";
+        FROM product
+        LIMIT $productsPerPage OFFSET $offset";
 $result = $conn->query($sql);
 
 if (!$result) {
     die("Lỗi truy vấn: " . $conn->error);
 }
 
+// 🔹 Xử lý cập nhật sản phẩm (nếu có POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id = $_POST['product_id'];
     $name = $_POST['product_name'];
@@ -17,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $price = $_POST['price'];
     $category = $_POST['category_id'];
 
-    // Xử lý upload hình ảnh nếu có
     if (!empty($_FILES['product_image']['name'])) {
         $target_dir = "uploads/";
         $image_name = basename($_FILES["product_image"]["name"]);
@@ -38,18 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+// 🔹 Trả về JSON sản phẩm nếu gọi bằng AJAX
+if (isset($_GET['product_id'])) {
+    $id = $_GET['product_id'];
     $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $result = $stmt->get_result();
     $product = $result->fetch_assoc();
     echo json_encode($product);
-} else {
-    echo json_encode(['error' => 'ID not provided']);
+    exit;
 }
 ?>
+
 
 
 <link rel="stylesheet" href="../Admin/assets/css/list-product.css">
@@ -77,12 +92,13 @@ if (isset($_GET['id'])) {
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
         <div class="product-items"> <?php echo $row['category_id']; ?> </div>
         <div class="product-items">
-            <button class="edit-button" onclick="editProduct(<?= $row['product_id'] ?>)">Edit</button>
+            <button class="edit-btn" data-id="<?= $row['product_id']; ?>">Edit</button>
             <button class="delete-button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
         </div>
     <?php } ?>
 </div>
 
+<div id="overlay" class="overlay"></div>
 
 <!-- Edit Notification -->
 <div class="notification edit-notification" id="editNotification">
@@ -111,3 +127,22 @@ if (isset($_GET['id'])) {
         <button type="button" onclick="hideNotification('editNotification')">Cancel</button>
     </form>
 </div>
+
+<!-- Phân trang -->
+<div class="pagination">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1; ?>" class="btn"><</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+        <a href="?page=<?= $i; ?>" class="btn <?= ($i == $page) ? 'active' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($page < $totalPages): ?>
+        <a href="?page=<?= $page + 1; ?>" class="btn">></a>
+    <?php endif; ?>
+</div>
+
+

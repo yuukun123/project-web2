@@ -39,9 +39,9 @@
         
     </div>
     
+    <link rel="stylesheet" href="../assets/css/list-product.css">
     <script src="../assets/js/script.js"></script>
-    <script src="../assets/js/list-product.js"></script>
-]
+    <script src="../Admin/assets/js/list-product.js"></script>
 </body>
 
 </html>
