@@ -79,9 +79,10 @@ if (!$result) {
 
     <div class="bsearchpro">
         <form class="search-container-pro" method="GET" action="">
+            
             <div class="flex">
-                <input type="text" name="searchName" placeholder="Search name" 
-                    value="<?php echo isset($_GET['searchName']) ? htmlspecialchars($_GET['searchName']) : ''; ?>">
+                <p class="title-search">Product name: <input type="text" name="searchName" placeholder="Search name" 
+                value="<?php echo isset($_GET['searchName']) ? htmlspecialchars($_GET['searchName']) : ''; ?>"></p>
                 
                 <select name="searchCategory" class="category-select">
                     <option value="0">Category</option>
@@ -93,11 +94,16 @@ if (!$result) {
                     <?php endforeach; ?>
                 </select>
             </div>
-            <div class="search-price flex">
-                <input type="number" name="minPrice" placeholder="Minimum price" min="0" 
-                    value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>">
+            <div class="search-price">
+              <div class="from">
+              <p class="title-search">Price from: <input type="number" name="minPrice" placeholder="Minimum price" min="0" 
+              value="<?php echo isset($_GET['minPrice']) && $_GET['minPrice'] !== '' ? htmlspecialchars($_GET['minPrice']) : ''; ?>"></p>
+              </div>
+               <div class="to">
+               <label class="title-search">to:</label>
                 <input type="number" name="maxPrice" placeholder="Maximum price" min="0"
                     value="<?php echo isset($_GET['maxPrice']) && $_GET['maxPrice'] !== '' ? htmlspecialchars($_GET['maxPrice']) : ''; ?>">
+               </div>
             </div>
             <div class="btn-submit">
             <button type="submit" class="btn-searchpro">Search</button>
