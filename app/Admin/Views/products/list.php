@@ -1,5 +1,7 @@
 <?php
-include '../../config/data_connect.php'; // Kết nối CSDL
+include __DIR__ . '/../../../config/data_connect.php';
+
+ // Kết nối CSDL
 
 // 🔹 Phân trang: cần đặt TRƯỚC khi truy vấn
 $productsPerPage = 6;
@@ -93,7 +95,10 @@ if (isset($_GET['product_id'])) {
         <div class="product-items"> <?php echo $row['category_id']; ?> </div>
         <div class="product-items">
             <button class="edit-btn" data-id="<?= $row['product_id']; ?>">Edit</button>
-            <button class="delete-button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
+            <form method="GET" action="../Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
+                <input type="hidden" name="product_id" value="<?= $row['product_id']; ?>">
+                <button type="submit" class="delete-button">Delete</button>
+            </form>
         </div>
     <?php } ?>
 </div>
