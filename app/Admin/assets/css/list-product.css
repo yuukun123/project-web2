@@ -54,22 +54,66 @@
     height: auto;
 }
 
-.status {
-    padding: 5px 10px;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
-}
-
-.in-stock {
-    color: #21885a;
+.status-label {
     font-weight: 550;
     border-radius: 3px;
+    padding: 2px 6px;
+    display: inline-block;
 }
 
-.out-of-stock {
-    background-color: red;
+.status-label.available {
+    color: #21885a;
 }
+
+.status-label.out-of-stock {
+    background-color: red;
+    color: white;
+}
+
+.status-label.discontinued {
+    background-color: orange;
+    color: white;
+}
+
+.status-label.hidden {
+    color: #5a6268;
+}
+
+.edit-btn,
+.delete-button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 4px;
+}
+
+
+/* Edit button */
+.edit-btn {
+    background-color: #3498db;
+    color: white;
+}
+
+.edit-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Delete button */
+.delete-button {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
 
 .edit-button{
     background-color: transparent;
@@ -480,11 +524,6 @@
     text-align: center;
 }
 
-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
 
 .form-left,
 .form-right {
@@ -700,16 +739,6 @@ form {
     background-color: #5a6268; /* Màu xám đậm hơn khi hover */
 }
 
-.overlay {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5) !important;
-    display: none !important;
-    z-index: 1000;
-}
 
 /* pagination */
 
@@ -749,4 +778,132 @@ form {
 .pagination .active {
     background: #ffa0c8;
     border: 1px solid white;
+}
+
+/* Ẩn mặc định */
+#editModal .overlay,
+#editModal .notification.edit-notification {
+    display: none;
+}
+
+/* Khi được target */
+#editModal:target .overlay,
+#editModal:target .notification.edit-notification {
+    display: block;
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 999;
+}
+
+/* Modal */
+.notification.edit-notification {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 420px;
+    max-width: 90%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    z-index: 1000;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+
+.notification.edit-notification {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #fff;
+    padding: 25px 30px;
+    border-radius: 16px;
+    width: 420px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    color: #333;
+}
+
+.notification.edit-notification h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.notification.edit-notification label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    margin-top: 12px;
+}
+
+.notification.edit-notification input[type="text"],
+.notification.edit-notification input[type="number"],
+.notification.edit-notification select,
+.notification.edit-notification input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 15px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.notification.edit-notification img {
+    margin: 10px 0;
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.notification.edit-notification select {
+    appearance: none;
+}
+
+.notification.edit-notification button,
+.notification.edit-notification .cancel-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+.notification.edit-notification button {
+    background-color: #4CAF50;
+    color: white;
+    margin-right: 10px;
+}
+
+.notification.edit-notification button:hover {
+    background-color: #45a049;
+}
+
+.notification.edit-notification .cancel-button {
+    background-color: transparent;
+    color: #9b59b6;
+    text-decoration: none;
+}
+
+.notification.edit-notification .cancel-button:hover {
+    text-decoration: underline;
 }
