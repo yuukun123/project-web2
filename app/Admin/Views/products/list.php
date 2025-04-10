@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db_image_path = $relative_path . $new_filename;
 
         if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $target_file)) {
-            $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, image=?, ingredients=?, expiration_date=?, storage_instruction=? WHERE product_id=?");
+            $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, image=?, ingredients=?, expiration_date=?, storage_instructions=? WHERE product_id=?");
             $stmt->bind_param("sssissssi", $name, $status, $price, $category, $db_image_path, $ingredients, $expiration, $storage, $id);
         } else {
             $errorMsg = "❌ Upload hình ảnh thất bại!";
