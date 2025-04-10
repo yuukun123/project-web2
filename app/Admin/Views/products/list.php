@@ -1,4 +1,3 @@
-
 <?php
 include __DIR__ . '/../../../config/data_connect.php';
 // lấy thông tin sản phẩm:
@@ -42,8 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['product_status'];
     $price = $_POST['product_price'];
     $category = $_POST['product_category'];
+    $ingredients = $_POST['product_ingredients'];
+    $expiration = $_POST['product_expiration'];
+    $storage = $_POST['product_storage'];
 
-    // 🔸 Lấy tên danh mục từ category_id
     $catStmt = $conn->prepare("SELECT category_name FROM category WHERE category_id = ?");
     $catStmt->bind_param("i", $category);
     $catStmt->execute();
@@ -52,45 +53,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $categoryName = $catRow['category_name'] ?? 'default';
 
     if (!empty($_FILES['product_image']['name'])) {
-        // 🔸 Tạo thư mục tương ứng với category_name
         $folderName = str_replace(' ', '', $categoryName);
-
-        // 🔸 Dẫn đường tuyệt đối từ thư mục gốc web
         $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/project-web2/public/assets/Img/" . $folderName . "/";
         $relative_path = "public/assets/Img/" . $folderName . "/";
-        
-
-
         $image_name = basename($_FILES["product_image"]["name"]);
         $new_filename = time() . "_" . $image_name;
         $target_file = $target_dir . $new_filename;
         $db_image_path = $relative_path . $new_filename;
-        
+
         if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $target_file)) {
-            // cập nhật DB như bình thường
-            $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, image=? WHERE product_id=?");
-            $stmt->bind_param("sssisi", $name, $status, $price, $category, $db_image_path, $id);
+            $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, image=?, ingredients=?, expiration_date=?, storage_instruction=? WHERE product_id=?");
+            $stmt->bind_param("sssissssi", $name, $status, $price, $category, $db_image_path, $ingredients, $expiration, $storage, $id);
         } else {
             $errorMsg = "❌ Upload hình ảnh thất bại!";
         }
-        
     } else {
-        $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=? WHERE product_id=?");
-        $stmt->bind_param("ssssi", $name, $status, $price, $category, $id);
+        $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, ingredients=?, expiration_date=?, storage_instructions=? WHERE product_id=?");
+        $stmt->bind_param("sssisssi", $name, $status, $price, $category, $ingredients, $expiration, $storage, $id);
     }
 
     if (isset($stmt) && $stmt->execute()) {
         echo "<script>
-        alert('Update Successfull!');
-        window.history.back();
-    </script>";
-    } elseif (isset($stmt)) {
-        echo "Lỗi: " . $stmt->error;
+            alert('Update Successfull!');
+            window.location.href = 'list-product.php';
+        </script>";
     }
-    
 }
 
-// 🔹 Trả về JSON sản phẩm nếu gọi bằng AJAX
 if (isset($_GET['product_id'])) {
     $id = $_GET['product_id'];
     $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = ?");
@@ -102,6 +91,7 @@ if (isset($_GET['product_id'])) {
     exit;
 }
 ?>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -261,6 +251,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     </option>
                 <?php endwhile; ?>
             </select>
+                        <label for="product_ingredients">Ingredients:</label>
+            <input type="text" id="product_ingredients" name="product_ingredients" value="<?= htmlspecialchars($editingProduct['ingredients']) ?>">
+
+            <label for="product_expiration">Expiration Date:</label>
+            <input type="date" id="product_expiration" name="product_expiration" value="<?= htmlspecialchars($editingProduct['expiration_date']) ?>">
+
+            <label for="product_storage">Storage Instruction:</label>
+            <input type="text" id="product_storage" name="product_storage" value="<?= htmlspecialchars($editingProduct['storage_instructions']) ?>">
 
             <button type="submit">Save</button>
             <a href="list-product.php" class="cancel-button">Cancel</a>
