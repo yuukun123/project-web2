@@ -48,7 +48,7 @@ if (!empty($product)) {
                 <p>' . $product['ingredients'] . '</p>
             </div>
 
-            <div class="date-use">Use: <span class="date-span">' .$product['expiration_date']. '</span> </div>
+            <div class="date-use">Expired: <span class="date-span">' .$product['expiration_date']. '</span> </div>
             <div class="date-use">Preserves: <span class="date-span" style="color: #8098cc;">' .$product['storage_instructions']. '</span></div>
             <div class="buy-cake">
 

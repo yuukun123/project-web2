@@ -36,7 +36,7 @@ CREATE TABLE product (
     price DECIMAL(15,2) NOT NULL CHECK (price > 0),
     category_id INT,
     size_id INT,
-    status ENUM('Available', 'Out of Stock', 'Discontinued') DEFAULT 'Available',
+    status ENUM('Available', 'Out of Stock', 'Discontinued', 'Hidden') DEFAULT 'Available',
     ingredients TEXT,  -- Thành phần bánh
     expiration_date TEXT,  -- Hạn sử dụng
     storage_instructions TEXT,  -- Cách bảo quản

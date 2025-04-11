@@ -12,6 +12,9 @@ if (
     !isset($_SESSION['user']['username']) || 
     !isset($_SESSION['user']['role'])
 ) 
+exit;
+
+
 
 
 
