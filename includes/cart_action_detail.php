@@ -11,7 +11,10 @@ if (
     !isset($_SESSION['user']) || 
     !isset($_SESSION['user']['username']) || 
     !isset($_SESSION['user']['role'])
-) 
+) {
+    echo json_encode(["success" => false, "message" => "User not logged in."]);
+    exit;
+}
 
 
 
