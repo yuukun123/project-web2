@@ -1,27 +1,25 @@
 <?php
-include_once __DIR__ . '/../../config/config.php'; // Kết nối database
+header('Content-Type: application/json');
+include_once __DIR__ . '/../../config/config.php';
 include __DIR__ . '/../../config/data_connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['status'])) {
-    $order_id = intval($_POST['order_id']); //chuyển về số nguyên (intval()) để đảm bảo dữ liệu hợp lệ.
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['order_id'], $_POST['status'])) {
+    $order_id = intval($_POST['order_id']);
     $new_status = $_POST['status'];
 
-    // Lấy trạng thái hiện tại từ database
-    $sql_check = "SELECT status FROM orders WHERE order_id = ?";
-    $stmt_check = $conn->prepare($sql_check);  //sử dụng Prepared Statement ($stmt_check) để tránh SQL Injection.
+    // Lấy trạng thái hiện tại
+    $stmt_check = $conn->prepare("SELECT status FROM orders WHERE order_id = ?");
     $stmt_check->bind_param("i", $order_id);
     $stmt_check->execute();
     $result = $stmt_check->get_result();
-    $row = $result->fetch_assoc();
+    $order = $result->fetch_assoc();
 
-    if (!$row) {
-        echo "<script>alert('Error: Order does not exist!'); window.history.back();</script>";
+    if (!$order) {
+        echo json_encode(['success' => false, 'message' => '❌ Order does not exist']);
         exit;
     }
 
-    $current_status = $row['status'];
-
-    // Quy tắc cập nhật trạng thái
+    $current_status = $order['status'];
     $valid_transitions = [
         'Pending' => ['Processing'],
         'Processing' => ['Completed', 'Cancelled'],
@@ -30,26 +28,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['order_id'], $_POST['st
     ];
 
     if (!isset($valid_transitions[$current_status]) || !in_array($new_status, $valid_transitions[$current_status])) {
-        echo "<script>alert('Unable to update the status from $current_status to $new_status!'); window.history.back();</script>";
+        echo json_encode(['success' => false, 'message' => "⚠️ Invalid transition from $current_status to $new_status"]);
         exit;
     }
 
+    // Chuẩn bị SQL cập nhật
+    $sql_update = ($new_status === "Completed")
+        ? "UPDATE orders SET status = ?, delivery_time = NOW() WHERE order_id = ?"
+        : "UPDATE orders SET status = ? WHERE order_id = ?";
 
-    // Cập nhật trạng thái nếu hợp lệ 
-    //Cập nhật trạng thái, nếu là Completed thì cập nhật thêm delivery time ở thời điểm sau khi update
-    if ($new_status == "Completed") {
-        $sql_update = "UPDATE orders SET status = ?, delivery_time = NOW() WHERE order_id = ?";
-    } else{
-        $sql_update = "UPDATE orders SET status = ? WHERE order_id = ?";
-    }
     $stmt_update = $conn->prepare($sql_update);
     $stmt_update->bind_param("si", $new_status, $order_id);
 
     if ($stmt_update->execute()) {
-        echo "<script>alert('Update successful!'); window.history.back();</script>";
+        echo json_encode(['success' => true, 'message' => '✅ Order updated successfully']);
     } else {
-        echo "<script>alert('Order update error: " . $stmt_update->error . "'); window.history.back();</script>";
+        echo json_encode(['success' => false, 'message' => '❌ Update failed: ' . $stmt_update->error]);
     }
-    exit;
+} else {
+    echo json_encode(['success' => false, 'message' => '❌ Invalid request']);
 }
+exit;
 ?>

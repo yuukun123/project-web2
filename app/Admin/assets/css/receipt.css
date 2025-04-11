@@ -56,19 +56,7 @@
     background: #ffa0c8;
     border: 1px solid white;
 }
-.btn-update{
-    margin-left: 5px;
-    margin-top: 10px;
-    border-radius: 5px;
-    border: none;
-    padding: 5px 10px;
-    background: #0e990e;
-    color: white;
-    cursor: pointer;
-}
-.btn-update:hover{
-    background: #0a6f0a;
-}
+
 /* Responsive Design */
 @media screen and (min-width: 1390px) and (min-width: 1281px) {
     /* .text-head{
@@ -552,3 +540,25 @@ select#order_status{
     background: #F7B9D7;
     border-radius: 10px;
 }
+
+.icon-detail {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 4px;
+    background-color: #3498db;
+    color: white;
+    font-weight: 800;
+}
+
+.icon-detail:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+
+
+

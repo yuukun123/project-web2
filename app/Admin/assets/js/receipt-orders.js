@@ -89,3 +89,138 @@ function hideDetailOrders(detailordersId) {
 
 // Ban đầu hiển thị tất cả đơn hàng
 window.onload = filterOrders;
+
+function loadOrders() {
+    const params = new URLSearchParams(window.location.search);
+    fetch('../Controllers/get_orders.php?' + params.toString())
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.getElementById('order-table-body');
+            tbody.innerHTML = '';
+            data.orders.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = row.status.toLowerCase();
+                tr.innerHTML = `
+                    <td>${row.order_id}</td>
+                    <td>${row.user_name}</td>
+                    <td>${row.order_date}</td>
+                    <td>${row.delivery_date}</td>
+                    <td>${row.delivery_time || ''}</td>
+                    <td>${row.status}</td>
+                    <td>${row.payment_method}</td>
+                    <td>${row.full_address}</td>
+                    <td>${Number(row.total_cost).toLocaleString()} VND</td>
+                    <td>
+                        <form class="status-form">
+                            <input type="hidden" name="order_id" value="${row.order_id}">
+                        </form>
+                        <button class="btn-update icon-detail" onclick="showOrderDetail(${row.order_id})" title="Edit">
+                            <ion-icon name="create-outline"></ion-icon>
+                        </button>
+
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.querySelectorAll('.status-form').forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+
+                    fetch('../Controllers/update_status.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        if (res.success) {
+                            alert('✅ Update Successful!');
+                            loadOrders();
+                        } else {
+                            alert('❌ ' + res.message);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error:', err);
+                        alert('❌ Error when send process.');
+                    });
+                });
+            });
+        });
+}
+
+function showOrderDetail(orderId) {
+    fetch(`../Controllers/get_order_detail.php?order_id=${orderId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('detail_order_id').textContent = '#' + data.order_id;
+            document.getElementById('customer_name').value = data.customer_name;
+            document.getElementById('phone').value = data.phone;
+            document.getElementById('order_date').value = data.order_date;
+            document.getElementById('delivery_address').value = data.delivery_address;
+            document.getElementById('product_info').value = data.product_info;
+            document.getElementById('product_id').value = data.product_id;
+            document.getElementById('order_note').value = data.notes;
+            const select = document.getElementById('order_status');
+            select.innerHTML = `
+                <option value="Pending" ${data.status === 'Pending' ? 'selected' : ''}>Pending</option>
+                <option value="Processing" ${data.status === 'Processing' ? 'selected' : ''}>Processing</option>
+                <option value="Completed" ${data.status === 'Completed' ? 'selected' : ''}>Completed</option>
+                <option value="Cancelled" ${data.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+            `;
+
+            document.getElementById('DetailOrders').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+}
+
+function updateOrderStatusFromDetail() {
+    const orderId = document.getElementById('detail_order_id').textContent.replace('#', '');
+    const newStatus = document.getElementById('order_status').value;
+
+    const formData = new FormData();
+    formData.append('order_id', orderId);
+    formData.append('status', newStatus);
+
+    fetch('../Controllers/update_status.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(res => {
+        if (res.success) {
+            alert('✅ Status updated successfully!');
+            loadOrders();
+        } else {
+            alert('❌ ' + res.message);
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        alert('❌ Failed to update.');
+    });
+}
+
+function hideDetailOrders(id) {
+    document.getElementById(id).style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function renderPagination(totalPages, currentPage) {
+    const pagination = document.querySelector('.pagination');
+    pagination.innerHTML = '';
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = (i === currentPage) ? 'active' : '';
+        btn.onclick = () => loadOrders(i); // gọi lại loadOrders với page mới
+        pagination.appendChild(btn);
+    }
+}
+
+
+loadOrders();
+setInterval(loadOrders, 5000);
+

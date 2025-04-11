@@ -67,3 +67,4 @@ function toggleGrade(contentId, chevronId) {
         }
     })
 }
+

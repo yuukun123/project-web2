@@ -68,23 +68,20 @@ $sql .= " ORDER BY o.order_date DESC LIMIT $ordersPerPage OFFSET $offset";
 $result = $conn->query($sql);
 ?>
 
-
-
-    <div class="subtitle_table">
-        <form method="GET" action="">
+<div class="subtitle_table">
+    <form method="GET" action="">
         <div class="filter-date">
-                <label for="fromDate">From:</label>
-                <input type="date" name="from_date" value="<?= htmlspecialchars($fromDate) ?>">
-                <label for="toDate">To:</label>
-                <input type="date" name="to_date" value="<?= htmlspecialchars($toDate) ?>">
-            </div>
+            <label for="fromDate">From:</label>
+            <input type="date" name="from_date" value="<?= htmlspecialchars($fromDate) ?>">
+            <label for="toDate">To:</label>
+            <input type="date" name="to_date" value="<?= htmlspecialchars($toDate) ?>">
+        </div>
 
         <div class="filter-address">
             <label for="address">Address:</label>
-                <input type="text" name="location" placeholder="Enter City, District, .." value="<?= htmlspecialchars($locationFilter) ?>">
-
+            <input type="text" name="location" placeholder="Enter City, District, .." value="<?= htmlspecialchars($locationFilter) ?>">
         </div>
-        
+
         <div class="status-filter">
             <label for="status">Status:</label>
             <select name="status">
@@ -95,13 +92,11 @@ $result = $conn->query($sql);
                 <option value="Cancelled" <?= $statusFilter == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
             </select>
         </div>
-            <div class="btn_filter">
-                <button type="submit">Filter</button>
-            </div>
-        
-        </form>
-    </div>
-
+        <div class="btn_filter">
+            <button type="submit">Filter</button>
+        </div>
+    </form>
+</div>
 
 <table>
     <thead>
@@ -115,40 +110,66 @@ $result = $conn->query($sql);
             <th>Payment Method</th>
             <th>Delivery Address</th>
             <th>Total</th>
-            <th>Update</th>
+            <th>Detail</th>
         </tr>
     </thead>
-    <tbody>
-        <?php while ($row = $result->fetch_assoc()): ?>
-        <tr class="<?= strtolower($row['status']) ?>">
-            <td><?= $row['order_id'] ?></td>
-            <td><?= htmlspecialchars($row['user_name']) ?></td>
-            <td><?= $row['order_date'] ?></td>
-            <td><?= $row['delivery_date'] ?></td>
-            <td><?= $row['delivery_time'] ?></td>
-            <td><?= $row['status'] ?></td>
-            <td><?= $row['payment_method'] ?></td>
-            <td><?= $row['full_address'] ?></td>
-            <td><?= number_format($row['total_cost'], 0, ',', '.') ?> VND</td>
-            <td>
-                <form method="POST" action="../Controllers/update_status.php">
-                    <input type="hidden" name="order_id" value="<?= $row['order_id'] ?>">
-                    <select name="status">
-                        <option value="Pending" <?= $row['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
-                        <option value="Processing" <?= $row['status'] == 'Processing' ? 'selected' : '' ?>>Processing</option>
-                        <option value="Completed" <?= $row['status'] == 'Completed' ? 'selected' : '' ?>>Completed</option>
-                        <option value="Cancelled" <?= $row['status'] == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
-                    </select>
-                    <button class="btn-update" type="submit">Update</button>
-                </form>
-            </td>
-        </tr>
-        <?php endwhile; ?>
+    <tbody id="order-table-body">
+        <!-- Nội dung sẽ được load bằng JavaScript -->
     </tbody>
 </table>
 
+<!-- Chi tiết đơn hàng -->
+<div class="overlay" id="overlay"></div>
+<div class="ShowDetail edit-ShowDetailOrder" id="DetailOrders" style="display: none;">
+    <h2>Detail Order</h2>
+    <div class="id_order">
+        <p>ID Order: <strong id="detail_order_id">#ND002</strong></p>
+    </div>
+    <div class="scroll-see">
+        <form>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label for="customer_name">Customer Name:</label>
+                    <input type="text" id="customer_name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <input type="text" id="phone" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="order_date">Order Date:</label>
+                    <input type="text" id="order_date" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="delivery_address">Delivery Address:</label>
+                    <input type="text" id="delivery_address" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="product_info">Product Info:</label>
+                    <input type="text" id="product_info" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="product_id">Product ID:</label>
+                    <input type="text" id="product_id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="order_note">Note:</label>
+                    <input type="text" id="order_note" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="order_status">Order Status:</label>
+                    <select id="order_status"></select>
+                </div>
+            </div>
+            <div class="form-buttons">
+                <button type="button" class="save-btn" onclick="updateOrderStatusFromDetail()">Save</button>
+                <button type="button" class="close-btn" onclick="hideDetailOrders('DetailOrders')">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
 
-<!-- Phan trang  -->
+<!-- phân trang -->
 <div class="pagination">
     <?php if ($page > 1): ?>
         <a href="?search=<?= urlencode($search); ?>&status=<?= urlencode($statusFilter); ?>&location=<?= urlencode($locationFilter); ?>&from_date=<?= urlencode($fromDate); ?>&to_date=<?= urlencode($toDate); ?>&page=<?= $page - 1; ?>" class="btn"><</a>
