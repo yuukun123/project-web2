@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    $admin_id = $_SESSION['admin']['username'];
+    $admin = $_SESSION['admin']['username'];
 
     // Nếu có remember_token thì xóa
     $check_column = $conn->query("SHOW COLUMNS FROM users LIKE 'remember_token'");
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "UPDATE users SET remember_token = NULL WHERE user_name = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $stmt->bind_param("i", $admin_id);
+            $stmt->bind_param("s", $admin);
             $stmt->execute();
             $stmt->close();
         }

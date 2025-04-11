@@ -1,9 +1,24 @@
 RewriteEngine On
-RewriteBase /project-web2
+RewriteBase /Project-Web2
 
-# Rule cho URL trống phải được ưu tiên
+# ✅ Không rewrite nếu là file hoặc thư mục thật
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ✅ Route trang chủ người dùng
 RewriteCond %{REQUEST_URI} !^/index\.php$
 RewriteRule ^$ index.php?pages=home [QSA,L]
 
+# ✅ Route các trang người dùng
 RewriteCond %{REQUEST_URI} !^/index\.php$
 RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product|pay)$ index.php?pages=$1 [QSA,L]
+
+# ✅ Truy cập /app/admin → tự động vào trang login
+RewriteRule ^app/admin/?$ app/admin/index.php [L]
+
+# ✅ /app/admin/login → cũng vào login
+RewriteRule ^app/admin/login$ app/admin/index.php [L]
+
+# ✅ Các trang sau đăng nhập admin
+RewriteRule ^app/admin/([a-zA-Z0-9_-]+)$ app/admin/pages/$1.php [L]

@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
     sizeSelect.innerHTML = '<option selected="selected">--Select size--</option>';
 
     // Gọi API để lấy danh sách size
-    fetch("../Api_php/get-size.php")
+    fetch("Api_php/get-size.php")
         .then(response => response.json())
         .then(data => {
             console.log("📌 Dữ liệu từ API:", data); // Kiểm tra dữ liệu API

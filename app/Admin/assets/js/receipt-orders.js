@@ -1,12 +1,3 @@
-const orders = [
-    { id: 'ND001', customer: 'Nguyễn Thanh Bình', phone: '0908070112', date: '2024-10-01', status: 'Loading', address: 'Quận 1', product: 'Product A' },
-    { id: 'ND002', customer: 'Bùi Minh Ngọc', phone: '0908070113', date: '2024-10-05', status: 'Confirmed', address: 'Quận 3', product_id: 'SP003, SP006' , product: 'Corn Mousse (x1), Melon Mousse (x1)' , address_more: '105 bà Huyện Thanh Quan, phường Võ Thị Sáu, Quận 3, TP. HCM' },
-    { id: 'ND003', customer: 'Dương Nhiên Phong', phone: '0908070114', date: '2024-10-10', status: 'Delivered', address: 'Quận 8', product: 'Product C' },
-    { id: 'ND004', customer: 'Võ Anh Hào', phone: '0908070115', date: '2024-10-15', status: 'Canceled', address: 'Quận 1', product: 'Product D' },
-    { id: 'ND005', customer: 'Trần Huy Hoàng', phone: '0908070116', date: '2024-10-21', status: 'Canceled', address: 'Quận 12', product: 'Product E' },
-    { id: 'ND006', customer: 'Nguyễn Hoàng Tín', phone: '0908070117', date: '2024-10-22', status: 'Delivered', address: 'Quận 5', product: 'Product F' }
-];
-
 function filterOrders() {
     const fromDate = document.getElementById('fromDate').value;
     const toDate = document.getElementById('toDate').value;
@@ -92,7 +83,7 @@ window.onload = filterOrders;
 
 function loadOrders() {
     const params = new URLSearchParams(window.location.search);
-    fetch('../Controllers/get_orders.php?' + params.toString())
+    fetch('Controllers/get_orders.php?' + params.toString())
         .then(response => response.json())
         .then(data => {
             const tbody = document.getElementById('order-table-body');
@@ -151,7 +142,7 @@ function loadOrders() {
 }
 
 function showOrderDetail(orderId) {
-    fetch(`../Controllers/get_order_detail.php?order_id=${orderId}`)
+    fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('detail_order_id').textContent = '#' + data.order_id;
