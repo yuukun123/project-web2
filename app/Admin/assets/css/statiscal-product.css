@@ -457,7 +457,8 @@ tr .js-detail-btn:hover{
         font-size: 9px;
     }
     .sta-btn{
-        padding: 4px 12px;
+        padding: 3px 10px;
+        font-size: 11px;
     }
     tr .js-detail-btn{
         padding: 0 2px;
@@ -471,6 +472,20 @@ tr .js-detail-btn:hover{
     }
     .div-receipt .receipt{
         width: 330px;
+    }
+    .filter input {
+        padding: 2px 4px;
+        border-radius: 1px;
+        border: none;
+        background: #f0f0f0;
+        font-size: 10px;
+        
+    }
+    .filter{
+        flex-direction: column;
+    }
+    .main-title{
+        font-size: 13px;
     }
 }
 
