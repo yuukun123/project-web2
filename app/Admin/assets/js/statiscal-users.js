@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function loadInitialData() {
-    fetch("../../Admin/Controllers/statistical-user-process.php")
+    fetch("Controllers/statistical-user-process.php")
         .then(response => response.json())
         .then(data => {
             console.log("Dữ liệu từ PHP:", data);

@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo json_encode([
                 "status" => "success",
                 "message" => "Login successful",
-                "redirect" => "pages/home.php",
+                "redirect" => "home",
                 "user" => $_SESSION['admin'] // Trả về session đã lưu
             ]);
         } else {

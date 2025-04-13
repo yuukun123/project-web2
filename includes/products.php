@@ -40,7 +40,10 @@ echo'
     </span>
 </div>
 <div id="hintContainer" class="hint-container"></div>
+
+<a href="advance" class="searchAdvancemobile">ADVANCED SEARCH</a>
 </div>
+
 ';
 
 // Xuất HTML sử dụng echo

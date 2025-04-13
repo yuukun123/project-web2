@@ -77,7 +77,7 @@ async function showEditUserForm(user) {
 
 
 async function editUser(username) {
-    const response = await fetch(`../Api_php/get-user.php?user_name=${username}`);
+    const response = await fetch(`Api_php/get-user.php?user_name=${username}`);
     const user = await response.json();
     showEditUserForm(user);
 }
@@ -141,7 +141,7 @@ function saveUser() {
     const formData = new FormData();
     let errors = [];
 
-    const fields = ['username', 'email', 'phone', 'password', 'role', 'street', 'city', 'district', 'ward'];
+    const fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password', 'role', 'street', 'city', 'district', 'ward'];
 
     // Lấy dữ liệu từ input và kiểm tra nếu trống
     fields.forEach(id => {
@@ -175,8 +175,10 @@ function saveUser() {
     // 📌 Kiểm tra mật khẩu hợp lệ
     const passwordElement = document.getElementById('password');
     const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (passwordElement && !passwordPattern.test(passwordElement.value.trim())) {
-        errors.push("Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.");
+    if (passwordElement && !passwordElement.readOnly) {
+        if (!passwordPattern.test(passwordElement.value.trim())) {
+            errors.push("Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.");
+        }
     }
 
     // Nếu có lỗi, hiển thị thông báo lỗi bằng alert
@@ -186,7 +188,7 @@ function saveUser() {
     }
 
     // Gửi dữ liệu nếu hợp lệ
-    fetch('../Api_php/save-user.php', { method: 'POST', body: formData })
+    fetch('Api_php/save-user.php', { method: 'POST', body: formData })
         .then(response => response.text())
         .then(data => {
             alert(data);
@@ -241,7 +243,7 @@ function paginateTable() {
 
 
 function loadUserTable() {
-    fetch('../Controllers/user-process.php')
+    fetch('Controllers/user-process.php')
         .then(response => response.text())
         .then(html => {
             document.getElementById('userTableContainer').innerHTML = html;

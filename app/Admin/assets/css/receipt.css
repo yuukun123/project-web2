@@ -309,6 +309,7 @@ table {
     border-collapse: collapse;
     text-align: center;
     border: 1px solid #d5d5d5;
+    font-size: 12px;
 
 }
 th {

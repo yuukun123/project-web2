@@ -23,7 +23,7 @@
     });
     // Lấy dữ liệu khi trang load
     function loadInitialData() {
-        fetch("../Controllers/statistical-process.php")
+        fetch("Controllers/statistical-process.php")
             .then(response => response.json())
             .then(data => {
                 console.log("Dữ liệu từ PHP:", data);

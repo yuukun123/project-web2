@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
         
-        fetch('../Api_php/session-admin.php', {
+        fetch('Api_php/session-admin.php', {
             method: 'GET',
             credentials: 'include'  // đảm bảo gửi cookie phiên
         })
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Function: Check login status
     function checkLoginStatus(callback) {
         console.log("Đang gọi checkLoginStatus...");
-        fetch("../Api_php/session-admin.php", {
+        fetch("Api_php/session-admin.php", {
             method: "GET",
             credentials: "include"
         })

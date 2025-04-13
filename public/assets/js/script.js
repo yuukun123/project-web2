@@ -377,6 +377,110 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     // search product
+
+        // render và lọc sản phẩm
+    let itemsPerPage = 8; // Số sản phẩm mỗi trang
+    let currentPage = 1;
+    let selectedCategory = "all"; // Mặc định là All
+
+    function updateProducts() {
+        // Lấy tất cả sản phẩm trong container
+        let allProducts = document.querySelectorAll("#product-container .movie-item");
+        if (allProducts.length === 0) return; // Nếu không có sản phẩm, dừng
+
+        // Ẩn tất cả sản phẩm
+        allProducts.forEach(product => product.style.display = "none");
+
+        // Lọc sản phẩm theo danh mục
+        let filteredProducts = selectedCategory === "all"
+            ? allProducts
+            : document.querySelectorAll(`#product-container .movie-item[data-category="${selectedCategory}"]`);
+
+        if (filteredProducts.length === 0) {
+            console.warn("Không tìm thấy sản phẩm nào thuộc danh mục: " + selectedCategory);
+            return;
+        }
+
+        let totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+        if (currentPage > totalPages) currentPage = 1; // Nếu vượt quá số trang, quay về trang đầu
+
+        // Hiển thị sản phẩm của trang hiện tại
+        filteredProducts.forEach((product, index) => {
+            product.style.display = (index >= (currentPage - 1) * itemsPerPage && index < currentPage * itemsPerPage) 
+                ? "block" 
+                : "none";
+        });
+
+        // Cập nhật giao diện phân trang
+        let paginationContainer = document.querySelector(".pagination");
+        paginationContainer.innerHTML = ""; // Xóa phân trang cũ
+
+        if (totalPages > 1) { // Tạo nút phân trang nếu có hơn 1 trang
+            for (let i = 1; i <= totalPages; i++) {
+                let button = document.createElement("button");
+                button.className = "page-link";
+                button.innerText = i;
+                button.dataset.page = i;
+                if (i === currentPage) button.classList.add("active");
+                paginationContainer.appendChild(button);
+            }
+        }
+    }
+
+
+    // Xử lý sự kiện lọc sản phẩm khi thay đổi radio input
+    document.querySelectorAll(".filter-input").forEach(input => {
+        input.addEventListener("change", function () {
+            selectedCategory = this.id.replace("filter-", "").toLowerCase();
+            currentPage = 1; // Reset về trang đầu tiên khi đổi danh mục
+            updateProducts();
+        });
+    });
+
+    // Xử lý sự kiện khi bấm vào nút phân trang
+    document.querySelector(".pagination").addEventListener("click", function (event) {
+        if (event.target.tagName === "BUTTON") {
+            currentPage = parseInt(event.target.dataset.page);
+            updateProducts();
+        }
+    });
+
+    // Cập nhật class active cho navigation (dành cho nhãn)
+    document.querySelectorAll(".nav-item").forEach(label => {
+        label.addEventListener("click", function () {
+            document.querySelectorAll(".nav-item").forEach(l => l.classList.remove("active"));
+            this.classList.add("active");
+        });
+    });
+
+    updateProducts(); // Chạy lần đầu khi trang tải
+
+    // test fetch sản phẩm 
+    const searchTerm = 'm';
+    const url = `pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`;
+    console.log('Fetching:', url); // Kiểm tra URL
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+
+    // Xử lý gọi sản phẩm từ server
+    function loadAllProducts() {
+        let allProducts = document.querySelectorAll("#product-container .movie-item");
+    
+        if (allProducts.length === 0) {
+            console.warn("Không có sản phẩm nào trong DOM.");
+            return;
+        }
+    
+        // Hiển thị lại tất cả sản phẩm
+        allProducts.forEach(product => product.style.display = "block");
+    
+        // Cập nhật phân trang nếu cần
+        updateProducts();
+    }
+
     const searchInputs = document.querySelectorAll(".search-input");
     const searchButtons = document.querySelectorAll(".searchBtn");
 

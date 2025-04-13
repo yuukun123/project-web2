@@ -1,7 +1,7 @@
 <div class="right-screen">
     <div class="Function-use">
         <button class="logo" style="border: none; background: none; cursor:pointer">
-            <img src="../../../public/assets/Img/Sweets1.png" alt="">
+            <img src="../../public/assets/Img/Sweets1.png" alt="">
         </button>
         
         <div class="menu-container">
@@ -17,13 +17,13 @@
                 <div class="subject-item">
                     <span class="text-in">
                         <ion-icon name="clipboard-outline"></ion-icon>
-                        <a class="colorForLink" href="./list-product.php">List product</a>
+                        <a class="colorForLink" href="list-product">List product</a>
                     </span>
                 </div>
                 <div class="subject-item">
                     <span class="text-in">
                         <ion-icon name="add-circle-outline"></ion-icon>
-                        <a class="colorForLink" href="./add-product.php">Add product</a>
+                        <a class="colorForLink" href="add-product">Add product</a>
                     </span>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class="subject-item">
                     <span class="text-in">
                         <ion-icon name="person-outline"></ion-icon>
-                        <a class="colorForLink" href="./manager-user.php">List User</a>
+                        <a class="colorForLink" href="manager-user">List User</a>
                     </span>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                 <div class="subject-item">
                     <span>
                         <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
-                        <a class="colorForLink" href="./receipt.php">Status order</a>
+                        <a class="colorForLink" href="receipt">Status order</a>
                     </span>
                 </div>
             </div>
@@ -74,13 +74,13 @@
                 <div class="subject-item">
                     <span class="text-in">
                         <ion-icon name="stats-chart-outline"></ion-icon>
-                        <a class="colorForLink" href="./statiscal-product.php">Product statistical</a>
+                        <a class="colorForLink" href="statiscal-product">Product statistical</a>
                     </span>
                 </div>
                 <div class="subject-item">
                     <span class="text-in">
                         <ion-icon name="stats-chart-outline"></ion-icon>
-                        <a class="colorForLink" href="./statiscal-users.php">User Statistical</a>
+                        <a class="colorForLink" href="statiscal-users">User Statistical</a>
                     </span>
                 </div>
             </div>

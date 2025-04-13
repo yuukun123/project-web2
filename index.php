@@ -164,9 +164,9 @@ $page = $_GET['pages'];
 
     <?php include 'includes/footer.php'; ?>
     <?php
-    if ($page === 'home') :
-        echo '<script src="public/assets/js/index.js"></script>';
-    endif;  // End of if statement
+    // if ($page === 'home') :
+    //     echo '<script src="public/assets/js/index.js"></script>';
+    // endif;  // End of if statement
     if ($page === 'login' || $page === 'register') :
         echo '<script src="public/assets/js/login.js"></script>';
     endif;  // End of if statement
