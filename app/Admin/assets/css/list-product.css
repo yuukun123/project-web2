@@ -780,6 +780,8 @@
     border: 1px solid white;
 }
 
+
+
 /* Ẩn mặc định */
 #editModal .overlay,
 #editModal .notification.edit-notification {
@@ -790,6 +792,8 @@
 #editModal:target .overlay,
 #editModal:target .notification.edit-notification {
     display: block;
+    width: 800px;
+    max-width: 90%;
 }
 
 /* Overlay */
@@ -857,7 +861,7 @@
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-size: 15px;
+    font-size: 12px;
     margin-bottom: 10px;
     box-sizing: border-box;
 }
@@ -906,4 +910,19 @@
 
 .notification.edit-notification .cancel-button:hover {
     text-decoration: underline;
+}
+
+
+.browse-button{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 5px;
+    border: 1px solid rgb(0, 0, 0);
+    background: #000000;
+    color: #ffffff;
+    width: 66px;
+    height: 20px;
+    margin: 0 50px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }

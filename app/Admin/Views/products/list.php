@@ -97,38 +97,52 @@ if (isset($_GET['product_id'])) {
 document.addEventListener("DOMContentLoaded", function () {
     const inputFile = document.getElementById("product_image");
     const previewWrapper = document.getElementById("preview-wrapper");
+    const previewPath = document.getElementById("preview-path");
+    const categorySelect = document.getElementById("product_category");
 
     inputFile?.addEventListener("change", function () {
         if (this.files && this.files[0]) {
+            const file = this.files[0];
             const reader = new FileReader();
+            const fileName = file.name;
+            const categoryOption = categorySelect.options[categorySelect.selectedIndex].text.trim().replace(/\s+/g, '');
+
             reader.onload = function (e) {
-                // Xóa ảnh preview cũ nếu có
                 previewWrapper.innerHTML = '';
 
-                // Tạo label
-                const label = document.createElement("label");
-                label.textContent = "Preview";
-                label.style.display = "block";
-                label.style.fontWeight = "bold";
-
-                // Tạo ảnh preview
                 const previewImg = document.createElement("img");
                 previewImg.src = e.target.result;
-                previewImg.style.maxWidth = "100px";
-                previewImg.style.height = "75px";
+                previewImg.style.maxWidth = "120px";
+                previewImg.style.height = "90px";
                 previewImg.style.border = "1px solid #ccc";
                 previewImg.style.borderRadius = "4px";
                 previewImg.alt = "Preview";
 
-                // Thêm vào wrapper
-                previewWrapper.appendChild(label);
                 previewWrapper.appendChild(previewImg);
+
+                // Gán đường dẫn giả định
+                previewPath.value = `/assets/Img/${categoryOption}/${fileName}`;
             };
-            reader.readAsDataURL(this.files[0]);
+            reader.readAsDataURL(file);
         }
     });
 });
+
+// ✅ Di chuyển hàm này RA NGOÀI, không được đặt trong DOMContentLoaded
+function openFileChooserIfCategorySelected() {
+    const categorySelect = document.getElementById("product_category");
+    const selectedValue = categorySelect.value;
+
+    if (!selectedValue) {
+        alert("⚠️ Please select a Category before uploading an image.");
+        categorySelect.focus();
+        return;
+    }
+
+    document.getElementById("product_image").click();
+}
 </script>
+
 
 
 
@@ -205,28 +219,55 @@ document.addEventListener("DOMContentLoaded", function () {
         <form enctype="multipart/form-data" method="post">
             <input type="hidden" name="product_id" value="<?= $editingProduct['product_id'] ?>">
 
-            <label for="product_name">Product Name:</label>
+            <label for="product_name" style="font-weight: bold;">Product Name:</label>
             
             <input type="text" id="product_name" name="product_name" value="<?= htmlspecialchars($editingProduct['product_name']) ?>">
-            <label for="product_image">Change Picture:</label>
-            <div style="display: flex; gap: 20px; align-items: flex-start;" id="image-preview-container">
-                <div>
-                    <label style="display: block; font-weight: bold;">Now:</label>
+            <label for="product_image" style="font-weight: bold;">Change Picture:</label>
+            
+            <!-- Phần chứa ảnh hiện tại và ảnh preview -->
+            <div id="image-preview-container" style="display: flex; gap: 30px; align-items: flex-start; margin-bottom: 10px;">
+                <!-- NOW -->
+                <div style="flex: 1;">
+                    <label>Now:</label><br>
                     <?php if (!empty($editingProduct['image'])): ?>
-                        <img src="/project-web2/<?= htmlspecialchars($editingProduct['image']) ?>" width="100" height="75" alt="Hình hiện tại" style="border: 1px solid #ccc; border-radius: 4px;">
+                        <img src="/project-web2/<?= htmlspecialchars($editingProduct['image']) ?>" width="120" height="90" alt="Current Image" style="border: 1px solid #ccc; border-radius: 4px;">
                     <?php else: ?>
-                        <span>Không có hình</span>
+                        <span>No image available</span>
                     <?php endif; ?>
                 </div>
-                <div id="preview-wrapper">
-                    <!-- JS sẽ render preview ở đây -->
+
+                <!-- PREVIEW -->
+                <div style="flex: 1;">
+                    <label>Preview:</label><br>
+                    <div id="preview-wrapper" style="margin-bottom: 5px;"></div>
+                    <input type="file" id="product_image" name="product_image" style="display: none;">
+                    <input type="button" class="browse-button" value="Browse..." onclick="openFileChooserIfCategorySelected()" style="margin-top: 5px;">
                 </div>
             </div>
 
-            <input type="file" id="product_image" name="product_image">
+            <!-- 🆕 Đặt 2 ô input đường dẫn ngang hàng -->
+            <div style="display: flex; gap: 30px; margin-bottom: 15px;">
+                <!-- Path NOW -->
+                <input 
+                    type="text" 
+                    readonly 
+                    class="image-path-input" 
+                    value="/assets/Img/<?= basename(dirname($editingProduct['image'])) ?>/<?= basename($editingProduct['image']) ?>"
+                >
+
+                <!-- Path PREVIEW -->
+                <input 
+                    type="text" 
+                    id="preview-path" 
+                    readonly 
+                    class="image-path-input" 
+                    placeholder="Path will appear here..."
+                >
+            </div>
 
 
-            <label for="product_status">Status</label>
+
+            <label for="product_status" style="font-weight: bold;">Status</label>
             <select id="product_status" name="product_status">
                 <?php 
                 $statuses = ['Available', 'Out of Stock', 'Discontinued', 'Hidden'];
@@ -237,10 +278,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 <?php endforeach; ?>
             </select>
 
-            <label for="product_price">Price:</label>
+            <label for="product_price" style="font-weight: bold;">Price:</label>
             <input type="number" id="product_price" name="product_price" value="<?= $editingProduct['price'] ?>">
 
-            <label for="product_category">Category</label>
+            <label for="product_category" style="font-weight: bold;">Category</label>
             <select id="product_category" name="product_category">
                 <?php
                 $catResult = $conn->query("SELECT * FROM category");
@@ -251,16 +292,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     </option>
                 <?php endwhile; ?>
             </select>
-                        <label for="product_ingredients">Ingredients:</label>
+                        <label for="product_ingredients" style="font-weight: bold;">Ingredients:</label>
             <input type="text" id="product_ingredients" name="product_ingredients" value="<?= htmlspecialchars($editingProduct['ingredients']) ?>">
 
-            <label for="product_expiration">Expiration Date:</label>
+            <label for="product_expiration" style="font-weight: bold;">Expiration Date:</label>
             <input type="date" id="product_expiration" name="product_expiration" value="<?= htmlspecialchars($editingProduct['expiration_date']) ?>">
 
-            <label for="product_storage">Storage Instruction:</label>
+            <label for="product_storage" style="font-weight: bold;">Storage Instruction:</label>
             <input type="text" id="product_storage" name="product_storage" value="<?= htmlspecialchars($editingProduct['storage_instructions']) ?>">
 
-            <button type="submit">Save</button>
+            <button type="submit" style="font-weight: bold;">Save</button>
             <a href="list-product.php" class="cancel-button">Cancel</a>
         </form>
     </div>
