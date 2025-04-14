@@ -78,9 +78,8 @@
             rows += `
                 <tr>
                     <td>#${index + 1}</td>
-                    <td>${order.delivery_date}</td>
                     <td>${order.product_name}</td>
-                    <td>${order.quantity}</td>
+                    <td>${order.total_quantity}</td>
                     <td>
                         <button class="js-detail-btn" data-id="${order.product_id || ''}">
                             <ion-icon name="receipt-outline"></ion-icon>
@@ -161,6 +160,10 @@ function renderReceipt(data) {
                 <div class="form-group">
                     <label><strong>Delivery address:</strong></label>
                     <input type="text" value="${order.shipping_street}, ${order.shipping_ward}, ${order.shipping_district}, ${order.shipping_city}" readonly>
+                </div>
+                <div class="form-group">
+                    <label><strong>Delivery date:</strong></label>
+                    <input type="text" value="${order.delivery_date}" readonly>
                 </div>
                 <div class="form-group">
                     <label><strong>Status:</strong></label>

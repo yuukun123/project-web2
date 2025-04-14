@@ -515,6 +515,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!searchTerm) {
             hintContainer.innerHTML = "";
             hintContainer.style.display = "none";
+            
             return;
         }
 
@@ -522,11 +523,22 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(products => {
                 hintContainer.innerHTML = "";
+                
+                // Nếu không có sản phẩm nào, hiển thị dòng "Not found"
                 if (!products || products.length === 0) {
-                    hintContainer.style.display = "none";
+                    const notFoundItem = document.createElement("div");
+                    notFoundItem.className = "hint-item";
+                    notFoundItem.textContent = "Not found";
+                    notFoundItem.style.textAlign = "center";
+                    notFoundItem.style.padding = "8px";
+                    notFoundItem.style.color = "#999";
+                    hintContainer.appendChild(notFoundItem);
+            
+                    hintContainer.style.display = "block";
                     return;
                 }
-
+            
+                // Nếu có sản phẩm, hiển thị các gợi ý
                 products.forEach(item => {
                     const hintItem = document.createElement("div");
                     hintItem.className = "hint-item";
@@ -536,22 +548,22 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${item.image}" alt="${item.product_name}" style="width:30px; height:30px; margin-right:10px;">
                         ${item.product_name}
                     `;
-
+            
                     // Dùng mousedown để tránh mất focus trước khi xử lý
                     hintItem.addEventListener("mousedown", function (event) {
                         event.preventDefault(); // Ngăn trình duyệt hiểu là nhấp ra ngoài input
                         isSelectingHint = true;
                     });
-
+            
                     hintItem.addEventListener("click", function () {
                         isSelectingHint = false; // Reset biến
                         console.log(item.product_id);
                         window.location.href = `home?pages=product&id=${item.product_id}`;
-                    });                    
-
+                    });
+            
                     hintContainer.appendChild(hintItem);
                 });
-
+            
                 hintContainer.style.display = "block";
             })
             .catch(error => console.error("Lỗi khi lấy gợi ý:", error));

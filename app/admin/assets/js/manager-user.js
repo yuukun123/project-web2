@@ -285,7 +285,7 @@ document.getElementById('confirmLockBtn').addEventListener('click', () => {
         formData.append('user_name', pendingUserName);
         formData.append('action', pendingStatus ? 'unlock' : 'lock');
 
-        fetch('../Api_php/lock-user.php', { method: 'POST', body: formData })
+        fetch('Api_php/lock-user.php', { method: 'POST', body: formData })
             .then(response => response.text())
             .then(data => {
                 alert(data);
@@ -311,22 +311,27 @@ function searchUser() {
     const table = document.querySelector('#userTableContainer table');
     if (!table) return;
 
-    const rows = table.querySelectorAll('tbody tr');
+    const tbody = table.querySelector('tbody');
+    const rows = tbody.querySelectorAll('tr');
+
+    // Xóa dòng "Not found" nếu có từ lần tìm kiếm trước
+    const notFoundRow = tbody.querySelector('.not-found-row');
+    if (notFoundRow) {
+        notFoundRow.remove();
+    }
 
     if (filter === "") {
-        // Nếu ô tìm kiếm rỗng, hiển thị tất cả hàng và cập nhật lại phân trang
+        // Hiển thị lại tất cả hàng
         rows.forEach(row => row.style.display = '');
-        currentPage = 1; // Reset về trang đầu
-        paginateTable(); // Cập nhật phân trang
+        currentPage = 1;
+        paginateTable();
         return;
     }
 
-    let found = false; // Kiểm tra có tìm thấy kết quả hay không
+    let found = false;
     rows.forEach(row => {
-        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-
-        if (username.includes(filter) || email.includes(filter)) {
+        const username = row.querySelector('td:nth-child(1)')?.textContent.toLowerCase() || '';
+        if (username.includes(filter)) {
             row.style.display = '';
             found = true;
         } else {
@@ -335,12 +340,21 @@ function searchUser() {
     });
 
     if (!found) {
-        alert("No matching user found!");
+        // Tạo dòng mới hiển thị "Not found"
+        const newRow = document.createElement('tr');
+        newRow.classList.add('not-found-row');
+        const td = document.createElement('td');
+        td.colSpan = rows[0].children.length;
+        td.style.textAlign = 'center';
+        td.textContent = 'Not found';
+        newRow.appendChild(td);
+        tbody.appendChild(newRow);
     }
 
-    currentPage = 1; // Reset về trang đầu
-    paginateTable(); // Cập nhật phân trang
+    currentPage = 1;
+    paginateTable();
 }
+
 
 // Gán sự kiện vào nút tìm kiếm để chỉ tìm khi nhấn nút
 document.querySelector('.search').addEventListener('click', searchUser);
