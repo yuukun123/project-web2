@@ -75,13 +75,13 @@ ob_end_flush();
             <div class="subject-item active">
                 <span class="text-in">
                     <ion-icon name="clipboard-outline"></ion-icon>
-                    <a href="./list-product.php">List product</a>
+                    <a href="list-product">List product</a>
                 </span>
             </div>
             <div class="subject-item">
                 <span class="text-in">
                     <ion-icon name="add-circle-outline"></ion-icon>
-                    <a href="./add-product.php">Add product</a>
+                    <a href="add-product">Add product</a>
                 </span>
             </div>
         </div>
@@ -98,7 +98,7 @@ ob_end_flush();
             <div class="subject-item">
                 <span class="text-in">
                     <ion-icon name="person-outline"></ion-icon>
-                    <a href="./manager-user.php">List User</a>
+                    <a href="manager-user">List User</a>
                 </span>
             </div>
         </div>
@@ -115,7 +115,7 @@ ob_end_flush();
             <div class="subject-item">
                 <span>
                     <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
-                    <a href="./receipt.php">Status order</a>
+                    <a href="receipt">Status order</a>
                 </span>
             </div>
         </div>
@@ -132,13 +132,13 @@ ob_end_flush();
             <div class="subject-item">
                 <span class="text-in">
                     <ion-icon name="stats-chart-outline"></ion-icon>
-                    <a href="./statiscal-product.php">Product statistical</a>
+                    <a href="statiscal-product">Product statistical</a>
                 </span>
             </div>
             <div class="subject-item">
                 <span class="text-in">
                     <ion-icon name="stats-chart-outline"></ion-icon>
-                    <a href="./statiscal-users.php">User Statistical</a>
+                    <a href="statiscal-users">User Statistical</a>
                 </span>
             </div>
         </div>
