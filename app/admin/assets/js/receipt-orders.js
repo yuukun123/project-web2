@@ -119,7 +119,7 @@ function loadOrders() {
                     e.preventDefault();
                     const formData = new FormData(this);
 
-                    fetch('../Controllers/update_status.php', {
+                    fetch('Controllers/update_status.php', {
                         method: 'POST',
                         body: formData
                     })
@@ -174,7 +174,7 @@ function updateOrderStatusFromDetail() {
     formData.append('order_id', orderId);
     formData.append('status', newStatus);
 
-    fetch('../Controllers/update_status.php', {
+    fetch('Controllers/update_status.php', {
         method: 'POST',
         body: formData
     })
