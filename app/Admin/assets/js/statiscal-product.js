@@ -45,7 +45,7 @@
             toDate: toDate
         };
 
-        fetch("../Controllers/filter-statiscal-process.php", {
+        fetch("Controllers/filter-statiscal-process.php", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -94,7 +94,7 @@
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
 function showDetail(productId) {
     console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", productId);
-    fetch(`../Controllers/detail-statistical-process.php?product_id=${productId}`)
+    fetch(`Controllers/detail-statistical-process.php?product_id=${productId}`)
         .then(response => response.json())
         .then(data => {
             console.log("📦 Dữ liệu hóa đơn nhận được:", data);

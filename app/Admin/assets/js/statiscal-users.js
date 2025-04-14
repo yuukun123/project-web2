@@ -46,7 +46,7 @@ function search() {
 
     const requestData = { searchValue: searchValue };
 
-    fetch("../Controllers/searchUser-statistical-process.php", {
+    fetch("Controllers/searchUser-statistical-process.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData)
@@ -101,7 +101,7 @@ function renderUser(data) {
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
 function showDetail(userName) {
     console.log("📤 Gửi yêu cầu lấy hóa đơn cho user:", userName);
-    fetch(`../Controllers/detail-statistical-user.php?user_name=${userName}`)
+    fetch(`Controllers/detail-statistical-user.php?user_name=${userName}`)
         .then(response => response.json())
         .then(data => {
             console.log("📦 Dữ liệu hóa đơn nhận được:", data);
