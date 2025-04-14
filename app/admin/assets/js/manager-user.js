@@ -285,7 +285,7 @@ document.getElementById('confirmLockBtn').addEventListener('click', () => {
         formData.append('user_name', pendingUserName);
         formData.append('action', pendingStatus ? 'unlock' : 'lock');
 
-        fetch('../Api_php/lock-user.php', { method: 'POST', body: formData })
+        fetch('Api_php/lock-user.php', { method: 'POST', body: formData })
             .then(response => response.text())
             .then(data => {
                 alert(data);
