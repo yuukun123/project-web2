@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("image", imagePath);
 
         // Gửi request AJAX để lưu sản phẩm
-        fetch("../Controllers/add-product-process.php", {
+        fetch("Controllers/add-product-process.php", {
             method: "POST",
             body: formData
         })
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append("file", file);
         formData.append("category", categorySelect.value);
     
-        fetch("../Api_php/upload-img.php", {
+        fetch("Api_php/upload-img.php", {
             method: "POST",
             body: formData,
         })
