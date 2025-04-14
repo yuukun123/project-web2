@@ -1,11 +1,6 @@
 RewriteEngine On
 RewriteBase /Project-Web2
 
-# ✅ Không rewrite nếu là file hoặc thư mục thật
-RewriteCond %{REQUEST_FILENAME} -f [OR]
-RewriteCond %{REQUEST_FILENAME} -d
-RewriteRule ^ - [L]
-
 # ✅ Route trang chủ người dùng
 RewriteCond %{REQUEST_URI} !^/index\.php$
 RewriteRule ^$ index.php?pages=home [QSA,L]
