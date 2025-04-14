@@ -34,7 +34,7 @@ if (isset($_SESSION['admin']) && isset($_SESSION['admin']['username'])) {
     $authButtons = '
         <div class="navigation">
             <button id="user-btn" class="btnLogin-popup">' . $username . '</button>
-            <form action="../Login_Processing/logout_processing.php" method="POST" style="display: inline;">
+            <form action="Login_Processing/logout_processing.php" method="POST" style="display: inline;">
                 <div class="Function-cl">
                     <div class="logout">
                         <button type="submit" id="logout-btn" class="btnLogout-popup">Logout</button>

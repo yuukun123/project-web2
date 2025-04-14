@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!isset($_SESSION['admin']) || !isset($_SESSION['admin']['username'])) {
         // Chuyển hướng nếu chưa đăng nhập thay vì echo để tránh headers sent
-        header("Location: ../index.php");
+        header("Location: ../");
         exit();
     }
 
@@ -46,11 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     setcookie("remember_token", "", time() - 3600, "/");
 
     // Chuyển hướng về trang đăng nhập
-    header("Location: ../index.php");
+    header("Location: ../");
     exit();
 }
 
 // Nếu truy cập bằng GET thì cũng chuyển về login
-header("Location: ../index.php");
+header("Location: ../");
 exit();
 ?>

@@ -14,7 +14,7 @@ const logo = document.querySelector('.logo');
 if (logo) {
     logo.addEventListener('click', function (e) {
         e.preventDefault();
-        window.location.href = 'home.php';
+        window.location.href = 'home';
     });
 }
 
