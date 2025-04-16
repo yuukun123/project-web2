@@ -65,6 +65,10 @@
     width: 32.5%;
 }
 
+.expiration-date{
+    width: 32.5%;
+}
+
 .product-head {
     font-weight: bold;
     text-align: left;
@@ -488,11 +492,11 @@ button.go-to a:hover {
         width: 40%;
     }
 
-    .id , .name, .price{
+    .name, .price, .status{
         width: 100%;
     }
 
-    .status , .category, .capital{
+    .expiration-date , .category, .capital{
         width: 100%;
     }
 
@@ -632,11 +636,11 @@ button.go-to a:hover {
         gap: 30px;
     }
 
-    .id , .name, .price{
+    .name, .price, .status{
         width: 32%
     }
 
-    .status , .category, .capital{
+    .expiration-date , .category, .capital{
         width: 32%;
     }
 
@@ -719,11 +723,11 @@ button.go-to a:hover {
         display: contents;
     }
     
-    .id , .name, .price{
+    .status, .name, .price{
         width: 100%
     }
 
-    .status , .category, .capital{
+    .expiration-date, .category, .capital{
         width: 100%;
     }
 
