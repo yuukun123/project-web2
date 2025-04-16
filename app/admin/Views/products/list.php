@@ -200,7 +200,7 @@ function openFileChooserIfCategorySelected() {
             <i class="fas fa-edit"></i>
         </a>
 
-            <form method="GET" action="Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
+            <form method="GET" action="../Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?= $row['product_id']; ?>">
                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
             </form>
