@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($stmt) && $stmt->execute()) {
         echo "<script>
             alert('Update Successfull!');
-            window.location.href = 'list-product.php';
+            window.location.href = 'list-product';
         </script>";
     }
 }
@@ -196,11 +196,11 @@ function openFileChooserIfCategorySelected() {
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
         <div class="product-items"> <?php echo $row['category_id']; ?> </div>
         <div class="product-items">
-        <a href="list-product.php?edit_id=<?= $row['product_id'] ?>#editModal" class="edit-btn">
+        <a href="list-product?edit_id=<?= $row['product_id'] ?>#editModal" class="edit-btn">
             <i class="fas fa-edit"></i>
         </a>
 
-            <form method="GET" action="../Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
+            <form method="GET" action="Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?= $row['product_id']; ?>">
                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
             </form>
@@ -302,7 +302,7 @@ function openFileChooserIfCategorySelected() {
             <input type="text" id="product_storage" name="product_storage" value="<?= htmlspecialchars($editingProduct['storage_instructions']) ?>">
 
             <button type="submit" style="font-weight: bold;">Save</button>
-            <a href="list-product.php" class="cancel-button">Cancel</a>
+            <a href="list-product" class="cancel-button">Cancel</a>
         </form>
     </div>
 </div>

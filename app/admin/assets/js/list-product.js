@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function fetchAndEditProduct(productId) {
     console.log("Fetching product ID:", productId);
-    fetch(`list-product.php?product_id=${productId}`)
+    fetch(`list-product?product_id=${productId}`)
         .then(res => res.json())
         .then(product => {
             console.log("Product fetched:", product);
