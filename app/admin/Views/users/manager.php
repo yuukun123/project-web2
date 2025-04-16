@@ -6,7 +6,7 @@
     </button>
     <div class="find-user">
         <input class="find" type="text" placeholder="find user"  />
-        <button class="search" type="button" onclick="searchUser()">
+        <button class="search" type="button" >
             search
         </button>
     </div>

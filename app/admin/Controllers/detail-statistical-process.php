@@ -16,7 +16,7 @@ $query = "
        c.user_name, c.phone, c.street, c.ward, c.district, c.city,
        p.product_name, od.quantity, o.status, od.price, 
        o.shipping_street, o.shipping_ward, o.shipping_district, o.shipping_city, 
-       o.notes, od.note
+       o.notes, od.note, o.delivery_date
         FROM orders AS o
         JOIN users AS c ON o.user_name = c.user_name
         JOIN order_detail AS od ON o.order_id = od.order_id

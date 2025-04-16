@@ -73,7 +73,6 @@
     <thead>
         <tr>
             <th class="title item">No</th>
-            <th class="title item">Date</th>
             <th class="title item">Product Name</th>
             <th class="title item">Quantity sales</th>
             <th class="title item">Receipt</th>
@@ -91,7 +90,6 @@
     <thead>
         <tr>
             <th class="title item">No</th>
-            <th class="title item">Date</th>
             <th class="title item">Product Name</th>
             <th class="title item">Quantity sales</th>
             <th class="title item">Receipt</th>
