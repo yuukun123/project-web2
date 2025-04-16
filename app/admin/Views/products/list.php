@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// ✅ Di chuyển hàm này RA NGOÀI, không được đặt trong DOMContentLoaded
+
 function openFileChooserIfCategorySelected() {
     const categorySelect = document.getElementById("product_category");
     const selectedValue = categorySelect.value;
@@ -147,7 +147,7 @@ function openFileChooserIfCategorySelected() {
 
 
 
-<link rel="stylesheet" href="../Admin/assets/css/list-product.css">
+<link rel="stylesheet" href="../assets/css/list-product.css">
 
 <div class="product-grid">
     <div class="product-head">ID</div>
@@ -200,7 +200,7 @@ function openFileChooserIfCategorySelected() {
             <i class="fas fa-edit"></i>
         </a>
 
-            <form method="GET" action="../Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
+            <form method="GET" action="Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?= $row['product_id']; ?>">
                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
             </form>
