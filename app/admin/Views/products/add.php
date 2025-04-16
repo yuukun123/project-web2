@@ -45,9 +45,9 @@
                 <div class="product-items">
                     <select class="select" name="category" id="category" required>
                         <option selected="selected">--Select category--</option>
-                        <option >Mousse</option>
-                        <option >Croissant</option>
-                        <option >Drink</option>
+                        <option>Mousse</option>
+                        <option>Croissant</option>
+                        <option>Drink</option>
                     </select>
                 </div>
             </div>
