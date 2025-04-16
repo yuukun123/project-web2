@@ -45,9 +45,9 @@
                 <div class="product-items">
                     <select class="select" name="category" id="category" required>
                         <option selected="selected">--Select category--</option>
-                        <option >Mousse</option>
-                        <option >Croissant</option>
-                        <option >Drink</option>
+                        <option>Mousse</option>
+                        <option>Croissant</option>
+                        <option>Drink</option>
                     </select>
                 </div>
             </div>
@@ -126,7 +126,7 @@
         
         <div class="button1">
             <button class="close" id="productForm" type="reset">close</button>
-            <button class="go-to"><a href="./list-product.html">Go List Product</a></button>
+            <button class="go-to"><a href="list-product">Go List Product</a></button>
         </div>
     </div>
 

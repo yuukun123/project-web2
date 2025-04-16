@@ -1,4 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
+    let allSizes = [];
+
     const save = document.querySelector('.save'); // Nút lưu
     const blurOverlay = document.querySelector('.blur-overlay');
     const save_suc = document.querySelector('.save-success');
@@ -166,9 +168,50 @@ document.addEventListener('DOMContentLoaded', function() {
                 sizeSelect.appendChild(option);
             });
 
+            // 👉 Lưu vào biến toàn cục
+            allSizes = data;
+
+            console.log("✅ Dữ liệu size đã lưu vào allSizes:", allSizes);
+
             console.log("✅ Dữ liệu đã hiển thị trên select.");
         })
         .catch(error => console.error("❌ Lỗi khi gọi API:", error));
+
+    // Cập nhật danh sách category theo database
+    categorySelect.addEventListener('change', function () {
+        const selectedCategory = this.value.trim().toLowerCase();
+        console.log("🔍 Category đã chọn:", selectedCategory);
+        console.log("📦 Danh sách size hiện tại:", allSizes);
+    
+        sizeSelect.innerHTML = '<option selected="selected">--Select size--</option>';
+    
+        let filteredSizes = [];
+    
+        if (selectedCategory === "mousse") {
+            filteredSizes = allSizes.filter(size => size.size_name.toLowerCase() === "16cm");
+        } else if (selectedCategory === "drink") {
+            filteredSizes = allSizes.filter(size => size.size_name.toLowerCase() === "l");
+        } else if (selectedCategory === "croissant") {
+            filteredSizes = allSizes.filter(size => size.size_name.toLowerCase() === "10cm");
+        }
+    
+        if (filteredSizes.length === 0) {
+            console.warn(`⚠️ Không có size phù hợp cho category "${selectedCategory}"`);
+            return;
+        }
+    
+        filteredSizes.forEach(item => {
+            const option = document.createElement("option");
+            option.value = item.size_id;
+            option.textContent = item.size_name;
+            sizeSelect.appendChild(option);
+        });
+    
+        console.log("✅ Size đã cập nhật theo category.");
+    });
+    
+    
+    
     
     
     // Đường dẫn ảnh
