@@ -126,7 +126,7 @@
         
         <div class="button1">
             <button class="close" id="productForm" type="reset">close</button>
-            <button class="go-to"><a href="./list-product.html">Go List Product</a></button>
+            <button class="go-to"><a href="list-product">Go List Product</a></button>
         </div>
     </div>
 
