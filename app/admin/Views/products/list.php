@@ -122,6 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Gán đường dẫn giả định
                 previewPath.value = `/assets/Img/${categoryOption}/${fileName}`;
+
             };
             reader.readAsDataURL(file);
         }
@@ -164,8 +165,9 @@ function openFileChooserIfCategorySelected() {
         <div class="product-items"> <?php echo $row['product_name']; ?> </div>
         <div class="product-items">
             <?php 
-                $base_url = "/project-web2/"; // Thay đổi nếu cần
-                $image_path = $base_url . htmlspecialchars($row['image']);
+            $image_path = "../../" . htmlspecialchars($row['image']);
+            // Vì 'image' đã là đường dẫn tương đối
+
             ?>
             <img src="<?php echo $image_path; ?>" width="90" height="90" alt="">
         </div>
@@ -230,7 +232,7 @@ function openFileChooserIfCategorySelected() {
                 <div style="flex: 1;">
                     <label>Now:</label><br>
                     <?php if (!empty($editingProduct['image'])): ?>
-                        <img src="/project-web2/<?= htmlspecialchars($editingProduct['image']) ?>" width="120" height="90" alt="Current Image" style="border: 1px solid #ccc; border-radius: 4px;">
+                        <img src="../../<?= htmlspecialchars($editingProduct['image']) ?>" width="120" height="90" alt="Current Image" style="border: 1px solid #ccc; border-radius: 4px;">
                     <?php else: ?>
                         <span>No image available</span>
                     <?php endif; ?>
