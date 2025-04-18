@@ -5,7 +5,7 @@ session_start();
 include '../../config/data_connect.php';
 
 // Lấy username của admin hiện tại đang đăng nhập
-$currentUser = $_SESSION['username'] ?? '';
+$currentUser = $_SESSION['admin']['username'] ?? '';
 
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
@@ -48,12 +48,13 @@ if ($result->num_rows > 0): ?>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>
 
                     <td>
-                        <button 
-                            class="button lock <?php echo $isSelf ? 'disabled' : ''; ?>" 
-                            onclick="<?php echo !$isSelf ? 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')' : ''; ?>"
-                            title="<?php echo $isSelf ? 'You cannot lock your own account' : $toggleAction . ' this user'; ?>">
-                            <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
-                        </button>
+                    <button 
+                        class="button lock <?php echo $isSelf ? 'disabled' : ''; ?>" 
+                        <?php echo $isSelf ? 'disabled' : 'onclick="toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')"'; ?>
+                        title="<?php echo $isSelf ? 'You cannot lock your own account' : $toggleAction . ' this user'; ?>">
+                        <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
+                    </button>
+
 
                         <button class="button edit" onclick="editUser('<?php echo $user_name; ?>')">
                             <ion-icon name="create-outline" style="color: black;"></ion-icon>
