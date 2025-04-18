@@ -4,6 +4,9 @@ session_start();
 
 include '../../config/data_connect.php';
 
+// Lấy user hiện tại đang đăng nhập
+$currentUser = $_SESSION['username'] ?? '';
+
 $sql = "SELECT * FROM users";
 $result = $conn->query($sql);
 
@@ -28,15 +31,13 @@ if ($result->num_rows > 0): ?>
                 $firstname = $row['first_name'];
                 $statusText = ($row['status'] === 'locked') ? 'Locked' : 'Active';
                 $toggleAction = ($row['status'] === 'locked') ? 'Unlock' : 'Lock';
-                // Đặt icon phù hợp với trạng thái
                 $icon = ($row['status'] === 'locked') ? 'lock-open-outline' : 'lock-closed-outline';
-                // Kiểm tra nếu role là admin
-                $isAdmin = ($row['role'] === 'admin');
+                $isCurrentUser = ($user_name === $currentUser); // 👉 kiểm tra có phải chính mình không
             ?>
                 <tr user_name="<?php echo $user_name; ?>">
-                    <td><?php echo htmlspecialchars($row['user_name']); ?></td>
-                    <td><?php echo htmlspecialchars($row['first_name']); ?></td>
-                    <td><?php echo htmlspecialchars($row['last_name']); ?></td>
+                    <td><?php echo htmlspecialchars($user_name); ?></td>
+                    <td><?php echo htmlspecialchars($firstname); ?></td>
+                    <td><?php echo htmlspecialchars($lastname); ?></td>
                     <td><?php echo htmlspecialchars($row['email']); ?></td>
                     <td><?php echo htmlspecialchars($row['phone']); ?></td>
                     <td class="hide2">
@@ -45,11 +46,12 @@ if ($result->num_rows > 0): ?>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>
 
                     <td>
-                        <button class="button lock <?php echo $user_name === $currentUser ? 'disabled' : ''; ?>" 
-                            onclick="<?php echo $user_name === $currentUser ? '' : 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')'; ?>">
+                        <button 
+                            class="button lock <?php echo $isCurrentUser ? 'disabled' : ''; ?>" 
+                            onclick="<?php echo !$isCurrentUser ? 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')' : ''; ?>"
+                            title="<?php echo $isCurrentUser ? 'You cannot lock your own account' : $toggleAction . ' this user'; ?>">
                             <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
                         </button>
-
 
                         <button class="button edit" onclick="editUser('<?php echo $user_name; ?>')">
                             <ion-icon name="create-outline" style="color: black;"></ion-icon>
@@ -61,4 +63,4 @@ if ($result->num_rows > 0): ?>
     </table>
 <?php else: ?>
     <p>No users found.</p>
-<?php endif; ?>
+<?php endif; ?>  
