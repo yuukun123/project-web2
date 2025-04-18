@@ -4,7 +4,7 @@ session_start();
 
 include '../../config/data_connect.php';
 
-// Lấy user hiện tại đang đăng nhập
+// Lấy username của admin hiện tại đang đăng nhập
 $currentUser = $_SESSION['username'] ?? '';
 
 $sql = "SELECT * FROM users";
@@ -32,7 +32,9 @@ if ($result->num_rows > 0): ?>
                 $statusText = ($row['status'] === 'locked') ? 'Locked' : 'Active';
                 $toggleAction = ($row['status'] === 'locked') ? 'Unlock' : 'Lock';
                 $icon = ($row['status'] === 'locked') ? 'lock-open-outline' : 'lock-closed-outline';
-                $isCurrentUser = ($user_name === $currentUser); // 👉 kiểm tra có phải chính mình không
+
+                // Kiểm tra có phải admin đang đăng nhập không
+                $isSelf = ($user_name === $currentUser);
             ?>
                 <tr user_name="<?php echo $user_name; ?>">
                     <td><?php echo htmlspecialchars($user_name); ?></td>
@@ -47,9 +49,9 @@ if ($result->num_rows > 0): ?>
 
                     <td>
                         <button 
-                            class="button lock <?php echo $isCurrentUser ? 'disabled' : ''; ?>" 
-                            onclick="<?php echo !$isCurrentUser ? 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')' : ''; ?>"
-                            title="<?php echo $isCurrentUser ? 'You cannot lock your own account' : $toggleAction . ' this user'; ?>">
+                            class="button lock <?php echo $isSelf ? 'disabled' : ''; ?>" 
+                            onclick="<?php echo !$isSelf ? 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')' : ''; ?>"
+                            title="<?php echo $isSelf ? 'You cannot lock your own account' : $toggleAction . ' this user'; ?>">
                             <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
                         </button>
 
@@ -63,4 +65,4 @@ if ($result->num_rows > 0): ?>
     </table>
 <?php else: ?>
     <p>No users found.</p>
-<?php endif; ?>  
+<?php endif; ?>
