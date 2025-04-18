@@ -61,11 +61,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $target_file = $target_dir . $new_filename;
         $db_image_path = $relative_path . $new_filename;
 
+        //kiểm tra định dạng và kích thước hình ảnh
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        $maxSize = 10 * 1024 * 1024; // 10MB
+        
+        $fileType = $_FILES['product_image']['type'];
+        $fileSize = $_FILES['product_image']['size'];
+        
+        if (!in_array($fileType, $allowedTypes)) {
+            echo "<script>alert('❌ Only accept file .JPG, .JPEG, .PNG.'); window.history.back();</script>";
+            exit;
+        }
+        
+        if ($fileSize > $maxSize) {
+            echo "<script>alert('❌ Image size exceeds 10MB.'); window.history.back();</script>";
+            exit;
+        }
+        
+
         if (move_uploaded_file($_FILES["product_image"]["tmp_name"], $target_file)) {
             $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, image=?, ingredients=?, expiration_date=?, storage_instructions=? WHERE product_id=?");
             $stmt->bind_param("sssissssi", $name, $status, $price, $category, $db_image_path, $ingredients, $expiration, $storage, $id);
         } else {
-            $errorMsg = "❌ Upload hình ảnh thất bại!";
+            $errorMsg = "❌ Upload Failed!";
         }
     } else {
         $stmt = $conn->prepare("UPDATE product SET product_name=?, status=?, price=?, category_id=?, ingredients=?, expiration_date=?, storage_instructions=? WHERE product_id=?");
@@ -242,7 +260,8 @@ function openFileChooserIfCategorySelected() {
                 <div style="flex: 1;">
                     <label>Preview:</label><br>
                     <div id="preview-wrapper" style="margin-bottom: 5px;"></div>
-                    <input type="file" id="product_image" name="product_image" style="display: none;">
+                    <input type="file" id="product_image" name="product_image" accept=".jpg,.jpeg,.png" style="display: none;">
+
                     <input type="button" class="browse-button" value="Browse..." onclick="openFileChooserIfCategorySelected()" style="margin-top: 5px;">
                 </div>
             </div>
