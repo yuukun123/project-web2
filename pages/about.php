@@ -13,15 +13,13 @@
             <h3>THE SWEETS</h3>
         </div>
         <div class="column right-column">
-            <p>Tại The Sweets, mỗi chiếc bánh là một tác phẩm nghệ thuật, mang trong mình câu chuyện và hương vị
-                độc đáo không thể trộn lẫn.</p>
+            <p>At The Sweets, every cake is a work of art, carrying its own story and a unique flavor that cannot be mistaken for anything else.</p>
             <br>
-            <p>Chúng tôi – những người thợ làm bánh tâm huyết, luôn đặt sự tỉ mỉ và tình yêu vào từng chi tiết
-                nhỏ nhất. Chúng tôi tôn trọng sự nguyên bản và tự nhiên của từng nguyên liệu, để dù mỗi thứ đều
-                có những nét riêng, chúng vẫn kết hợp hài hòa tạo nên những chiếc bánh thơm ngon và đẹp mắt.</p>
+            <p>We are passionate bakers who pour meticulous care and love into every little detail. We honor the originality and natural essence of each ingredient,
+                 allowing their individual characteristics to come together in harmony to create cakes that are both delicious and visually stunning.</p>
             <br>
-            <p>Vì vậy, nếu bạn đang tìm kiếm những hương vị tinh tế, mộc mạc nhưng không kém phần hấp dẫn, hãy
-                ghé thăm The Sweets. Luôn có những điều đặc biệt chờ đón bạn khám phá!</p>
+            <p>So, if you're in search of refined, rustic flavors with a touch of charm, come visit The Sweets. There’s 
+                always something special waiting for you to discover!</p>
         </div>
     </div>
 
