@@ -22,7 +22,6 @@ async function showEditUserForm(user) {
     document.getElementById('email').value = user.email;
     document.getElementById('phone').value = user.phone;
 
-    document.getElementById('role').value = user.role;
     document.getElementById('street').value = user.street;
     document.getElementById('created_at').value = user.created_at;
     document.getElementById('updated_at').value = user.updated_at;
@@ -30,6 +29,7 @@ async function showEditUserForm(user) {
     document.getElementById('username').readOnly = true;
     document.getElementById('email').readOnly = true;
     document.getElementById('password').readOnly = true;
+    document.getElementById("role").readOnly = true;
 
     // Load city and select correct city
     const cities = await loadCities();
@@ -240,8 +240,6 @@ function paginateTable() {
 }
 
 
-
-
 function loadUserTable() {
     fetch('Controllers/user-process.php')
         .then(response => response.text())
@@ -261,6 +259,7 @@ function showAddUserForm() {
     document.getElementById('username').readOnly = false;
     document.getElementById('email').readOnly = false;
     document.getElementById('password').readOnly = false;
+    document.getElementById('role').readOnly = false;
 
     document.getElementById('userModal').style.display = 'flex';
 }

@@ -1,4 +1,4 @@
-<?php include '../Api_php/check-session-admin.php';?>
+<?php include '../Api_php/session-admin.php';?>
 <!DOCTYPE html>
 <html lang="en">
 
