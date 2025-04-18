@@ -45,10 +45,11 @@ if ($result->num_rows > 0): ?>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>
 
                     <td>
-                        <button class="button lock <?php echo $isAdmin ? 'disabled' : ''; ?>" 
-                                onclick="<?php echo $isAdmin ? '' : 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')'; ?>">
+                        <button class="button lock <?php echo $user_name === $currentUser ? 'disabled' : ''; ?>" 
+                            onclick="<?php echo $user_name === $currentUser ? '' : 'toggleLockUser(\'' . $user_name . '\', \'' . $row['status'] . '\')'; ?>">
                             <ion-icon name="<?php echo $icon; ?>" style="color: black;"></ion-icon>
                         </button>
+
 
                         <button class="button edit" onclick="editUser('<?php echo $user_name; ?>')">
                             <ion-icon name="create-outline" style="color: black;"></ion-icon>
