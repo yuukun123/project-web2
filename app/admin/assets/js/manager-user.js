@@ -273,11 +273,18 @@ function closeModal() {
 let pendingUserName = null;
 let pendingStatus = null;
 
-function toggleLockUser(username, currentStatus) {
+function toggleLockUser(username, currentStatus, role) {
     pendingUserName = username;
     pendingStatus = currentStatus === 'locked';
     document.getElementById('confirmLockModal').style.display = 'flex';
+
+    // Kiểm tra nếu người dùng là admin và bị khóa
+    if (role === 'admin' && pendingStatus) {
+        logout();
+    }
 }
+
+
 
 document.getElementById('confirmLockBtn').addEventListener('click', () => {
     if (pendingUserName !== null) {

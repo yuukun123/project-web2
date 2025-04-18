@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }else {
         // INSERT
         $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, user_name, email, phone, password, role, street, city, district, ward, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssssssss", $first_name, $last_name, $username, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $current_time);
+        $stmt->bind_param("sssssssssssss", $first_name, $last_name, $username, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $current_time);
 
         if ($stmt->execute()) {
             echo "New user added successfully!";

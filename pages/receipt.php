@@ -1,21 +1,5 @@
 <?php
-// Đặt múi giờ cho PHP
-date_default_timezone_set('Asia/Ho_Chi_Minh'); 
-
 include "app/config/data_connect.php";
-
-// Đặt múi giờ cho MySQL
-$conn->query("SET GLOBAL time_zone = '+07:00'");
-$conn->query("SET time_zone = '+07:00'");
-
-// Kiểm tra thời gian MySQL và PHP có đồng bộ không
-$result = $conn->query("SELECT NOW() AS mysql_time");
-$row = $result->fetch_assoc();
-$mysqlTime = $row['mysql_time'];
-$phpTime = date('Y-m-d H:i:s');
-
-
-
 // Kiểm tra nếu người dùng đã đăng nhập
 $loggedIn = isset($_SESSION['user']) && isset($_SESSION['user']['username']);
 
