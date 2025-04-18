@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         //kiểm tra định dạng và kích thước hình ảnh
         $allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
-        $maxSize = 10 * 1024 * 1024; // 10MB
+        $maxSize = 5 * 1024 * 1024; // 10MB
         
         $fileType = $_FILES['product_image']['type'];
         $fileSize = $_FILES['product_image']['size'];
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         
         if ($fileSize > $maxSize) {
-            echo "<script>alert('❌ Image size exceeds 10MB.'); window.history.back();</script>";
+            echo "<script>alert('❌ Image size exceeds 5MB.'); window.history.back();</script>";
             exit;
         }
         
