@@ -30,8 +30,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         error_log("Username từ DB: " . $row['user_name']);
         error_log("Password từ DB: " . $row['password']);
         error_log("Role từ DB: " . $row['role']);
+        error_log("Status từ DB: " . $row['status']); // Kiểm tra trạng thái tài khoản
 
+        // Kiểm tra xem tài khoản có bị khóa không
+        if ($row['status'] === 'locked') {
+            echo json_encode([
+                "status" => "error",
+                "message" => "Your account is locked. Please contact support.",
+            ]);
+            exit;
+        }
 
+        // Kiểm tra quyền truy cập
         $allowed_roles = ['admin', 'staff', 'manager'];
         if (!in_array(strtolower($row['role']), $allowed_roles)){
             echo json_encode([
