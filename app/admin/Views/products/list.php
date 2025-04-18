@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($stmt) && $stmt->execute()) {
         echo "<script>
             alert('Update Successfull!');
-            window.location.href = 'list-product.php';
+            window.location.href = 'list-product';
         </script>";
     }
 }
@@ -122,13 +122,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Gán đường dẫn giả định
                 previewPath.value = `/assets/Img/${categoryOption}/${fileName}`;
+
             };
             reader.readAsDataURL(file);
         }
     });
 });
 
-// ✅ Di chuyển hàm này RA NGOÀI, không được đặt trong DOMContentLoaded
+
 function openFileChooserIfCategorySelected() {
     const categorySelect = document.getElementById("product_category");
     const selectedValue = categorySelect.value;
@@ -147,7 +148,7 @@ function openFileChooserIfCategorySelected() {
 
 
 
-<link rel="stylesheet" href="../Admin/assets/css/list-product.css">
+<link rel="stylesheet" href="../assets/css/list-product.css">
 
 <div class="product-grid">
     <div class="product-head">ID</div>
@@ -164,8 +165,9 @@ function openFileChooserIfCategorySelected() {
         <div class="product-items"> <?php echo $row['product_name']; ?> </div>
         <div class="product-items">
             <?php 
-                $base_url = "/project-web2/"; // Thay đổi nếu cần
-                $image_path = $base_url . htmlspecialchars($row['image']);
+            $image_path = "../../" . htmlspecialchars($row['image']);
+            // Vì 'image' đã là đường dẫn tương đối
+
             ?>
             <img src="<?php echo $image_path; ?>" width="90" height="90" alt="">
         </div>
@@ -196,11 +198,11 @@ function openFileChooserIfCategorySelected() {
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
         <div class="product-items"> <?php echo $row['category_id']; ?> </div>
         <div class="product-items">
-        <a href="list-product.php?edit_id=<?= $row['product_id'] ?>#editModal" class="edit-btn">
+        <a href="list-product?edit_id=<?= $row['product_id'] ?>#editModal" class="edit-btn">
             <i class="fas fa-edit"></i>
         </a>
 
-            <form method="GET" action="../Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
+            <form method="GET" action="Controllers/delete.php" onsubmit="return confirm('Bạn có chắc muốn xóa sản phẩm này không?');" style="display:inline;">
                 <input type="hidden" name="product_id" value="<?= $row['product_id']; ?>">
                 <button type="submit" class="delete-button"><i class="fas fa-trash-alt"></i></button>
             </form>
@@ -230,7 +232,7 @@ function openFileChooserIfCategorySelected() {
                 <div style="flex: 1;">
                     <label>Now:</label><br>
                     <?php if (!empty($editingProduct['image'])): ?>
-                        <img src="/project-web2/<?= htmlspecialchars($editingProduct['image']) ?>" width="120" height="90" alt="Current Image" style="border: 1px solid #ccc; border-radius: 4px;">
+                        <img src="../../<?= htmlspecialchars($editingProduct['image']) ?>" width="120" height="90" alt="Current Image" style="border: 1px solid #ccc; border-radius: 4px;">
                     <?php else: ?>
                         <span>No image available</span>
                     <?php endif; ?>
@@ -302,7 +304,7 @@ function openFileChooserIfCategorySelected() {
             <input type="text" id="product_storage" name="product_storage" value="<?= htmlspecialchars($editingProduct['storage_instructions']) ?>">
 
             <button type="submit" style="font-weight: bold;">Save</button>
-            <a href="list-product.php" class="cancel-button">Cancel</a>
+            <a href="list-product" class="cancel-button">Cancel</a>
         </form>
     </div>
 </div>
