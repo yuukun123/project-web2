@@ -211,28 +211,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     
-    
-    
-    
     // Đường dẫn ảnh
     fileInput.addEventListener("change", function (event) {
+        const file = this.files[0];
 
-        // Kiểm tra lại lần nữa nếu có thay đổi trong category
-        // Kiểm tra nếu category vẫn là giá trị mặc định "--Select category--"
+        // Kiểm tra nếu chưa chọn category
         if (!categorySelect.value || categorySelect.value === "--Select category--") {
             alert("⚠️ Please select a category before uploading an image!");
-            fileInput.value = "";  // Reset lại giá trị file input
+            fileInput.value = "";
             return;
         }
 
-        previewImage(event);  // 👉 Gọi hàm preview
-    
-        let file = this.files[0];
-    
-        let formData = new FormData();
+        // Kiểm tra định dạng và kích thước
+        const allowedTypes = ["image/jpeg", "image/jpg", "image/png", "image/gif"];
+        const maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("❌ Invalid file type. Only JPG, JPEG, PNG, and GIF are allowed.");
+            fileInput.value = "";
+            clearPreview();
+            return;
+        }
+
+        if (file.size > maxSize) {
+            alert("❌ File size exceeds 5MB. Please choose a smaller image.");
+            fileInput.value = "";
+            clearPreview();
+            return;
+        }
+
+        // 👉 Nếu hợp lệ thì hiển thị preview và upload
+        previewImage(event);
+
+        const formData = new FormData();
         formData.append("file", file);
         formData.append("category", categorySelect.value);
-    
+
         fetch("Api_php/upload-img.php", {
             method: "POST",
             body: formData,
@@ -241,21 +255,26 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             console.log(data);
             if (data.success) {
-                // ✅ Chỉ gán vào input #filePath
-                let filePathInput = document.getElementById("filePath");
+                const filePathInput = document.getElementById("filePath");
                 filePathInput.value = data.filePath;
             } else {
                 alert("❌ Upload failed: " + data.error);
+                clearPreview();
+                fileInput.value = "";
             }
         })
-        .catch(error => console.error("❌ Lỗi khi upload ảnh:", error));
+        .catch(error => {
+            console.error("❌ Lỗi khi upload ảnh:", error);
+            clearPreview();
+            fileInput.value = "";
+        });
     });
-    
+
     function previewImage(event) {
         const file = event.target.files[0];
         const preview = document.getElementById('imagePreview');
         const filePathInput = document.getElementById('filePath');
-        
+
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -265,11 +284,19 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.readAsDataURL(file);
             filePathInput.value = file.name;
         } else {
-            preview.src = '';
-            preview.style.display = 'none';
-            filePathInput.value = '';
+            clearPreview();
         }
     }
+
+    function clearPreview() {
+        const preview = document.getElementById('imagePreview');
+        const filePathInput = document.getElementById('filePath');
+
+        preview.src = '';
+        preview.style.display = 'none';
+        filePathInput.value = '';
+    }
+
 
     // Xóa dữ liệu khi form reset
     const form = document.getElementById("add-product-form");  // �� Đúng ID của form
