@@ -127,6 +127,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // Gọi hiển thị lời chào nếu đăng nhập
     displayWelcomeMessage();
 
+    fetch('Api_php/session-admin.php')
+    .then(response => response.json())
+    .then(data => {
+        if (!data.loggedIn) {
+            if (data.status === 'locked') {
+                alert(data.message); // Thông báo tài khoản bị khóa
+                logout(); // Đăng xuất người dùng
+            }
+        }
+    });
+
+    function logout() {
+        // Thực hiện logout, ví dụ:
+        fetch("Login_Processing/logout_processing.php", { method: "POST" })
+        .then((response) => response.text())
+        .then((data) => {
+            alert("You have been logged out due to your account being locked.");
+            window.location.href = "../"; // Điều hướng đến trang đăng nhập
+        })
+        .catch(console.error);
+    }
+
     // Các chức năng khác (ví dụ: xử lý giỏ hàng, tìm kiếm, ...)
     // ...
 });

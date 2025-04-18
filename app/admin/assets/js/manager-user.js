@@ -284,27 +284,7 @@ function toggleLockUser(username, currentStatus, role) {
     }
 }
 
-fetch('Api_php/session-admin.php')
-    .then(response => response.json())
-    .then(data => {
-        if (!data.loggedIn) {
-            if (data.status === 'locked') {
-                alert(data.message); // Thông báo tài khoản bị khóa
-                logout(); // Đăng xuất người dùng
-            }
-        }
-    });
 
-function logout() {
-    // Thực hiện logout, ví dụ:
-    fetch("Login_Processing/logout_processing.php", { method: "POST" })
-      .then((response) => response.text())
-      .then((data) => {
-        alert("You have been logged out due to your account being locked.");
-        window.location.href = "../"; // Điều hướng đến trang đăng nhập
-      })
-      .catch(console.error);
-}
 
 document.getElementById('confirmLockBtn').addEventListener('click', () => {
     if (pendingUserName !== null) {
