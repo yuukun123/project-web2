@@ -2,10 +2,8 @@
 header("Content-Type: application/json");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Lấy thông tin category từ request
     $category = isset($_POST['category']) ? trim($_POST['category']) : '';
 
-    // Xác định thư mục theo category
     $categoryFolders = [
         "Mousse" => "Mousse",
         "Drink" => "Drink",
@@ -15,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $folder = isset($categoryFolders[$category]) ? $categoryFolders[$category] : "other";
     $uploadDir = __DIR__ . "/../../../public/assets/Img/$folder/";
 
-    // Tạo thư mục nếu chưa tồn tại
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
         echo json_encode([
@@ -29,12 +26,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $fileName = basename($_FILES["file"]["name"]);
         $fileType = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
         $allowedTypes = ["jpg", "jpeg", "png", "gif"];
+        $fileSize = $_FILES["file"]["size"];
+        $maxSize = 5 * 1024 * 1024; // 5MB
 
-        // Kiểm tra định dạng file hợp lệ
+        // Kiểm tra định dạng
         if (!in_array($fileType, $allowedTypes)) {
             echo json_encode([
                 "success" => false,
                 "error" => "Only JPG, JPEG, PNG, and GIF files are allowed."
+            ]);
+            exit();
+        }
+
+        // Kiểm tra kích thước file
+        if ($fileSize > $maxSize) {
+            echo json_encode([
+                "success" => false,
+                "error" => "File size exceeds the maximum limit of 5MB."
             ]);
             exit();
         }
@@ -45,9 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $targetPath = $uploadDir . $uniqueName;
         } while (file_exists($targetPath));
 
-        // Di chuyển file
         if (move_uploaded_file($_FILES["file"]["tmp_name"], $targetPath)) {
-            // Trả về đường dẫn để lưu vào DB & frontend
             echo json_encode([
                 "success" => true,
                 "filePath" => "/assets/Img/$folder/" . $uniqueName
