@@ -71,7 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // **🔹 Cập nhật phần lưu session**
             $_SESSION['admin'] = [
                 'username' => $row['user_name'],
-                'role'     => $row['role']
+                'role'     => $row['role'],
+                'status'   => $row['status']
             ];
 
             // Trả về dữ liệu JSON

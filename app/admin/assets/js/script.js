@@ -102,17 +102,26 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(data => {
             console.log("Dữ liệu session trả về:", data);
+    
             if (data.loggedIn) {
+                if (data.status && data.status.toLowerCase() === "locked") {
+                    console.warn("Tài khoản đã bị khóa. Đang tiến hành đăng xuất...");
+                    logout(); // Gọi hàm logout nếu trạng thái là locked
+                    return; // Không chạy tiếp
+                }
+    
                 document.body.classList.add("logged-in");
             } else {
                 document.body.classList.remove("logged-in");
             }
+    
             if (callback) {
                 callback(data.loggedIn);
             }
         })
         .catch(error => console.error("Lỗi khi kiểm tra session:", error));
     }
+    
     
 
     // Kiểm tra trạng thái đăng nhập
@@ -127,28 +136,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Gọi hiển thị lời chào nếu đăng nhập
     displayWelcomeMessage();
 
-    fetch('Api_php/session-admin.php')
-    .then(response => response.json())
-    .then(data => {
-        if (!data.loggedIn) {
-            if (data.status === 'locked') {
-                alert(data.message); // Thông báo tài khoản bị khóa
-                logout(); // Đăng xuất người dùng
-            }
-        }
-    });
-
-    function logout() {
-        // Thực hiện logout, ví dụ:
-        fetch("Login_Processing/logout_processing.php", { method: "POST" })
-        .then((response) => response.text())
-        .then((data) => {
-            alert("You have been logged out due to your account being locked.");
-            window.location.href = "../"; // Điều hướng đến trang đăng nhập
-        })
-        .catch(console.error);
-    }
-
     // Các chức năng khác (ví dụ: xử lý giỏ hàng, tìm kiếm, ...)
     // ...
 });
+
+function logout() {
+    // Thực hiện logout, ví dụ:
+    fetch("Login_Processing/logout_processing.php", { method: "POST" })
+    .then((response) => response.text())
+    .then((data) => {
+        alert("You have been logged out due to your account being locked.");
+        window.location.href = "../"; // Điều hướng đến trang đăng nhập
+    })
+    .catch(console.error);
+}
