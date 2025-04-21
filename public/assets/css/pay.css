@@ -1,3 +1,7 @@
+.search-icon button{
+    display: none;
+}
+
 .click {
     margin-right: 5px;
     margin-left: 5px;

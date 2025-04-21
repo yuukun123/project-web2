@@ -1,4 +1,8 @@
 /*Main*/
+.search-icon button{
+    display: none;
+}
+
 .Home_main {
     flex: 1 0 auto;
     position: relative;

@@ -7,6 +7,9 @@
     padding: 0px 0px;
     overflow: hidden;
 } */
+.search-icon button{
+    display: none;
+}
 
 .receipt{
     position: relative;
