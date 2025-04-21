@@ -1,4 +1,8 @@
 /* Style the input */
+.search-icon button{
+    display: none;
+}
+
 .search-container {
     position: relative;
     display: inline-block;

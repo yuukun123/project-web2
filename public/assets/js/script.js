@@ -438,12 +438,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Xử lý sự kiện khi bấm vào nút phân trang
-    document.querySelector(".pagination").addEventListener("click", function (event) {
-        if (event.target.tagName === "BUTTON") {
-            currentPage = parseInt(event.target.dataset.page);
-            updateProducts();
-        }
-    });
+    const pagination = document.querySelector(".pagination");
+    if (pagination) {
+        pagination.addEventListener("click", function (event) {
+            if (event.target.tagName === "BUTTON") {
+                currentPage = parseInt(event.target.dataset.page);
+                updateProducts();
+            }
+        });
+    }
+    
 
     // Cập nhật class active cho navigation (dành cho nhãn)
     document.querySelectorAll(".nav-item").forEach(label => {

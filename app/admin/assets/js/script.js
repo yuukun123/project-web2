@@ -96,23 +96,31 @@ document.addEventListener("DOMContentLoaded", function () {
             method: "GET",
             credentials: "include"
         })
-        .then(response => {
-            console.log("Response status:", response.status);
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             console.log("Dữ liệu session trả về:", data);
+    
+            // Check tài khoản bị khóa
+            if (data.status && data.status.toLowerCase() === "locked") {
+                console.warn("Tài khoản đã bị khóa. Chuyển về trang đăng nhập...");
+                alert("Your account has been locked. You will be redirected to the login page.");
+                window.location.href = "login"; // Hoặc đúng link login của bạn
+                return;
+            }
+    
+            // Check trạng thái đăng nhập
             if (data.loggedIn) {
                 document.body.classList.add("logged-in");
             } else {
                 document.body.classList.remove("logged-in");
             }
+    
             if (callback) {
                 callback(data.loggedIn);
             }
         })
         .catch(error => console.error("Lỗi khi kiểm tra session:", error));
-    }
+    }    
     
 
     // Kiểm tra trạng thái đăng nhập
@@ -125,29 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Gọi hiển thị lời chào nếu đăng nhập
+
     displayWelcomeMessage();
-
-    fetch('Api_php/session-admin.php')
-    .then(response => response.json())
-    .then(data => {
-        if (!data.loggedIn) {
-            if (data.status === 'locked') {
-                alert(data.message); // Thông báo tài khoản bị khóa
-                logout(); // Đăng xuất người dùng
-            }
-        }
-    });
-
-    function logout() {
-        // Thực hiện logout, ví dụ:
-        fetch("Login_Processing/logout_processing.php", { method: "POST" })
-        .then((response) => response.text())
-        .then((data) => {
-            alert("You have been logged out due to your account being locked.");
-            window.location.href = "../"; // Điều hướng đến trang đăng nhập
-        })
-        .catch(console.error);
-    }
 
     // Các chức năng khác (ví dụ: xử lý giỏ hàng, tìm kiếm, ...)
     // ...
