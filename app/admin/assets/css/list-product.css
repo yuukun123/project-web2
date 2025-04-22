@@ -319,6 +319,18 @@
         padding: 10px;
     }
 
+    .edit-btn,
+    .delete-button {
+        padding: 4px 7px;
+        font-size: 8px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-right: 4px;
+    }
+
     .notification{
         width: 85%;
         height: 700px;
@@ -461,8 +473,21 @@
 @media (max-width: 360px) {
     .product-grid {
         /* grid-template-columns: 4vh 6vh 9vh 6vh 6vh 5vh 10vh; */
-        grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
+        /* grid-template-columns: repeat(auto-fit, minmax(35px, 1fr)); */
         /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr ; */
+    }
+
+
+    .edit-btn,
+    .delete-button {
+        padding: 2px 5px;
+        font-size: 7px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        margin-right: 4px;
     }
 
     .product-head {
