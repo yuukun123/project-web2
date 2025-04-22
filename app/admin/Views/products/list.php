@@ -162,12 +162,6 @@ function openFileChooserIfCategorySelected() {
 }
 </script>
 
-
-
-
-
-<link rel="stylesheet" href="../assets/css/list-product.css">
-
 <div class="product-grid">
     <div class="product-head">ID</div>
     <div class="product-head">NAME</div>
