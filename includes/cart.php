@@ -49,7 +49,6 @@ echo "<script>console.log('Dữ liệu giỏ hàng: ', " . json_encode($products
 foreach ($products as $row) {
     $total_price += $row["price"] * $row["quantity"];
     echo '
-
         <div class="cart-items">
             <img src="' . $row["image"] . '" height="74" width="60" class="cart-img" alt="">
             <span class="infor">
@@ -81,7 +80,5 @@ echo '
     <div class="provisional-charge">
         <p>Provisional invoice :</p>
         <p>' . number_format($total_price, 0, ",", ".") . ' VND</p>
-    </div>
-
-    ';
+    </div>';
 ?>

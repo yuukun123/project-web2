@@ -7,7 +7,7 @@ RewriteRule ^$ index.php?pages=home [QSA,L]
 
 # ✅ Route các trang người dùng
 RewriteCond %{REQUEST_URI} !^/index\.php$
-RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product|pay)$ index.php?pages=$1 [QSA,L]
+RewriteRule ^(home|about|receipt|login|register|advance|croissant|mousse|drink|product|pay|shopping_cart)$ index.php?pages=$1 [QSA,L]
 
 # ✅ Truy cập /app/admin → tự động vào trang login
 RewriteRule ^app/admin/?$ app/admin/index.php [L]

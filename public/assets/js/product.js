@@ -7,6 +7,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartCount = document.querySelector(".cart-count"); // Số lượng hiển thị trên giỏ hàng
     const blurOverlay = document.querySelector(".blur-overlay");
     let inputElement = document.querySelector('.quantity-button input');
+    const payButton = document.querySelector(".pay-btn-link");
+    const payLink = document.querySelector(".pay-link");
+
+
+
     // 🔼 Tăng số lượng
     plusBtn.addEventListener("click", function () {
         let currentValue = parseInt(quantityInput.value);
@@ -101,8 +106,21 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             console.log("Số lượng giỏ hàng:", data.count);
-            if (cartCount) {
+    
+            // Cập nhật số lượng giỏ hàng trên tất cả các phần tử hiển thị
+            document.querySelectorAll(".cart-count").forEach(cartCount => {
                 cartCount.textContent = data.count || 0;
+            });
+    
+            // Nếu giỏ hàng có sản phẩm, cho phép thanh toán
+            if (data.count > 0) {
+                payButton.removeAttribute("disabled");
+                payButton.classList.remove("disabled");
+                payLink.classList.remove("disabled-link"); // Đảm bảo có thể nhấn
+            } else {
+                payButton.setAttribute("disabled", "true");
+                payButton.classList.add("disabled");
+                payLink.classList.add("disabled-link"); // Ngăn điều hướng
             }
         })
         .catch(error => console.error("Lỗi khi lấy số lượng giỏ hàng:", error));

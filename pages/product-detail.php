@@ -83,7 +83,7 @@ if (!empty($product)) {
                     echo '<p>' . htmlspecialchars($product['status']) . '</p>';
                     echo '</button>';
                 } else {
-                    echo '<button class="sp-cart add-to-cart-detail" data-id="' . htmlspecialchars($product['product_id']) . '">';
+                    echo '<button class="add-to-cart-detail" data-id="' . htmlspecialchars($product['product_id']) . '">';
                     echo '<p>Add to cart</p>';
                     echo '</button>';
                 }
@@ -125,5 +125,21 @@ if (!empty($product)) {
     
     echo '</div>';
     echo '</div>';
+
+//    echo '<div class="shopping-cart">
+//         <button class="close">
+//             &times;
+//         </button>
+//         <div class="cart-scroll">
+//             '. include 'includes/cart.php'; '
+//         </div>
+        
+//         <div class="Pay_button">
+//             <a href="pay" class="pay-link">
+//                 <button class="pay-btn-link">Pay</button>
+//             </a>
+//         </div>
+//     </div>
+//     <div class="blur-overlay"></div>';
 }
 ?>
