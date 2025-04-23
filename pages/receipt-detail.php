@@ -71,9 +71,14 @@ $statusColor = match($order['status']) {
             <img src="<?= htmlspecialchars($row['image']) ?>" alt="<?= htmlspecialchars($row['product_name']) ?>">
             <div class="name-type">
                 <div class="name">
-                    <p><?= htmlspecialchars($row['product_name']) ?></p>
-                    <p>Quantity: <?= $row['quantity'] ?></p>
-                    <p><?= number_format($row['price'], 0, '.', ',') ?> VND</p>
+                    <div class="pd_name">
+                        <p><?= htmlspecialchars($row['product_name']) ?></p>
+                    </div>
+                    <div class="pd_quantity" >
+                        <p>Quantity: <?= $row['quantity'] ?></p>
+                        <p><?= number_format($row['price'], 0, '.', ',') ?> VND</p>
+                    </div>
+
                 </div>
                 <div class="type">
                     <div>Category: <?= htmlspecialchars($row['category_name']) ?></div>

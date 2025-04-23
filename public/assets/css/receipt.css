@@ -185,7 +185,16 @@
 
 .name{
     display: flex;
-    gap:54px;
+    gap:35px;
+}
+
+.pd_name{
+    width: 130px;
+}
+
+.pd_quantity{
+    display: flex;
+    gap: 45px;
 }
 
 .type{
@@ -357,6 +366,15 @@
     .more-infor{
         width: 350px;
         font-size: 10px;
+        padding: 30px 25px;
+    }
+    .pd_name{
+        width: 50px;
+    }
+    
+    .pd_quantity{
+        display: flex;
+        gap: 30px;
     }
 
     .img-infor{

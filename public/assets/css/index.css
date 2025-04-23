@@ -860,12 +860,11 @@
         border: none;
         cursor: pointer;
         padding: 4px;
-        display: flex
-;
+        display: flex;
         align-items: center;
         justify-content: center;
         color: #666;
-        background: #e1dfdf;
+        background: #e1dfdfe6;
         border-radius: 20px;
         margin-right: -8px;
         transition: color 0.2s ease;
