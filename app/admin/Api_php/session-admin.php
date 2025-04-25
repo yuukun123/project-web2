@@ -4,6 +4,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ob_start(); // Bật bộ đệm đầu ra để tránh lỗi headers
+
+// // Kiểm tra xem session admin có tồn tại và hợp lệ không
+// if (!isset($_SESSION['admin']) || !is_array($_SESSION['admin']) || !isset($_SESSION['admin']['username'])) {
+//     // Nếu không đăng nhập, chuyển hướng về trang login
+//     header("Location: ../");
+//     exit();
+// }
+
 header('Content-Type: application/json');
 include_once __DIR__ . '/../../config/data_connect.php';
 

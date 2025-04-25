@@ -1,5 +1,54 @@
 /*admin data*/
 document.addEventListener('DOMContentLoaded', function() {
+    // Function: Check login status
+    function checkLoginStatus(callback) {
+        console.log("Đang gọi checkLoginStatus...");
+        fetch("Api_php/session-admin.php", {
+            method: "GET",
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Dữ liệu session trả về:", data);
+
+            // Nếu chưa đăng nhập, chuyển hướng về trang login
+            if (!data.loggedIn) {
+                console.warn("Chưa đăng nhập. Chuyển về trang đăng nhập...");
+                window.location.href = "login";
+                return;
+            }
+    
+            // Check tài khoản bị khóa
+            if (data.status && data.status.toLowerCase() === "locked") {
+                console.warn("Tài khoản đã bị khóa. Chuyển về trang đăng nhập...");
+                alert("Your account has been locked. You will be redirected to the login page.");
+                window.location.href = "login"; // Hoặc đúng link login của bạn
+                return;
+            }
+    
+            // Check trạng thái đăng nhập
+            if (data.loggedIn) {
+                document.body.classList.add("logged-in");
+            } else {
+                document.body.classList.remove("logged-in");
+            }
+    
+            if (callback) {
+                callback(data.loggedIn);
+            }
+        })
+        .catch(error => console.error("Lỗi khi kiểm tra session:", error));
+    }    
+    
+
+    // Kiểm tra trạng thái đăng nhập
+    checkLoginStatus((isLoggedIn) => {
+        if (!isLoggedIn) {
+            console.log("Không đăng nhập, xóa flag welcomeShownAdmin");
+            localStorage.removeItem("welcomeShownAdmin");
+            console.log("welcomeShownAdmin flag removed:", localStorage.getItem("welcomeShownAdmin"));
+        }
+    });
 
     // // Get stored users from localStorage
     // function getCurrentUser() {

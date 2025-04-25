@@ -99,6 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(response => response.json())
         .then(data => {
             console.log("Dữ liệu session trả về:", data);
+
+            // Nếu chưa đăng nhập, chuyển hướng về trang login
+            if (!data.loggedIn) {
+                console.warn("Chưa đăng nhập. Chuyển về trang đăng nhập...");
+                window.location.href = "login";
+                return;
+            }
     
             // Check tài khoản bị khóa
             if (data.status && data.status.toLowerCase() === "locked") {
