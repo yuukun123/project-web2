@@ -284,6 +284,10 @@ header.hide {
     font-weight: 500;
     margin-left: 40px;
     transition: .5s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
 }
 
 .btnLogin-popup:hover {
@@ -879,6 +883,11 @@ header.hide {
         font-weight: 500;
         margin-left: 23px;
         transition: .5s;
+    }
+
+    .text-small{
+        font-size: 3em;
+        padding: 100px;
     }
 }
 

@@ -60,8 +60,8 @@ ob_end_flush();
 </div>
 
 <!--Mobile-->
+<!--Mobile-->
 <div class="mobile-menu" id="mobileMenu">
-
     <div class="menu-container">
         <!--Manage-product-->
         <button class="grade-button" onclick="toggleGrade('gradeFood', 'chevronFood')">
@@ -71,14 +71,14 @@ ob_end_flush();
             </span>
             <span class="chevron down" id="chevronFood"></span>
         </button>
-        <div class="subject-list active" id="gradeFood" >
-            <div class="subject-item active">
+        <div class="subject-list <?php echo ($page == 'list-product.php' || $page == 'add-product.php') ? 'active' : ''; ?>" id="gradeFood">
+            <div class="subject-item <?php echo ($page == 'list-product.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="clipboard-outline"></ion-icon>
                     <a href="list-product">List product</a>
                 </span>
             </div>
-            <div class="subject-item">
+            <div class="subject-item <?php echo ($page == 'add-product.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="add-circle-outline"></ion-icon>
                     <a href="add-product">Add product</a>
@@ -94,8 +94,8 @@ ob_end_flush();
             </span>
             <span class="chevron up" id="chevronUserList"></span>
         </button>
-        <div class="subject-list" id="gradeUserList" style="display:none;">
-            <div class="subject-item">
+        <div class="subject-list <?php echo ($page == 'manager-user.php') ? 'active' : ''; ?>" id="gradeUserList" style="display:none;">
+            <div class="subject-item <?php echo ($page == 'manager-user.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="person-outline"></ion-icon>
                     <a href="manager-user">List User</a>
@@ -108,11 +108,11 @@ ob_end_flush();
             <span class="text-head">
                 <ion-icon name="receipt-outline"></ion-icon>
                 Receipt
-        </span>
+            </span>
             <span class="chevron up" id="chevronReceipt"></span>
         </button>
-        <div class="subject-list " id="gradeReceipt" style="display:none;">
-            <div class="subject-item">
+        <div class="subject-list <?php echo ($page == 'receipt.php') ? 'active' : ''; ?>" id="gradeReceipt" style="display:none;">
+            <div class="subject-item <?php echo ($page == 'receipt.php') ? 'active' : ''; ?>">
                 <span>
                     <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>
                     <a href="receipt">Status order</a>
@@ -128,22 +128,19 @@ ob_end_flush();
             </span>
             <span class="chevron up" id="chevronStatistical"></span>
         </button>
-        <div class="subject-list" id="gradeStatistical" style="display:none;">
-            <div class="subject-item">
+        <div class="subject-list <?php echo ($page == 'statiscal-product.php' || $page == 'statiscal-user.php') ? 'active' : ''; ?>" id="gradeStatistical" style="display:none;">
+            <div class="subject-item <?php echo ($page == 'statiscal-product.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="stats-chart-outline"></ion-icon>
                     <a href="statiscal-product">Product statistical</a>
                 </span>
             </div>
-            <div class="subject-item">
+            <div class="subject-item <?php echo ($page == 'statiscal-user.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="stats-chart-outline"></ion-icon>
                     <a href="statiscal-users">User Statistical</a>
                 </span>
             </div>
         </div>
-
     </div>
-
-
 </div>

@@ -78,8 +78,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -35%);
-    width: 360px;
-    height: 400px;
+    width: 320px;
+    height: 370px;
     background-color: #ffffff;
     border-radius: 20px;
     border: 2px solid rgba(0, 0, 0, .6);
@@ -93,7 +93,7 @@ body {
 
 .wrapper .form-box {
     width: 100%;
-    padding: 0 40px;
+    padding: 0 25px;
 }
 
 .wrapper .form-box.login {

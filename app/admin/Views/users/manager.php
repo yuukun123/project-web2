@@ -2,7 +2,7 @@
 <div class="add-more">
     <button class="add-user" onclick="showAddUserForm()">
         <ion-icon name="add-circle-outline"></ion-icon>
-        add more users
+        add users
     </button>
     <div class="find-user">
         <input class="find" type="text" placeholder="find user"  />

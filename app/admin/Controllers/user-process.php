@@ -15,11 +15,11 @@ if ($result->num_rows > 0): ?>
         <thead>
             <tr>
                 <th>Username</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th class="hide2">Address</th>
+                <th class="hide2">Lastname</th>
+                <th class="hide2">Firstname</th>
+                <th class="hide3">Email</th>
+                <th class="hide4">Phone</th>
+                <th class="hide5">Address</th>
                 <th>Role</th>
                 <th>Actions</th>
             </tr>
@@ -38,11 +38,11 @@ if ($result->num_rows > 0): ?>
             ?>
                 <tr user_name="<?php echo $user_name; ?>">
                     <td><?php echo htmlspecialchars($user_name); ?></td>
-                    <td><?php echo htmlspecialchars($firstname); ?></td>
-                    <td><?php echo htmlspecialchars($lastname); ?></td>
-                    <td><?php echo htmlspecialchars($row['email']); ?></td>
-                    <td><?php echo htmlspecialchars($row['phone']); ?></td>
-                    <td class="hide2">
+                    <td class="hide2"><?php echo htmlspecialchars($firstname); ?></td>
+                    <td class="hide2"><?php echo htmlspecialchars($lastname); ?></td>
+                    <td class="hide3"><?php echo htmlspecialchars($row['email']); ?></td>
+                    <td class="hide4"><?php echo htmlspecialchars($row['phone']); ?></td>
+                    <td class="hide5">
                         <?php echo htmlspecialchars($row['street'] . ', ' . $row['ward'] . ', ' . $row['district'] . ', ' . $row['city']); ?>
                     </td>
                     <td><?php echo htmlspecialchars($row['role']); ?></td>

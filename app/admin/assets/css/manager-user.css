@@ -95,6 +95,7 @@
     gap: 35px;
     justify-content: center;
     margin-bottom: 45px;
+    padding: 0 20px;
 }
 
 .add-more button{
@@ -109,6 +110,7 @@
     font-size: 13px;
     color: white;
     cursor: pointer;
+    border: none;
 }
 
 .add-more ion-icon{
@@ -448,6 +450,10 @@ h2 {
     /* .product-head{
         width: 300px;
     } */
+    table td.hide5,
+    table th.hide5{
+        display: none;
+    }
 
 }
 
@@ -529,6 +535,14 @@ h2 {
         height: 45vw;
         gap: 40px;
     }
+
+    table td.hide5,
+    table th.hide5,
+    table td.hide4,
+    table th.hide4{
+        display: none;
+    }
+
 }
 
 
@@ -572,6 +586,15 @@ h2 {
         width: 55vw;
         height: 45vw;
         gap: 40px;
+    }
+
+    table td.hide5,
+    table th.hide5,
+    table td.hide4,
+    table th.hide4,
+    table td.hide3,
+    table th.hide3{
+        display: none;
     }
 }
 
@@ -664,6 +687,8 @@ h2 {
     .add-more button {
         gap: 5px;
         font-size: 9px;
+        width: 35%;
+        height: 35px;
     }
 
     .add-more ion-icon {
@@ -692,8 +717,11 @@ h2 {
 
     table th.hide1,
     table th.hide2,
+    table th.hide3,
     table td.hide1,
-    table td.hide2 {
+    table td.hide2,
+    table td.hide3{
+
         display: none;
     }
 
