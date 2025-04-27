@@ -10,9 +10,10 @@ $sql_order = "SELECT o.order_id,
                     o.total_cost, 
                     o.status, 
                     o.payment_method,
-                    u.user_name, 
-                    u.phone, 
-                    CONCAT(u.street, ', ', u.ward, ', ', u.district, ', ', u.city) AS full_address
+                    u.user_name,
+                    o.recipient_name,
+                    o.recipient_phone,
+                    CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) AS full_address
             FROM orders o
             JOIN users u ON o.user_name = u.user_name
             WHERE o.order_id = ?";
@@ -51,9 +52,9 @@ $statusColor = match($order['status']) {
 
     <div class="scroll-see">
         <div class="customer-infor">
-            <p><strong>Name:</strong> <?= htmlspecialchars($order['user_name']) ?></p>
+            <p><strong>Name:</strong> <?= htmlspecialchars($order['recipient_name']) ?></p>
             <p><strong>Address:</strong> <?= htmlspecialchars($order['full_address']) ?></p>
-            <p><strong>Phone:</strong> <?= htmlspecialchars($order['phone']) ?></p>
+            <p><strong>Phone:</strong> <?= htmlspecialchars($order['recipient_phone']) ?></p>
             <p><strong>Order date :</strong> <?= htmlspecialchars($order['order_date']) ?></p>
             <p><strong>Delivery date:</strong> <?= htmlspecialchars($order['delivery_date']) ?></p>
             <p><strong>Delivery time:</strong> <?= htmlspecialchars($order['delivery_time']) ?></p>
