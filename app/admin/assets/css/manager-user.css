@@ -244,6 +244,7 @@ button.disabled {
     gap: 20px;
     max-height: 400px;
     overflow-y: auto;
+    padding: 0 10px;
 }
 .form-group {
     display: flex;
