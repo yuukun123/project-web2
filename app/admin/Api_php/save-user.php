@@ -7,35 +7,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
     $phone = $_POST['phone'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash password
     $role = $_POST['role'];
     $street = $_POST['street'];
-    $city = $_POST['city'];
-    $district = $_POST['district'];
-    $ward = $_POST['ward'];
+    $city = $_POST['city_name'];
+    $district = $_POST['district_name'];
+    $ward = $_POST['ward_name'];
     $current_time = date('Y-m-d H:i:s');
 
-    
-    // KIỂM TRA user đã tồn tại chưa
+    // Kiểm tra user đã tồn tại chưa
     $check = $conn->prepare("SELECT user_name FROM users WHERE user_name = ?");
+    if (!$check) {
+        die("Prepare failed: " . $conn->error);
+    }
     $check->bind_param("s", $username);
     $check->execute();
-    $check->store_result(); // cần thiết để dùng num_rows
+    $check->store_result();
 
     if ($check->num_rows > 0) {
         // UPDATE nếu tồn tại
         $stmt = $conn->prepare("UPDATE users SET first_name=?, last_name=?, email=?, phone=?, password=?, role=?, street=?, city=?, district=?, ward=?, updated_at=? WHERE user_name=?");
-        $stmt->bind_param("ssssssssssssss", $first_name, $last_name, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $username);
-    
-    
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+        // Sửa lỗi: dùng 12 's' thay vì 13
+        $stmt->bind_param("ssssssssssss", $first_name, $last_name, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $username);
+
         if ($stmt->execute()) {
             echo "User updated successfully!";
         } else {
             echo "Failed to update user: " . $stmt->error;
         }
-    }else {
+        $stmt->close();
+    } else {
         // INSERT
         $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, user_name, email, phone, password, role, street, city, district, ward, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
         $stmt->bind_param("sssssssssssss", $first_name, $last_name, $username, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $current_time);
 
         if ($stmt->execute()) {
@@ -45,7 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
+    $check->close();
 } else {
     echo "Invalid request!";
 }
 $conn->close();
+?>

@@ -4,35 +4,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const wardSelect = document.getElementById("registerWard");
     const form = document.getElementById('registerForm');
     
-    // Các input ẩn để lưu tên
     const cityNameHidden = document.getElementById("city_name");
     const districtNameHidden = document.getElementById("district_name");
     const wardNameHidden = document.getElementById("ward_name");
 
-    // Kiểm tra nếu đang ở trang Register
     if (citySelect && districtSelect && wardSelect) {
         // Lấy danh sách thành phố
         fetch("https://provinces.open-api.vn/api/p/")
             .then(response => response.json())
             .then(data => {
                 data.forEach(city => {
-                    // Sử dụng city.code làm value để gọi API,
-                    // thêm thuộc tính data-name chứa tên
                     let option = new Option(city.name, city.code);
-                    option.setAttribute("data-name", city.name);
+                    option.dataset.name = city.name; // Sử dụng dataset
                     citySelect.add(option);
                 });
             })
             .catch(error => console.error("Error fetching cities:", error));
 
-        // Khi chọn thành phố, cập nhật input ẩn và load quận/huyện
+        // Khi chọn thành phố
         citySelect.addEventListener("change", function () {
             const selectedCity = citySelect.options[citySelect.selectedIndex];
             const cityCode = citySelect.value;
-            // Cập nhật hidden input: tên thành phố
-            cityNameHidden.value = selectedCity.getAttribute("data-name") || "";
+            cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
             
-            // Reset quận, phường
             districtSelect.innerHTML = "<option value=''>Select District</option>";
             wardSelect.innerHTML = "<option value=''>Select Ward</option>";
             
@@ -42,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(data => {
                         data.districts.forEach(district => {
                             let option = new Option(district.name, district.code);
-                            option.setAttribute("data-name", district.name);
+                            option.dataset.name = district.name;
                             districtSelect.add(option);
                         });
                     })
@@ -50,13 +44,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Khi chọn quận/huyện, cập nhật input ẩn và load phường/xã
+        // Khi chọn quận/huyện
         districtSelect.addEventListener("change", function () {
             const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
             const districtCode = districtSelect.value;
-            // Cập nhật hidden input: tên quận/huyện
-            districtNameHidden.value = selectedDistrict.getAttribute("data-name") || "";
-            
+            districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
+
             wardSelect.innerHTML = "<option value=''>Select Ward</option>";
             
             if (districtCode) {
@@ -65,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     .then(data => {
                         data.wards.forEach(ward => {
                             let option = new Option(ward.name, ward.code);
-                            option.setAttribute("data-name", ward.name);
+                            option.dataset.name = ward.name;
                             wardSelect.add(option);
                         });
                     })
@@ -73,24 +66,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        // Khi chọn phường/xã, cập nhật input ẩn
+        // Khi chọn phường/xã
         wardSelect.addEventListener("change", function () {
             const selectedWard = wardSelect.options[wardSelect.selectedIndex];
-            wardNameHidden.value = selectedWard.getAttribute("data-name") || "";
+            wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
         });
 
         // Xử lý submit form
         if (form) {
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-                // Đảm bảo cập nhật lại hidden input nếu người dùng không thay đổi sau lần chọn đầu tiên
+                
+                // Cập nhật chắc chắn hidden input trước khi gửi
                 const selectedCity = citySelect.options[citySelect.selectedIndex];
                 const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
                 const selectedWard = wardSelect.options[wardSelect.selectedIndex];
-                cityNameHidden.value = selectedCity ? selectedCity.getAttribute("data-name") : "";
-                districtNameHidden.value = selectedDistrict ? selectedDistrict.getAttribute("data-name") : "";
-                wardNameHidden.value = selectedWard ? selectedWard.getAttribute("data-name") : "";
-                
+
+                cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
+                districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
+                wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
+
                 const formData = new FormData(form);
                 fetch('pages/Controllers/register_process.php', {
                     method: 'POST',
@@ -143,10 +138,9 @@ document.addEventListener("DOMContentLoaded", function () {
             window.history.replaceState({}, document.title, cleanUrl);
         }
     }
-    
 });
 
-// Hiệu ứng cho input: thêm class "has-content" khi có nội dung
+// Hiệu ứng cho input
 document.querySelectorAll(".input-box input").forEach((input) => {
     input.addEventListener("input", function () {
         if (this.validity.valid || this.value.trim() !== "") {

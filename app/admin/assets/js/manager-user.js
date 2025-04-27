@@ -49,58 +49,79 @@ checkLoginStatus((isLoggedIn) => {
 });
 
 function normalizeString(str) {
-    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+    if (!str) return "";
+    return str
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Bỏ dấu
+        .toLowerCase()
+        .trim()
+        .replace(/^tp\s+|^tinh\s+/i, ""); // Xóa tiền tố "TP" hoặc "Tỉnh"
 }
 
 function findBestMatchByName(list, name) {
-    if (!name) return null;
+    if (!name || !list) return null;
     const normName = normalizeString(name);
-    return list.find(item => {
-        const normItemName = normalizeString(item.name);
-        return normItemName === normName || normItemName.includes(normName) || normName.includes(normItemName);
-    }) || null;
+    return (
+        list.find(item => {
+            const normItemName = normalizeString(item.name);
+            // So khớp chính xác hoặc so khớp một phần
+            return (
+                normItemName === normName ||
+                normItemName.includes(normName) ||
+                normName.includes(normItemName)
+            );
+        }) || null
+    );
 }
 
 
 async function showEditUserForm(user) {
-    document.getElementById('modalTitle').innerText = "Edit User";
+    document.getElementById('modalTitle').innerText = "Chỉnh sửa người dùng";
 
-    document.getElementById('username').value = user.username;
-    document.getElementById('first_name').value = user.first_name;
-    document.getElementById('last_name').value = user.last_name;
-    document.getElementById('password').value = user-password;
-    document.getElementById('email').value = user.email;
-    document.getElementById('phone').value = user.phone;
+    // Ghi log dữ liệu người dùng để kiểm tra
+    console.log("Dữ liệu người dùng:", user);
 
-    document.getElementById('street').value = user.street;
-    document.getElementById('created_at').value = user.created_at;
-    document.getElementById('updated_at').value = user.updated_at;
+    // Sửa lỗi đánh máy và thêm kiểm tra null
+    document.getElementById('username').value = user.username || "";
+    document.getElementById('first_name').value = user.first_name || "";
+    document.getElementById('last_name').value = user.last_name || "";
+    document.getElementById('password').value = user.password || ""; // Sửa lỗi: user-password -> user.password
+    document.getElementById('email').value = user.email || "";
+    document.getElementById('phone').value = user.phone || "";
+    document.getElementById('role').value = user.role || "";
+    document.getElementById('street').value = user.street || "";
+    document.getElementById('created_at').value = user.created_at || "";
+    document.getElementById('updated_at').value = user.updated_at || "";
 
     document.getElementById('username').readOnly = true;
     document.getElementById('email').readOnly = true;
     document.getElementById('password').readOnly = true;
     document.getElementById("role").readOnly = true;
 
-    // Load city and select correct city
+    // Load danh sách thành phố
     const cities = await loadCities();
+    console.log("Danh sách thành phố:", cities);
+    console.log("Thành phố của người dùng:", user.city);
+
     const cityMatch = findBestMatchByName(cities, user.city);
     if (cityMatch) {
+        console.log("Thành phố khớp:", cityMatch);
         document.getElementById('city').value = cityMatch.code;
 
-        // Load districts of that city
+        // Load quận/huyện
         const cityData = await fetchCityData(cityMatch.code);
         await loadDistrictsByCityData(cityData);
 
-        // Find and select district
+        // Tìm và chọn quận/huyện
         const districtMatch = findBestMatchByName(cityData.districts, user.district);
         if (districtMatch) {
             document.getElementById('district').value = districtMatch.code;
 
-            // Load wards
+            // Load phường/xã
             const res = await fetch(`https://provinces.open-api.vn/api/d/${districtMatch.code}?depth=2`);
             const districtData = await res.json();
             const wardSelect = document.getElementById('ward');
-            wardSelect.innerHTML = '<option value="">Select ward</option>';
+            wardSelect.innerHTML = '<option value="">Chọn phường/xã</option>';
             districtData.wards.forEach(w => {
                 const opt = document.createElement("option");
                 opt.value = w.name;
@@ -108,21 +129,30 @@ async function showEditUserForm(user) {
                 wardSelect.appendChild(opt);
             });
 
-            // Find and select ward
+            // Tìm và chọn phường/xã
             const wardMatch = findBestMatchByName(districtData.wards, user.ward);
             if (wardMatch) {
                 wardSelect.value = wardMatch.name;
             } else {
-                console.log("Không tìm thấy ward:", user.ward);
+                console.log("Không tìm thấy phường/xã:", user.ward);
             }
         } else {
-            console.log("Không tìm thấy district:", user.district);
+            console.log("Không tìm thấy quận/huyện:", user.district);
         }
     } else {
-        console.log("Không tìm thấy city:", user.city);
+        console.log("Không tìm thấy thành phố:", user.city);
+        console.log("Thành phố chuẩn hóa:", normalizeString(user.city));
+        console.log("Danh sách thành phố chuẩn hóa:", cities.map(c => normalizeString(c.name)));
+        alert("Không tìm thấy thành phố trong danh sách. Vui lòng chọn lại.");
     }
 
-    document.getElementById('userModal').style.display = 'flex';
+    // Kiểm tra và hiển thị modal
+    const userModal = document.getElementById('userModal');
+    if (userModal) {
+        userModal.style.display = 'flex';
+    } else {
+        console.error("Không tìm thấy phần tử modal!");
+    }
 }
 
 
@@ -206,9 +236,6 @@ function saveUser() {
         }
     });
 
-    const userId = document.getElementById('user_id');
-    if (userId) formData.append('id', userId.value.trim());
-
     // 📌 Kiểm tra email hợp lệ
     const emailElement = document.getElementById('email');
     if (emailElement && !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(emailElement.value.trim())) {
@@ -237,6 +264,16 @@ function saveUser() {
         return;
     }
 
+    // Lấy tên thành phố, quận/huyện, và phường/xã từ các option đã chọn
+    const cityName = document.getElementById('city').selectedOptions[0]?.textContent || '';
+    const districtName = document.getElementById('district').selectedOptions[0]?.textContent || '';
+    const wardName = document.getElementById('ward').selectedOptions[0]?.textContent || '';
+
+    // Thêm vào formData các giá trị tên
+    formData.append('city_name', cityName);
+    formData.append('district_name', districtName);
+    formData.append('ward_name', wardName);
+
     // Gửi dữ liệu nếu hợp lệ
     fetch('Api_php/save-user.php', { method: 'POST', body: formData })
         .then(response => response.text())
@@ -247,6 +284,7 @@ function saveUser() {
         })
         .catch(console.error);
 }
+
 
 let currentPage = 1;
 const rowsPerPage = 8;
@@ -422,24 +460,19 @@ document.querySelector('.find').addEventListener('input', function () {
     }
 });
 
+document.querySelector('.find').addEventListener('input', function () {
+    const filter = this.value.toLowerCase();
+    const table = document.querySelector('#userTableContainer table');
+    if (!table) return; // Nếu chưa có table thì không làm gì
 
-
-
-
-
-// document.querySelector('.find').addEventListener('input', function () {
-//     const filter = this.value.toLowerCase();
-//     const table = document.querySelector('#userTableContainer table');
-//     if (!table) return; // Nếu chưa có table thì không làm gì
-
-//     const rows = table.querySelectorAll('tbody tr');
-//     rows.forEach(row => {
-//         const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-//         const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-//         if (username.includes(filter) || email.includes(filter)) {
-//             row.style.display = '';
-//         } else {
-//             row.style.display = 'none';
-//         }
-//     });
-// });
+    const rows = table.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+        if (username.includes(filter) || email.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
