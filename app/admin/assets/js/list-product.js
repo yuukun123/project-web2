@@ -185,7 +185,6 @@ function toggleGrade(contentId, chevronId) {
             console.log("11");
         } else {
             btn.style.display = "none";
-
             console.log("12");
         }
     })

@@ -53,7 +53,7 @@
             </span>
                 <span class="chevron up" id="chevronReceipt"></span>
             </button>
-            <div class="subject-list " id="gradeReceipt" style="display:none;">
+            <div class="subject-list" id="gradeReceipt" style="display:none;">
                 <div class="subject-item">
                     <span>
                         <ion-icon name="ellipsis-horizontal-circle-outline"></ion-icon>

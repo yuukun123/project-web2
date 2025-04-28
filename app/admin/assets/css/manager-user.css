@@ -470,9 +470,9 @@ h2 {
         font-size: 13.5px;
     }
 
-    .text-head ion-icon{
+    /* .text-head ion-icon{
         display: none;
-    }
+    } */
 
     .text-in{
         font-size: 14px;
@@ -712,7 +712,7 @@ h2 {
     }
 
     table{
-        width: 100%;
+        /* width: 100%; */
         font-size: 10px;
     }
 
