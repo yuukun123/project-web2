@@ -152,7 +152,7 @@ function showOrderDetail(orderId) {
             document.getElementById('phone').value = data.phone;
             document.getElementById('order_date').value = data.order_date;
             document.getElementById('delivery_address').value = data.delivery_address;
-            document.getElementById('product_info').value = data.product_info;
+            document.getElementById('product_info').innerHTML = data.product_info;
             document.getElementById('product_id').value = data.product_id;
             document.getElementById('order_note').value = data.notes;
             const select = document.getElementById('order_status');
