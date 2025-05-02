@@ -145,16 +145,16 @@ $result = $conn->query($sql);
                     <input type="text" id="delivery_address" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="product_info">Product Info:</label>
-                    <input type="text" id="product_info" readonly>
+                    <label for="order_note">Note:</label>
+                    <input type="text" id="order_note" readonly>
                 </div>
                 <div class="form-group">
                     <label for="product_id">Product ID:</label>
                     <input type="text" id="product_id" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="order_note">Note:</label>
-                    <input type="text" id="order_note" readonly>
+                    <label for="product_info">Product Info:</label>
+                    <div id="product_info" class="product-info-box" readonly></div>
                 </div>
                 <div class="form-group">
                     <label for="order_status">Order Status:</label>

@@ -150,3 +150,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Các chức năng khác (ví dụ: xử lý giỏ hàng, tìm kiếm, ...)
     // ...
 });
+
