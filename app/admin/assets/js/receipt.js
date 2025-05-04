@@ -48,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.removeItem("welcomeShownAdmin");
             console.log("welcomeShownAdmin flag removed:", localStorage.getItem("welcomeShownAdmin"));
         }
+
+        
     });
 
     // // Get stored users from localStorage
@@ -81,6 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // // Automatically set admin name on page load if already logged in
     // updateLoginButton();
+
+    
 });
 
 // function toggleGrade(gradeId) {
@@ -116,4 +120,6 @@ function toggleGrade(contentId, chevronId) {
         }
     })
 }
+
+
 

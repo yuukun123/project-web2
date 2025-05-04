@@ -107,9 +107,9 @@
         font-size: 13.5px;
     }
 
-    .text-head ion-icon{
+    /* .text-head ion-icon{
         display: none;
-    }
+    } */
 
     .text-in{
         font-size: 14px;
@@ -563,3 +563,11 @@ select#order_status{
 
 
 
+.product-info-box {
+    white-space: pre-line; /* giữ xuống dòng */
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}

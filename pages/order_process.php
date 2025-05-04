@@ -88,13 +88,16 @@ foreach ($cart_items as $item) {
     $product_id = $item['product_id'];
     $quantity = $item['quantity'];
     $price = $item['price'];
-    $product_note = isset($item['note']) ? mysqli_real_escape_string($conn, $item['note']) : '';
+    // Lấy ghi chú cho sản phẩm từ $_POST['product_note'][$cart_id]
+    $product_note = isset($_POST['product_note'][$item['cart_id']]) ? mysqli_real_escape_string($conn, $_POST['product_note'][$item['cart_id']]) : '';
 
+    // Thực hiện câu lệnh INSERT vào bảng order_detail
     mysqli_query($conn, "
         INSERT INTO order_detail (order_id, product_id, quantity, price, note) 
         VALUES ('$order_id', '$product_id', '$quantity', '$price', '$product_note')
     ");
 }
+
 
 
 // Xóa giỏ hàng sau khi đặt hàng thành công

@@ -408,14 +408,8 @@ function searchUser() {
     const tbody = table.querySelector('tbody');
     const rows = tbody.querySelectorAll('tr');
 
-    // Xóa dòng "Not found" nếu có từ lần tìm kiếm trước
-    const notFoundRow = tbody.querySelector('.not-found-row');
-    if (notFoundRow) {
-        notFoundRow.remove();
-    }
-
+    // Nếu input trống -> show lại tất cả
     if (filter === "") {
-        // Hiển thị lại tất cả hàng
         rows.forEach(row => row.style.display = '');
         currentPage = 1;
         paginateTable();
@@ -426,24 +420,26 @@ function searchUser() {
     rows.forEach(row => {
         const username = row.querySelector('td:nth-child(1)')?.textContent.toLowerCase() || '';
         if (username.includes(filter)) {
-            row.style.display = '';
             found = true;
-        } else {
-            row.style.display = 'none';
         }
     });
 
     if (!found) {
-        // Tạo dòng mới hiển thị "Not found"
-        const newRow = document.createElement('tr');
-        newRow.classList.add('not-found-row');
-        const td = document.createElement('td');
-        td.colSpan = rows[0].children.length;
-        td.style.textAlign = 'center';
-        td.textContent = 'Not found';
-        newRow.appendChild(td);
-        tbody.appendChild(newRow);
+        alert('Not found!');
+        inputField.value = ""; // reset ô search nếu muốn
+        // Không làm gì với bảng -> bảng giữ nguyên
+        return;
     }
+
+    // Nếu tìm thấy thì lọc như bình thường
+    rows.forEach(row => {
+        const username = row.querySelector('td:nth-child(1)')?.textContent.toLowerCase() || '';
+        if (username.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
 
     currentPage = 1;
     paginateTable();
@@ -460,19 +456,19 @@ document.querySelector('.find').addEventListener('input', function () {
     }
 });
 
-document.querySelector('.find').addEventListener('input', function () {
-    const filter = this.value.toLowerCase();
-    const table = document.querySelector('#userTableContainer table');
-    if (!table) return; // Nếu chưa có table thì không làm gì
+// document.querySelector('.find').addEventListener('input', function () {
+//     const filter = this.value.toLowerCase();
+//     const table = document.querySelector('#userTableContainer table');
+//     if (!table) return; // Nếu chưa có table thì không làm gì
 
-    const rows = table.querySelectorAll('tbody tr');
-    rows.forEach(row => {
-        const username = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-        const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-        if (username.includes(filter) || email.includes(filter)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-});
+//     const rows = table.querySelectorAll('tbody tr');
+//     rows.forEach(row => {
+//         const username = row.querySelector('td:nth-child(1)')?.textContent.toLowerCase() || '';
+//         // const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+//         if (username.includes(filter)) {
+//             row.style.display = '';
+//         } else {
+//             row.style.display = 'none';
+//         }
+//     });
+// });

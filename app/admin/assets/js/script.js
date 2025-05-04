@@ -10,35 +10,39 @@ function toggleMenu(hamburger) {
 }
 
 // Logo click event to navigate to home.php
-const logo = document.querySelector('.logo');
-if (logo) {
-    logo.addEventListener('click', function (e) {
-        e.preventDefault();
-        window.location.href = 'home';
+const logos = document.querySelectorAll('.logo');
+if (logos.length > 0) {
+    logos.forEach(logo => {
+        logo.addEventListener('click', function (e) {
+            e.preventDefault();
+            window.location.href = 'home';
+        });
     });
 }
 
+
 // Function: Toggle Grade (hide/show content)
 function toggleGrade(contentId, chevronId) {
-    // Sử dụng template literal để chọn phần tử theo id
-    const chevrons = document.querySelectorAll(`#${chevronId}`);
-    const contents = document.querySelectorAll(`#${contentId}`);
+    var chevron = document.querySelectorAll(('#' + chevronId));
+    var content = document.querySelectorAll(('#' + contentId));
 
-    chevrons.forEach(btn => {
+
+    chevron.forEach((btn) => {
         btn.classList.toggle('up');
         btn.classList.toggle('down');
-    });
+    })
 
-    contents.forEach(el => {
-        // Nếu chưa có giá trị display hoặc đang ẩn, hiện ra; ngược lại, ẩn đi.
-        if (el.style.display === "none" || el.style.display === "") {
-            el.style.display = "block";
-            console.log("Hiển thị nội dung");
+    content.forEach((btn) => {
+        // Toggle visibility of content
+        if (btn.style.display === "none") {
+            btn.style.display = "block";
+
+            console.log("11");
         } else {
-            el.style.display = "none";
-            console.log("Ẩn nội dung");
+            btn.style.display = "none";
+            console.log("12");
         }
-    });
+    })
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -146,3 +150,4 @@ document.addEventListener("DOMContentLoaded", function () {
     // Các chức năng khác (ví dụ: xử lý giỏ hàng, tìm kiếm, ...)
     // ...
 });
+

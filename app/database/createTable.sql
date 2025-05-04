@@ -52,7 +52,7 @@ CREATE TABLE orders (
     order_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     delivery_date DATE,
     delivery_time TIME,
-    total_cost DECIMAL(10,2) NOT NULL CHECK (total_cost >= 0),
+    total_cost DECIMAL(20,2) NOT NULL CHECK (total_cost >= 0),
     status ENUM('Pending', 'Processing', 'Completed', 'Cancelled') DEFAULT 'Pending',
     payment_method ENUM('COD', 'Momo', 'Credit Card', 'VNPay') DEFAULT 'COD',
     user_name VARCHAR(255) NOT NULL,  -- Khóa ngoại thay vì user_id

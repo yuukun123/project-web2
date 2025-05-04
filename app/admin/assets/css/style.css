@@ -107,7 +107,7 @@ body {
 }
 
 .menu-container {
-    width: 99.5%;
+    width: 98.5%;
     /* max-width: 400px; */
     background: #ffffff;
     margin-bottom: 100px;
@@ -430,7 +430,7 @@ header.hide {
         right: 0;
         width: 280px;
         height: 194vh;
-        padding: 35px 15px;
+        padding: 20px 15px;
     }
 
 }
@@ -526,8 +526,20 @@ header.hide {
         font-size: 13.5px;
     }
 
-    .text-head ion-icon{
+    /* .text-head ion-icon{
         display: none;
+    } */
+
+    .logo {
+        box-shadow: none;
+    }
+
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
     }
 
     .text-in{
@@ -596,6 +608,17 @@ header.hide {
 
 
 @media screen and (max-width: 860px) {
+    .logo {
+        box-shadow: none;
+    }
+
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
 
     .id , .name, .price{
         width: 32%
@@ -640,11 +663,26 @@ header.hide {
 }
 
 @media screen and (max-width: 768px) {
+    .text-small{
+        font-size: 4em;
+        /* padding: 100px; */
+    }
+
     .Home{
         font-size: 14px;
     }
 
+    .logo {
+        box-shadow: none;
+    }
 
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
 
     .text p{
         font-size: 16px
@@ -658,8 +696,24 @@ header.hide {
 }
 
 @media screen and (max-width: 640px) {
+    .text-small{
+        font-size: 3.5em;
+        padding: 100px;
+    }
     .header{
         padding: 10px;
+    }
+
+    .logo {
+        box-shadow: none;
+    }
+
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
     }
 
     .top{
@@ -749,6 +803,18 @@ header.hide {
 }
 
 @media (max-width: 480px) {
+    .logo {
+        box-shadow: none;
+    }
+
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
     .add-more button {
         gap: 5px;
         font-size: 9px;
@@ -895,6 +961,17 @@ header.hide {
     /* .product-grid{
         grid-template-columns: repeat(auto-fit, minmax(35px, 1fr));
     } */
+    .logo {
+        box-shadow: none;
+    }
+
+    .logo img {
+        width: 240px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
 
     .product-head{
         font-size: 14px;

@@ -10,6 +10,7 @@ $sql_order = "SELECT o.order_id,
                     o.total_cost, 
                     o.status, 
                     o.payment_method,
+                    o.notes,
                     u.user_name,
                     o.recipient_name,
                     o.recipient_phone,
@@ -23,7 +24,7 @@ $stmt->bind_param("i", $order_id);
 $stmt->execute();
 $order = $stmt->get_result()->fetch_assoc();
 
-$sql_details = "SELECT od.quantity, od.price, p.product_name, c.category_name, p.image
+$sql_details = "SELECT od.quantity, od.price, p.product_name, c.category_name, p.image, od.note
                 FROM order_detail od
                 JOIN product p ON od.product_id = p.product_id
                 JOIN category c ON p.category_id = c.category_id
@@ -59,7 +60,7 @@ $statusColor = match($order['status']) {
             <p><strong>Delivery date:</strong> <?= htmlspecialchars($order['delivery_date']) ?></p>
             <p><strong>Delivery time:</strong> <?= htmlspecialchars($order['delivery_time']) ?></p>
             <p><strong>Payment method:</strong> <?= htmlspecialchars($order['payment_method']) ?></p>
-
+            <p><strong>Greeting Message:</strong> <?= htmlspecialchars($order['notes']) ?></p>
             <p><strong>Status:</strong>
                 <span style="color: <?= $statusColor ?>;">
                     <?= htmlspecialchars($order['status']) ?>
@@ -86,7 +87,10 @@ $statusColor = match($order['status']) {
                 </div>
             </div>
         </div>
-        <?php endwhile; ?>
+        <div class="Note for this product" style="margin-bottom: 20px; ">
+            <p style="word-wrap: break-word; white-space: normal; font-weight: bold; padding: 0 5px;">Note for <span style="color: #f76fb3d4;"><?= htmlspecialchars($row['product_name']) ?></span> : <spanm style="font-weight: 100;"><?= htmlspecialchars($row['note'])?></spanm></p>
+        </div>
+        <?php endwhile;?>
     </div>
 
     <div class="total-price">

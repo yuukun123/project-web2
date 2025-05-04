@@ -244,6 +244,7 @@ button.disabled {
     gap: 20px;
     max-height: 400px;
     overflow-y: auto;
+    padding: 0 10px;
 }
 .form-group {
     display: flex;
@@ -469,9 +470,9 @@ h2 {
         font-size: 13.5px;
     }
 
-    .text-head ion-icon{
+    /* .text-head ion-icon{
         display: none;
-    }
+    } */
 
     .text-in{
         font-size: 14px;
@@ -711,7 +712,7 @@ h2 {
     }
 
     table{
-        width: 100%;
+        /* width: 100%; */
         font-size: 10px;
     }
 

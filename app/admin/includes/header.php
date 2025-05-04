@@ -62,6 +62,9 @@ ob_end_flush();
 <!--Mobile-->
 <!--Mobile-->
 <div class="mobile-menu" id="mobileMenu">
+    <button class="logo" style="border: none; background: none; cursor:pointer">
+        <img src="../../public/assets/Img/Sweets1.png" alt="">
+    </button>
     <div class="menu-container">
         <!--Manage-product-->
         <button class="grade-button" onclick="toggleGrade('gradeFood', 'chevronFood')">
@@ -69,9 +72,9 @@ ob_end_flush();
                 <ion-icon name="fast-food-outline"></ion-icon>
                 Product
             </span>
-            <span class="chevron down" id="chevronFood"></span>
+            <span class="chevron up" id="chevronFood"></span>
         </button>
-        <div class="subject-list <?php echo ($page == 'list-product.php' || $page == 'add-product.php') ? 'active' : ''; ?>" id="gradeFood">
+        <div class="subject-list <?php echo ($page == 'list-product.php' || $page == 'add-product.php') ? 'active' : ''; ?>" id="gradeFood" style="display:none;">
             <div class="subject-item <?php echo ($page == 'list-product.php') ? 'active' : ''; ?>">
                 <span class="text-in">
                     <ion-icon name="clipboard-outline"></ion-icon>
