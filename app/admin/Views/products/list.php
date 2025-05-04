@@ -24,8 +24,10 @@ $totalProducts = $totalRow['total'];
 $totalPages = ceil($totalProducts / $productsPerPage);
 
 // 🔹 Truy vấn sản phẩm có phân trang (bỏ Hidden)
-$sql = "SELECT product_id, product_name, image, status, price, category_id 
-        FROM product 
+$sql = "SELECT p.product_id, p.product_name, p.image, p.status, p.price, c.category_name 
+        FROM product p
+        JOIN category c ON p.category_id = c.category_id
+        WHERE p.status != 'Hidden'
         LIMIT $productsPerPage OFFSET $offset";
 
 $result = $conn->query($sql);
@@ -208,7 +210,7 @@ function openFileChooserIfCategorySelected() {
 
 
         <div class="product-items"> <?php echo number_format($row['price']); ?> VND</div>
-        <div class="product-items"> <?php echo $row['category_id']; ?> </div>
+        <div class="product-items"> <?php echo $row['category_name']; ?> </div>
         <div class="product-items">
         <a href="list-product?edit_id=<?= $row['product_id'] ?>#editModal" class="edit-btn">
             <i class="fas fa-edit"></i>
