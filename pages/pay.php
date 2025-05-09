@@ -204,4 +204,6 @@ $total_cost = 0;
         ward: "<?= $user['ward'] ?>",
         street: "<?= $user['street'] ?>"
     };
+
+    
 </script>

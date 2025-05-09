@@ -429,7 +429,7 @@ header.hide {
         display: flex;
         right: 0;
         width: 280px;
-        height: 194vh;
+        height: auto;
         padding: 20px 15px;
     }
 

@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+
+// Hàm kiểm tra chuỗi có chứa link hay không
+    function containsLink(text) {
+        const urlPattern = /https?:\/\/|www\./i;
+        return urlPattern.test(text);
+    }
+
+    
     const citySelect = document.getElementById("registerCity");
     const districtSelect = document.getElementById("registerDistrict");
     const wardSelect = document.getElementById("registerWard");
@@ -141,6 +149,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Submit form và hiện confirmation
     document.getElementById('payment-form').addEventListener('submit', function (e) {
+        const urlPattern = /(https?:\/\/|www\.)[^\s]+|[^\s]+\.(com|net|org|vn|info|biz|edu)/i;
+        const inputs = this.querySelectorAll('input[type="text"], input[type="number"], textarea');
+    
+        for (const input of inputs) {
+            if (urlPattern.test(input.value)) {
+                alert('Links are not allowed in input fields. Please remove any URLs before proceeding.');
+                input.focus();
+                e.preventDefault(); // Ngăn form được gửi
+                return false;
+            }
+        }
+
         e.preventDefault();
 
         updateAddressNames(); // Cập nhật tên city/district/ward
