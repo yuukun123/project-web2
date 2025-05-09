@@ -76,8 +76,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (form) {
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
+
+                const loginUserNameInput = document.getElementById('loginUserName');
                 
-                // Cập nhật chắc chắn hidden input trước khi gửi
+                // Regex kiểm tra URL chặt chẽ hơn
+                const urlPattern = /\b((http|https):\/\/|www\.)[^\s]+|[^\s]+\.(com|net|org|vn|info|biz|edu)(\b|\/)/i;
+
+                const usernameValue = loginUserNameInput?.value?.trim().toLowerCase() || "";
+
+                if (loginUserNameInput && urlPattern.test(usernameValue)) {
+                    alert('Links are not allowed in the username field. Please remove any URLs before proceeding.');
+                    loginUserNameInput.focus();
+                    return; // DỪNG tại đây
+                }
+
+                // Cập nhật hidden inputs
                 const selectedCity = citySelect.options[citySelect.selectedIndex];
                 const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
                 const selectedWard = wardSelect.options[wardSelect.selectedIndex];
@@ -86,6 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
                 wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
 
+                // Gửi form
                 const formData = new FormData(form);
                 fetch('pages/Controllers/register_process.php', {
                     method: 'POST',
@@ -105,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert('An unknown error occurred.');
                 });
             });
+
         }
     }
 

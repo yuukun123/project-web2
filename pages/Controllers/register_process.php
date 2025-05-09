@@ -27,6 +27,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($username) || empty($lastname) || empty($firstname) || empty($phone) || empty($email) || empty($street) || empty($city) || empty($district) || empty($ward) || empty($password) || empty($confirm_password)) {
         $errors[] = "Please fill in all the information.";
     }
+    
+
+    // Chặn username chứa link
+    if (preg_match('/\b((https?:\/\/)|(www\.))[^\s]+|[^\s]+\.(com|net|org|vn|info|biz|edu)(\b|\/)?/i', $username)) {
+        $errors[] = "Username must not contain links or domain names.";
+    }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "Invalid email.";
