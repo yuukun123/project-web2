@@ -472,18 +472,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // Xử lý gọi sản phẩm từ server
     function loadAllProducts() {
         let allProducts = document.querySelectorAll("#product-container .movie-item");
+        const noResultMsg = document.getElementById("no-result-message");
     
         if (allProducts.length === 0) {
             console.warn("Không có sản phẩm nào trong DOM.");
             return;
         }
     
-        // Hiển thị lại tất cả sản phẩm
         allProducts.forEach(product => product.style.display = "block");
     
-        // Cập nhật phân trang nếu cần
-        updateProducts();
+        if (noResultMsg) noResultMsg.style.display = "none";
+    
+        updateProducts(); // nếu bạn có phân trang
     }
+    
 
     const searchInputs = document.querySelectorAll(".search-input");
     const searchButtons = document.querySelectorAll(".searchBtn");
@@ -491,44 +493,72 @@ document.addEventListener("DOMContentLoaded", function () {
     // Hàm tìm kiếm sản phẩm (giữ nguyên nếu cần)
     function searchItems(searchTerm) {
         let allProducts = document.querySelectorAll("#product-container .movie-item");
-        if (searchTerm.trim() === "") {
+        const noResultMsg = document.getElementById("no-result-message");
+    
+        const normalizedSearch = removeVietnameseTones(searchTerm.trim().toLowerCase());
+    
+        if (normalizedSearch === "") {
             allProducts.forEach(product => product.style.display = "block");
+            if (noResultMsg) noResultMsg.style.display = "none";
             return;
         }
+    
         let found = false;
         allProducts.forEach(product => {
             let productName = product.querySelector(".title").innerText.toLowerCase();
-            if (productName.includes(searchTerm.toLowerCase())) {
+            let normalizedProductName = removeVietnameseTones(productName);
+    
+            if (normalizedProductName.includes(normalizedSearch)) {
                 product.style.display = "block";
                 found = true;
             } else {
                 product.style.display = "none";
             }
         });
-        if (!found) {
-            document.getElementById("product-container").innerHTML = "<p>No products found!</p>";
-        }
+    
+        if (noResultMsg) noResultMsg.style.display = found ? "none" : "block";
+    }    
+    
+
+    function removeVietnameseTones(str) {
+        return str.normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .replace(/đ/g, "d")
+                  .replace(/Đ/g, "D");
     }
+    
 
     let isSelectingHint = false;
     // Hàm hiển thị gợi ý tìm kiếm
     function showHints(inputField) {
-        const searchTerm = inputField.value.trim();
+        const rawInput = inputField.value.trim();
+        const searchTerm = removeVietnameseTones(rawInput.toLowerCase()); // chuẩn hóa input
         const hintContainer = inputField.closest(".search-container").querySelector(".hint-container");
-
+    
+        // Nếu ô tìm kiếm trống, reset giao diện và gọi lại danh sách sản phẩm
         if (!searchTerm) {
             hintContainer.innerHTML = "";
             hintContainer.style.display = "none";
-            
+    
+            if (typeof loadAllProducts === 'function') {
+                loadAllProducts(); // gọi lại toàn bộ sản phẩm
+            }
+    
             return;
         }
-
-        fetch(`pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`)
+    
+    
+        // if (!searchTerm) {
+        //     hintContainer.innerHTML = "";
+        //     hintContainer.style.display = "none";
+        //     return;
+        // }
+    
+        fetch(`pages/getAllProduct.php?term=${encodeURIComponent(searchTerm)}`) // gửi chuỗi đã bỏ dấu
             .then(response => response.json())
             .then(products => {
                 hintContainer.innerHTML = "";
-                
-                // Nếu không có sản phẩm nào, hiển thị dòng "Not found"
+    
                 if (!products || products.length === 0) {
                     const notFoundItem = document.createElement("div");
                     notFoundItem.className = "hint-item";
@@ -537,79 +567,90 @@ document.addEventListener("DOMContentLoaded", function () {
                     notFoundItem.style.padding = "8px";
                     notFoundItem.style.color = "#999";
                     hintContainer.appendChild(notFoundItem);
-            
+    
                     hintContainer.style.display = "block";
                     return;
                 }
-            
-                // Nếu có sản phẩm, hiển thị các gợi ý
+    
                 products.forEach(item => {
                     const hintItem = document.createElement("div");
                     hintItem.className = "hint-item";
-                    // Sử dụng dataset để lưu product_id
                     hintItem.dataset.productId = item.product_id;
                     hintItem.innerHTML = `
                         <img src="${item.image}" alt="${item.product_name}" style="width:30px; height:30px; margin-right:10px;">
                         ${item.product_name}
                     `;
-            
-                    // Dùng mousedown để tránh mất focus trước khi xử lý
+    
                     hintItem.addEventListener("mousedown", function (event) {
-                        event.preventDefault(); // Ngăn trình duyệt hiểu là nhấp ra ngoài input
+                        event.preventDefault();
                         isSelectingHint = true;
                     });
-            
+    
                     hintItem.addEventListener("click", function () {
-                        isSelectingHint = false; // Reset biến
-                        console.log(item.product_id);
+                        isSelectingHint = false;
                         window.location.href = `home?pages=product&id=${item.product_id}`;
                     });
-            
+    
                     hintContainer.appendChild(hintItem);
                 });
-            
+    
                 hintContainer.style.display = "block";
             })
             .catch(error => console.error("Lỗi khi lấy gợi ý:", error));
     }
 
+
     let inputTimeout = null; // Biến lưu bộ đếm thời gian
     // Gán sự kiện cho từng ô tìm kiếm
     searchInputs.forEach(input => {
-        input.addEventListener("input", function () {
-        
-            if (event.data === " ") return;
-
-            clearTimeout(inputTimeout); // Xóa bộ đếm thời gian trước đó
+        input.addEventListener("input", function (event) {
+            clearTimeout(inputTimeout);
             const searchField = this;
-            
-            inputTimeout = setTimeout(() => {
-                showHints(searchField); // Gọi hàm hiển thị hint sau khi người dùng ngừng nhập
-            }, 500); // Chờ 500ms sau khi ngừng nhập mới gọi API
-            
-            if (this.value.trim() === "") {
-                console.log("Ô tìm kiếm trống - Đang tải lại danh sách sản phẩm gốc...");
-                // Nếu có hàm loadAllProducts(), gọi ở đây
-                loadAllProducts();
+            const value = searchField.value.trim();
+    
+            if (value === "") {
+                console.log("Ô tìm kiếm trống - Tải lại danh sách sản phẩm gốc...");
+    
+                // Ẩn hint nếu có
+                const hintContainer = searchField.closest(".search-container").querySelector(".hint-container");
+                if (hintContainer) {
+                    hintContainer.innerHTML = "";
+                    hintContainer.style.display = "none";
+                }
+    
+                // Gọi lại danh sách sản phẩm nếu hàm tồn tại
+                if (typeof loadAllProducts === 'function') {
+                    loadAllProducts();
+                }
+    
+                return; // Không cần gọi showHints nếu input rỗng
             }
+    
+            // Nếu có nội dung, delay 500ms rồi gọi hint
+            inputTimeout = setTimeout(() => {
+                showHints(searchField);
+            }, 500);
         });
-
+    
         input.addEventListener("keypress", function (event) {
             if (event.key === "Enter") {
                 searchItems(this.value);
             }
         });
-
+    
         input.addEventListener("blur", function () {
             setTimeout(() => {
                 if (!isSelectingHint) {
-                    this.closest(".search-container").querySelector(".hint-container").style.display = "none";
+                    const hintContainer = this.closest(".search-container").querySelector(".hint-container");
+                    if (hintContainer) {
+                        hintContainer.style.display = "none";
+                    }
                 }
                 isSelectingHint = false;
-            }, 200); // Đợi 200ms để kiểm tra xem người dùng có click vào hint không
+            }, 200);
         });
-
     });
+    
 
     // Xử lý click ngoài vùng input/hint-container
     document.addEventListener("click", function (event) {

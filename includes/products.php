@@ -107,4 +107,6 @@ echo '<div class="container">';
 echo '<div class="pagination"></div>';
 echo '</div>';
 echo '</div>'; // Kết thúc pg-12
+
+echo '<p id="no-result-message" style="display:none; text-align:center; color:#999;">No products found!</p>';
 ?>
