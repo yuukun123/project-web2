@@ -12,28 +12,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    // 🔼 Tăng số lượng
-    plusBtn.addEventListener("click", function () {
-        let currentValue = parseInt(quantityInput.value);
-        quantityInput.value = currentValue + 1;
-    });
+        // 🔼 Tăng số lượng
+        plusBtn.addEventListener("click", function () {
+            let currentValue = parseInt(quantityInput.value) || 1;
+            if (currentValue >= 100) {
+                alert("You are only allowed to order a maximum of 100 products.");
+                quantityInput.value = 100;
+                return;
+            }
+            quantityInput.value = currentValue + 1;
+        });
 
-    // 🔽 Giảm số lượng (không nhỏ hơn 1)
-    minusBtn.addEventListener("click", function () {
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-        }
-    });
-    inputElement.addEventListener("input", function () {
-        this.value = this.value.replace(/\D/g, ''); // Loại bỏ tất cả ký tự không phải số
-    });
-    // Khi mất focus, nếu input rỗng thì đặt lại thành 1
-    inputElement.addEventListener("blur", function () {
-        if (this.value === "") {
-            this.value = 1;
-        }
-    });
+        // 🔽 Giảm số lượng (không nhỏ hơn 1)
+        minusBtn.addEventListener("click", function () {
+            let currentValue = parseInt(quantityInput.value) || 1;
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+            }
+        });
+
+        // ✏️ Giới hạn nhập tay chỉ là số và không vượt quá 100
+        inputElement.addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, ''); // Chỉ cho phép số
+
+            if (this.value !== "" && parseInt(this.value) > 100) {
+                alert("Maximum allowed quantity is 100.");
+                this.value = 100;
+            }
+        });
+
+        // 👉 Nếu để trống hoặc < 1 thì đặt lại thành 1
+        inputElement.addEventListener("blur", function () {
+            if (this.value === "" || parseInt(this.value) < 1) {
+                this.value = 1;
+            }
+        });
+
     // 🛒 Xử lý thêm vào giỏ hàng
     addToCartBtn.addEventListener("click", function () {
         const productId = addToCartBtn.dataset.id;
