@@ -86,17 +86,27 @@ async function showEditUserForm(user) {
     document.getElementById('first_name').value = user.first_name || "";
     document.getElementById('last_name').value = user.last_name || "";
     document.getElementById('password').value = user.password || ""; // Sửa lỗi: user-password -> user.password
+    document.getElementById('confirm_password').value = user.password || ""; // Sửa lỗi: user-password -> user.password
     document.getElementById('email').value = user.email || "";
     document.getElementById('phone').value = user.phone || "";
     document.getElementById('role').value = user.role || "";
     document.getElementById('street').value = user.street || "";
-    document.getElementById('created_at').value = user.created_at || "";
-    document.getElementById('updated_at').value = user.updated_at || "";
+    // document.getElementById('created_at').value = user.created_at || "";
+    // document.getElementById('updated_at').value = user.updated_at || "";
 
     document.getElementById('username').readOnly = true;
     document.getElementById('email').readOnly = true;
     document.getElementById('password').readOnly = true;
-    document.getElementById("role").readOnly = true;
+    document.getElementById('confirm_password_group').style.display = 'none';
+    document.getElementById("role").disabled = true;
+    // Đặt giá trị mặc định ngay khi trang tải
+    document.getElementById("role_hidden").value = document.getElementById('role').value = user.role || "";
+
+    // // Nếu có thay đổi từ JavaScript, phải cập nhật lại
+    // document.getElementById("role").addEventListener("change", function () {
+    //     document.getElementById("role_hidden").value = this.value;
+    // });
+
 
     // Load danh sách thành phố
     const cities = await loadCities();
@@ -251,11 +261,16 @@ function saveUser() {
 
     // 📌 Kiểm tra mật khẩu hợp lệ
     const passwordElement = document.getElementById('password');
-    const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (passwordElement && !passwordElement.readOnly) {
         if (!passwordPattern.test(passwordElement.value.trim())) {
-            errors.push("Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.");
+            errors.push("Password must be at least 8 characters long, including uppercase letters, numbers, and special characters.");
         }
+    }
+
+    const confirm_password = document.getElementById('confirm_password').value;
+    if (passwordElement && passwordElement.value !== confirm_password) {
+        errors.push("Passwords do not match.");
     }
 
     // Nếu có lỗi, hiển thị thông báo lỗi bằng alert
@@ -347,7 +362,9 @@ function showAddUserForm() {
     document.getElementById('username').readOnly = false;
     document.getElementById('email').readOnly = false;
     document.getElementById('password').readOnly = false;
-    document.getElementById('role').readOnly = false;
+    document.getElementById('confirm_password_group').style.display = 'block';
+    document.getElementById('role').disabled = false;
+    document.getElementById('role_hidden').value = document.getElementById('role').value = '';
 
     document.getElementById('userModal').style.display = 'flex';
 }

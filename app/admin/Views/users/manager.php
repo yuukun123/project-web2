@@ -40,6 +40,10 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter password" />
             </div>
+            <div class="form-group" id="confirm_password_group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm password" />
+            </div>
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" placeholder="Enter email" />
@@ -73,16 +77,14 @@
             </div>
             <div class="form-group">
                 <label for="role">Role:</label>
-                <input type="text" id="role" name="role" placeholder="Enter role" />
+                <select id="role" name="role" disabled>
+                    <option value="admin">admin</option>
+                    <option value="customer">customer</option>
+                </select>
+                <input type="hidden" name="role" id="role_hidden" value="">
             </div>
-            <div class="form-group">
-                <label for="created_at">Created At:</label>
-                <input type="text" id="created_at" disabled />
-            </div>
-            <div class="form-group">
-                <label for="updated_at">Updated At:</label>
-                <input type="text" id="updated_at" disabled />
-            </div>
+            
+
         </div>
         <div class="modal-buttons">
             <button class="save-btn" onclick="saveUser()">Save</button>

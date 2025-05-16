@@ -1657,6 +1657,45 @@ ul {
         height: 217px;
     }
 
+    .shopping-cart{
+        width: 300px;
+    }
+
+    .cart-img{
+        width: 64px;
+        height: 54px;
+    }
+
+    .infor .head-text{
+        font-size: 10px;
+    }
+
+    .infor p {
+        font-size: 13px;
+    }
+
+    .price{
+        font-size: 10px;
+        margin-left: 12px;
+    }
+
+    .bottom-text input {
+        font-size: 14px;
+        width: 30px;
+    }
+
+    .provisional-charge{
+        font-size: 14px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    
+    }
+
+    .pay-btn-link {
+        width: 220px;
+    }
+
     .slide-banner-img{
         width:100%; 
         height:auto;

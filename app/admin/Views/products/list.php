@@ -1,4 +1,5 @@
 <?php
+ob_start();
 include __DIR__ . '/../../../config/data_connect.php';
 // lấy thông tin sản phẩm:
 $editingProduct = null;
@@ -17,11 +18,23 @@ if ($page < 1) $page = 1;
 $offset = ($page - 1) * $productsPerPage;
 
 // 🔹 Lấy tổng số sản phẩm (không bao gồm Hidden)
-$totalQuery = "SELECT COUNT(*) as total FROM product WHERE status != 'Hidden'";
+$totalQuery = "SELECT COUNT(*) as total FROM product";
 $totalResult = $conn->query($totalQuery);
 $totalRow = $totalResult->fetch_assoc();
 $totalProducts = $totalRow['total'];
 $totalPages = ceil($totalProducts / $productsPerPage);
+
+// // Sau khi có $totalProducts và $totalPages
+// if ($page > $totalPages && $totalPages > 0) {
+//     header("Location: ?page=" . $totalPages);
+//     exit;
+// }
+
+// // Nếu không còn sản phẩm nào (danh sách trống hoàn toàn)
+// if ($totalPages == 0) {
+//     $page = 1;
+// }
+
 
 // 🔹 Truy vấn sản phẩm có phân trang (bỏ Hidden)
 $sql = "SELECT p.product_id, p.product_name, p.image, p.status, p.price, c.category_name 
@@ -111,6 +124,7 @@ if (isset($_GET['product_id'])) {
     echo json_encode($product);
     exit;
 }
+ob_end_flush();
 ?>
 
 

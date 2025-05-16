@@ -15,22 +15,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ward = $_POST['ward_name'];
     $current_time = date('Y-m-d H:i:s');
 
-    // Kiểm tra user đã tồn tại chưa
+    // Kiểm tra user đã tồn tại chưa (theo username)
     $check = $conn->prepare("SELECT user_name FROM users WHERE user_name = ?");
     if (!$check) {
-        die("Prepare failed: " . $conn->error);
+        echo "Prepare failed: " . $conn->error;
+        exit;
     }
     $check->bind_param("s", $username);
     $check->execute();
     $check->store_result();
 
     if ($check->num_rows > 0) {
-        // UPDATE nếu tồn tại
+        // User tồn tại, kiểm tra email có bị trùng với user khác không
+        $email_check = $conn->prepare("SELECT user_name FROM users WHERE email = ? AND user_name <> ?");
+        if (!$email_check) {
+            echo "Prepare failed: " . $conn->error;
+            exit;
+        }
+        $email_check->bind_param("ss", $email, $username);
+        $email_check->execute();
+        $email_check->store_result();
+
+        if ($email_check->num_rows > 0) {
+            echo "<p style='color:red;'>Email đã tồn tại cho user khác!</p>";
+            $email_check->close();
+            $check->close();
+            $conn->close();
+            exit;
+        }
+        $email_check->close();
+
+        // Thực hiện UPDATE nếu email không trùng
         $stmt = $conn->prepare("UPDATE users SET first_name=?, last_name=?, email=?, phone=?, password=?, role=?, street=?, city=?, district=?, ward=?, updated_at=? WHERE user_name=?");
         if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
+            echo "Prepare failed: " . $conn->error;
+            exit;
         }
-        // Sửa lỗi: dùng 12 's' thay vì 13
         $stmt->bind_param("ssssssssssss", $first_name, $last_name, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $username);
 
         if ($stmt->execute()) {
@@ -40,10 +60,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     } else {
-        // INSERT
+        // User mới, kiểm tra email đã tồn tại chưa
+        $email_check = $conn->prepare("SELECT user_name FROM users WHERE email = ?");
+        if (!$email_check) {
+            echo "Prepare failed: " . $conn->error;
+            exit;
+        }
+        $email_check->bind_param("s", $email);
+        $email_check->execute();
+        $email_check->store_result();
+
+        if ($email_check->num_rows > 0) {
+            echo "<p style='color:red;'>Email đã tồn tại!</p>";
+            $email_check->close();
+            $check->close();
+            $conn->close();
+            exit;
+        }
+        $email_check->close();
+
+        // Thực hiện INSERT nếu email không trùng
         $stmt = $conn->prepare("INSERT INTO users (first_name, last_name, user_name, email, phone, password, role, street, city, district, ward, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
         if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
+            echo "Prepare failed: " . $conn->error;
+            exit;
         }
         $stmt->bind_param("sssssssssssss", $first_name, $last_name, $username, $email, $phone, $password, $role, $street, $city, $district, $ward, $current_time, $current_time);
 
@@ -54,9 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $stmt->close();
     }
+
     $check->close();
 } else {
     echo "Invalid request!";
 }
+
 $conn->close();
 ?>
