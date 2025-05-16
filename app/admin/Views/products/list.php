@@ -27,7 +27,6 @@ $totalPages = ceil($totalProducts / $productsPerPage);
 $sql = "SELECT p.product_id, p.product_name, p.image, p.status, p.price, c.category_name 
         FROM product p
         JOIN category c ON p.category_id = c.category_id
-        WHERE p.status != 'Hidden'
         ORDER BY p.product_id
         LIMIT $productsPerPage OFFSET $offset";
         
