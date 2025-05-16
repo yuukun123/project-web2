@@ -18,10 +18,10 @@
                 <label>Password</label>
             </div>
 
-            <div class="remember-forgot">
+            <!-- <div class="remember-forgot">
                 <label><input type="checkbox">remember me</label>
                 <a href="#">Forgot Password</a>
-            </div>
+            </div> -->
             <button type="submit" class="btn">Login</button>
             <div class="login-register">
                 <p>Don't have an account ? <a href="register" class="register-link">Register</a></p>
