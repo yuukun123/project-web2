@@ -89,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("⏳ Hàm filterData() đã chạy");
         let fromDate = document.getElementById("fromDate").value;
         let toDate = document.getElementById("toDate").value;
+        window.filterRange = { fromDate, toDate };
         console.log("📤 Gửi dữ liệu lọc:", { fromDate, toDate });
         let requestData = {
             fromDate: fromDate,
@@ -143,7 +144,12 @@ document.addEventListener("DOMContentLoaded", function () {
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
 function showDetail(productId) {
     console.log("📤 Gửi yêu cầu lấy hóa đơn cho sản phẩm ID:", productId);
-    fetch(`Controllers/detail-statistical-process.php?product_id=${productId}`)
+    let url = `Controllers/detail-statistical-process.php?product_id=${productId}`
+     // Nếu đã có filterRange thì thêm vào query string
+    if (window.filterRange && window.filterRange.fromDate && window.filterRange.toDate) {
+        url += `&fromDate=${window.filterRange.fromDate}&toDate=${window.filterRange.toDate}`;
+    }
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             console.log("📦 Dữ liệu hóa đơn nhận được:", data);

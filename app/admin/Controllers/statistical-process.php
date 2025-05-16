@@ -11,8 +11,9 @@
                         p.product_name, 
                         SUM(od.quantity) AS total_quantity
                     FROM order_detail AS od
+                    JOIN orders AS o ON od.order_id = o.order_id
                     JOIN product AS p ON od.product_id = p.product_id
-                    
+                    WHERE o.status = 'Completed'
                     GROUP BY p.product_id, p.product_name
                     ORDER BY total_quantity DESC
                     LIMIT 10
@@ -23,7 +24,9 @@
                     p.product_name, 
                     SUM(od.quantity) AS total_quantity
                 FROM order_detail AS od
+                JOIN orders AS o ON od.order_id = o.order_id
                 JOIN product AS p ON od.product_id = p.product_id
+                WHERE o.status = 'Completed'
                 GROUP BY p.product_id, p.product_name
                 ORDER BY total_quantity ASC
                 LIMIT 10

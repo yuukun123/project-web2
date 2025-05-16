@@ -1,16 +1,16 @@
-<div class="filter">
+<form id="filterForm" action="../Controllers/filter-statiscal-user-process.php" class="filter">
     <div class="time">
-        
         <div class="to">
-            <p>Find User: </p>
-            <input id="searchUser" placeholder="User name" type="text">
+            <p>From:</p>
+            <input type="date" name="fromDate" id="fromDate">
+            <p>To</p>
+            <input type="date" name="toDate" id="toDate">
         </div>
     </div>
     <div class="div">
-        <button id="BtnSearch" class="sta-btn">Filter</button>
+        <button id="filter-button" type="submit" class="sta-btn" >Filter</button>
     </div>
-</div>
-
+</form>
 <p class="main-title">TOP USERS</p>
 <div class="bd-bt"></div>
 
@@ -18,10 +18,11 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>User Name</th>
-            <th>Total Orders</th>
+            <th>Customer</th>
+            <th>Email</th>
+            <th>Orders Made</th>
             <th>Total Spending</th>
-            <th>Function</th>
+            <th>Details</th>
         </tr>
     </thead>
     <tbody id="orderBodyUsers">

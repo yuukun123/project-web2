@@ -26,6 +26,7 @@ $stmt_best = $conn->prepare("
     JOIN orders AS o ON o.order_id = od.order_id 
     JOIN product AS p ON od.product_id = p.product_id 
     WHERE o.delivery_date BETWEEN ? AND ? 
+    AND o.status = 'Completed'
     GROUP BY p.product_id, p.product_name
     ORDER BY total_quantity DESC 
     LIMIT 10
@@ -44,6 +45,7 @@ $stmt_unpop = $conn->prepare("
     JOIN orders AS o ON o.order_id = od.order_id 
     JOIN product AS p ON od.product_id = p.product_id 
     WHERE o.delivery_date BETWEEN ? AND ? 
+    AND o.status = 'Completed'
     GROUP BY p.product_id, p.product_name
     ORDER BY total_quantity ASC 
     LIMIT 10

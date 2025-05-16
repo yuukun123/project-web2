@@ -52,7 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log("✅ DOM đã load");
     loadInitialData();
-    document.getElementById("BtnSearch").addEventListener("click", search);
+    document.getElementById("filterForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            console.log("✅ Form submit, gọi filterData()");
+            filterData();
+        });
     document.addEventListener("click", function (event) {
         let detailBtn = event.target.closest(".js-function-detail");
         if (detailBtn) {
@@ -79,24 +83,19 @@ function loadInitialData() {
         .catch(error => console.error("Lỗi:", error));
 }
 
-function search() {
-    console.log("🔍 Đã nhấn nút search");
-    const searchBox = document.getElementById("searchUser");
-    if (!searchBox) {
-        console.error("❌ Không tìm thấy input searchUser");
-        return;
-    }
-    
-    const searchValue = searchBox.value.trim();
-    if (!searchValue) {
-        alert("⚠️ Please enter keyword search!");
-        loadInitialData();
-        return;
-    }
+function filterData() {
+    console.log("⏳ Hàm filterData() đã chạy");
+    let fromDate = document.getElementById("fromDate").value;
+    let toDate = document.getElementById("toDate").value;
+    // Lưu thời gian lọc vào biến toàn cục hoặc localStorage
+    window.filterRange = { fromDate, toDate };
+    console.log("📤 Gửi dữ liệu lọc:", { fromDate, toDate });
+        let requestData = {
+            fromDate: fromDate,
+            toDate: toDate
+        };
 
-    const requestData = { searchValue: searchValue };
-
-    fetch("Controllers/searchUser-statistical-process.php", {
+    fetch("Controllers/filter-statiscal-user-process.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData)
@@ -106,7 +105,7 @@ function search() {
         return response.json();
     })
     .then(data => {
-        console.log("🔹 Dữ liệu search:", data);
+        console.log("🔹 Dữ liệu lọc:", data);
         if (data.length === 0) {
             alert("User not found!");
             return;
@@ -137,8 +136,9 @@ function renderUser(data) {
             <tr>
                 <td>#${index + 1}</td>
                 <td>${user.user_name}</td>
+                <td>${user.email}</td>
                 <td>${user.total_order}</td>
-                <td>${user.total_spending}</td>
+                <td>${new Intl.NumberFormat('vi-VN').format(user.total_spending)} đ</td>
                 <td>
                     <button class="js-function-detail" data-name="${user.user_name || ""}"><ion-icon name="receipt-outline"></ion-icon></button>
                 </td>
@@ -151,7 +151,12 @@ function renderUser(data) {
 // Gửi yêu cầu lấy dữ liệu chi tiết hóa đơn
 function showDetail(userName) {
     console.log("📤 Gửi yêu cầu lấy hóa đơn cho user:", userName);
-    fetch(`Controllers/detail-statistical-user.php?user_name=${userName}`)
+    let url = `Controllers/detail-statistical-user.php?user_name=${userName}`
+    // Nếu đã có filterRange thì thêm vào query string
+    if (window.filterRange && window.filterRange.fromDate && window.filterRange.toDate) {
+        url += `&fromDate=${window.filterRange.fromDate}&toDate=${window.filterRange.toDate}`;
+    }
+    fetch(url)
         .then(response => response.json())
         .then(data => {
             console.log("📦 Dữ liệu hóa đơn nhận được:", data);
@@ -200,7 +205,7 @@ function renderReceipt(data) {
                 <p class="title-receipt">ID Receipt: <strong>#${order.order_id}</strong></p>
 
                 <div class="form-group">
-                    <label><strong>Customer name:</strong></label>
+                    <label><strong>Customer:</strong></label>
                     <input type="text" value="${order.user_name}" readonly>
                 </div>
                 <div class="form-group">
