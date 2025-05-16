@@ -1,5 +1,5 @@
 <form id="add-product-form" action="../../Controllers/add-product-process.php" method="post" enctype="multipart/form-data">
-    <div class="add-more">
+    <!-- <div class="add-more">
         <button class="add-category">
             <ion-icon name="add-circle-outline"></ion-icon>
             add more category
@@ -8,7 +8,7 @@
             <ion-icon name="add-circle-outline"></ion-icon>
             add more status
         </button>
-    </div>
+    </div> -->
 
     <div class="product-grid">
 

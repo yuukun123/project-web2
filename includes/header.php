@@ -36,17 +36,27 @@ echo '
         </button>
         <span class="cart-count"></span>
 
-        <div class="search-container">
+        <form method="GET" action="" class="search-container">
             <div class="input-wrapper">
-                <input type="text" class="search-input" onkeyup="myFunction()" placeholder="Search for names..">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    name="term" 
+                    value="'. (isset($_GET['term']) ? $_GET['term'] : ''). '"
+                    placeholder="Search for names.."
+                >
                 <span class="search-icon">
-                    <button class="searchBtn" type="button">
+                    <button class="searchBtn" type="submit">
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </span>
             </div>
+
+            <!-- ✅ THÊM hint-container vào đây -->
             <div class="hint-container"></div>
-        </div>
+        </form>
+
+
 
         <a href="advance" class="searchAdvance">ADVANCED SEARCH</a>
         <div class="auth-container">

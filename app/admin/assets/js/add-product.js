@@ -172,18 +172,18 @@ document.addEventListener('DOMContentLoaded', function() {
         blurOverlay.classList.remove('active');
     });
     
-    const addCategory = document.querySelector('.add-category');
-    const addStatus = document.querySelector('.add-status');
+    // const addCategory = document.querySelector('.add-category');
+    // const addStatus = document.querySelector('.add-status');
     
-    addCategory.addEventListener('click', function(event) {
-        event.preventDefault();
-        alert("This function is still under development")
-    });
+    // addCategory.addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     alert("This function is still under development")
+    // });
     
-    addStatus.addEventListener('click', function(event) {
-        event.preventDefault();
-        alert("This function is still under development")
-    });
+    // addStatus.addEventListener('click', function(event) {
+    //     event.preventDefault();
+    //     alert("This function is still under development")
+    // });
 
     // Cập nhật kích thước theo database
     let sizeSelect = document.getElementById("size");
