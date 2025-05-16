@@ -18,26 +18,36 @@ $toDate = $data['toDate'];
 
 // Tránh SQL Injection
 $stmt_best = $conn->prepare("
-    SELECT o.delivery_date, p.product_name, od.quantity, o.order_id, p.product_id
+    SELECT 
+    p.product_id, 
+    p.product_name, 
+    SUM(od.quantity) AS total_quantity
     FROM order_detail AS od 
     JOIN orders AS o ON o.order_id = od.order_id 
     JOIN product AS p ON od.product_id = p.product_id 
     WHERE o.delivery_date BETWEEN ? AND ? 
-    ORDER BY od.quantity DESC 
+    GROUP BY p.product_id, p.product_name
+    ORDER BY total_quantity DESC 
     LIMIT 10
+
 ");
 $stmt_best->bind_param("ss", $fromDate, $toDate);
 $stmt_best->execute();
 $result_bestseller = $stmt_best->get_result();
 
 $stmt_unpop = $conn->prepare("
-    SELECT o.delivery_date, p.product_name, od.quantity, o.order_id, p.product_id
+    SELECT 
+        p.product_id, 
+        p.product_name, 
+        SUM(od.quantity) AS total_quantity
     FROM order_detail AS od 
     JOIN orders AS o ON o.order_id = od.order_id 
     JOIN product AS p ON od.product_id = p.product_id 
     WHERE o.delivery_date BETWEEN ? AND ? 
-    ORDER BY od.quantity ASC 
+    GROUP BY p.product_id, p.product_name
+    ORDER BY total_quantity ASC 
     LIMIT 10
+
 ");
 $stmt_unpop->bind_param("ss", $fromDate, $toDate);
 $stmt_unpop->execute();
