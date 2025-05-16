@@ -95,6 +95,45 @@ document.addEventListener('DOMContentLoaded', function() {
 //     chevronElement.classList.toggle('up');
 //     chevronElement.classList.toggle('down');
 // }
+const orderStatus = document.getElementById('order_status');
+
+function updateStatusOptions() {
+    const selected = orderStatus.value;
+
+    // Lấy tất cả option
+    const options = Array.from(orderStatus.options);
+
+    if (selected === 'Processing') {
+        // Khi chọn Processing, ẩn Pending, hiện các option còn lại
+        options.forEach(option => {
+            if (option.value === 'Pending') {
+                option.style.display = 'none';
+            } else {
+                option.style.display = 'block';
+            }
+        });
+    } else if (selected === 'Completed' || selected === 'Cancelled') {
+        // Khi chọn Completed hoặc Cancelled, chỉ hiện option đó, ẩn hết
+        options.forEach(option => {
+            if (option.value === selected) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    } else {
+        // Nếu chọn các trạng thái khác (ví dụ Pending), hiện tất cả
+        options.forEach(option => {
+            option.style.display = 'block';
+        });
+    }
+}
+
+// Gọi khi dropdown thay đổi
+orderStatus.addEventListener('change', updateStatusOptions);
+
+// Gọi lần đầu để xử lý trạng thái mặc định khi load trang
+updateStatusOptions();
 
 
 function toggleGrade(contentId, chevronId) {
