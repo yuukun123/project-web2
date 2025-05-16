@@ -78,7 +78,7 @@ foreach ($products as $row) {
 
 echo '
     <div class="provisional-charge">
-        <p>Provisional invoice :</p>
+        <p style="color: #ffd1d1;">Provisional invoice</p>
         <p>' . number_format($total_price, 0, ",", ".") . ' VND</p>
     </div>';
 ?>

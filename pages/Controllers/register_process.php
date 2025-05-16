@@ -43,9 +43,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errors[] = "Invalid phone number.";
     }
 
-    $password_pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
+    $password_pattern = '/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/';
     if (!preg_match($password_pattern, $password)) {
-        $errors[] = "Password must be at least 8 characters long, including uppercase letters, lowercase letters, numbers, and special characters.";
+        $errors[] = "Password must be at least 8 characters long, including uppercase letters, numbers, and special characters.";
     }
 
     if ($password !== $confirm_password) {

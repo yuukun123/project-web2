@@ -120,9 +120,9 @@ if (!isset($showRegister)) {
 
             </div>
 
-            <div class="remember-forgot">
+            <!-- <div class="remember-forgot">
                 <label><input type="checkbox" name="agree">i agree to the terms & conditions</label>
-            </div>
+            </div> -->
             <button type="submit" class="btn">Register</button>
             <div class="login-register">
                 <p>Already have an account ? <a href="login" class="login-link">Login</a></p>

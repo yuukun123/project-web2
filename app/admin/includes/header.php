@@ -1,6 +1,5 @@
 <?php
-// include '../Api_php/ession-admin.php';
-ob_start();
+// ob_start();
 $page = basename($_SERVER['PHP_SELF']);
 
 switch ($page) {
@@ -44,9 +43,8 @@ if (isset($_SESSION['admin']) && isset($_SESSION['admin']['username'])) {
         </div>
     ';
 }
-ob_end_flush();
+// ob_end_flush();
 ?>
-
 <div class="header">
     <div class="text-heading">
         <h1><?php echo $title; ?></h1>

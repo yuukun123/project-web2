@@ -32,10 +32,37 @@ $shipping_district = mysqli_real_escape_string($conn, $_POST['shipping_district_
 $shipping_ward = mysqli_real_escape_string($conn, $_POST['shipping_ward_name'] ?? '');
 $shipping_street = mysqli_real_escape_string($conn, $_POST['shipping_street'] ?? '');
 $delivery_date = mysqli_real_escape_string($conn, $_POST['delivery_date'] ?? '');
+
+// $delivery_time = mysqli_real_escape_string($conn, $_POST['delivery_time'] ?? '');
+
+// if (!empty($delivery_time) && strtotime($delivery_time) !== false) {
+//     $formatted_time = date("H:i:00", strtotime($delivery_time_raw));
+// } else {
+//     $formatted_time = null; // hoặc "" tùy DB chấp nhận
+// }
+# test 
+$delivery_time_raw = $_POST['delivery_time'] ?? '';
+
+if ($delivery_time_raw) {
+    $parts = explode(':', $delivery_time_raw);
+    if (count($parts) >= 2) {
+        $hour = intval($parts[0]);
+        $minute = intval($parts[1]);
+        $formatted_time = sprintf("%02d:%02d:00", $hour, $minute);
+    } else {
+        $formatted_time = null;
+    }
+} else {
+    $formatted_time = null;
+}
+
+
 $note = mysqli_real_escape_string($conn, $_POST['note'] ?? '');
 
+
+
 // Kiểm tra hợp lệ phương thức thanh toán
-$valid_methods = ['COD', 'Momo', 'Credit Card', 'VNPay'];
+$valid_methods = ['COD'];
 $payment_method = strtoupper($_POST['payment_method'] ?? 'COD');
 if (!in_array($payment_method, $valid_methods)) {
     $payment_method = 'COD';
@@ -69,8 +96,8 @@ if (empty($cart_items)) {
 }
 
 // Tạo đơn hàng
-$stmt = $conn->prepare("INSERT INTO orders (user_name, recipient_name, recipient_phone, order_date, delivery_date, total_cost, payment_method, notes, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$stmt->bind_param("sssssdssssss", $username, $fullname, $phone, $order_date, $delivery_date, $total_cost, $payment_method, $note, $shipping_city, $shipping_district, $shipping_ward, $shipping_street);
+$stmt = $conn->prepare("INSERT INTO orders (user_name, recipient_name, recipient_phone, order_date, delivery_date, delivery_time, total_cost, payment_method, notes, shipping_city, shipping_district, shipping_ward, shipping_street) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssssdssssss", $username, $fullname, $phone, $order_date, $delivery_date, $formatted_time, $total_cost, $payment_method, $note, $shipping_city, $shipping_district, $shipping_ward, $shipping_street);
 
 if (!$stmt->execute()) {
     echo json_encode(["success" => false, "message" => "Error creating order: " . $stmt->error]);

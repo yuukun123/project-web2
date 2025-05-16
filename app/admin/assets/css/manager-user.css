@@ -402,6 +402,15 @@ h2 {
     background-color: #4f514fcb;
 }
 
+select:disabled {
+    background-color: #fff;        /* Giữ nền trắng */
+    color: #000;                   /* Giữ màu chữ */
+    border: 1px solid #000000ab;        /* Thêm lại border */
+    opacity: 1;                    /* Không làm mờ */
+    cursor: not-allowed;           /* Hiệu ứng chuột */
+}
+
+
 /* Responsive Design */
 @media (max-width: 1390px) and (min-width: 1281px){
     .product-grid{

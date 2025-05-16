@@ -10,6 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
+    // ✅ Kiểm tra nếu người dùng bỏ trống ô nhập
+    if ($username === '' || $password === '') {
+        header("Location: ../../login?error=unauthorized");
+        exit();
+    }
+
     // Truy vấn người dùng từ database (lấy thêm status)
     $sql = "SELECT user_name, password, role, status FROM users WHERE user_name = ?";
     $stmt = $conn->prepare($sql);

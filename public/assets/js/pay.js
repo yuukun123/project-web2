@@ -23,6 +23,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const userWard = userAddressInfo.ward;
     const userStreet = userAddressInfo.street;
 
+    const timeInput = document.getElementById('delivery_time');
+
+    timeInput.addEventListener('change', function () {
+        const selectedTime = timeInput.value;
+        if (!selectedTime) return;
+
+        const [hourStr, minuteStr] = selectedTime.split(':');
+        const hours = parseInt(hourStr, 10);
+        const minutes = parseInt(minuteStr, 10);
+
+        const totalMinutes = hours * 60 + minutes;
+
+        const minMinutes = 8 * 60;    // 08:00 = 480 phút
+        const maxMinutes = 20 * 60;   // 20:00 = 1200 phút
+
+        if (totalMinutes < minMinutes || totalMinutes > maxMinutes) {
+            alert('Thời gian phải nằm trong khoảng từ 08:00 đến 20:00.');
+            timeInput.value = ''; // reset lại input
+        }
+    });
+
     // Auto-fill địa chỉ
     // autoFillRadio.addEventListener("change", function () {
     //     if (this.checked) {
@@ -46,6 +67,8 @@ document.addEventListener('DOMContentLoaded', function () {
             wardSelect.classList.remove('select-disabled');
             streetInput.classList.remove('readonly-input');
 
+            receiverName.readOnly = false;
+            receiverPhone.readOnly = false;
             receiverName.value = '';
             receiverPhone.value = '';
             streetInput.value = '';
@@ -109,30 +132,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // hiện thông tin thanh toán
-    const Momo = document.getElementById('Momo-fields');
-    const VNPay = document.getElementById('VNPay-fields');
-    const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
+    // const Momo = document.getElementById('Momo-fields');
+    // const VNPay = document.getElementById('VNPay-fields');
+    // const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
     
-    paymentMethods.forEach(method => {
-        method.addEventListener('change', function() {
-            // Ẩn tất cả các phương thức thanh toán trước
-            Momo.classList.remove('show');
-            VNPay.classList.remove('show');
+    // paymentMethods.forEach(method => {
+    //     method.addEventListener('change', function() {
+    //         // Ẩn tất cả các phương thức thanh toán trước
+    //         Momo.classList.remove('show');
+    //         VNPay.classList.remove('show');
     
-            // Hiển thị phương thức thanh toán được chọn
-            if (this.value === 'Momo') {
-                Momo.classList.add('show');
-            } else if (this.value === 'VNPay') {
-                VNPay.classList.add('show');
-            }
-        });
-    });
+    //         // Hiển thị phương thức thanh toán được chọn
+    //         if (this.value === 'Momo') {
+    //             Momo.classList.add('show');
+    //         } else if (this.value === 'VNPay') {
+    //             VNPay.classList.add('show');
+    //         }
+    //     });
+    // });
     
-    // Ẩn tất cả các phương thức thanh toán khi tải trang
-    window.addEventListener('load', () => {
-        Momo.classList.remove('show');
-        VNPay.classList.remove('show');
-    });
+    // // Ẩn tất cả các phương thức thanh toán khi tải trang
+    // window.addEventListener('load', () => {
+    //     Momo.classList.remove('show');
+    //     VNPay.classList.remove('show');
+    // });
     
     // Lấy ngày hôm nay và định dạng lại theo định dạng yyyy-mm-dd
     var today = new Date();
@@ -149,6 +172,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Submit form và hiện confirmation
     document.getElementById('payment-form').addEventListener('submit', function (e) {
+
+        const timeInput = document.getElementById('delivery_time');
+        const selectedTime = timeInput.value;
+    
+        if (selectedTime) {
+            const [hours, minutes] = selectedTime.split(':').map(Number);
+            const totalMinutes = hours * 60 + minutes;
+    
+            if (totalMinutes < 480 || totalMinutes > 1200) {
+                e.preventDefault();
+                alert('Delivery time must be between 08:00 and 20:00.');
+                timeInput.focus();
+                return false;
+            }
+        }
+        
         const urlPattern = /(https?:\/\/|www\.)[^\s]+|[^\s]+\.(com|net|org|vn|info|biz|edu)/i;
         const inputs = this.querySelectorAll('input[type="text"], input[type="number"], textarea');
     
@@ -191,6 +230,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     .then(items => {
                         let orderItemsHtml = '';
                         let totalCost = 0;
+
+                        if (items.length > 0) {
+                            // Hiển thị tên người nhận và địa chỉ nhận hàng
+                            const infoHtml = `
+                                <div class="receive-info">
+                                    <div><strong>Recipient:</strong> ${items[0].receive_name}</div>
+                                    <div><strong>Delivery address:</strong> ${items[0].receive_address}</div>
+                                </div>
+                            `;
+                            document.getElementById('receive-address-display').innerHTML = infoHtml;
+                        }                        
+
                         items.forEach(item => {
                             orderItemsHtml += `
                                 <div class="receipt-rev">
@@ -214,6 +265,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     function autoFillAddress() {
+        receiverName.value = userAddressInfo.full_name;
+        receiverPhone.value = userAddressInfo.phone;
         citySelect.innerHTML = `<option value="${userCity}" selected>${userCity}</option>`;
         districtSelect.innerHTML = `<option value="${userDistrict}" selected>${userDistrict}</option>`;
         wardSelect.innerHTML = `<option value="${userWard}" selected>${userWard}</option>`;
@@ -223,6 +276,15 @@ document.addEventListener('DOMContentLoaded', function () {
         districtSelect.classList.add('select-disabled');
         wardSelect.classList.add('select-disabled');
         streetInput.classList.add('readonly-input');
+
+        // Disable inputs nếu muốn tránh chỉnh sửa
+        receiverName.readOnly = true;
+        receiverPhone.readOnly = true;
+
+        console.log("userAddressInfo:", userAddressInfo);
+        console.log("userAddressInfo.phone:", userAddressInfo?.phone);
+        console.log("userAddressInfo.full_name:", userAddressInfo?.full_name);
+
     }
     
 

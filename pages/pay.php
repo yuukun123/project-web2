@@ -5,6 +5,7 @@ include __DIR__ . "/../app/config/data_connect.php"; // Kết nối database v�
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+
 // Kiểm tra đăng nhập
 if (
     !isset($_SESSION['user']) || 
@@ -38,6 +39,19 @@ $total_cost = 0;
     <div class="pay-infor">
         <div class="input-information">
             <h1>Customer Information</h1>
+
+            <div class="choose">   
+                <div class="fill">
+                    <input type="radio" name="auto-fill" id="autoFill" value="Auto fill" checked>
+                    <label for="autoFill">Use Saved Information</label>
+                </div>
+
+                <div class="clear">
+                    <input type="radio" id="sendOther" name="auto-fill"  value="Clear fill">
+                    <label for="sendOther">Send To Others</label>
+                </div>
+            </div>
+
             <form id="payment-form" >
                 <div class="name">
                     <label for="full_name">Full name <span style="color: red;">(*)</span></label>
@@ -86,32 +100,33 @@ $total_cost = 0;
                     <label for="delivery_date">Delivery Date <span style="color: red;">(*)</span></label>
                     <input type="date" id="delivery_date" name="delivery_date" required>
                 </div>
+
+
+                <div class="delivery-time">
+                    <label for="delivery_time">Delivery Time <span style="color: red;">(*)</span></label>
+                    <!-- <select id="delivery_time" name="delivery_time" required>
+                        <option value="">Select Time</option>
+                        <option value="8:00 - 10:00">8:00 - 10:00</option>
+                        <option value="10:00 - 12:00">10:00 - 12:00</option>
+                        <option value="13:00 - 15:00">13:00 - 15:00</option>
+                        <option value="15:00 - 17:00">15:00 - 17:00</option>
+                        <option value="17:00 - 19:00">17:00 - 20:00</option>
+                    </select> -->
+                    <input type="time" id="delivery_time" name="delivery_time" min="08:00" max="20:00" required>
+                </div>
+
                 <div class="note">
                     <label for="note">Greeting Message</label>
                     <textarea id="note" name="note" rows="2" cols="90" style="overflow:auto;"></textarea>
                 </div>
 
-                <div class="choose">   
-                    <div class="fill">
-                        <input type="radio" name="auto-fill" id="autoFill" value="Auto fill" checked>
-                        <label for="autoFill">Use Saved Information</label>
-                    </div>
-
-                    <div class="clear">
-                        <input type="radio" id="sendOther" name="auto-fill"  value="Clear fill">
-                        <label for="sendOther">Send To Others</label>
-                    </div>
-                </div>
-
-                <h1>Final Payment</h1>
+                <h1>Payment Method</h1>
                 <div class="payment-method">
                     <label><input type="radio" name="payment_method" value="COD" checked> COD</label>
-                    <label><input type="radio" name="payment_method" value="Momo"> Momo</label>
-                    <label><input type="radio" name="payment_method" value="VNPay"> VNPay</label>
                 </div>
 
 
-                <div id="Momo-fields" class="credit-details active">
+                <!-- <div id="Momo-fields" class="credit-details active">
                     <p>Card Number: 1234567890</p>
                     <p>Name: Vo Anh Hao</p>
                     <p style="color: red">Staff will call you to confirm your order after payment.</p>
@@ -121,7 +136,7 @@ $total_cost = 0;
                     <p>Card Number: 1234567890</p>
                     <p>Name: Vo Anh Hao</p>
                     <p style="color: red">Staff will call you to confirm your order after payment.</p>
-                </div>
+                </div> -->
 
                 <div class="my-order">
                     <div class="Text-head">
@@ -185,6 +200,7 @@ $total_cost = 0;
     </div>
     <h1>SUCCESS</h1>
     <p class="order-id"><span style="font-weight: bold;">Your Order ID </span><strong class="order-id-number" id="order-id-number">#...</strong></p>
+    <div id="receive-address-display" class="receive-address-display"></div>
     <div id="order-items" class="order-items"></div>
     <p class="total" id="total-cost-display">Total <span>0 VND</span></p>
     <p style="font-size: 14px;">Thank you for choosing our service!</p>
@@ -199,11 +215,12 @@ $total_cost = 0;
 
 <script>
     const userAddressInfo = {
+        full_name: "<?= $user['first_name'].''. $user['last_name']?>",
+        phone: "<?= $user['phone']?>",
         city: "<?= $user['city'] ?>",
         district: "<?= $user['district'] ?>",
         ward: "<?= $user['ward'] ?>",
         street: "<?= $user['street'] ?>"
     };
 
-    
 </script>

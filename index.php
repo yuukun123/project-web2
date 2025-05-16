@@ -56,6 +56,18 @@ if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
 
 // Bây giờ chắc chắn đã có ?pages
 $page = $_GET['pages'];
+
+// Danh sách các trang cần yêu cầu đăng nhập
+$protectedPages = ['pay'];
+// Nếu là trang cần bảo vệ và người dùng chưa đăng nhập
+if (in_array($page, $protectedPages)) {
+    if (!isset($_SESSION['user']) || !is_array($_SESSION['user'])) {
+        header('Location: login?error=method_not_allowed');
+        
+        exit();
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
