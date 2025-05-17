@@ -26,7 +26,7 @@ $stmt_best = $conn->prepare("
     AND o.status = 'Completed'
     GROUP BY u.user_name
     ORDER BY total_spending DESC
-    
+    LIMIT 5
 ");
 $stmt_best->bind_param("ss", $fromDate, $toDate);
 $stmt_best->execute();

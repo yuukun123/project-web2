@@ -11,6 +11,7 @@ error_reporting(E_ALL);
         AND o.status = 'Completed'
         GROUP BY u.user_name
         ORDER BY total_spending DESC
+        LIMIT 5
         ";
 
 $result = $conn->query($sql);
