@@ -11,10 +11,14 @@ if (citySelect && districtSelect && wardSelect) {
         .then(response => response.json())
         .then(data => {
             data.forEach(city => {
-                let option = new Option(city.name, city.code);
-                option.dataset.name = city.name; // Sử dụng dataset
+                // Bỏ tiền tố "Thành phố" hoặc "TP." khỏi tên thành phố
+                const cleanedCityName = city.name.replace(/^Thành phố\s*/i, '').replace(/^TP\.\s*/i, '');
+            
+                let option = new Option(cleanedCityName, city.code);
+                option.dataset.name = cleanedCityName;
                 citySelect.add(option);
             });
+            
         })
         .catch(error => console.error("Error fetching cities:", error));
 
@@ -39,6 +43,8 @@ if (citySelect && districtSelect && wardSelect) {
                 })
                 .catch(error => console.error("Error fetching districts:", error));
         }
+
+        loadOrders();
     });
 
     // Khi chọn quận/huyện
@@ -61,12 +67,16 @@ if (citySelect && districtSelect && wardSelect) {
                 })
                 .catch(error => console.error("Error fetching wards:", error));
         }
+
+        loadOrders();
     });
 
     // Khi chọn phường/xã
     wardSelect.addEventListener("change", function () {
         const selectedWard = wardSelect.options[wardSelect.selectedIndex];
         wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
+
+        loadOrders();
     });
     const filterForm = document.querySelector('form');
     if (filterForm) {
@@ -76,8 +86,11 @@ if (citySelect && districtSelect && wardSelect) {
             const selectedWard = wardSelect.options[wardSelect.selectedIndex];
 
             cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
+            console.log("City selected:", cityNameHidden.value); 
             districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
+            console.log("District selected:", districtNameHidden.value); // ✅ thêm dòng này
             wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
+            console.log("Ward selected:", wardNameHidden.value); // ✅ thêm dòng này
         });
     }
 }
@@ -168,7 +181,22 @@ function hideDetailOrders(detailordersId) {
 window.onload = filterOrders;
 
 function loadOrders() {
+    const cityInput = document.getElementById("city_name");
+    const districtInput = document.getElementById("district_name");
+    const wardInput = document.getElementById("ward_name");
+
+    const city = cityInput ? cityInput.value : "";
+    const district = districtInput ? districtInput.value : "";
+    const ward = wardInput ? wardInput.value : "";
+
+    console.log("Loading orders with address filter:", { city, district, ward });
+
+
     const params = new URLSearchParams(window.location.search);
+    params.set('city', city);
+    params.set('district', district);
+    params.set('ward', ward);
+
     fetch('Controllers/get_orders.php?' + params.toString())
         .then(response => response.json())
         .then(data => {
@@ -196,7 +224,6 @@ function loadOrders() {
                         <button class="btn-update icon-detail" onclick="showOrderDetail(${row.order_id})" title="Edit">
                             <ion-icon name="create-outline"></ion-icon>
                         </button>
-
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -228,6 +255,7 @@ function loadOrders() {
             });
         });
 }
+
 
 function showOrderDetail(orderId) {
     fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
@@ -317,7 +345,7 @@ function renderPagination(totalPages, currentPage) {
         pagination.appendChild(btn);
     }
 }
-
-
-loadOrders();
-setInterval(loadOrders, 5000);
+document.addEventListener('DOMContentLoaded', () => {
+    loadOrders();
+    setInterval(loadOrders, 5000);
+});

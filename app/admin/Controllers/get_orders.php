@@ -12,36 +12,75 @@ $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
 $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
 $offset = ($page - 1) * $limit;
 
-// Câu truy vấn cơ bản
-$where = "WHERE 1=1";
+$city = isset($_GET['city']) ? trim($_GET['city']) : '';
+$district = isset($_GET['district']) ? trim($_GET['district']) : '';
+$ward = isset($_GET['ward']) ? trim($_GET['ward']) : '';
+
+// Xây dựng điều kiện WHERE
+$whereClauses = ["1=1"];
+$params = [];
+$types = '';
 
 if (!empty($statusFilter)) {
-    $where .= " AND o.status = '" . $conn->real_escape_string($statusFilter) . "'";
-}
-if (!empty($fromDate) && !empty($toDate)) {
-    $where .= " AND o.order_date BETWEEN '" . $conn->real_escape_string($fromDate) . "' AND '" . $conn->real_escape_string($toDate) . "'";
-}
-if (!empty($locationFilter)) {
-    $loc = $conn->real_escape_string($locationFilter);
-    $where .= " AND (o.shipping_ward LIKE '%$loc%' 
-                  OR o.shipping_district LIKE '%$loc%' 
-                  OR o.shipping_city LIKE '%$loc%')";
-}
-if (!empty($search)) {
-    $key = $conn->real_escape_string($search);
-    $where .= " AND (o.order_id LIKE '%$key%' 
-                  OR u.user_name LIKE '%$key%')";
+    $whereClauses[] = "o.status = ?";
+    $params[] = $statusFilter;
+    $types .= 's';
 }
 
-// Lấy tổng số bản ghi để tính phân trang
+if (!empty($fromDate) && !empty($toDate)) {
+    $whereClauses[] = "o.order_date BETWEEN ? AND ?";
+    $params[] = $fromDate;
+    $params[] = $toDate;
+    $types .= 'ss';
+}
+
+if (!empty($locationFilter)) {
+    $like = "%$locationFilter%";
+    $whereClauses[] = "(o.shipping_ward LIKE ? OR o.shipping_district LIKE ? OR o.shipping_city LIKE ?)";
+    array_push($params, $like, $like, $like);
+    $types .= 'sss';
+}
+
+if (!empty($search)) {
+    $like = "%$search%";
+    $whereClauses[] = "(o.order_id LIKE ? OR u.user_name LIKE ?)";
+    array_push($params, $like, $like);
+    $types .= 'ss';
+}
+
+if (!empty($city)) {
+    $whereClauses[] = "CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) LIKE ?";
+    $params[] = "%$city%";
+    $types .= 's';
+}
+if (!empty($district)) {
+    $whereClauses[] = "CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) LIKE ?";
+    $params[] = "%$district%";
+    $types .= 's';
+}
+if (!empty($ward)) {
+    $whereClauses[] = "CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) LIKE ?";
+    $params[] = "%$ward%";
+    $types .= 's';
+}
+
+$where = "WHERE " . implode(" AND ", $whereClauses);
+
+// ================== TRUY VẤN COUNT ==================
 $countSql = "SELECT COUNT(*) as total FROM orders o 
              LEFT JOIN users u ON o.user_name = u.user_name 
              $where";
-$countResult = $conn->query($countSql);
-$totalRows = $countResult->fetch_assoc()['total'];
+$stmt = $conn->prepare($countSql);
+if (!empty($params)) {
+    $stmt->bind_param($types, ...$params);
+}
+$stmt->execute();
+$result = $stmt->get_result();
+$totalRows = $result->fetch_assoc()['total'];
 $totalPages = ceil($totalRows / $limit);
+$stmt->close();
 
-// Truy vấn có phân trang
+// ================== TRUY VẤN DỮ LIỆU ==================
 $dataSql = "SELECT o.order_id, u.user_name, o.order_date, o.delivery_date, o.delivery_time,
                    o.total_cost, o.status, o.payment_method,
                    CONCAT(o.shipping_street, ', ', o.shipping_ward, ', ', o.shipping_district, ', ', o.shipping_city) AS full_address
@@ -49,14 +88,22 @@ $dataSql = "SELECT o.order_id, u.user_name, o.order_date, o.delivery_date, o.del
             LEFT JOIN users u ON o.user_name = u.user_name
             $where
             ORDER BY o.order_date DESC
-            LIMIT $limit OFFSET $offset";
+            LIMIT ? OFFSET ?";
 
-$dataResult = $conn->query($dataSql);
+$params[] = $limit;
+$params[] = $offset;
+$types .= 'ii';
+
+$stmt = $conn->prepare($dataSql);
+$stmt->bind_param($types, ...$params);
+$stmt->execute();
+$dataResult = $stmt->get_result();
+
 $orders = [];
-
 while ($row = $dataResult->fetch_assoc()) {
     $orders[] = $row;
 }
+$stmt->close();
 
 // Trả kết quả JSON
 echo json_encode([
