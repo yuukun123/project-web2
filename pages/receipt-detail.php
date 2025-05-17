@@ -58,7 +58,7 @@ $statusColor = match($order['status']) {
             <p><strong>Phone:</strong> <?= htmlspecialchars($order['recipient_phone']) ?></p>
             <p><strong>Order date :</strong> <?= htmlspecialchars($order['order_date']) ?></p>
             <p><strong>Delivery date:</strong> <?= htmlspecialchars($order['delivery_date']) ?></p>
-            <p><strong>Delivery time:</strong> <?= htmlspecialchars($order['delivery_time']) ?></p>
+            <p><strong>Deliveried time:</strong> <?= htmlspecialchars($order['delivery_time']) ?></p>
             <p><strong>Payment method:</strong> <?= htmlspecialchars($order['payment_method']) ?></p>
             <p><strong>Greeting Message:</strong> <?= htmlspecialchars($order['notes']) ?></p>
             <p><strong>Status:</strong>

@@ -22,7 +22,7 @@ switch ($page) {
         $title = "Receipt";
         break;
     default:
-        $title = "Home";
+        $title = "Dashboard";
 }
 
 
