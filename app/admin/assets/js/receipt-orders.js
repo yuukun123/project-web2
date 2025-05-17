@@ -155,22 +155,38 @@ function showOrderDetail(orderId) {
             document.getElementById('product_info').innerHTML = data.product_info;
             document.getElementById('product_id').value = data.product_id;
             document.getElementById('order_note').value = data.notes;
+
+            // Định nghĩa các trạng thái hợp lệ tùy trạng thái hiện tại
+            const validTransitions = {
+                'Pending': ['Pending', 'Processing', 'Cancelled'],
+                'Processing': ['Processing', 'Completed', 'Cancelled'],
+                'Completed': ['Completed'],
+                'Cancelled': ['Cancelled']
+            };
+
+            const currentStatus = data.status;
+            const allowedStatuses = validTransitions[currentStatus] || [currentStatus];
+
+            // Chỉ render các option hợp lệ
             const select = document.getElementById('order_status');
-            select.innerHTML = `
-                <option value="Pending" ${data.status === 'Pending' ? 'selected' : ''}>Pending</option>
-                <option value="Processing" ${data.status === 'Processing' ? 'selected' : ''}>Processing</option>
-                <option value="Completed" ${data.status === 'Completed' ? 'selected' : ''}>Completed</option>
-                <option value="Cancelled" ${data.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
-            `;
+            select.innerHTML = ['Pending', 'Processing', 'Completed', 'Cancelled']
+                .filter(status => allowedStatuses.includes(status))
+                .map(status => `<option value="${status}" ${status === currentStatus ? 'selected' : ''}>${status}</option>`)
+                .join('');
 
             document.getElementById('DetailOrders').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         });
 }
 
+
 function updateOrderStatusFromDetail() {
+    console.log('updateOrderStatusFromDetail called');  // Dòng log đầu tiên kiểm tra hàm chạy
+
     const orderId = document.getElementById('detail_order_id').textContent.replace('#', '');
     const newStatus = document.getElementById('order_status').value;
+
+    console.log('orderId:', orderId, 'newStatus:', newStatus);  // Kiểm tra giá trị
 
     const formData = new FormData();
     formData.append('order_id', orderId);
@@ -182,9 +198,11 @@ function updateOrderStatusFromDetail() {
     })
     .then(res => res.json())
     .then(res => {
+        console.log('Server response:', res);  // Log kết quả trả về từ server
         if (res.success) {
             alert('✅ Status updated successfully!');
-            loadOrders();
+            // Reload lại trang hoặc load lại dữ liệu
+            location.reload();   // <-- Thêm dòng này để reload trang
         } else {
             alert('❌ ' + res.message);
         }
@@ -193,7 +211,8 @@ function updateOrderStatusFromDetail() {
         console.error('Error:', err);
         alert('❌ Failed to update.');
     });
-}
+} 
+
 
 function hideDetailOrders(id) {
     document.getElementById(id).style.display = 'none';

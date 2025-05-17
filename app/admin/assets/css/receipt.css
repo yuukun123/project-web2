@@ -22,7 +22,7 @@
 .pagination {
     display: flex;
     justify-content: center;
-    gap: 0;
+    gap: 15px;
     margin-bottom: 18px;
 }
 
@@ -55,7 +55,15 @@
 .pagination .active {
     background: #ffa0c8;
     border: 1px solid white;
+    width: 30px;
 }
+
+select option:disabled {
+    color: #999;
+    background-color: #eee;
+    /* bạn có thể thêm cursor: not-allowed; nhưng trên option nó không hoạt động */
+  }
+  
 
 /* Responsive Design */
 @media screen and (min-width: 1390px) and (min-width: 1281px) {

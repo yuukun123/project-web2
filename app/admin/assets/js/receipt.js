@@ -1,164 +1,116 @@
-/*admin data*/
-document.addEventListener('DOMContentLoaded', function() {
-    // Function: Check login status
-    function checkLoginStatus(callback) {
-        console.log("Đang gọi checkLoginStatus...");
-        fetch("Api_php/session-admin.php", {
-            method: "GET",
-            credentials: "include"
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Dữ liệu session trả về:", data);
+/* admin data */
+document.addEventListener('DOMContentLoaded', function () {
+  // Function: Check login status
+  function checkLoginStatus(callback) {
+    console.log("Đang gọi checkLoginStatus...");
+    fetch("Api_php/session-admin.php", {
+      method: "GET",
+      credentials: "include"
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Dữ liệu session trả về:", data);
 
-            // Nếu chưa đăng nhập, chuyển hướng về trang login
-            if (!data.loggedIn) {
-                console.warn("Chưa đăng nhập. Chuyển về trang đăng nhập...");
-                window.location.href = "login";
-                return;
-            }
-    
-            // Check tài khoản bị khóa
-            if (data.status && data.status.toLowerCase() === "locked") {
-                console.warn("Tài khoản đã bị khóa. Chuyển về trang đăng nhập...");
-                alert("Your account has been locked. You will be redirected to the login page.");
-                window.location.href = "login"; // Hoặc đúng link login của bạn
-                return;
-            }
-    
-            // Check trạng thái đăng nhập
-            if (data.loggedIn) {
-                document.body.classList.add("logged-in");
-            } else {
-                document.body.classList.remove("logged-in");
-            }
-    
-            if (callback) {
-                callback(data.loggedIn);
-            }
-        })
-        .catch(error => console.error("Lỗi khi kiểm tra session:", error));
-    }    
-    
-
-    // Kiểm tra trạng thái đăng nhập
-    checkLoginStatus((isLoggedIn) => {
-        if (!isLoggedIn) {
-            console.log("Không đăng nhập, xóa flag welcomeShownAdmin");
-            localStorage.removeItem("welcomeShownAdmin");
-            console.log("welcomeShownAdmin flag removed:", localStorage.getItem("welcomeShownAdmin"));
+        if (!data.loggedIn) {
+          console.warn("Chưa đăng nhập. Chuyển về trang đăng nhập...");
+          window.location.href = "login";
+          return;
         }
 
-        
-    });
+        if (data.status && data.status.toLowerCase() === "locked") {
+          console.warn("Tài khoản đã bị khóa. Chuyển về trang đăng nhập...");
+          alert("Your account has been locked. You will be redirected to the login page.");
+          window.location.href = "login";
+          return;
+        }
 
-    // // Get stored users from localStorage
-    // function getCurrentUser() {
-    //     const admins = localStorage.getItem('AdminUser');
-    //     return admins ? JSON.parse(admins) : [];
-    // }
+        if (data.loggedIn) {
+          document.body.classList.add("logged-in");
+        } else {
+          document.body.classList.remove("logged-in");
+        }
 
-    // // Check if the admin is logged in and update button text
-    // function updateLoginButton() {
-    //     const loginButton = document.getElementById('login-btn');
+        if (callback) {
+          callback(data.loggedIn);
+        }
+      })
+      .catch(error => console.error("Lỗi khi kiểm tra session:", error));
+  }
 
-    //     const admins = getCurrentUser();
-
-    //     if (admins) {
-    //         loginButton.textContent = admins.username; // Change button to admin's name
-    //         loginButton.disabled = true; // Optionally, disable the button after login
-    //     }
-    // }
-
-    // const logoutButton = document.getElementById('logout-btn');
-
-    // // Handle the logout functionality
-    // logoutButton.addEventListener('click', function() {
-    //     // Optionally, clear user data from localStorage or sessionStorage
-    //     localStorage.removeItem('AdminUser'); // Example: remove the logged-in user from localStorage
-
-    //     // Redirect to home page (you can modify the URL as needed)
-    //     window.location.replace('../index.html'); // Redirect to the home page
-    // });
-
-    // // Automatically set admin name on page load if already logged in
-    // updateLoginButton();
-
-    
+  // Gọi kiểm tra login
+  checkLoginStatus((isLoggedIn) => {
+    if (!isLoggedIn) {
+      console.log("Không đăng nhập, xóa flag welcomeShownAdmin");
+      localStorage.removeItem("welcomeShownAdmin");
+    }
+  });
 });
 
-// function toggleGrade(gradeId) {
-//     const gradeElement = document.getElementById(gradeId);
-//     const chevronElement = document.getElementById(`chevron${gradeId.slice(-2)}`);
-    
-//     gradeElement.classList.toggle('active');
-//     chevronElement.classList.toggle('up');
-//     chevronElement.classList.toggle('down');
-// }
-const orderStatus = document.getElementById('order_status');
+// Hàm cập nhật các option trạng thái dựa theo trạng thái hiện tại
+function updateStatusOptionsBasedOnCurrent(orderStatus) {
+  const statuses = ['Pending', 'Processing', 'Completed', 'Cancelled'];
+  const currentStatus = orderStatus.value;
+  const currentIndex = statuses.indexOf(currentStatus);
 
-function updateStatusOptions() {
-    const selected = orderStatus.value;
-
-    // Lấy tất cả option
-    const options = Array.from(orderStatus.options);
-
-    if (selected === 'Processing') {
-        // Khi chọn Processing, ẩn Pending, hiện các option còn lại
-        options.forEach(option => {
-            if (option.value === 'Pending') {
-                option.style.display = 'none';
-            } else {
-                option.style.display = 'block';
-            }
-        });
-    } else if (selected === 'Completed' || selected === 'Cancelled') {
-        // Khi chọn Completed hoặc Cancelled, chỉ hiện option đó, ẩn hết
-        options.forEach(option => {
-            if (option.value === selected) {
-                option.style.display = 'block';
-            } else {
-                option.style.display = 'none';
-            }
-        });
+  for (let option of orderStatus.options) {
+    const optionIndex = statuses.indexOf(option.value);
+    if (optionIndex < currentIndex) {
+      option.disabled = true;
+      option.hidden = true;
     } else {
-        // Nếu chọn các trạng thái khác (ví dụ Pending), hiện tất cả
-        options.forEach(option => {
-            option.style.display = 'block';
-        });
+      option.disabled = false;
+      option.hidden = false;
     }
+  }
 }
 
-// Gọi khi dropdown thay đổi
-orderStatus.addEventListener('change', updateStatusOptions);
+// Hàm load chi tiết đơn hàng và xử lý hiển thị
+function loadOrderDetail(orderId) {
+  fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
+    .then(res => res.json())
+    .then(data => {
+      const orderStatus = document.getElementById('order_status');
 
-// Gọi lần đầu để xử lý trạng thái mặc định khi load trang
-updateStatusOptions();
+      // Render các option đầy đủ
+      orderStatus.innerHTML = `
+        <option value="Pending">Pending</option>
+        <option value="Processing">Processing</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+      `;
 
+      // Đặt trạng thái hiện tại
+      orderStatus.value = data.status;
 
+      // Cập nhật trạng thái các option
+      updateStatusOptionsBasedOnCurrent(orderStatus);
+
+      // Lắng nghe thay đổi và cập nhật lại nếu cần
+      orderStatus.addEventListener('change', () => {
+        updateStatusOptionsBasedOnCurrent(orderStatus);
+      });
+
+      // Hiển thị modal
+      document.getElementById('DetailOrders').style.display = 'block';
+      document.getElementById('overlay').style.display = 'block';
+    })
+    .catch(err => {
+      console.error('Error loading order detail:', err);
+      alert('❌ Failed to load order details.');
+    });
+}
+
+// Toggle menu (nếu có)
 function toggleGrade(contentId, chevronId) {
-    var chevron = document.querySelectorAll(('#' + chevronId));
-    var content = document.querySelectorAll(('#' + contentId));
+  var chevron = document.querySelectorAll('#' + chevronId);
+  var content = document.querySelectorAll('#' + contentId);
 
+  chevron.forEach((btn) => {
+    btn.classList.toggle('up');
+    btn.classList.toggle('down');
+  });
 
-    chevron.forEach((btn) => {
-        btn.classList.toggle('up');
-        btn.classList.toggle('down');
-    })
-
-    content.forEach((btn) => {
-        // Toggle visibility of content
-        if (btn.style.display === "none") {
-            btn.style.display = "block";
-
-            console.log("11");
-        } else {
-            btn.style.display = "none";
-
-            console.log("12");
-        }
-    })
+  content.forEach((btn) => {
+    btn.style.display = (btn.style.display === "none") ? "block" : "none";
+  });
 }
-
-
-
