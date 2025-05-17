@@ -72,9 +72,9 @@ $result = $conn->query($sql);
     <form method="GET" action="">
         <div class="filter-date">
             <label for="fromDate">From:</label>
-            <input type="date" name="from_date" value="<?= htmlspecialchars($fromDate) ?>">
+            <input type="date" name="from_date" id="fromDate" value="<?= htmlspecialchars($fromDate) ?>">
             <label for="toDate">To:</label>
-            <input type="date" name="to_date" value="<?= htmlspecialchars($toDate) ?>">
+            <input type="date" name="to_date" id="toDate" value="<?= htmlspecialchars($toDate) ?>">
         </div>
         <input type="hidden" name="city_name" id="city_name">
         <input type="hidden" name="district_name" id="district_name">
@@ -100,7 +100,7 @@ $result = $conn->query($sql);
 
         <div class="status-filter">
             <label for="status">Status:</label>
-            <select name="status">
+            <select name="status" id="orderStatus">
                 <option value="">All Status</option>
                 <option value="Pending" <?= $statusFilter == 'Pending' ? 'selected' : '' ?>>Pending</option>
                 <option value="Processing" <?= $statusFilter == 'Processing' ? 'selected' : '' ?>>Processing</option>

@@ -1,10 +1,94 @@
+const citySelect = document.getElementById("registerCity");
+const districtSelect = document.getElementById("registerDistrict");
+const wardSelect = document.getElementById("registerWard");
+const cityNameHidden = document.getElementById("city_name");
+const districtNameHidden = document.getElementById("district_name");
+const wardNameHidden = document.getElementById("ward_name");
 
+if (citySelect && districtSelect && wardSelect) {
+    // Lấy danh sách thành phố
+    fetch("https://provinces.open-api.vn/api/p/")
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(city => {
+                let option = new Option(city.name, city.code);
+                option.dataset.name = city.name; // Sử dụng dataset
+                citySelect.add(option);
+            });
+        })
+        .catch(error => console.error("Error fetching cities:", error));
+
+    // Khi chọn thành phố
+    citySelect.addEventListener("change", function () {
+        const selectedCity = citySelect.options[citySelect.selectedIndex];
+        const cityCode = citySelect.value;
+        cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
+        
+        districtSelect.innerHTML = "<option value=''>Select District</option>";
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
+        
+        if (cityCode) {
+            fetch(`https://provinces.open-api.vn/api/p/${cityCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.districts.forEach(district => {
+                        let option = new Option(district.name, district.code);
+                        option.dataset.name = district.name;
+                        districtSelect.add(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching districts:", error));
+        }
+    });
+
+    // Khi chọn quận/huyện
+    districtSelect.addEventListener("change", function () {
+        const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
+        const districtCode = districtSelect.value;
+        districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
+
+        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
+        
+        if (districtCode) {
+            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+                .then(response => response.json())
+                .then(data => {
+                    data.wards.forEach(ward => {
+                        let option = new Option(ward.name, ward.code);
+                        option.dataset.name = ward.name;
+                        wardSelect.add(option);
+                    });
+                })
+                .catch(error => console.error("Error fetching wards:", error));
+        }
+    });
+
+    // Khi chọn phường/xã
+    wardSelect.addEventListener("change", function () {
+        const selectedWard = wardSelect.options[wardSelect.selectedIndex];
+        wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
+    });
+    const filterForm = document.querySelector('form');
+    if (filterForm) {
+        filterForm.addEventListener("submit", function () {
+            const selectedCity = citySelect.options[citySelect.selectedIndex];
+            const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
+            const selectedWard = wardSelect.options[wardSelect.selectedIndex];
+
+            cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
+            districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
+            wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
+        });
+    }
+}
+
+let orders = [];
 
 function filterOrders() {
     const fromDate = document.getElementById('fromDate').value;
     const toDate = document.getElementById('toDate').value;
     const orderStatus = document.getElementById('orderStatus').value;
-    const orderList = document.getElementById('orderList');
+    const orderList = document.getElementById('order-table-body');
 
     const filteredOrders = orders.filter(order => {
         const orderDate = new Date(order.date);
@@ -88,6 +172,8 @@ function loadOrders() {
     fetch('Controllers/get_orders.php?' + params.toString())
         .then(response => response.json())
         .then(data => {
+            orders = data.orders; // Gán dữ liệu vào biến toàn cục
+            filterOrders(); 
             const tbody = document.getElementById('order-table-body');
             tbody.innerHTML = '';
             data.orders.forEach(row => {
@@ -235,4 +321,3 @@ function renderPagination(totalPages, currentPage) {
 
 loadOrders();
 setInterval(loadOrders, 5000);
-

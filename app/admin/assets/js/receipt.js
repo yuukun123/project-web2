@@ -46,59 +46,61 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-// Hàm cập nhật các option trạng thái dựa theo trạng thái hiện tại
-function updateStatusOptionsBasedOnCurrent(orderStatus) {
-  const statuses = ['Pending', 'Processing', 'Completed', 'Cancelled'];
-  const currentStatus = orderStatus.value;
-  const currentIndex = statuses.indexOf(currentStatus);
+// // Hàm cập nhật các option trạng thái dựa theo trạng thái hiện tại
+// function updateStatusOptionsBasedOnCurrent(orderStatus) {
+//   const statuses = ['Pending', 'Processing', 'Completed', 'Cancelled'];
+//   const currentStatus = orderStatus.value;
+//   const currentIndex = statuses.indexOf(currentStatus);
 
-  for (let option of orderStatus.options) {
-    const optionIndex = statuses.indexOf(option.value);
-    if (optionIndex < currentIndex) {
-      option.disabled = true;
-      option.hidden = true;
-    } else {
-      option.disabled = false;
-      option.hidden = false;
-    }
-  }
-}
+//   for (let option of orderStatus.options) {
+//     const optionIndex = statuses.indexOf(option.value);
+//     if (optionIndex < currentIndex) {
+//       option.disabled = true;
+//       option.hidden = true;
+//     } else {
+//       option.disabled = false;
+//       option.hidden = false;
+//     }
+//   }
+// }
 
-// Hàm load chi tiết đơn hàng và xử lý hiển thị
-function loadOrderDetail(orderId) {
-  fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
-    .then(res => res.json())
-    .then(data => {
-      const orderStatus = document.getElementById('order_status');
+// // Hàm load chi tiết đơn hàng và xử lý hiển thị
+// function loadOrderDetail(orderId) {
+//   fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
+//     .then(res => res.json())
+//     .then(data => {
+//       const orderStatus = document.getElementById('order_status');
 
-      // Render các option đầy đủ
-      orderStatus.innerHTML = `
-        <option value="Pending">Pending</option>
-        <option value="Processing">Processing</option>
-        <option value="Completed">Completed</option>
-        <option value="Cancelled">Cancelled</option>
-      `;
+//       // Render các option đầy đủ
+//       orderStatus.innerHTML = `
+//         <option value="Pending">Pending</option>
+//         <option value="Processing">Processing</option>
+//         <option value="Completed">Completed</option>
+//         <option value="Cancelled">Cancelled</option>
+//       `;
 
-      // Đặt trạng thái hiện tại
-      orderStatus.value = data.status;
+//       // Đặt trạng thái hiện tại
+//       orderStatus.value = data.status;
 
-      // Cập nhật trạng thái các option
-      updateStatusOptionsBasedOnCurrent(orderStatus);
+//       // Cập nhật trạng thái các option
+//       updateStatusOptionsBasedOnCurrent(orderStatus);
 
-      // Lắng nghe thay đổi và cập nhật lại nếu cần
-      orderStatus.addEventListener('change', () => {
-        updateStatusOptionsBasedOnCurrent(orderStatus);
-      });
+//       // Lắng nghe thay đổi và cập nhật lại nếu cần
+//       orderStatus.addEventListener('change', () => {
+//         updateStatusOptionsBasedOnCurrent(orderStatus);
+//       });
 
-      // Hiển thị modal
-      document.getElementById('DetailOrders').style.display = 'block';
-      document.getElementById('overlay').style.display = 'block';
-    })
-    .catch(err => {
-      console.error('Error loading order detail:', err);
-      alert('❌ Failed to load order details.');
-    });
-}
+//       // Hiển thị modal
+//       document.getElementById('DetailOrders').style.display = 'block';
+//       document.getElementById('overlay').style.display = 'block';
+//     })
+//     .catch(err => {
+//       console.error('Error loading order detail:', err);
+//       alert('❌ Failed to load order details.');
+//     });
+// }
+
+  
 
 // Toggle menu (nếu có)
 function toggleGrade(contentId, chevronId) {
