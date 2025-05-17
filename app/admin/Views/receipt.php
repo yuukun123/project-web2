@@ -83,17 +83,17 @@ $result = $conn->query($sql);
             <input type="hidden" name="ward_name" id="ward_name">    
 
             <label for="address">City:</label>
-            <select id="registerCity" name="registerCity"  required>
+            <select id="registerCity" name="registerCity">
                 <option value="">Select City</option>
             </select>
 
             <label for="address">District:</label>
-            <select id="registerDistrict" name="registerDistrict"  required>
+            <select id="registerDistrict" name="registerDistrict">
                 <option value="">Select District</option>
             </select>
 
             <label for="address">Ward:</label>
-            <select id="registerWard" name="registerWard" required>
+            <select id="registerWard" name="registerWard">
                 <option value="">Select Ward</option>
             </select>
 
@@ -109,10 +109,11 @@ $result = $conn->query($sql);
                 <option value="Cancelled" <?= $statusFilter == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
             </select>
         </div>
-        <div class="btn_filter">
+
+    </form>
+    <div class="btn_filter">
             <button type="submit">Filter</button>
         </div>
-    </form>
 </div>
 
 <table>

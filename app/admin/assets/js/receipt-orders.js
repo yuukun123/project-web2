@@ -1,9 +1,34 @@
+// ✅ Đặt ở đầu file JS (global scope)
+let selectedCityCode = null;
+let selectedDistrictCode = null;
+let selectedWardCode = null;
+
 const citySelect = document.getElementById("registerCity");
 const districtSelect = document.getElementById("registerDistrict");
 const wardSelect = document.getElementById("registerWard");
 const cityNameHidden = document.getElementById("city_name");
 const districtNameHidden = document.getElementById("district_name");
 const wardNameHidden = document.getElementById("ward_name");
+
+function fetchCities() {
+    fetch("https://provinces.open-api.vn/api/p/")
+        .then(response => response.json())
+        .then(data => {
+            citySelect.innerHTML = "<option value=''>Select City</option>";
+            data.forEach(city => {
+                const cleanedCityName = city.name.replace(/^Thành phố\s*/i, '').replace(/^TP\.\s*/i, '');
+                let option = new Option(cleanedCityName, city.code);
+                option.dataset.name = cleanedCityName;
+                citySelect.add(option);
+            });
+
+            if (selectedCityCode) {
+                citySelect.value = selectedCityCode;
+                citySelect.dispatchEvent(new Event("change")); // Tự động kích hoạt để load district
+            }
+        });
+}
+
 
 if (citySelect && districtSelect && wardSelect) {
     // Lấy danh sách thành phố
@@ -24,15 +49,15 @@ if (citySelect && districtSelect && wardSelect) {
 
     // Khi chọn thành phố
     citySelect.addEventListener("change", function () {
+        selectedCityCode = citySelect.value; // ✅ THÊM DÒNG NÀY
         const selectedCity = citySelect.options[citySelect.selectedIndex];
-        const cityCode = citySelect.value;
         cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
-        
+    
         districtSelect.innerHTML = "<option value=''>Select District</option>";
         wardSelect.innerHTML = "<option value=''>Select Ward</option>";
-        
-        if (cityCode) {
-            fetch(`https://provinces.open-api.vn/api/p/${cityCode}?depth=2`)
+    
+        if (selectedCityCode) {
+            fetch(`https://provinces.open-api.vn/api/p/${selectedCityCode}?depth=2`)
                 .then(response => response.json())
                 .then(data => {
                     data.districts.forEach(district => {
@@ -40,23 +65,25 @@ if (citySelect && districtSelect && wardSelect) {
                         option.dataset.name = district.name;
                         districtSelect.add(option);
                     });
-                })
-                .catch(error => console.error("Error fetching districts:", error));
+                    if (selectedDistrictCode) {
+                        districtSelect.value = selectedDistrictCode;
+                        districtSelect.dispatchEvent(new Event("change"));
+                    }
+                });
         }
-
-        loadOrders();
     });
+    
 
     // Khi chọn quận/huyện
     districtSelect.addEventListener("change", function () {
+        selectedDistrictCode = districtSelect.value; // ✅ THÊM DÒNG NÀY
         const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
-        const districtCode = districtSelect.value;
         districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
-
+    
         wardSelect.innerHTML = "<option value=''>Select Ward</option>";
-        
-        if (districtCode) {
-            fetch(`https://provinces.open-api.vn/api/d/${districtCode}?depth=2`)
+    
+        if (selectedDistrictCode) {
+            fetch(`https://provinces.open-api.vn/api/d/${selectedDistrictCode}?depth=2`)
                 .then(response => response.json())
                 .then(data => {
                     data.wards.forEach(ward => {
@@ -64,35 +91,38 @@ if (citySelect && districtSelect && wardSelect) {
                         option.dataset.name = ward.name;
                         wardSelect.add(option);
                     });
-                })
-                .catch(error => console.error("Error fetching wards:", error));
+                    if (selectedWardCode) {
+                        wardSelect.value = selectedWardCode;
+                    }
+                });
         }
-
-        loadOrders();
     });
+    
 
     // Khi chọn phường/xã
     wardSelect.addEventListener("change", function () {
         const selectedWard = wardSelect.options[wardSelect.selectedIndex];
         wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
 
-        loadOrders();
+        // loadOrders();
     });
     const filterForm = document.querySelector('form');
     if (filterForm) {
-        filterForm.addEventListener("submit", function () {
+        filterForm.addEventListener("submit", function (e) {
+            e.preventDefault(); // ✅ Ngăn reload
+    
             const selectedCity = citySelect.options[citySelect.selectedIndex];
             const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
             const selectedWard = wardSelect.options[wardSelect.selectedIndex];
-
+    
             cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
-            console.log("City selected:", cityNameHidden.value); 
             districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
-            console.log("District selected:", districtNameHidden.value); // ✅ thêm dòng này
             wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
-            console.log("Ward selected:", wardNameHidden.value); // ✅ thêm dòng này
+    
+            loadOrders(); // ✅ Gọi lại loadOrders với các filter mới
         });
     }
+    
 }
 
 let orders = [];
@@ -180,28 +210,32 @@ function hideDetailOrders(detailordersId) {
 // Ban đầu hiển thị tất cả đơn hàng
 window.onload = filterOrders;
 
-function loadOrders() {
-    const cityInput = document.getElementById("city_name");
-    const districtInput = document.getElementById("district_name");
-    const wardInput = document.getElementById("ward_name");
+function loadOrders(page = 1) {
+    const city = document.getElementById("city_name")?.value || "";
+    const district = document.getElementById("district_name")?.value || "";
+    const ward = document.getElementById("ward_name")?.value || "";
 
-    const city = cityInput ? cityInput.value : "";
-    const district = districtInput ? districtInput.value : "";
-    const ward = wardInput ? wardInput.value : "";
+    const fromDate = document.getElementById("fromDate")?.value || "";
+    const toDate = document.getElementById("toDate")?.value || "";
+    const status = document.getElementById("orderStatus")?.value || "";
+    const search = document.getElementById("searchInput")?.value || "";
 
-    console.log("Loading orders with address filter:", { city, district, ward });
+    const params = new URLSearchParams();
+    if (city) params.set("city", city);
+    if (district) params.set("district", district);
+    if (ward) params.set("ward", ward);
+    if (fromDate) params.set("from_date", fromDate);
+    if (toDate) params.set("to_date", toDate);
+    if (status) params.set("status", status);
+    if (search) params.set("search", search);
+    params.set("page", page);
 
-
-    const params = new URLSearchParams(window.location.search);
-    params.set('city', city);
-    params.set('district', district);
-    params.set('ward', ward);
-
-    fetch('Controllers/get_orders.php?' + params.toString())
+    fetch("Controllers/get_orders.php?" + params.toString())
         .then(response => response.json())
         .then(data => {
-            orders = data.orders; // Gán dữ liệu vào biến toàn cục
-            filterOrders(); 
+            orders = data.orders;
+            filterOrders();
+
             const tbody = document.getElementById('order-table-body');
             tbody.innerHTML = '';
             data.orders.forEach(row => {
