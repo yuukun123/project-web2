@@ -381,5 +381,5 @@ function renderPagination(totalPages, currentPage) {
 }
 document.addEventListener('DOMContentLoaded', () => {
     loadOrders();
-    setInterval(loadOrders, 5000);
+    setInterval(loadOrders, 100);
 });
