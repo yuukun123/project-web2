@@ -393,7 +393,7 @@ tr .js-detail-btn:hover{
 
 @media (max-width: 480px) {
     .text-heading h1{
-        font-size: 18px;
+        font-size: 15px;
     }
 
     .btnLogin-popup{

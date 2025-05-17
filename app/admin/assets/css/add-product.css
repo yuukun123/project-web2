@@ -820,7 +820,7 @@ button.go-to a:hover {
     }
 
     .text-heading h1{
-        font-size: 20px;
+        font-size: 16px;
     }
     .product-head{
         font-size: 15px;
@@ -923,7 +923,7 @@ button.go-to a:hover {
     }
 
     .btnLogin-popup{
-        width: auto;
+        width: 77px;
         height: 30px;
         background: transparent;
         border: 1px solid #1f1c1c;

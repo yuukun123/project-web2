@@ -354,11 +354,11 @@ td {
 
 @media (max-width: 480px) {
     .text-heading h1{
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .btnLogin-popup{
-        width: 60px;
+        width: 78px;
         height: 30px;
         background: transparent;
         border: 1px solid #1f1c1c;
@@ -427,6 +427,11 @@ td {
     }
     .paragraph{
         font-size: 10px;
+    }
+
+    .filter{
+        display: flex;
+        flex-wrap: wrap;
     }
 }
 
