@@ -29,7 +29,7 @@
             <?php include ("../includes/header.php"); ?>
             
             <div class="Home">
-                <div class="text-big">Home</div>
+                <div class="text-big">Dashboard</div>
                 <div class="text-small">Welcome to Admin</div>
             </div>
         </div>
