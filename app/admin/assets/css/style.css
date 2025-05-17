@@ -271,8 +271,9 @@ header.hide {
 
 /* login button */
 .btnLogin-popup {
-    width: 70px;
+    width: auto;
     height: 30px;
+    padding: 0 12px;
     background: transparent;
     border: 1px solid #1f1c1c;
     outline-width: 2px;
@@ -920,7 +921,7 @@ header.hide {
     }
 
     .btnLogin-popup{
-        width: 60px;
+        width: 85px;
         height: 30px;
         background: transparent;
         border: 1px solid #1f1c1c;

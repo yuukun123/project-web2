@@ -76,11 +76,12 @@ $result = $conn->query($sql);
             <label for="toDate">To:</label>
             <input type="date" name="to_date" id="toDate" value="<?= htmlspecialchars($toDate) ?>">
         </div>
-        <input type="hidden" name="city_name" id="city_name">
-        <input type="hidden" name="district_name" id="district_name">
-        <input type="hidden" name="ward_name" id="ward_name">
+
         <div class="filter-address">
-            
+            <input type="hidden" name="city_name" id="city_name">
+            <input type="hidden" name="district_name" id="district_name">
+            <input type="hidden" name="ward_name" id="ward_name">    
+
             <label for="address">City:</label>
             <select id="registerCity" name="registerCity"  required>
                 <option value="">Select City</option>

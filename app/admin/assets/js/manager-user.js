@@ -231,6 +231,10 @@ function saveUser() {
     const formData = new FormData();
     let errors = [];
 
+    const isUpdate = document.getElementById('username').readOnly; // nếu readonly thì là đang sửa
+    formData.append('is_update', isUpdate ? '1' : '0');
+
+
     const fields = ['username', 'first_name', 'last_name', 'email', 'phone', 'password', 'role', 'street', 'city', 'district', 'ward'];
 
     // Lấy dữ liệu từ input và kiểm tra nếu trống
@@ -472,20 +476,3 @@ document.querySelector('.find').addEventListener('input', function () {
         searchUser(); // Khi ô tìm kiếm trống, gọi lại để reset bảng
     }
 });
-
-// document.querySelector('.find').addEventListener('input', function () {
-//     const filter = this.value.toLowerCase();
-//     const table = document.querySelector('#userTableContainer table');
-//     if (!table) return; // Nếu chưa có table thì không làm gì
-
-//     const rows = table.querySelectorAll('tbody tr');
-//     rows.forEach(row => {
-//         const username = row.querySelector('td:nth-child(1)')?.textContent.toLowerCase() || '';
-//         // const email = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-//         if (username.includes(filter)) {
-//             row.style.display = '';
-//         } else {
-//             row.style.display = 'none';
-//         }
-//     });
-// });

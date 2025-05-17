@@ -923,7 +923,7 @@ button.go-to a:hover {
     }
 
     .btnLogin-popup{
-        width: 60px;
+        width: auto;
         height: 30px;
         background: transparent;
         border: 1px solid #1f1c1c;
