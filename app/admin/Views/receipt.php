@@ -109,11 +109,12 @@ $result = $conn->query($sql);
                 <option value="Cancelled" <?= $statusFilter == 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
             </select>
         </div>
-
-    </form>
-    <div class="btn_filter">
+        <div class="btn_filter">
             <button type="submit">Filter</button>
         </div>
+
+    </form>
+
 </div>
 
 <table>

@@ -1,137 +1,10 @@
-// ✅ Đặt ở đầu file JS (global scope)
-let selectedCityCode = null;
-let selectedDistrictCode = null;
-let selectedWardCode = null;
 
-const citySelect = document.getElementById("registerCity");
-const districtSelect = document.getElementById("registerDistrict");
-const wardSelect = document.getElementById("registerWard");
-const cityNameHidden = document.getElementById("city_name");
-const districtNameHidden = document.getElementById("district_name");
-const wardNameHidden = document.getElementById("ward_name");
-
-function fetchCities() {
-    fetch("https://provinces.open-api.vn/api/p/")
-        .then(response => response.json())
-        .then(data => {
-            citySelect.innerHTML = "<option value=''>Select City</option>";
-            data.forEach(city => {
-                const cleanedCityName = city.name.replace(/^Thành phố\s*/i, '').replace(/^TP\.\s*/i, '');
-                let option = new Option(cleanedCityName, city.code);
-                option.dataset.name = cleanedCityName;
-                citySelect.add(option);
-            });
-
-            if (selectedCityCode) {
-                citySelect.value = selectedCityCode;
-                citySelect.dispatchEvent(new Event("change")); // Tự động kích hoạt để load district
-            }
-        });
-}
-
-
-if (citySelect && districtSelect && wardSelect) {
-    // Lấy danh sách thành phố
-    fetch("https://provinces.open-api.vn/api/p/")
-        .then(response => response.json())
-        .then(data => {
-            data.forEach(city => {
-                // Bỏ tiền tố "Thành phố" hoặc "TP." khỏi tên thành phố
-                const cleanedCityName = city.name.replace(/^Thành phố\s*/i, '').replace(/^TP\.\s*/i, '');
-            
-                let option = new Option(cleanedCityName, city.code);
-                option.dataset.name = cleanedCityName;
-                citySelect.add(option);
-            });
-            
-        })
-        .catch(error => console.error("Error fetching cities:", error));
-
-    // Khi chọn thành phố
-    citySelect.addEventListener("change", function () {
-        selectedCityCode = citySelect.value; // ✅ THÊM DÒNG NÀY
-        const selectedCity = citySelect.options[citySelect.selectedIndex];
-        cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
-    
-        districtSelect.innerHTML = "<option value=''>Select District</option>";
-        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
-    
-        if (selectedCityCode) {
-            fetch(`https://provinces.open-api.vn/api/p/${selectedCityCode}?depth=2`)
-                .then(response => response.json())
-                .then(data => {
-                    data.districts.forEach(district => {
-                        let option = new Option(district.name, district.code);
-                        option.dataset.name = district.name;
-                        districtSelect.add(option);
-                    });
-                    if (selectedDistrictCode) {
-                        districtSelect.value = selectedDistrictCode;
-                        districtSelect.dispatchEvent(new Event("change"));
-                    }
-                });
-        }
-    });
-    
-
-    // Khi chọn quận/huyện
-    districtSelect.addEventListener("change", function () {
-        selectedDistrictCode = districtSelect.value; // ✅ THÊM DÒNG NÀY
-        const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
-        districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
-    
-        wardSelect.innerHTML = "<option value=''>Select Ward</option>";
-    
-        if (selectedDistrictCode) {
-            fetch(`https://provinces.open-api.vn/api/d/${selectedDistrictCode}?depth=2`)
-                .then(response => response.json())
-                .then(data => {
-                    data.wards.forEach(ward => {
-                        let option = new Option(ward.name, ward.code);
-                        option.dataset.name = ward.name;
-                        wardSelect.add(option);
-                    });
-                    if (selectedWardCode) {
-                        wardSelect.value = selectedWardCode;
-                    }
-                });
-        }
-    });
-    
-
-    // Khi chọn phường/xã
-    wardSelect.addEventListener("change", function () {
-        const selectedWard = wardSelect.options[wardSelect.selectedIndex];
-        wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
-
-        // loadOrders();
-    });
-    const filterForm = document.querySelector('form');
-    if (filterForm) {
-        filterForm.addEventListener("submit", function (e) {
-            e.preventDefault(); // ✅ Ngăn reload
-    
-            const selectedCity = citySelect.options[citySelect.selectedIndex];
-            const selectedDistrict = districtSelect.options[districtSelect.selectedIndex];
-            const selectedWard = wardSelect.options[wardSelect.selectedIndex];
-    
-            cityNameHidden.value = selectedCity?.dataset.name || selectedCity?.text || "";
-            districtNameHidden.value = selectedDistrict?.dataset.name || selectedDistrict?.text || "";
-            wardNameHidden.value = selectedWard?.dataset.name || selectedWard?.text || "";
-    
-            loadOrders(); // ✅ Gọi lại loadOrders với các filter mới
-        });
-    }
-    
-}
-
-let orders = [];
 
 function filterOrders() {
     const fromDate = document.getElementById('fromDate').value;
     const toDate = document.getElementById('toDate').value;
     const orderStatus = document.getElementById('orderStatus').value;
-    const orderList = document.getElementById('order-table-body');
+    const orderList = document.getElementById('orderList');
 
     const filteredOrders = orders.filter(order => {
         const orderDate = new Date(order.date);
@@ -210,32 +83,11 @@ function hideDetailOrders(detailordersId) {
 // Ban đầu hiển thị tất cả đơn hàng
 window.onload = filterOrders;
 
-function loadOrders(page = 1) {
-    const city = document.getElementById("city_name")?.value || "";
-    const district = document.getElementById("district_name")?.value || "";
-    const ward = document.getElementById("ward_name")?.value || "";
-
-    const fromDate = document.getElementById("fromDate")?.value || "";
-    const toDate = document.getElementById("toDate")?.value || "";
-    const status = document.getElementById("orderStatus")?.value || "";
-    const search = document.getElementById("searchInput")?.value || "";
-
-    const params = new URLSearchParams();
-    if (city) params.set("city", city);
-    if (district) params.set("district", district);
-    if (ward) params.set("ward", ward);
-    if (fromDate) params.set("from_date", fromDate);
-    if (toDate) params.set("to_date", toDate);
-    if (status) params.set("status", status);
-    if (search) params.set("search", search);
-    params.set("page", page);
-
-    fetch("Controllers/get_orders.php?" + params.toString())
+function loadOrders() {
+    const params = new URLSearchParams(window.location.search);
+    fetch('Controllers/get_orders.php?' + params.toString())
         .then(response => response.json())
         .then(data => {
-            orders = data.orders;
-            filterOrders();
-
             const tbody = document.getElementById('order-table-body');
             tbody.innerHTML = '';
             data.orders.forEach(row => {
@@ -258,6 +110,7 @@ function loadOrders(page = 1) {
                         <button class="btn-update icon-detail" onclick="showOrderDetail(${row.order_id})" title="Edit">
                             <ion-icon name="create-outline"></ion-icon>
                         </button>
+
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -289,7 +142,6 @@ function loadOrders(page = 1) {
             });
         });
 }
-
 
 function showOrderDetail(orderId) {
     fetch(`Controllers/get_order_detail.php?order_id=${orderId}`)
@@ -383,3 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
     loadOrders();
     setInterval(loadOrders, 100);
 });
+
+
+
+loadOrders();
+setInterval(loadOrders, 5000);
+
