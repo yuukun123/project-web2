@@ -55,7 +55,7 @@
 .pagination .active {
     background: #ffa0c8;
     border: 1px solid white;
-    width: 30px;
+    /* width: 30px; */
 }
 
 select option:disabled {
