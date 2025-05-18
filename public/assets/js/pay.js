@@ -173,6 +173,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // Submit form và hiện confirmation
     document.getElementById('payment-form').addEventListener('submit', function (e) {
 
+        // Kiểm tra số điện thoại nếu gửi đến địa chỉ khác
+        if (otherRadio.checked) {
+            const phone = receiverPhone.value.trim();
+            const phoneRegex = /^(03|05|07|08|09)\d{8}$/;
+        
+            if (!phoneRegex.test(phone)) {
+                alert("Số điện thoại không hợp lệ. Vui lòng nhập đúng 10 chữ số, bắt đầu bằng 03, 05, 07, 08 hoặc 09.");
+                receiverPhone.focus();
+                e.preventDefault();
+                return false;
+            }
+        }
+        
+        
+
         const timeInput = document.getElementById('delivery_time');
         const selectedTime = timeInput.value;
     
@@ -310,3 +325,5 @@ document.addEventListener('DOMContentLoaded', function () {
     
     
 });
+
+
