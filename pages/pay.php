@@ -169,10 +169,10 @@ $total_cost = 0;
 
                     <div class="subtotal">
                         <div class="total">
-                            <div class="provisional">
+                            <!-- <div class="provisional">
                                 <div>Provisional</div>
                                 <div class="price"><?= number_format($total_cost, 0, '.', '.') ?> VND</div>
-                            </div>
+                            </div> -->
                             <div class="total-sum">
                                 <div>Total</div>
                                 <div class="price"><?= number_format($total_cost, 0, '.', '.') ?> VND</div>

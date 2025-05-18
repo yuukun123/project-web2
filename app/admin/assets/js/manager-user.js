@@ -76,7 +76,7 @@ function findBestMatchByName(list, name) {
 
 
 async function showEditUserForm(user) {
-    document.getElementById('modalTitle').innerText = "Chỉnh sửa người dùng";
+    document.getElementById('modalTitle').innerText = "Edit User";
 
     // Ghi log dữ liệu người dùng để kiểm tra
     console.log("Dữ liệu người dùng:", user);

@@ -111,15 +111,47 @@ function removeItem($conn, $username, $data) {
 }
 
 /* 🛍️ Lấy số lượng sản phẩm trong giỏ hàng */
+/* 🛍️ Lấy số lượng sản phẩm trong giỏ hàng (CHỈ ĐẾM SẢN PHẨM "AVAILABLE") */
 function getCartCount($conn, $username) {
-    $sql = "SELECT SUM(quantity) AS total FROM cart WHERE user_name = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    // Bước 1: Xóa các sản phẩm trong giỏ hàng của người dùng này mà không còn "Available"
+    // Giả sử trạng thái hợp lệ là 'Available'
+    $sql_delete_hidden = "DELETE c FROM cart c
+                          JOIN product p ON c.product_id = p.product_id
+                          WHERE c.user_name = ? AND p.status != 'Available'";
+    $stmt_delete = $conn->prepare($sql_delete_hidden);
+    if (!$stmt_delete) {
+        // Không nên echo lỗi ở đây vì sẽ làm hỏng JSON response của getCartCount
+        // Ghi log lỗi server-side
+        error_log("Error preparing delete hidden items query: " . $conn->error);
+        // Trả về count = 0 hoặc một giá trị lỗi nếu muốn client xử lý
+        // echo json_encode(["count" => 0, "error_message" => "Could not verify cart items."]);
+        // exit;
+        // Hoặc bỏ qua bước xóa nếu có lỗi và chỉ đếm những cái hiện có + available
+    } else {
+        $stmt_delete->bind_param("s", $username);
+        $stmt_delete->execute();
+        $stmt_delete->close();
+    }
+
+
+    // Bước 2: Đếm tổng số lượng các sản phẩm còn lại (và chắc chắn là Available)
+    $sql_count = "SELECT SUM(c.quantity) AS total
+                  FROM cart c
+                  JOIN product p ON c.product_id = p.product_id
+                  WHERE c.user_name = ? AND p.status = 'Available'";
+    $stmt_count = $conn->prepare($sql_count);
+    if (!$stmt_count) {
+        error_log("Error preparing cart count query: " . $conn->error);
+        echo json_encode(["count" => 0, "error_message" => "Could not count cart items."]);
+        exit;
+    }
+    $stmt_count->bind_param("s", $username);
+    $stmt_count->execute();
+    $result = $stmt_count->get_result();
     $row = $result->fetch_assoc();
     $totalItems = $row['total'] ?? 0;
+    $stmt_count->close();
 
-    echo json_encode(["count" => $totalItems]);
+    echo json_encode(["count" => (int)$totalItems]); // Ép kiểu về int
     exit;
 }
