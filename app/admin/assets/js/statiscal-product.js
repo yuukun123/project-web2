@@ -218,6 +218,10 @@ function renderReceipt(data) {
                     <input type="text" value="${order.shipping_street}, ${order.shipping_ward}, ${order.shipping_district}, ${order.shipping_city}" readonly>
                 </div>
                 <div class="form-group">
+                    <label><strong>Order date:</strong></label>
+                    <input type="text" value="${order.order_date}" readonly>
+                </div>
+                <div class="form-group">
                     <label><strong>Delivery date:</strong></label>
                     <input type="text" value="${order.delivery_date}" readonly>
                 </div>
