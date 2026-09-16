@@ -1,31 +1,46 @@
 version: '3.8'
+
+# ==============================================================================
+# THE SWEETS — Docker Compose
+# Kiến trúc:
+#   Web:    React (FE: port 3000) + C# ASP.NET Core (BE: port 5000)
+#   Mobile: Flutter (FE - chạy trên thiết bị) + Python FastAPI (BE: port 8000)
+#   DB:     MySQL 8.0 (port 3308) + phpMyAdmin (port 8081)
+#   Legacy: PHP Web cũ (port 8080)
+# ==============================================================================
+
 services:
-  web:
-    build: .
-    ports:
-      - "8080:80"
-    volumes:
-      - .:/var/www/html/docker-web2
 
-
-    depends_on:
-      - db
-
+  # ============================================================
+  # DATABASE
+  # ============================================================
   db:
     image: mysql:8.0
+    container_name: thesweets_db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: webdata
+      MYSQL_DATABASE: thesweets_db
       MYSQL_USER: user
       MYSQL_PASSWORD: 123
     ports:
       - "3308:3306"
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - thesweets_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # ============================================================
+  # PHPMYADMIN — Quản lý DB trực quan
+  # ============================================================
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: thesweets_phpmyadmin
     restart: always
     ports:
       - "8081:80"
@@ -33,7 +48,94 @@ services:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: root
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    networks:
+      - thesweets_network
 
+  # ============================================================
+  # WEB — C# ASP.NET Core Backend (BE: port 5000)
+  # ============================================================
+  web_backend:
+    build:
+      context: ./web/backend
+      dockerfile: Dockerfile
+    container_name: thesweets_web_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=thesweets_db
+      - DB_USER=user
+      - DB_PASSWORD=123
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./web/backend:/src
+    networks:
+      - thesweets_network
+
+  # ============================================================
+  # WEB — React Frontend (FE: port 3000)
+  # ============================================================
+  web_frontend:
+    build:
+      context: ./web/frontend
+      dockerfile: Dockerfile
+    container_name: thesweets_web_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - web_backend
+    volumes:
+      - ./web/frontend:/app
+      - /app/node_modules
+    networks:
+      - thesweets_network
+
+  # ============================================================
+  # MOBILE — Python FastAPI Backend (BE: port 8000)
+  # ============================================================
+  mobile_backend:
+    build:
+      context: ./mobile/backend
+      dockerfile: Dockerfile
+    container_name: thesweets_mobile_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=thesweets_db
+      - DB_USER=user
+      - DB_PASSWORD=123
+      - SECRET_KEY=your_jwt_secret_key_here
+      - ACCESS_TOKEN_EXPIRE_MINUTES=60
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./mobile/backend:/app
+    networks:
+      - thesweets_network
+
+
+
+# ==============================================================================
+# VOLUMES & NETWORKS
+# ==============================================================================
 volumes:
   db_data:
+    driver: local
+
+networks:
+  thesweets_network:
+    driver: bridge
